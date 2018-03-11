@@ -88,7 +88,7 @@
 <meta property="og:description" content="折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG">
-<meta property="og:updated_time" content="2018-03-10T15:00:15.092Z">
+<meta property="og:updated_time" content="2018-03-11T04:14:22.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿谢的BLOG Beta3.9版 发布说明">
 <meta name="twitter:description" content="折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。">
@@ -382,13 +382,8 @@
 <p>摘要(文章折叠):<strong>&lt;!–more–&gt;</strong>之前的文字就会显示在文章首页，后面的文字就会被折叠。</p>
 <p>链接和锚点:</p>
 <p>粗体:<em>斜体</em>，<strong>粗体</strong>，<strong><em>斜体和粗体</em></strong></p>
-<p>转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\”</p>
-<p>字体颜色:</p>
-<p>文章中链接样式:<br>修改文件 themes\next\source\css_common\components\post\post.styl ，在末尾添加如下css样式，：</p>
-<p>// 文章内链接文本样式<br>.post-body p a{<br>  color: #0593d3;<br>  border-bottom: none;<br>  border-bottom: 1px solid #0593d3;<br>  &amp;:hover {<br>    color: #fc6423;<br>    border-bottom: none;<br>    border-bottom: 1px solid #fc6423;<br>  }<br>}<br>其中选择 .post-body 是为了不影响标题，选择 p 是为了不影响首页“阅读全文”的显示样式,颜色可以自己定义。</p>
-<p>主页文章添加阴影效果:<br>打开\themes\next\source\css_custom\custom.styl,向里面加入：<br>// 主页文章添加阴影效果<br> .post {<br>   margin-top: 60px;<br>   margin-bottom: 60px;<br>   padding: 25px;<br>   -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);<br>   -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);<br>  }</p>
-<p>  在网站底部加上访问量</p>
-<p>  实现统计功能<br>  $ npm install hexo-wordcount –save<br>post_wordcount:<br>  item_text: true<br>  wordcount: true<br>  min2read: true</p>
+<p>转义:比如我要打出<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;\!--more--&gt;</span><br><span class="line"><span class="code">```，可以在"!"前添加"\"</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">文章中链接样式:</span></span><br><span class="line"><span class="code">修改文件 themes\next\source\css\_common\components\post\post.styl ，在末尾添加如下css样式</span></span><br><span class="line"><span class="code">```css</span></span><br><span class="line"><span class="code">  // 文章内链接文本样式,颜色可以自己定义</span></span><br><span class="line"><span class="code">.post-body p a&#123;</span></span><br><span class="line"><span class="code">  color: #0593d3;</span></span><br><span class="line"><span class="code">  border-bottom: none;</span></span><br><span class="line"><span class="code">  border-bottom: 1px solid #0593d3;</span></span><br><span class="line"><span class="code">  &amp;:hover &#123;</span></span><br><span class="line"><span class="code">    color: #fc6423;</span></span><br><span class="line"><span class="code">    border-bottom: none;</span></span><br><span class="line"><span class="code">    border-bottom: 1px solid #fc6423;</span></span><br><span class="line"><span class="code">  &#125;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>主页文章添加阴影效果:<br>打开\themes\next\source\css_custom\custom.styl,向里面加入:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 主页文章添加阴影效果</span><br><span class="line"><span class="selector-class">.post</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 203, .5);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>4.部署</p>
 <p>5.主题修改</p>
 <p>修改语言:</p>
@@ -417,11 +412,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag"># hexo</a>
+            <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
           
-            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+            <a href="/tags/nodejs/" rel="tag"><i class="fa fa-tag"></i> nodejs</a>
           
-            <a href="/tags/Blog/" rel="tag"># Blog</a>
+            <a href="/tags/Blog/" rel="tag"><i class="fa fa-tag"></i> Blog</a>
           
         </div>
       
@@ -443,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/text/" rel="prev" title="text">
+                text <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -510,7 +509,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -586,13 +585,10 @@
 
 <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  Vistors:<span id="busuanzi_value_site_uv"></span>
+  :<span id="busuanzi_value_site_uv"></span>
 </span>
 
-</div>
-<span id="busuanzi_container_site_pv">
-    <span id="busuanzi_value_site_pv"></span>
-</span>
+
         
 
 
