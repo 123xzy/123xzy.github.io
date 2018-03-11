@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux,CSAPP,GCC," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="杭电在读大一学生喜欢折腾，喜欢Computer 我的知乎">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About me">
-<meta property="og:url" content="http://yoursite.com/About/index.html">
+<meta name="keywords" content="Linux,CSAPP,GCC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux GCC">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/Linux-GCC/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="杭电在读大一学生喜欢折腾，喜欢Computer 我的知乎">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-09T06:35:47.944Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
+<meta property="og:updated_time" content="2018-03-11T14:19:52.533Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About me">
-<meta name="twitter:description" content="杭电在读大一学生喜欢折腾，喜欢Computer 我的知乎">
+<meta name="twitter:title" content="Linux GCC">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/About/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/Linux-GCC/"/>
 
 
 
 
 
-  <title>About me | 阿谢的BLOG</title>
+  <title>Linux GCC | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +270,165 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/Linux-GCC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">About me</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<p>杭电在读大一学生<br>喜欢折腾，喜欢Computer</p>
-<h2 id="我的知乎"><a href="#我的知乎" class="headerlink" title="我的知乎"></a><a href="https://www.zhihu.com/people/xzy-71-59/activities" target="_blank" rel="noopener">我的知乎</a></h2>
+          <h1 class="post-title" itemprop="name headline">Linux GCC</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T22:13:44+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><img src="/2018/03/11/Linux-GCC/5.jpg" alt=""><br><a id="more"></a></p>
+<p>这个星期作死的想要在linux下写c代码，结果花了大半天，不过还是很有收获的，至少以后可以在linux下写代码了，还有CSAPP上的案例也就可以动手操作了，哈哈哈</p>
+<p>之前都是在CSAPP上看的<strong>汇编代码</strong>，今天终于看到了“真人”了。</p>
+<p>还是总结一下这次烦人的操作</p>
+<p>因为看书的时候，经常会看到gdb调试，就一直都想实验一下，但是windows安装实在烦人</p>
+<p>首先是安装虚拟机，这步倒是很顺利；安装linux也是按照教程一步步就完成了，安装的是centos7</p>
+<p>gcc，gdb的安装也是瞎操作一番就成功了，但是就是这个编译运行花了很长时间，</p>
+<p>我写了一个文件hello.c保存在了home下的Documents，结果导致我运行gcc hello.c -o hello,一直提示No such file or directory，去百度的时候也是搜到一堆没用的东西，知道我想起来home，我尝试的将hello.c放到了home中，结果就成功了，就是手贱，要把它保存到Documents</p>
+<p>放了成果，开心一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//hello.c文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello world&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//命令行操作</span><br><span class="line">[xzy@localhost ~]$ gcc hello.c -o hello //编译</span><br><span class="line">[xzy@localhost ~]$ gcc -S hello.c//汇编文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//汇编文件</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;hello world&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	movl	$.LC0, %edi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	printf</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	popq	%rbp</span><br><span class="line">	.cfi_def_cfa 7, 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>因为已经看了一些CSAPP，这几行汇编还是可以看懂的，xixi</p>
+<p><strong>编译部分代码：</strong>有时候指向编译部分代码，不带main</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -S text.c</span><br></pre></td></tr></table></figure>
+<p>反汇编</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d a.out</span><br></pre></td></tr></table></figure>
+<p>安装beautifulsoup4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E:\Python\Scripts&gt;pip install beautifulsoup4</span><br><span class="line">Collecting beautifulsoup4</span><br><span class="line">  Downloading beautifulsoup4-4.6.0-py3-none-any.whl (86kB)</span><br><span class="line">    100% |████████████████████████████████| 92kB 43kB/s</span><br><span class="line">Installing collected packages: beautifulsoup4</span><br><span class="line">Successfully installed beautifulsoup4-4.6.0</span><br></pre></td></tr></table></figure></p>
+<h2 id="接下来就是要学习gdb的操作，熟悉linux"><a href="#接下来就是要学习gdb的操作，熟悉linux" class="headerlink" title="接下来就是要学习gdb的操作，熟悉linux"></a>接下来就是要学习gdb的操作，熟悉linux</h2>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+          
+            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/《深入理解计算机系统》bomb-lab/" rel="next" title="《深入理解计算机系统》bomb_lab">
+                <i class="fa fa-chevron-left"></i> 《深入理解计算机系统》bomb_lab
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +437,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -398,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#我的知乎"><span class="nav-number">1.</span> <span class="nav-text">我的知乎</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#接下来就是要学习gdb的操作，熟悉linux"><span class="nav-number">1.</span> <span class="nav-text">接下来就是要学习gdb的操作，熟悉linux</span></a></li></ol></div>
             
 
           </div>
