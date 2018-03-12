@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG">
-<meta property="og:updated_time" content="2018-03-11T05:42:36.685Z">
+<meta property="og:updated_time" content="2018-03-12T02:53:01.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿谢的BLOG Beta3.9版 发布说明">
 <meta name="twitter:description" content="折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。">
@@ -356,45 +356,65 @@
         <p><img src="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG" alt="BLOG首页截图"></p>
 <p>折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。</p>
 <a id="more"></a>
-<p><strong><em>文章目录：</em></strong><br><a href="#1">安装</a></p>
-<pre><code>- 注册github账户
-- 安装Git
-- 安装node.js
-- 安装hexo
-</code></pre><p><a href="#2">使用入门</a></p>
-<pre><code>- 分类和标签
-- 导航栏
-- 摘要(文章折叠)
-- markdown简单语法
-- 部署
-- 主题修改
-- 图片
-</code></pre><p><a href="#3">总结</a></p>
+<h1 id="文章目录："><a href="#文章目录：" class="headerlink" title="文章目录："></a>文章目录：</h1><p><a href="#1">安装</a></p>
+<ul>
+<li>注册github账户</li>
+<li>安装Git</li>
+<li>安装node.js</li>
+<li>安装hexo</li>
+</ul>
+<p><a href="#2">使用入门</a></p>
+<ul>
+<li>分类和标签</li>
+<li>导航栏</li>
+<li>摘要(文章折叠)</li>
+<li>markdown简单语法</li>
+<li>部署</li>
+<li>主题修改</li>
+<li>图片</li>
+</ul>
+<p><a href="#3">总结</a></p>
 <p><span id="1"><strong>一、安装</strong></span></p>
 <p>1.注册github：我想作为一个同性交友网站，<a href="https://github.com/" target="_blank" rel="noopener">github</a>是每个程序员都需要注册和使用的。</p>
 <p>2.安装Git: 学会使用Git就可以替代Windows下的命令行。</p>
 <p>划重点：接下来的两步都是 <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">文档|hexo</a> 上面都的，要学会看文档，不管是哪种类型。</p>
 <p>3.安装node.js</p>
 <p>4.安装hexo</p>
-<p><span id="2"><strong>二、使用入门</strong></span><br>1.分类和标签:</p>
-<p>多标签:    <strong>tags:[tag1,tag2,tag3]</strong></p>
+<p><span id="2"><strong>二、使用入门</strong></span></p>
+<p>1.多标签:<strong>tags:[tag1,tag2,tag3]</strong></p>
 <p>2.导航栏：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;xxx&quot;  产生如下图所示的文件格式</span><br></pre></td></tr></table></figure></p>
 <p><img src="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG" alt="BLOG首页截图"></p>
 <p>3.markdown简单语法</p>
-<p>摘要(文章折叠):<strong>&lt;!–more–&gt;</strong>之前的文字就会显示在文章首页，后面的文字就会被折叠。</p>
-<p>链接和锚点:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[安装](#1)  </span><br><span class="line"></span><br><span class="line">&lt;span id = &quot;1&quot;&gt;**一、安装**&lt;/span&gt;</span><br></pre></td></tr></table></figure></p>
-<p>粗体:<em>斜体</em>，<strong>粗体</strong>，<strong><em>斜体和粗体</em></strong></p>
-<p>转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\”</p>
-<p>文章中链接样式:<br>修改文件 themes\next\source\css_common\components\post\post.styl ，在末尾添加如下css样式<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  // 文章内链接文本样式,颜色可以自己定义</span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    <span class="selector-tag">color</span>: <span class="selector-id">#fc6423</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: <span class="selector-tag">none</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>主页文章添加阴影效果:<br>打开\themes\next\source\css_custom\custom.styl,向里面加入:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 主页文章添加阴影效果</span><br><span class="line"><span class="selector-class">.post</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 203, .5);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>4.部署：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>一级标题:#</p>
+</li>
+<li><p>摘要(文章折叠):&lt;!–more–&gt;之前的文字就会显示在文章首页，后面的文字就会被折叠。</p>
+</li>
+<li><p>链接和锚点:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[安装](#1)  </span><br><span class="line"></span><br><span class="line">&lt;span id = &quot;1&quot;&gt;**一、安装**&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>粗体:<em>斜体</em>，<strong>粗体</strong>，<strong><em>斜体和粗体</em></strong></p>
+</li>
+<li><p>转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\”</p>
+</li>
+<li><p>文章中链接样式:</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//修改文件 themes\next\source\css\_common\components\post\post.styl ，</span><br><span class="line">//在末尾添加如下css样式，颜色可以自己定义。</span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    <span class="selector-tag">color</span>: <span class="selector-id">#fc6423</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: <span class="selector-tag">none</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>主页文章添加阴影效果:</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 打开\themes\next\source\css\_custom\custom.styl,向里面加入:</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 203, .5);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.部署</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
 <p>5.图片</p>
 <p>首先在根目录下_config.yml中找到post_asset_folder，并将其值修改为true；</p>
 <p>其次右键Git Bash Here输入：npm install hexo-asset-image –save</p>
 <p>然后输入hexo n “xxxx”,产生xxxx.md文件同时还会生成一个xxxx文件夹</p>
 <p>再将图片复制进xxxx文件夹,并在xxxx.md对应位置输入![t](xxxx/x.jpg)</p>
 <p>注意:xxxx为文件夹的名字,x为图片的名字，jpg也是分大小写的。</p>
-<p><span id="3"><strong>三、总结</strong></span><br>其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。</p>
+<p><span id="3"><strong>三、总结</strong></span></p>
+<p>其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。</p>
 <p>参考:<br><a href="https://segmentfault.com/a/1190000009544924" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009544924</a></p>
 
       
@@ -490,8 +510,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -506,7 +535,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -519,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -542,6 +571,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文章目录："><span class="nav-number">1.</span> <span class="nav-text">文章目录：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
