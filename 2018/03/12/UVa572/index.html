@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="UVa572," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Diary">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="description" content="UVa572">
+<meta name="keywords" content="UVa572">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa572">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/UVa572/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="Diary">
+<meta property="og:description" content="UVa572">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:37:32.150Z">
+<meta property="og:updated_time" content="2018-03-12T08:31:23.411Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="Diary">
+<meta name="twitter:title" content="UVa572">
+<meta name="twitter:description" content="UVa572">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/UVa572/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>UVa572 | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +271,149 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/UVa572/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<a href="/2018/03/11/Diary/" title="Diary">Diary</a>
-
+          <h1 class="post-title" itemprop="name headline">UVa572</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:30:48+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><a href="https://vjudge.net/problem/UVA-572" target="_blank" rel="noopener">UVa572</a><br><a id="more"></a><br>第一次做DFS的题目，还一次AC了，开心<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 105</span></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[MAXN][MAXN];</span><br><span class="line"><span class="keyword">int</span> m,n;</span><br><span class="line"><span class="keyword">int</span> dir[<span class="number">8</span>][<span class="number">2</span>] = &#123; &#123; <span class="number">0</span>,<span class="number">-1</span> &#125;,&#123; <span class="number">0</span>,<span class="number">1</span> &#125;,&#123; <span class="number">1</span>,<span class="number">0</span> &#125;,&#123; <span class="number">-1</span>,<span class="number">0</span> &#125;,&#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;,&#123;<span class="number">-1</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">-1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125; &#125;;<span class="comment">//因为题目意思是斜着也算连通，所以定义八个方向</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> si, <span class="keyword">int</span> sj)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (si&lt;<span class="number">0</span> || si&gt;m || sj&lt;<span class="number">0</span> || sj&gt;n)<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">map</span>[si + dir[i][<span class="number">0</span>]][sj + dir[i][<span class="number">1</span>]] == <span class="string">'@'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">map</span>[si + dir[i][<span class="number">0</span>]][sj + dir[i][<span class="number">1</span>]] =<span class="string">'*'</span>;<span class="comment">//做过的地方就标记不能走</span></span><br><span class="line">			dfs(si + dir[i][<span class="number">0</span>], sj + dir[i][<span class="number">1</span>]);<span class="comment">//递归把连通的地方都走一遍</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; m &gt;&gt; n&amp;&amp;n&amp;&amp;m)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; <span class="built_in">map</span>[i][j];</span><br><span class="line">		<span class="keyword">int</span> num = <span class="number">0</span>;  <span class="comment">//记录连通分量</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">map</span>[i][j] == <span class="string">'@'</span>) &#123; dfs(i, j); num++; &#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这是最简单的DFS题目，我们老师和我们说DFS最精彩的地方应该是<strong>剪枝</strong>，因为DFS是要去走完整幅地图，效率还是很低的，要提高效率，就要<strong>适当剪枝</strong>，避免一些多余的步子，当然也不可过度剪枝，所以怎么剪枝还是要多想。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UVa572/" rel="tag"><i class="fa fa-tag"></i> UVa572</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/UVa514/" rel="next" title="UVa514">
+                <i class="fa fa-chevron-left"></i> UVa514
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/UVa227/" rel="prev" title="UVa227">
+                UVa227 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +422,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

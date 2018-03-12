@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="HDOJ,DP," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Diary">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="description" content="HDOJ1176">
+<meta name="keywords" content="HDOJ,DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDOJ1176">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1176/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="Diary">
+<meta property="og:description" content="HDOJ1176">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:37:32.150Z">
+<meta property="og:updated_time" content="2018-03-12T08:18:55.038Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="Diary">
+<meta name="twitter:title" content="HDOJ1176">
+<meta name="twitter:description" content="HDOJ1176">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1176/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>HDOJ1176 | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +271,152 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1176/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<a href="/2018/03/11/Diary/" title="Diary">Diary</a>
-
+          <h1 class="post-title" itemprop="name headline">HDOJ1176</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:17:42+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><a href="http://acm.hdu.edu.cn/search.php?action=listproblem" target="_blank" rel="noopener">HDOJ1176</a></p>
+<a id="more"></a>
+<p>作为一个弱鸡，这道题目花了我很长的时间orz，首先花了很长的时间去理解这道题其实和数塔（<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2084" target="_blank" rel="noopener">ACM2084</a>）实质其实一模一样，甚至连代码都差不多orz</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 140000</span></span><br><span class="line"><span class="keyword">int</span> a[MAXN][<span class="number">11</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, position, time;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span>&gt;&gt;n&amp;&amp;n) &#123;</span><br><span class="line">		<span class="keyword">int</span> max_time = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">memset</span>(a, <span class="number">0</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">			scanf_s(<span class="string">"%d%d"</span>, &amp;position, &amp;time);</span><br><span class="line">			a[time][position]++;</span><br><span class="line">			max_time = max(max_time, time);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = max_time - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">10</span>; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(j==<span class="number">0</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					a[i][j] += max(a[i + <span class="number">1</span>][j], a[i + <span class="number">1</span>][j +<span class="number">1</span>]);</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span>(j==<span class="number">10</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					a[i][j] += max(a[i + <span class="number">1</span>][j], a[i + <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				a[i][j] += max(max(a[i + <span class="number">1</span>][j ], a[i + <span class="number">1</span>][j+<span class="number">1</span>]), a[i + <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[<span class="number">0</span>][<span class="number">5</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HDOJ/" rel="tag"><i class="fa fa-tag"></i> HDOJ</a>
+          
+            <a href="/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1233/" rel="next" title="HDOJ1233">
+                <i class="fa fa-chevron-left"></i> HDOJ1233
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1421/" rel="prev" title="HDOJ1421">
+                HDOJ1421 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +425,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,CSAPP,GCC," />
+  <meta name="keywords" content="HDOJ," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="keywords" content="Linux,CSAPP,GCC">
+<meta name="description" content="HDOJ1325">
+<meta name="keywords" content="HDOJ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux GCC">
-<meta property="og:url" content="http://yoursite.com/2018/03/11/Linux-GCC/index.html">
+<meta property="og:title" content="HDOJ1325">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1325/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="HDOJ1325">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
-<meta property="og:updated_time" content="2018-03-12T04:02:41.367Z">
+<meta property="og:updated_time" content="2018-03-12T08:26:47.212Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux GCC">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
+<meta name="twitter:title" content="HDOJ1325">
+<meta name="twitter:description" content="HDOJ1325">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/11/Linux-GCC/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1325/"/>
 
 
 
 
 
-  <title>Linux GCC | 阿谢的BLOG</title>
+  <title>HDOJ1325 | 阿谢的BLOG</title>
   
 
 
@@ -282,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/Linux-GCC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1325/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -299,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux GCC</h1>
+          <h1 class="post-title" itemprop="name headline">HDOJ1325</h1>
         
 
         <div class="post-meta">
@@ -311,8 +312,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T22:13:44+08:00">
-                2018-03-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:26:24+08:00">
+                2018-03-12
               </time>
             
 
@@ -349,26 +350,7 @@
       
 
       
-        <p><img src="/2018/03/11/Linux-GCC/5.jpg" alt=""><br><a id="more"></a></p>
-<p>这个星期作死的想要在linux下写c代码，结果花了大半天，不过还是很有收获的，至少以后可以在linux下写代码了，还有CSAPP上的案例也就可以动手操作了，哈哈哈</p>
-<p>之前都是在CSAPP上看的<strong>汇编代码</strong>，今天终于看到了“真人”了。</p>
-<p>还是总结一下这次烦人的操作</p>
-<p>因为看书的时候，经常会看到gdb调试，就一直都想实验一下，但是windows安装实在烦人</p>
-<p>首先是安装虚拟机，这步倒是很顺利；安装linux也是按照教程一步步就完成了，安装的是centos7</p>
-<p>gcc，gdb的安装也是瞎操作一番就成功了，但是就是这个编译运行花了很长时间，</p>
-<p>我写了一个文件hello.c保存在了home下的Documents，结果导致我运行gcc hello.c -o hello,一直提示No such file or directory，去百度的时候也是搜到一堆没用的东西，知道我想起来home，我尝试的将hello.c放到了home中，结果就成功了，就是手贱，要把它保存到Documents</p>
-<p>放了成果，开心一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//hello.c文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello world&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//命令行操作</span><br><span class="line">[xzy@localhost ~]$ gcc hello.c -o hello //编译</span><br><span class="line">[xzy@localhost ~]$ gcc -S hello.c//汇编文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//汇编文件</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;hello world&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	movl	$.LC0, %edi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	printf</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	popq	%rbp</span><br><span class="line">	.cfi_def_cfa 7, 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
-<p>因为已经看了一些CSAPP，这几行汇编还是可以看懂的，xixi</p>
-<p><strong>编译部分代码：</strong>有时候指向编译部分代码，不带main</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -S text.c</span><br></pre></td></tr></table></figure>
-<p>反汇编</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d a.out</span><br></pre></td></tr></table></figure>
-<p>安装beautifulsoup4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E:\Python\Scripts&gt;pip install beautifulsoup4</span><br><span class="line">Collecting beautifulsoup4</span><br><span class="line">  Downloading beautifulsoup4-4.6.0-py3-none-any.whl (86kB)</span><br><span class="line">    100% |████████████████████████████████| 92kB 43kB/s</span><br><span class="line">Installing collected packages: beautifulsoup4</span><br><span class="line">Successfully installed beautifulsoup4-4.6.0</span><br></pre></td></tr></table></figure></p>
-<p>接下来就是要学习gdb的操作，熟悉linux</p>
-<hr>
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325" target="_blank" rel="noopener">HDOJ1325</a><br><a id="more"></a><br>乍一看并查集啊，native，结果WA, ORZ<br>还是太菜了啊，做了好久好久orz<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">三个条件：</span><br><span class="line">1.不能成环</span><br><span class="line">2.不能成树林</span><br><span class="line">3.入度小于等于1</span><br><span class="line">特判：</span><br><span class="line">空树也是树</span><br><span class="line">*/</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define MAXN 10005</span><br><span class="line">int disjoint[MAXN];   //并查集</span><br><span class="line">int indegree[MAXN];   //记录出度</span><br><span class="line">int show[MAXN];        //标记出现的点</span><br><span class="line">int find(int x)       //找根节点</span><br><span class="line">&#123;</span><br><span class="line">	int t = x;</span><br><span class="line">	while(disjoint[t] != t)</span><br><span class="line">		t = disjoint[t];</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br><span class="line">int merge(int x, int y)  //合并查集(如果在一个集合形成环，则返回0)</span><br><span class="line">&#123;</span><br><span class="line">	int fx = find(x);</span><br><span class="line">	int fy = find(y);</span><br><span class="line">	if (fx == fy) return 0;</span><br><span class="line">	else while(disjoint[fy]!= fx)</span><br><span class="line">		disjoint[fy] = fx;</span><br><span class="line">	return fx;//如果没有成环，则合并，否则返回0	                                         </span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int x, y,count=1;</span><br><span class="line">	while (cin &gt;&gt; x &gt;&gt; y&amp;&amp;x&gt;=0&amp;&amp;y&gt;=0)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int i = 1; i &lt;= MAXN; i++)      //初始化并查集和入度和标记</span><br><span class="line">		&#123;</span><br><span class="line">			indegree[i] = 0;</span><br><span class="line">			disjoint[i] = i;</span><br><span class="line">			show[i] = 0;</span><br><span class="line">		&#125;</span><br><span class="line">		if (x == 0 &amp;&amp; y == 0)                 //特判空树</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;Case %d is a tree.\n&quot;, count++);</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		show[x]++; show[y]++;</span><br><span class="line">		indegree[y]++;    </span><br><span class="line">		merge(x, y);                         //要注意x，y顺序，因为该树是有方向的</span><br><span class="line">		int flag1 = 0, flag2 = 0,flag3=0;    //分别表示是否成环，是否成树林，是否入度小于等于1</span><br><span class="line">		int a, b;</span><br><span class="line">		while (cin &gt;&gt; a &gt;&gt; b&amp;&amp;a&amp;&amp;b)</span><br><span class="line">		&#123;</span><br><span class="line">			if (merge(a, b) == 0)flag1 = 1;//成环</span><br><span class="line">			show[a]++; show[b]++;</span><br><span class="line">			indegree[b]++;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		int root=0;</span><br><span class="line">		if(flag1==1)printf(&quot;Case %d is not a tree.\n&quot;, count++);</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			for (int j = 1; j &lt; MAXN; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				if (show[j] &amp;&amp; disjoint[j] == j)  //计算有几个根节点</span><br><span class="line">				&#123;</span><br><span class="line">					root++;</span><br><span class="line">					if (root &gt; 1) &#123;</span><br><span class="line">						flag2 = 1;</span><br><span class="line">						break;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				if (indegree[j] &gt; 1)flag3 = 1;</span><br><span class="line">			&#125;</span><br><span class="line">			if(flag2||flag3)printf(&quot;Case %d is not a tree.\n&quot;, count++);</span><br><span class="line">			else printf(&quot;Case %d is a tree.\n&quot;, count++);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -386,11 +368,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-          
-            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
-          
-            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
+            <a href="/tags/HDOJ/" rel="tag"><i class="fa fa-tag"></i> HDOJ</a>
           
         </div>
       
@@ -403,8 +381,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/11/《深入理解计算机系统》bomb-lab/" rel="next" title="《深入理解计算机系统》bomb_lab">
-                <i class="fa fa-chevron-left"></i> 《深入理解计算机系统》bomb_lab
+              <a href="/2018/03/12/HDOJ1232/" rel="next" title="HDOJ1232">
+                <i class="fa fa-chevron-left"></i> HDOJ1232
               </a>
             
           </div>
@@ -413,8 +391,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/12/HDOJ1010/" rel="prev" title="HDOJ1010">
-                HDOJ1010 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/12/UVa514/" rel="prev" title="UVa514">
+                UVa514 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

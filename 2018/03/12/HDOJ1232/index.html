@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="HDOJ," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Diary">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="description" content="HDOJ1232">
+<meta name="keywords" content="HDOJ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDOJ1232">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1232/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="Diary">
+<meta property="og:description" content="HDOJ1232">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:37:32.150Z">
+<meta property="og:updated_time" content="2018-03-12T08:25:07.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="Diary">
+<meta name="twitter:title" content="HDOJ1232">
+<meta name="twitter:description" content="HDOJ1232">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1232/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>HDOJ1232 | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +271,148 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1232/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<a href="/2018/03/11/Diary/" title="Diary">Diary</a>
-
+          <h1 class="post-title" itemprop="name headline">HDOJ1232</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:24:28+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1232" target="_blank" rel="noopener">HDOJ1232</a><br><a id="more"></a><br>不瞒大家，这题提交了十几遍，一道简单的并查集，硬是被我做成了一坨屎，orz，还是自己没有真正理解并查集的意思，导致自己翻车了2333</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int city[1002];</span><br><span class="line">int find(int x) </span><br><span class="line">&#123;</span><br><span class="line">	int temp=x;</span><br><span class="line">	while(city[temp] != temp)  //一定是while不能是if，是寻找根节点，不是父节点</span><br><span class="line">		temp = city[temp];</span><br><span class="line">	return temp;               </span><br><span class="line">&#125;</span><br><span class="line">void merge(int a, int b)</span><br><span class="line">&#123;</span><br><span class="line">	int fa, fb;</span><br><span class="line">	fa = find(a);</span><br><span class="line">	fb = find(b);</span><br><span class="line">	if (fa != fb)</span><br><span class="line">		city[fa] =fb;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int cnum, rnum, count,x, y,i;</span><br><span class="line">	while (scanf(&quot;%d&quot;, &amp;cnum),cnum)</span><br><span class="line">	&#123;</span><br><span class="line">		for (i = 1; i &lt;=cnum; i++)</span><br><span class="line">			city[i] = i;  </span><br><span class="line">		for(scanf(&quot;%d&quot;,&amp;rnum);rnum&gt;0;rnum--)</span><br><span class="line">		&#123;</span><br><span class="line">			scanf(&quot;%d %d&quot;, &amp;x, &amp;y);</span><br><span class="line">			merge(x, y);</span><br><span class="line">		&#125;</span><br><span class="line">		for (i= 1,count=-1; i &lt;= cnum; i++)</span><br><span class="line">			if (city[i] == i)</span><br><span class="line">				count++;</span><br><span class="line">		printf(&quot;%d\n&quot;, count);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HDOJ/" rel="tag"><i class="fa fa-tag"></i> HDOJ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1297/" rel="next" title="HDOJ1297">
+                <i class="fa fa-chevron-left"></i> HDOJ1297
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1325/" rel="prev" title="HDOJ1325">
+                HDOJ1325 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +421,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

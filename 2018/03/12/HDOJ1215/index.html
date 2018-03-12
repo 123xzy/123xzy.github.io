@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="HDOJ," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Diary">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="description" content="HDOJ1215">
+<meta name="keywords" content="HDOJ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDOJ1215">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1215/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="Diary">
+<meta property="og:description" content="HDOJ1215">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:37:32.150Z">
+<meta property="og:updated_time" content="2018-03-12T08:22:11.781Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="Diary">
+<meta name="twitter:title" content="HDOJ1215">
+<meta name="twitter:description" content="HDOJ1215">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1215/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>HDOJ1215 | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +271,149 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1215/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<a href="/2018/03/11/Diary/" title="Diary">Diary</a>
-
+          <h1 class="post-title" itemprop="name headline">HDOJ1215</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:21:39+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1215" target="_blank" rel="noopener">HDOJ1215</a><br><a id="more"></a><br><strong>例题</strong>：输入一个数N，输出所有小于等于N的素数<br>基本思想：素数的倍数一定不是素数<br>实现方法：用一个长度为N+1的数组保存信息（0表示素数，1表示非素数），先假设所有的数都是素数（初始化为0），从第一个素数2开始，把2的倍数都标记为非素数（置为1），一直到大于N；然后进行下一趟，找到2后面的下一个素数3，进行同样的处理，直到最后，数组中依然为0的数即为素数。说明：整数1特殊处理即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n,j;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">			<span class="keyword">if</span> (a[i] == <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">for</span> (j = i + i; j &lt;= n; j += i)</span><br><span class="line">					a[j] = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"2"</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">3</span>; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">if</span> (a[i] == <span class="number">0</span>)<span class="built_in">cout</span> &lt;&lt;i;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>和例题相似的处理方式，先定义一个a[t]来保存t对应的所有因子之和<br>对于一个i，它一定是所有i的倍数的因子，因此将a[i<em>x]都加上i(i</em>x表示i的所有倍数)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 500005</span></span><br><span class="line"><span class="keyword">int</span> a[MAXN];</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">for</span>( i=<span class="number">1</span>;i&lt;=MAXN/<span class="number">2</span>;i++)</span><br><span class="line">		<span class="keyword">for</span> (j = i + i; j &lt;= MAXN; j+=i)</span><br><span class="line">			a[j]+=i;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">while</span> (n--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> t;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[t]&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HDOJ/" rel="tag"><i class="fa fa-tag"></i> HDOJ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1421/" rel="next" title="HDOJ1421">
+                <i class="fa fa-chevron-left"></i> HDOJ1421
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1297/" rel="prev" title="HDOJ1297">
+                HDOJ1297 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +422,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="UVa," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Diary">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="description" content="UVA455">
+<meta name="keywords" content="UVa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa455">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/UVa455/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="Diary">
+<meta property="og:description" content="UVA455">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:37:32.150Z">
+<meta property="og:updated_time" content="2018-03-12T08:33:55.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="Diary">
+<meta name="twitter:title" content="UVa455">
+<meta name="twitter:description" content="UVA455">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/UVa455/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>UVa455 | 阿谢的BLOG</title>
   
 
 
@@ -270,35 +271,148 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/UVa455/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<a href="/2018/03/11/Diary/" title="Diary">Diary</a>
-
+          <h1 class="post-title" itemprop="name headline">UVa455</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:33:31+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><a href="https://vjudge.net/problem/UVA-455" target="_blank" rel="noopener">UVA455</a><br><a id="more"></a></p>
+<p>（笨脑子很难抽象的去想问题，这道题也是，要多加练习）<br>我的思路：从第一个元素开始，在遇到相同元素，就暂且把这个元素的序列作为最小周期，在循环判断，是否是循环数列，如果不是就退出，并找出下一个符合的最小周期，直到最后都没有退出，则输出这个最小周期。<br>总结：我的思路总是一步一步进行，但我看到大佬的博客，说的就很简洁：枚举循环节（循环节要能被字符串长度整除），进行循环判断，找到第一组解就是最小解。</p>
+<p>先上大佬的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t; <span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">85</span>];</span><br><span class="line">	<span class="keyword">while</span> (t--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="keyword">sizeof</span>(s));</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%s"</span>, s);</span><br><span class="line">		<span class="keyword">int</span> len = <span class="built_in">strlen</span>(s);</span><br><span class="line">		<span class="keyword">int</span> j;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= len; ++i)</span><br><span class="line">			<span class="keyword">if</span> (len%i == <span class="number">0</span>) </span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (j = i; j &lt;= len; j++)</span><br><span class="line">					<span class="keyword">if</span> (s[j] != s[j%i])</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">				<span class="keyword">if</span> (j == len)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span> (t)<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再上我的代码，好吧，其实没有代码，虽然我的解释和大佬的解释看上去很不一样，但当我去一步步写自己的代码的时候，发现其实是差不多的。<br>现在的要提升的就是把自己对题目的理解转化成代码的能力！！！</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UVa/" rel="tag"><i class="fa fa-tag"></i> UVa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/UVa227/" rel="next" title="UVa227">
+                <i class="fa fa-chevron-left"></i> UVa227
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -307,6 +421,10 @@
 
 
           
+
+  
+
+
 
         </div>
         

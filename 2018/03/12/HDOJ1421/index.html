@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HDOJ1421">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDOJ1421">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1421/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="HDOJ1421">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://img.blog.csdn.net/20171114153939286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171114163949212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171114164037947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-03-12T08:20:05.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDOJ1421">
+<meta name="twitter:description" content="HDOJ1421">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171114153939286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1421/"/>
+
+
+
+
+
+  <title>HDOJ1421 | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-z-turn">
+          <a href="/Z-Turn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Z-Turn
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1421/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HDOJ1421</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:18:00+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1421" target="_blank" rel="noopener">HDOJ1421</a><br><a id="more"></a><br>又是动态规划的题目，dp方面问题对现阶段的自己还是一个坎，还是要<strong>多理解多刷题</strong>。</p>
+<p><img src="http://img.blog.csdn.net/20171114153939286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="数塔"><br>首先从简单的数塔入手，从第一行开始走，走到最后一行，怎么使经过的值之和最大？</p>
+<p>dp问题的<strong>核心</strong>：找到<strong>状态</strong>并建立<strong>状态转移方程</strong></p>
+<p>首先需要建立一个数塔模型，模型中的元素用<strong>a(i,j)(j&lt;=i)</strong>表示，如第三行第二个元素10用a(3,2)表示。并且我们规定从a(i,j)往下走所能得到的最大值为<strong>dp(i,j)</strong>。<br>我们以数塔中任意一个元素a(i,j)为一个状态，根据规则，该元素可以选择向左下方a(i+1,j)或者右下方a(i+1，j+1)移动(最后一行除外)，显然对于处于a(i,j)一定选择{dp(i+1,j),dp(i+1,j+1)}中较大的值，于是我们得到了dp(i,j)的计算公式：<strong>dp(i,j)=a(i,j)+max(dp(i+1,j),dp(i+1,j+1))</strong>，这就是我们所要找的状态转移方程。很容易就知道该问题的最终<strong>答案是dp(1,1)</strong>。</p>
+<p>接下来介绍三种方法来求解：<br><strong>1.递归求解</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int dp(int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">	if(i!=n)return a[i][j]+=max(dp(i+1,j),dp(i+1,j+1));</span><br><span class="line">	else return 0;</span><br><span class="line">	//n表示最后一行的行数，即为边界</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析该算法，会发现效率很低。例如对于上图dp(3,2),dp(4,2),dp(4,3)将会被重复计算，但是这部分的结果一样，却被重复计算，我们就要设法使这部分不被重复，很显然，要使他不重复，那就在第一次计算的时候把<strong>结果记录下来</strong>，下次遇到的时候直接使用，就避免了重复计算。</p>
+<p><strong>2.根据算法1的分析，我们得到了带记忆功能的算法</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int dp(int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">//第一行就是所说的记忆功能，如果dp&gt;=0,就表明它已经被计算过了，可以直接使用，</span><br><span class="line">//所以在函数之前要将dp的值全赋值成-1，表示dp都未被计算过memset(dp,-1,sizeof(dp))</span><br><span class="line">	if(dp(i,j)&gt;=0)return dp(i,j);</span><br><span class="line">	else return dp[i][j]=a[i][j]+max(dp(i+1,j),dp(i+1,j+1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20171114163949212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><img src="http://img.blog.csdn.net/20171114164037947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>从图中很直观的看出记忆功能的算法能直接利用计算过的结果。</p>
+<p><strong>3.递推算法</strong><br>    算法3改变了思路，<strong>前两种都是自顶向下计算，算法3则选择从下向上计算</strong>，而且规定一下是从左下角向顶角计算。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(int i=n;i&gt;=1;i--)</span><br><span class="line">	for(int j=1;j&lt;=i;j++)</span><br><span class="line">		dp[i][j]=a[i][j]+max(a[i-1][j],a[i-1][j+1]);</span><br><span class="line">//仔细分析甚至连dp数组都可以不用</span><br><span class="line">		a[i][j]+=max(a[i-1][j],a[i-1][j+1]);</span><br></pre></td></tr></table></figure></p>
+<p>下面给出数塔问题<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2084" target="_blank" rel="noopener">ACM2084</a>的<strong>完整代码</strong>，这里选择算法3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#define MAXN 105</span><br><span class="line">int a[MAXN][MAXN];</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int t;</span><br><span class="line">	cin &gt;&gt; t;</span><br><span class="line">	while (t--) &#123;</span><br><span class="line">		int n; cin &gt;&gt; n;</span><br><span class="line">		for (int i = 1; i &lt;= n; i++)</span><br><span class="line">			for (int j = 1; j &lt;= i; j++)</span><br><span class="line">				cin &gt;&gt; a[i][j];</span><br><span class="line">		for (int i = n - 1; i &gt;= 1; i--)</span><br><span class="line">			for (int j = 1; j &lt;= i; j++)</span><br><span class="line">				a[i][j] += max(a[i + 1][j], a[i + 1][j + 1]);</span><br><span class="line">		cout &lt;&lt; a[1][1] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来分析一下开头的<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1421" target="_blank" rel="noopener">ACM1421</a><br>首先必须承认渣渣的我这道题想了很久，也是借鉴了别人的思路。</p>
+<p>先申明用a[n]来存储输入的数据，<strong>用dp[i][j]表示从i个数中取j对时的最小值</strong>，例如dp[3][1]表示从3个数取1对的最小疲劳度(当然三个数的时候也只能取一对)</p>
+<p>我想从题意中应该很容易想到给数组a进行排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort(a,a+n);</span><br></pre></td></tr></table></figure>
+<p>我们先从简单的找找规律：<br>当只有两个数的时候，结果显然等于(a[2]-a[1])*(a[2]-a[1]),根据前面的定义我们把结果记作dp[2][1];<br>当有三个数，要么a[1]和a[2],要么a[2]和a[3]组合，我们取两个组合的最小值,因此：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[3][1]=min(dp[2][1],(a[3]-a[2])*(a[3]-a[2]));</span><br></pre></td></tr></table></figure>
+<p>我们接着在推一个当四个数的时候，此时我们可以选取一对或者两对,<br>此时选取一对可以分成两类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.不包括第四个数时，dp[4][1]=dp[3][1];</span><br><span class="line">2.包括第四个数时，dp[4][1]=(a[4]-a[3])*(a[4]-a[3]);</span><br></pre></td></tr></table></figure></p>
+<p>选取两对：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[4][2]=dp[2][1]+(a[4]-a[3])*(a[4]-a[3]);</span><br></pre></td></tr></table></figure>
+<p>不知道你们发现什么没(如果还没有,可以在推一两组找找规律）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j]=min(dp[i-1][j],dp[i-2][j-1]+(a[i]-a[i-1])*(a[i]-a[i-1]);</span><br><span class="line">//其实这就是我们要找的状态转移方程</span><br><span class="line">//假设要找i个元素中j对的最小值:要么从前i-1个元素中找j对；要么从前i-2个元素中找j-1对+a[i]-a[i-1])*(a[i]-a[i-1]；</span><br></pre></td></tr></table></figure>
+<p>既然找到了状态转移方程，我们就根据题意进行一些细节的处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#define MAXN 2050</span><br><span class="line">int dp[MAXN][MAXN];</span><br><span class="line">int a[MAXN];</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int n, k;</span><br><span class="line">	while (cin &gt;&gt; n &gt;&gt; k)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		for (int i = 1; i &lt;=n; i++)</span><br><span class="line">			cin &gt;&gt; a[i];</span><br><span class="line">		sort(a+1, a + n+1);</span><br><span class="line">		memset(dp, 0, sizeof(dp));</span><br><span class="line">		for (int i = 1; i &lt;= n; i++)</span><br><span class="line">			for (int j = 1; j &lt;= k; j++)</span><br><span class="line">				dp[i][j] = 268435456; </span><br><span class="line">		for (int i = 2; i &lt;= n; i++)</span><br><span class="line">			for (int j = 1; 2*j&lt;= i ; j++)</span><br><span class="line">				dp[i][j] = min(dp[i - 2][j - 1] + (a[i] - a[i - 1])*(a[i] - a[i - 1]), dp[i - 1][j]);</span><br><span class="line">		cout &lt;&lt; dp[n][k]&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1176/" rel="next" title="HDOJ1176">
+                <i class="fa fa-chevron-left"></i> HDOJ1176
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1215/" rel="prev" title="HDOJ1215">
+                HDOJ1215 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
