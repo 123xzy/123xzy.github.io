@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG">
-<meta property="og:updated_time" content="2018-03-12T02:53:01.772Z">
+<meta property="og:updated_time" content="2018-03-12T03:49:02.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿谢的BLOG Beta3.9版 发布说明">
 <meta name="twitter:description" content="折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。">
@@ -374,18 +374,22 @@
 <li>图片</li>
 </ul>
 <p><a href="#3">总结</a></p>
-<p><span id="1"><strong>一、安装</strong></span></p>
-<p>1.注册github：我想作为一个同性交友网站，<a href="https://github.com/" target="_blank" rel="noopener">github</a>是每个程序员都需要注册和使用的。</p>
-<p>2.安装Git: 学会使用Git就可以替代Windows下的命令行。</p>
+<h2 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a><span id="1">一、安装</span></h2><ul>
+<li><p>注册github：我想作为一个同性交友网站，<a href="https://github.com/" target="_blank" rel="noopener">github</a>是每个程序员都需要注册和使用的。</p>
+</li>
+<li><p>安装Git: 学会使用Git就可以替代Windows下的命令行。</p>
+</li>
+</ul>
 <p>划重点：接下来的两步都是 <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">文档|hexo</a> 上面都的，要学会看文档，不管是哪种类型。</p>
-<p>3.安装node.js</p>
-<p>4.安装hexo</p>
-<p><span id="2"><strong>二、使用入门</strong></span></p>
-<p>1.多标签:<strong>tags:[tag1,tag2,tag3]</strong></p>
-<p>2.导航栏：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;xxx&quot;  产生如下图所示的文件格式</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG" alt="BLOG首页截图"></p>
-<p>3.markdown简单语法</p>
 <ul>
+<li><p>安装node.js</p>
+</li>
+<li><p>安装hexo</p>
+</li>
+</ul>
+<h2 id="二、使用入门"><a href="#二、使用入门" class="headerlink" title="二、使用入门"></a><span id="2"><strong>二、使用入门</strong></span></h2><h3 id="多标签-tags-tag1-tag2-tag3"><a href="#多标签-tags-tag1-tag2-tag3" class="headerlink" title="多标签:tags:[tag1,tag2,tag3]"></a>多标签:<strong>tags:[tag1,tag2,tag3]</strong></h3><h3 id="导航栏："><a href="#导航栏：" class="headerlink" title="导航栏："></a>导航栏：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;xxx&quot;  产生如下图所示的文件格式</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG" alt="BLOG首页截图"></p>
+<h3 id="markdown简单语法"><a href="#markdown简单语法" class="headerlink" title="markdown简单语法"></a>markdown简单语法</h3><ul>
 <li><p>一级标题:#</p>
 </li>
 <li><p>摘要(文章折叠):&lt;!–more–&gt;之前的文字就会显示在文章首页，后面的文字就会被折叠。</p>
@@ -397,7 +401,10 @@
 </li>
 <li><p>转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\”</p>
 </li>
-<li><p>文章中链接样式:</p>
+<li><p>文章间跳转: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% post_link 文章文件名（不要后缀） 文章标题（可选） %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链接样式:</p>
 </li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//修改文件 themes\next\source\css\_common\components\post\post.styl ，</span><br><span class="line">//在末尾添加如下css样式，颜色可以自己定义。</span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    <span class="selector-tag">color</span>: <span class="selector-id">#fc6423</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: <span class="selector-tag">none</span>;</span><br><span class="line">    <span class="selector-tag">border-bottom</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -405,16 +412,13 @@
 <li>主页文章添加阴影效果:</li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 打开\themes\next\source\css\_custom\custom.styl,向里面加入:</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 203, .5);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>4.部署</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>5.图片</p>
-<p>首先在根目录下_config.yml中找到post_asset_folder，并将其值修改为true；</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>首先在根目录下_config.yml中找到post_asset_folder，并将其值修改为true；</p>
 <p>其次右键Git Bash Here输入：npm install hexo-asset-image –save</p>
 <p>然后输入hexo n “xxxx”,产生xxxx.md文件同时还会生成一个xxxx文件夹</p>
 <p>再将图片复制进xxxx文件夹,并在xxxx.md对应位置输入![t](xxxx/x.jpg)</p>
 <p>注意:xxxx为文件夹的名字,x为图片的名字，jpg也是分大小写的。</p>
-<p><span id="3"><strong>三、总结</strong></span></p>
-<p>其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。</p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a><span id="3"><strong>三、总结</strong></span></h2><p>其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。</p>
 <p>参考:<br><a href="https://segmentfault.com/a/1190000009544924" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009544924</a></p>
 
       
@@ -581,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文章目录："><span class="nav-number">1.</span> <span class="nav-text">文章目录：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文章目录："><span class="nav-number">1.</span> <span class="nav-text">文章目录：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、安装"><span class="nav-number">1.1.</span> <span class="nav-text">一、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、使用入门"><span class="nav-number">1.2.</span> <span class="nav-text">二、使用入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多标签-tags-tag1-tag2-tag3"><span class="nav-number">1.2.1.</span> <span class="nav-text">多标签:tags:[tag1,tag2,tag3]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航栏："><span class="nav-number">1.2.2.</span> <span class="nav-text">导航栏：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#markdown简单语法"><span class="nav-number">1.2.3.</span> <span class="nav-text">markdown简单语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.2.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片"><span class="nav-number">1.2.5.</span> <span class="nav-text">图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、总结"><span class="nav-number">1.3.</span> <span class="nav-text">三、总结</span></a></li></ol></li></ol></div>
             
 
           </div>
