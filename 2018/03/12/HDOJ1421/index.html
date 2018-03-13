@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171114153939286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171114163949212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171114164037947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-03-12T08:43:40.348Z">
+<meta property="og:updated_time" content="2018-03-13T05:29:23.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDOJ1421">
 <meta name="twitter:description" content="HDOJ1421">
@@ -354,7 +354,8 @@
       
 
       
-        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1421" target="_blank" rel="noopener">HDOJ1421</a><br><a id="more"></a><br>又是动态规划的题目，dp方面问题对现阶段的自己还是一个坎，还是要<strong>多理解多刷题</strong>。</p>
+        <h1 id="HDOJ1421"><a href="#HDOJ1421" class="headerlink" title="HDOJ1421"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1421" target="_blank" rel="noopener">HDOJ1421</a></h1><a id="more"></a>
+<p>又是动态规划的题目，dp方面问题对现阶段的自己还是一个坎，还是要<strong>多理解多刷题</strong>。</p>
 <p><img src="http://img.blog.csdn.net/20171114153939286?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="数塔"><br>首先从简单的数塔入手，从第一行开始走，走到最后一行，怎么使经过的值之和最大？</p>
 <p>dp问题的<strong>核心</strong>：找到<strong>状态</strong>并建立<strong>状态转移方程</strong></p>
 <p>首先需要建立一个数塔模型，模型中的元素用<strong>a(i,j)(j&lt;=i)</strong>表示，如第三行第二个元素10用a(3,2)表示。并且我们规定从a(i,j)往下走所能得到的最大值为<strong>dp(i,j)</strong>。<br>我们以数塔中任意一个元素a(i,j)为一个状态，根据规则，该元素可以选择向左下方a(i+1,j)或者右下方a(i+1，j+1)移动(最后一行除外)，显然对于处于a(i,j)一定选择{dp(i+1,j),dp(i+1,j+1)}中较大的值，于是我们得到了dp(i,j)的计算公式：<strong>dp(i,j)=a(i,j)+max(dp(i+1,j),dp(i+1,j+1))</strong>，这就是我们所要找的状态转移方程。很容易就知道该问题的最终<strong>答案是dp(1,1)</strong>。</p>
@@ -475,8 +476,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -527,6 +537,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ1421"><span class="nav-number">1.</span> <span class="nav-text">HDOJ1421</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

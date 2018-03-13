@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="HDOJ1233">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T04:20:58.738Z">
+<meta property="og:updated_time" content="2018-03-13T05:29:40.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDOJ1233">
 <meta name="twitter:description" content="HDOJ1233">
@@ -350,8 +350,7 @@
       
 
       
-        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1233" target="_blank" rel="noopener">HDOJ1233</a></p>
-<a id="more"></a>
+        <h1 id="HDOJ1233"><a href="#HDOJ1233" class="headerlink" title="HDOJ1233"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1233" target="_blank" rel="noopener">HDOJ1233</a></h1><a id="more"></a>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> M 10005 </span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span>       <span class="comment">//定义边的结构体，包含边的起始城市，结束城市，路的距离</span></span><br><span class="line">	<span class="keyword">int</span> start;</span><br><span class="line">	<span class="keyword">int</span> end;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">&#125;edge[<span class="number">10005</span>];</span><br><span class="line"><span class="keyword">int</span> disjoint[M];    </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp=x;</span><br><span class="line">	<span class="keyword">while</span>(disjoint[temp]!= temp)    <span class="comment">//一直找到根节点</span></span><br><span class="line">		temp =disjoint[temp];   </span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fa, fb;</span><br><span class="line">	fa = find(a);</span><br><span class="line">	fb = find(b);</span><br><span class="line">	<span class="keyword">if</span> (fa != fb)</span><br><span class="line">	&#123;</span><br><span class="line">		disjoint[fa] = fb; <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(node n,node m)</span>      <span class="comment">//间接排序</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> n.dis &lt; m.dis;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,i,j;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n)&amp;&amp;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> count = n*(n - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= count; i++)</span><br><span class="line">			disjoint[i] = i;   <span class="comment">//初始化并查集</span></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= count; i++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;edge[i].start, &amp;edge[i].end, &amp;edge[i].dis);</span><br><span class="line">		sort(edge+<span class="number">1</span>, edge + count+<span class="number">1</span>, cmp);           <span class="comment">//将边长按从小到大排序</span></span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>,num=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">1</span>; j &lt;=count&amp;&amp;num&lt;n; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (merge(edge[j].start,edge[j].end))</span><br><span class="line">			&#123;</span><br><span class="line">				sum += edge[j].dis; </span><br><span class="line">				num++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; sum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -446,8 +445,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,6 +506,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ1233"><span class="nav-number">1.</span> <span class="nav-text">HDOJ1233</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

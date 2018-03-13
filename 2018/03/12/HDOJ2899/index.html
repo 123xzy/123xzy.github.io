@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="HDOJ2899">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T04:21:11.339Z">
+<meta property="og:updated_time" content="2018-03-13T05:29:16.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDOJ2899">
 <meta name="twitter:description" content="HDOJ2899">
@@ -350,8 +350,7 @@
       
 
       
-        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2899" target="_blank" rel="noopener">HDOJ2899</a></p>
-<a id="more"></a>
+        <h1 id="HDOJ2899"><a href="#HDOJ2899" class="headerlink" title="HDOJ2899"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2899" target="_blank" rel="noopener">HDOJ2899</a></h1><a id="more"></a>
 <p>一道很水的题目，硬是被我做成有毒的题目<br>先讲二分法<br>这种多次函数照理来说是不能用二分法的（因为一般来说函数不是单调的），但是这个函数的导函数在给定（0，100）区间是单调的，所以就可以以利用二分法去找导数等于零的点，也就是要找的极小值点<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> flag 1e-6</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">val</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">6</span> * <span class="built_in">pow</span>(x, <span class="number">7</span>) + <span class="number">8</span> * <span class="built_in">pow</span>(x, <span class="number">6</span>) + <span class="number">7</span> * <span class="built_in">pow</span>(x, <span class="number">3</span>) + <span class="number">5</span> * <span class="built_in">pow</span>(x, <span class="number">2</span>) - x*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">der</span><span class="params">(<span class="keyword">double</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">42</span> * <span class="built_in">pow</span>(x, <span class="number">6</span>) + <span class="number">48</span> * <span class="built_in">pow</span>(x, <span class="number">5</span>) + <span class="number">21</span> * <span class="built_in">pow</span>(x, <span class="number">2</span>) + <span class="number">10</span> * x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t; <span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span> (t--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">double</span>  y; <span class="built_in">cin</span> &gt;&gt; y;</span><br><span class="line">		<span class="keyword">double</span> x_mid=<span class="number">50.0</span>, x_min = <span class="number">0.0</span>, x_max = <span class="number">100.0</span>;</span><br><span class="line">		<span class="keyword">while</span> (<span class="built_in">abs</span>(der(x_mid) - y) &gt; flag)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (der(x_mid) &gt; y) &#123; x_max = x_mid; x_mid = (x_max + x_min) / <span class="number">2</span>; &#125;</span><br><span class="line">			<span class="keyword">else</span> &#123; x_min = x_mid; x_mid = (x_min + x_max) / <span class="number">2</span>; &#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.4lf\n"</span>, val(x_mid, y));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这个三分法是真的有毒，我在网上找到的三分查找都是先分成两半，再分，也就是四分了吧，所以害我WA了两遍，有大佬和我讲解一下为什么嘛<br>先把三分法的原理过一遍：首先需要明确三分法的使用条件，在给定区间内要具有<strong>相同的凹凸性</strong>（我们在后面举例说明如果不具备凹凸性三分法就不成立）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> flag 1e-6</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Fx</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">6</span> * <span class="built_in">pow</span>(x, <span class="number">7</span>) + <span class="number">8</span> * <span class="built_in">pow</span>(x, <span class="number">6</span>) + <span class="number">7</span> * <span class="built_in">pow</span>(x, <span class="number">3</span>) + <span class="number">5</span> * <span class="built_in">pow</span>(x, <span class="number">2</span>) - x*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t; <span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span> (t--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">double</span>  y; <span class="built_in">cin</span> &gt;&gt; y;</span><br><span class="line">		<span class="keyword">double</span> x_mid1 , x_min =<span class="number">0</span>, x_max = <span class="number">100</span>, x_mid2;</span><br><span class="line">		<span class="keyword">while</span> ((x_max-x_min)&gt;flag)</span><br><span class="line">		&#123;</span><br><span class="line">			x_mid1 = (x_max +<span class="number">2</span>*x_min) / <span class="number">3</span>;</span><br><span class="line">			x_mid2 = (<span class="number">2</span>*x_max +x_min) / <span class="number">3</span>;</span><br><span class="line">			<span class="keyword">if</span> (Fx(x_mid1, y) &lt; Fx(x_mid2, y)) </span><br><span class="line">				x_max = x_mid2;  </span><br><span class="line">			<span class="keyword">else</span> x_min=x_mid1  ; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.4lf\n"</span>, Fx(x_max,y));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -448,8 +447,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -500,6 +508,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ2899"><span class="nav-number">1.</span> <span class="nav-text">HDOJ2899</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

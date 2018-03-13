@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="HDOJ1297">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-12T08:24:42.244Z">
+<meta property="og:updated_time" content="2018-03-13T05:29:34.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDOJ1297">
 <meta name="twitter:description" content="HDOJ1297">
@@ -350,7 +350,7 @@
       
 
       
-        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1297%20%E9%A2%98%E7%9B%AE%E8%BF%9E%E6%8E%A" target="_blank" rel="noopener">HDOJ1297</a><br><a id="more"></a></p>
+        <h1 id="HDOJ1297"><a href="#HDOJ1297" class="headerlink" title="HDOJ1297"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1297%20%E9%A2%98%E7%9B%AE%E8%BF%9E%E6%8E%A" target="_blank" rel="noopener">HDOJ1297</a></h1><a id="more"></a>
 <p>第一次做这道题的时候，以为就是一个简单的递推题，但还是<strong>too native</strong>，结果自然是WA，后来测试发现题目给的范围是1~1000,但是取100数据就会溢出（即便使用的是long long），因此需要使用<strong>大数计算</strong>。</p>
 <p>先简单的分析这题的<strong>递推公式</strong>：用f（n）表示排队种类，假定已知f（n-1）<br><strong>第n个是男生</strong>，则有f（n-1）种可能<br><strong>第n个是女生</strong>，首先需要明确要使f（n）要合法，那么第n-1个必须为女生，接着需要分类讨论，如果前n-2个学生排列合法，则有f（n-2）种可能，如果前n-2个学生不合法，即第n-2是女生，第n-3是男生，此时再加上两个女生，队列就变成合法，因此这种情况有f（n-4）种可能<br>该题递推公式为<strong>f（n）=f（n-1）+f（n-2）+f（n-4）</strong></p>
 <p>接着需要解决<strong>大数计算</strong>的问题，接下来再引入<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1002" target="_blank" rel="noopener">ACM1002</a><br>大数计算基本思路：利用字符数组来保存每一位上的数字，并<strong>模拟手算</strong></p>
@@ -456,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +517,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ1297"><span class="nav-number">1.</span> <span class="nav-text">HDOJ1297</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -88,7 +88,7 @@
 <meta property="og:description" content="HDOJ1010">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://img.blog.csdn.net/20171226212200573?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-03-12T03:12:40.616Z">
+<meta property="og:updated_time" content="2018-03-13T05:30:10.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDOJ1010">
 <meta name="twitter:description" content="HDOJ1010">
@@ -352,8 +352,7 @@
       
 
       
-        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1010" target="_blank" rel="noopener">HDOJ1010</a></p>
-<a id="more"></a>
+        <h1 id="HDOJ1010"><a href="#HDOJ1010" class="headerlink" title="HDOJ1010"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1010" target="_blank" rel="noopener">HDOJ1010</a></h1><a id="more"></a>
 <p>这是最初的代码，没有经过剪枝，自然TLE，DFS很大的一个特点就是要搜遍全图，很耗时间，如果你按F10去一步步调试，将会按到天昏地暗（我就是这么做的），它会把每个能到达的节点都做一遍DFS，不过没关系，先理解最初始的代码，理解了再去剪枝<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> si, sj,ei, ej,n,m,flag,t;</span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">8</span>][<span class="number">8</span>];</span><br><span class="line"><span class="keyword">int</span> dir[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">-1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">-1</span>&#125; &#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> cost_time)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (a &gt; n || a&lt;<span class="number">1</span> || b&gt;m || b &lt; <span class="number">1</span>)<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span> (cost_time == t&amp;&amp;ei == a&amp;&amp;ej == b)flag = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (flag)<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">map</span>[a + dir[i][<span class="number">0</span>]][b + dir[i][<span class="number">1</span>]] !=<span class="string">'X'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">map</span>[a + dir[i][<span class="number">0</span>]][b + dir[i][<span class="number">1</span>]] = <span class="string">'X'</span>;</span><br><span class="line">			dfs(a + dir[i][<span class="number">0</span>], b + dir[i][<span class="number">1</span>],cost_time+<span class="number">1</span>);</span><br><span class="line">			<span class="built_in">map</span>[a + dir[i][<span class="number">0</span>]][b + dir[i][<span class="number">1</span>]] = <span class="string">'.'</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m&gt;&gt;t&amp;&amp;n&amp;&amp;m&amp;&amp;t)</span><br><span class="line">	&#123; </span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; <span class="built_in">map</span>[i][j];</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">map</span>[i][j] == <span class="string">'S'</span>) &#123; si = i; sj = j; &#125;</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">map</span>[i][j] == <span class="string">'D'</span>) &#123; ei = i; ej = j; &#125;</span><br><span class="line">			&#125;</span><br><span class="line">		flag = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">map</span>[si][sj] = <span class="string">'X'</span>;</span><br><span class="line">		dfs(si, sj, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span> (flag)<span class="built_in">cout</span> &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>接下来我们考虑怎么去剪枝，即不能剪多了，也要尽量多剪</p>
 <p>最重要的一个剪枝，<strong>奇偶性剪枝：</strong></p>
@@ -458,8 +457,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -510,6 +518,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ1010"><span class="nav-number">1.</span> <span class="nav-text">HDOJ1010</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
