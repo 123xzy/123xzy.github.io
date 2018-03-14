@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="HDOJ," />
+  <meta name="keywords" content="UVa," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="HDOJ1215">
-<meta name="keywords" content="HDOJ">
+<meta name="description" content="UVa679">
+<meta name="keywords" content="UVa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HDOJ1215">
-<meta property="og:url" content="http://yoursite.com/2018/03/12/HDOJ1215/index.html">
+<meta property="og:title" content="UVa679">
+<meta property="og:url" content="http://yoursite.com/2018/03/14/UVa679/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="HDOJ1215">
+<meta property="og:description" content="UVa679">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-13T05:29:56.387Z">
+<meta property="og:updated_time" content="2018-03-14T09:07:43.478Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDOJ1215">
-<meta name="twitter:description" content="HDOJ1215">
+<meta name="twitter:title" content="UVa679">
+<meta name="twitter:description" content="UVa679">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/12/HDOJ1215/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/14/UVa679/"/>
 
 
 
 
 
-  <title>HDOJ1215 | 阿谢的BLOG</title>
+  <title>UVa679 | 阿谢的BLOG</title>
   
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/HDOJ1215/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/UVa679/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HDOJ1215</h1>
+          <h1 class="post-title" itemprop="name headline">UVa679</h1>
         
 
         <div class="post-meta">
@@ -312,8 +312,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:21:39+08:00">
-                2018-03-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-14T16:55:48+08:00">
+                2018-03-14
               </time>
             
 
@@ -350,9 +350,9 @@
       
 
       
-        <h1 id="HDOJ1215"><a href="#HDOJ1215" class="headerlink" title="HDOJ1215"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1215" target="_blank" rel="noopener">HDOJ1215</a></h1><a id="more"></a>
-<p><strong>例题</strong>：输入一个数N，输出所有小于等于N的素数<br>基本思想：素数的倍数一定不是素数<br>实现方法：用一个长度为N+1的数组保存信息（0表示素数，1表示非素数），先假设所有的数都是素数（初始化为0），从第一个素数2开始，把2的倍数都标记为非素数（置为1），一直到大于N；然后进行下一趟，找到2后面的下一个素数3，进行同样的处理，直到最后，数组中依然为0的数即为素数。说明：整数1特殊处理即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n,j;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">			<span class="keyword">if</span> (a[i] == <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">for</span> (j = i + i; j &lt;= n; j += i)</span><br><span class="line">					a[j] = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"2"</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">3</span>; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">if</span> (a[i] == <span class="number">0</span>)<span class="built_in">cout</span> &lt;&lt;i;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>和例题相似的处理方式，先定义一个a[t]来保存t对应的所有因子之和<br>对于一个i，它一定是所有i的倍数的因子，因此将a[i<em>x]都加上i(i</em>x表示i的所有倍数)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 500005</span></span><br><span class="line"><span class="keyword">int</span> a[MAXN];</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">for</span>( i=<span class="number">1</span>;i&lt;=MAXN/<span class="number">2</span>;i++)</span><br><span class="line">		<span class="keyword">for</span> (j = i + i; j &lt;= MAXN; j+=i)</span><br><span class="line">			a[j]+=i;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">while</span> (n--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> t;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[t]&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h1 id="UVa679"><a href="#UVa679" class="headerlink" title="UVa679"></a><a href="https://vjudge.net/problem/UVA-679" target="_blank" rel="noopener">UVa679</a></h1><a id="more"></a>
+<p>超时<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 20</span></span><br><span class="line"><span class="keyword">int</span> s[<span class="number">1</span>&lt;&lt;MAXN];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> d, I,n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">while</span> (n--) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; d;</span><br><span class="line">		<span class="keyword">if</span> (d == <span class="number">-1</span>)<span class="keyword">break</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; I;</span><br><span class="line">		<span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="keyword">sizeof</span>(s));</span><br><span class="line">		<span class="keyword">int</span> k;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			k = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span> (;;)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> flag = s[k];</span><br><span class="line">				s[k] = !s[k];</span><br><span class="line">				<span class="keyword">if</span> (flag)k = k * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">else</span> k = k * <span class="number">2</span>;;</span><br><span class="line">				<span class="keyword">if</span> (k &gt; ((<span class="number">1</span> &lt;&lt; d) - <span class="number">1</span>))<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; k / <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> d, I,n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">while</span> (n--) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; d;</span><br><span class="line">		<span class="keyword">if</span> (d == <span class="number">-1</span>)<span class="keyword">break</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; I;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> k = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; d<span class="number">-1</span>; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (I % <span class="number">2</span>) &#123; k = k * <span class="number">2</span> ; I = (I + <span class="number">1</span>) / <span class="number">2</span>; &#125;<span class="comment">//向左走</span></span><br><span class="line">			<span class="keyword">else</span> &#123; k = k * <span class="number">2</span>+<span class="number">1</span>; I = I / <span class="number">2</span>; &#125;<span class="comment">//向右走</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; k &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -370,7 +370,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HDOJ/" rel="tag"><i class="fa fa-tag"></i> HDOJ</a>
+            <a href="/tags/UVa/" rel="tag"><i class="fa fa-tag"></i> UVa</a>
           
         </div>
       
@@ -383,8 +383,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/12/HDOJ1421/" rel="next" title="HDOJ1421">
-                <i class="fa fa-chevron-left"></i> HDOJ1421
+              <a href="/2018/03/12/UVa12657/" rel="next" title="UVa12657（附对拍教程）">
+                <i class="fa fa-chevron-left"></i> UVa12657（附对拍教程）
               </a>
             
           </div>
@@ -392,10 +392,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/12/HDOJ1297/" rel="prev" title="HDOJ1297">
-                HDOJ1297 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -518,7 +514,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDOJ1215"><span class="nav-number">1.</span> <span class="nav-text">HDOJ1215</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UVa679"><span class="nav-number">1.</span> <span class="nav-text">UVa679</span></a></li></ol></div>
             
 
           </div>
