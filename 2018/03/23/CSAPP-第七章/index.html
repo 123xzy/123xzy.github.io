@@ -88,7 +88,8 @@
 <meta property="og:description" content="链接：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/23/CSAPP-第七章/1.jpg">
-<meta property="og:updated_time" content="2018-03-23T14:04:56.465Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/23/CSAPP-第七章/2.jpg">
+<meta property="og:updated_time" content="2018-03-24T03:37:06.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP-第七章">
 <meta name="twitter:description" content="链接：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行">
@@ -363,7 +364,33 @@
 <li>运行链接器程序ld，将main.o和sum.o以及必要的系统目标文件组合，生成一个可执行目标文件prog</li>
 <li>输入“linux&gt; ./prog”，系统将调用加载器，将prog中的代码和数据复制到内存，并将控制移至程序开头<br><img src="/2018/03/23/CSAPP-第七章/1.jpg" alt=""></li>
 </ul>
-<h1 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h1>
+<h1 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h1><p>通过静态链接器以一组可重定位目标文件和命令行参数作为输入，生成完全链接、可加载和运行的可执行目标文件作为输出。<br>要完成以上任务，链接器需完成以下步骤：</p>
+<ul>
+<li>符号解析：将每个符号引用和符号定义关联起来</li>
+<li>重定位：把每个符号定义和一个内存位置关联起来，然后修改所有符号引用，使它们指向这个内存位置</li>
+</ul>
+<h1 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h1><p>纯粹就是字节块的集合，这些块中，有些包含程序代码，有些包含数据，其他则包含引导链接器和加载器的数据结构。链接器将这些块重新组合，确定它们的运行位置。</p>
+<ul>
+<li>可重定位目标文件：包含二进制代码和数据</li>
+<li>可执行目标文件：可直接被复制进内存并运行</li>
+<li>共享目标文件：特殊的可重定位目标文件，可以在加载和运行时被动态地加载进内存并链接</li>
+</ul>
+<p>下图是一个典型的可执行可链接格式（ELF）可重定位目标文件格式<br><img src="/2018/03/23/CSAPP-第七章/2.jpg" alt=""></p>
+<ul>
+<li>ELF头：以一个16字节的序列开始，描述了生成该文件的系统的字的大小和字节顺序。其次还包括ELF头的大小、目标文件的类型、机器类型（x86-64）、节头部表的文件偏移、节头部表中的条目大小和数量</li>
+<li>节头部表：描述不同节的位置和大小</li>
+<li>.text：以编译程序的机器代码</li>
+<li>.rodata：只读数据</li>
+<li>.data：已初始化的全局和静态C变量</li>
+<li>.bss：未初始化的全局和静态变量，以及初始化为0的全局或静态变量。这个节不占据实际空间，仅仅是占位符，所以在运行时，这些变量被初始化为0</li>
+<li>.symtab：符号表，包含在定义和引用的函数和全局变量的信息。但是不包含局部变量的条目</li>
+<li>.rel.text：通常省略</li>
+<li>.rel.data：被引用的或定义的所有全局变量的重定位信息</li>
+<li>.debug：调试符号表，只有以-g调用编译器驱动程序时才会得到这种表，其条目是局部变量和类型定义，程序中定义和引用的全局变量，以及原始的c源文件</li>
+<li>.line：原始c源程序和.text节中机器指令之间的映射，同样要以-g调用时才能得到</li>
+<li>.strlab：字符串表，包括.symlab和.debug节中的符号表，以及节头部中的节名字</li>
+</ul>
+
       
     </div>
     
@@ -524,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#链接的好处"><span class="nav-number">1.</span> <span class="nav-text">链接的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器驱动程序"><span class="nav-number">2.</span> <span class="nav-text">编译器驱动程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态链接"><span class="nav-number">3.</span> <span class="nav-text">静态链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#链接的好处"><span class="nav-number">1.</span> <span class="nav-text">链接的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器驱动程序"><span class="nav-number">2.</span> <span class="nav-text">编译器驱动程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态链接"><span class="nav-number">3.</span> <span class="nav-text">静态链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标文件"><span class="nav-number">4.</span> <span class="nav-text">目标文件</span></a></li></ol></div>
             
 
           </div>
