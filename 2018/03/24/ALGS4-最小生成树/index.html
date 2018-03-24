@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="ALGS," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿谢的BLOG">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta name="description" content="Prim算法和Kruskal算法">
+<meta name="keywords" content="ALGS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ALGS4-最小生成树">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/ALGS4-最小生成树/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="Prim算法和Kruskal算法">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-24T03:53:03.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿谢的BLOG">
+<meta name="twitter:title" content="ALGS4-最小生成树">
+<meta name="twitter:description" content="Prim算法和Kruskal算法">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/4/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/24/ALGS4-最小生成树/"/>
 
 
 
 
 
-  <title>阿谢的BLOG</title>
+  <title>ALGS4-最小生成树 | 阿谢的BLOG</title>
   
 
 
@@ -140,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,9 +258,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -269,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/Diary/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/ALGS4-最小生成树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -286,9 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/Diary/" itemprop="url">Diary</a></h1>
+          <h1 class="post-title" itemprop="name headline">ALGS4-最小生成树</h1>
         
 
         <div class="post-meta">
@@ -300,8 +302,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T21:21:54+08:00">
-                2018-03-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-24T11:41:02+08:00">
+                2018-03-24
               </time>
             
 
@@ -338,16 +340,14 @@
       
 
       
-        
-          <p><img src="/2018/03/11/Diary/3.jpg" alt=""><br></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/11/Diary/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>Prim算法和Kruskal算法<br><a id="more"></a><br>在初学一个算法时，我们会考虑最简单的情况，排除一些特殊情况，虽然现实情况下，这些特殊情况经常出现，但我们依旧从理解算法出发，做以下约定：</p>
+<ul>
+<li>只考虑连通图，对于非连通的图，可以计算它各自连通的最小生成树，合并成最小生成森林</li>
+<li>边的权重可以有不同的含义，例如距离、花费、时间等</li>
+<li>边的权重可能是0或者负数</li>
+<li>所有边的权重都各不相同，如果有相同权重的边，就可能出现多棵最小生成树</li>
+</ul>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1>
       
     </div>
     
@@ -362,139 +362,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="123xie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿谢的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/" itemprop="url">阿谢的BLOG Beta3.9版 发布说明</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-10T21:40:17+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/ALGS/" rel="tag"><i class="fa fa-tag"></i> ALGS</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p><img src="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG" alt="BLOG首页截图"></p>
-<p>折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/#more" rel="contents">
-              Read more &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/23/CSAPP-第七章/" rel="next" title="CSAPP-第七章">
+                <i class="fa fa-chevron-left"></i> CSAPP-第七章
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -504,14 +401,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -519,6 +413,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -539,8 +437,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -591,6 +498,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -731,6 +654,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
