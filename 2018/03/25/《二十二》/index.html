@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="CSAPP,Linux,GCC," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="keywords" content="CSAPP,Linux,GCC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux GCC">
-<meta property="og:url" content="http://yoursite.com/2018/03/11/Linux-GCC/index.html">
+<meta property="og:title" content="《二十二》">
+<meta property="og:url" content="http://yoursite.com/2018/03/25/《二十二》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
-<meta property="og:updated_time" content="2018-03-12T04:02:41.367Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/25/《二十二》/1.jpg">
+<meta property="og:updated_time" content="2018-03-25T08:44:31.104Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux GCC">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/11/Linux-GCC/5.jpg">
+<meta name="twitter:title" content="《二十二》">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/25/《二十二》/1.jpg">
 
 
 
@@ -119,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/11/Linux-GCC/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/25/《二十二》/"/>
 
 
 
 
 
-  <title>Linux GCC | 阿谢的BLOG</title>
+  <title>《二十二》 | 阿谢的BLOG</title>
   
 
 
@@ -272,7 +271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/Linux-GCC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/25/《二十二》/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -289,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux GCC</h1>
+          <h1 class="post-title" itemprop="name headline">《二十二》</h1>
         
 
         <div class="post-meta">
@@ -301,8 +300,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T22:13:44+08:00">
-                2018-03-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T16:19:09+08:00">
+                2018-03-25
               </time>
             
 
@@ -339,26 +338,9 @@
       
 
       
-        <p><img src="/2018/03/11/Linux-GCC/5.jpg" alt=""><br><a id="more"></a></p>
-<p>这个星期作死的想要在linux下写c代码，结果花了大半天，不过还是很有收获的，至少以后可以在linux下写代码了，还有CSAPP上的案例也就可以动手操作了，哈哈哈</p>
-<p>之前都是在CSAPP上看的<strong>汇编代码</strong>，今天终于看到了“真人”了。</p>
-<p>还是总结一下这次烦人的操作</p>
-<p>因为看书的时候，经常会看到gdb调试，就一直都想实验一下，但是windows安装实在烦人</p>
-<p>首先是安装虚拟机，这步倒是很顺利；安装linux也是按照教程一步步就完成了，安装的是centos7</p>
-<p>gcc，gdb的安装也是瞎操作一番就成功了，但是就是这个编译运行花了很长时间，</p>
-<p>我写了一个文件hello.c保存在了home下的Documents，结果导致我运行gcc hello.c -o hello,一直提示No such file or directory，去百度的时候也是搜到一堆没用的东西，知道我想起来home，我尝试的将hello.c放到了home中，结果就成功了，就是手贱，要把它保存到Documents</p>
-<p>放了成果，开心一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//hello.c文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello world&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//命令行操作</span><br><span class="line">[xzy@localhost ~]$ gcc hello.c -o hello //编译</span><br><span class="line">[xzy@localhost ~]$ gcc -S hello.c//汇编文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//汇编文件</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;hello world&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	movl	$.LC0, %edi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	printf</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	popq	%rbp</span><br><span class="line">	.cfi_def_cfa 7, 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
-<p>因为已经看了一些CSAPP，这几行汇编还是可以看懂的，xixi</p>
-<p><strong>编译部分代码：</strong>有时候指向编译部分代码，不带main</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -S text.c</span><br></pre></td></tr></table></figure>
-<p>反汇编</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d a.out</span><br></pre></td></tr></table></figure>
-<p>安装beautifulsoup4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E:\Python\Scripts&gt;pip install beautifulsoup4</span><br><span class="line">Collecting beautifulsoup4</span><br><span class="line">  Downloading beautifulsoup4-4.6.0-py3-none-any.whl (86kB)</span><br><span class="line">    100% |████████████████████████████████| 92kB 43kB/s</span><br><span class="line">Installing collected packages: beautifulsoup4</span><br><span class="line">Successfully installed beautifulsoup4-4.6.0</span><br></pre></td></tr></table></figure></p>
-<p>接下来就是要学习gdb的操作，熟悉linux</p>
+        <p><img src="/2018/03/25/《二十二》/1.jpg" alt=""><br><a id="more"></a></p>
 <hr>
+<p>很平静的看完这部影片，直到我盯着影片结尾众筹名单时，感情一下子就上来了。<br>影片里的一幕幕，都似曾相识。有的是它的景色像极了自己的家乡，有的是它的那些老人们像极了自己的外公外婆爷爷奶奶。<br>他们和自己的爷爷奶奶外公外婆一样很普通，那是因为他们将那几年甚至只是几个月所遭受的磨难，深深的埋在心里。可是就算再多的泥土都无法填满这个伤口。<br>他们也很不普通，因为他们受尽了侮辱，因为他们是曾经无恶不作的日本人的后代。<br>如果不是我们还记得，如果不是历史还记得，有谁能从他们身上看出对他们来说日日夜夜都不可能忘记的经历。<br>影片最后，镜头望着那个坟头，从冬天走向春天，这些老人一个个离去，带走了属于他们的记忆，可在坟头之上的我们，不能让那份历史被一起带走。<br>不奢望得到现在的日本政府的道歉，毕竟现在的日本政府不是当年的日本政府，但希望peace and love，也希望这段历史能一直提醒着人们战争的残酷。</p>
 
       
     </div>
@@ -374,16 +356,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
-          
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-          
-            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
-          
-        </div>
-      
 
       
       
@@ -393,8 +365,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/11/《深入理解计算机系统》bomb-lab/" rel="next" title="《深入理解计算机系统》bomb_lab">
-                <i class="fa fa-chevron-left"></i> 《深入理解计算机系统》bomb_lab
+              <a href="/2018/03/25/CSAPP-第三章/" rel="next" title="CSAPP-第三章">
+                <i class="fa fa-chevron-left"></i> CSAPP-第三章
               </a>
             
           </div>
@@ -402,10 +374,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/12/HDOJ1010/" rel="prev" title="HDOJ1010">
-                HDOJ1010 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
