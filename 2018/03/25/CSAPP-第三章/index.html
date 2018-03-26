@@ -89,7 +89,9 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/2.jpg">
-<meta property="og:updated_time" content="2018-03-25T06:42:01.697Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/4.jpg">
+<meta property="og:updated_time" content="2018-03-26T09:09:50.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP-第三章">
 <meta name="twitter:description" content="梗概：汇编代码是机器代码的文本表示，对于严谨的程序员来说，能够阅读和理解汇编代码是一项很重要的技能">
@@ -387,7 +389,14 @@
 <li>多了最后一行代码，虽然和书中实例不同，但应该是出于存储器系统性能考虑，使函数代码变为16字节</li>
 </ul>
 <h1 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a><span id="2">数据格式</span></h1><p><img src="/2018/03/25/CSAPP-第三章/1.jpg" alt="">用字（word）表示16位数据类型，32位数为双字，64位为四字。汇编代码指令都有一个字符的后缀，表明操作数的大小。如movb（传送字节），movw（传送字），movl（传送双字），movq（传送四字）</p>
-<h1 id="访问信息"><a href="#访问信息" class="headerlink" title="访问信息"></a><span id="3">访问信息</span></h1><p>一个CPU包含一组16个存储64位值的通用目的寄存器，用来存储整数数据和指针。<img src="/2018/03/25/CSAPP-第三章/2.jpg" alt="">图中不同颜色翻译了寄存器的发展历程，从最初的16位只有8个寄存器，到32位，再扩展到64位</p>
+<h1 id="访问信息"><a href="#访问信息" class="headerlink" title="访问信息"></a><span id="3">访问信息</span></h1><p>一个CPU包含一组16个存储64位值的通用目的寄存器，用来存储整数数据和指针。<img src="/2018/03/25/CSAPP-第三章/2.jpg" alt="">图中不同颜色的方框标明，指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作，字节级操作可以访问最低的字节，16位操作可以访问最低的2个字节，32位操作可以访问最低的4个字节，64位则可以访问整个寄存器。<br>所有寄存器中最特别的是栈指针%rsp，用来标明运行时栈的结束位置</p>
+<h2 id="操作数"><a href="#操作数" class="headerlink" title="操作数"></a>操作数</h2><p>一个指令往往有多于一个的操作数，操作数可分为三种类型</p>
+<ul>
+<li>立即数：用来表示常数值，如$-577或者$Ox1F</li>
+<li>寄存器：R[r]表示寄存器的值</li>
+<li>内存引用：根据计算出来的地址访问某个内存位置，M[Addr]表示地址Addr的值，并且有多种寻址模式，如下图所示<img src="/2018/03/25/CSAPP-第三章/3.jpg" alt="">例题如下<img src="/2018/03/25/CSAPP-第三章/4.jpg" alt="">计算结果如下：Ox100、OxAB、Ox108、OxFF、(Ox100+a)=(Ox104)=OxAB、(9+Ox100+Ox3)=(Ox10C)=Ox11、(260+Ox1+Ox3)=(Ox108)=Ox13、(OxFC+Ox1<em>4)=(Ox100)=OxFF、(Ox100+Ox3</em>4)=(Ox10C)=Ox11</li>
+</ul>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>我们将具有相同操作效果但操作数不同的指令划为一类<br>最简单的数据传输指令-MOV类，把数据从源位置复制到目的位置，有movb、movw、movl、movq，分别对应操作数大小为1、2、4、8字节</p>
 
       
     </div>
@@ -553,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据格式"><span class="nav-number">2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问信息"><span class="nav-number">3.</span> <span class="nav-text">访问信息</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据格式"><span class="nav-number">2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问信息"><span class="nav-number">3.</span> <span class="nav-text">访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数"><span class="nav-number">3.1.</span> <span class="nav-text">操作数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">3.2.</span> <span class="nav-text">指令</span></a></li></ol></li></ol></div>
             
 
           </div>
