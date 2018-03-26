@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/2.JPG">
-<meta property="og:updated_time" content="2018-03-12T04:29:18.963Z">
+<meta property="og:updated_time" content="2018-03-26T14:29:34.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿谢的BLOG Beta3.9版 发布说明">
 <meta name="twitter:description" content="折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。">
@@ -402,6 +402,11 @@
 <li>主页文章添加阴影效果:</li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 打开\themes\next\source\css\_custom\custom.styl,向里面加入:</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 203, .5);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数学公式：<br>在主题文件的_config.yml找到mathjax,并将其设置为true<br><a href="http://www.mohu.org/info/symbols/symbols.htm" target="_blank" rel="noopener">LaTe常见符号</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mathjax:</span><br><span class="line">  enable: true</span><br><span class="line">  per_page: true</span><br><span class="line"></span><br><span class="line">//并在需要数学公式的文章前将mathjax开关打开</span><br><span class="line"></span><br><span class="line">mathjax: true</span><br><span class="line"></span><br><span class="line">$$</span><br><span class="line">f([\frac&#123;1+\&#123;x,y\&#125;&#125;&#123;(\frac&#123;x&#125;&#123;y&#125;+\frac&#123;y&#125;&#123;x&#125;)(u+1)&#125;+a]^&#123;3\2&#125;)</span><br><span class="line">$$</span><br><span class="line">//效果如下所示</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>$$<br>f([\frac{1+{x,y}}{(\frac{x}{y}+\frac{y}{x})(u+1)}+a]^{3\2})<br>$$</p>
 <h3 id="部署："><a href="#部署：" class="headerlink" title="部署："></a>部署：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
 <h3 id="图片："><a href="#图片：" class="headerlink" title="图片："></a>图片：</h3><ul>
 <li><p>在根目录下_config.yml中找到post_asset_folder，并将其值修改为true；</p>
@@ -789,6 +794,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/2.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/3.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/4.jpg">
-<meta property="og:updated_time" content="2018-03-26T09:09:50.660Z">
+<meta property="og:updated_time" content="2018-03-26T10:46:09.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP-第三章">
 <meta name="twitter:description" content="梗概：汇编代码是机器代码的文本表示，对于严谨的程序员来说，能够阅读和理解汇编代码是一项很重要的技能">
@@ -396,7 +396,7 @@
 <li>寄存器：R[r]表示寄存器的值</li>
 <li>内存引用：根据计算出来的地址访问某个内存位置，M[Addr]表示地址Addr的值，并且有多种寻址模式，如下图所示<img src="/2018/03/25/CSAPP-第三章/3.jpg" alt="">例题如下<img src="/2018/03/25/CSAPP-第三章/4.jpg" alt="">计算结果如下：Ox100、OxAB、Ox108、OxFF、(Ox100+a)=(Ox104)=OxAB、(9+Ox100+Ox3)=(Ox10C)=Ox11、(260+Ox1+Ox3)=(Ox108)=Ox13、(OxFC+Ox1<em>4)=(Ox100)=OxFF、(Ox100+Ox3</em>4)=(Ox10C)=Ox11</li>
 </ul>
-<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>我们将具有相同操作效果但操作数不同的指令划为一类<br>最简单的数据传输指令-MOV类，把数据从源位置复制到目的位置，有movb、movw、movl、movq，分别对应操作数大小为1、2、4、8字节</p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>我们将具有相同操作效果但操作数不同的指令划为一类<br>最简单的数据传输指令-MOV类，把数据从源位置复制到目的位置，有movb、movw、movl、movq，分别对应操作数大小为1、2、4、8字节。<br>源操作数指定的值是一个立即数，存储在寄存器或者内存中。目的操作数指定一个寄存器或者一个内存位置。指令最后一个一个字符必须与寄存器的大小匹配。</p>
 
       
     </div>
@@ -769,6 +769,8 @@
   
 
   
+  
+
 
   
 

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine leaning," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="Github">
+<meta name="keywords" content="Machine leaning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K-近邻算法">
 <meta property="og:url" content="http://yoursite.com/2018/03/25/K-近邻算法/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="Github">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-25T14:06:44.479Z">
+<meta property="og:updated_time" content="2018-03-26T14:37:05.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="K-近邻算法">
+<meta name="twitter:description" content="Github">
 
 
 
@@ -336,7 +340,19 @@
       
 
       
-        
+        <p><a href="https://github.com/123xzy/Machine_Leaning/tree/master/K-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Github</a></p>
+<a id="more"></a>
+<hr>
+<p>k-近邻算法（k-nearest neighbor，kNN）是基本分类与回归方法，从它的名字也能知道算法大概是怎么实现的了，简单来说就是根据不同特征值之间的距离来进行分类。算法的输入为实例的特征向量，对应于特征空间的点，输出为实例的类别。测试数据输入后，与样本集中数据对于特征进行比较，提取前k个最相似的数据，这就是k的出处。最后选取k个相似数据在中出现次数最多的分类，作为新数据的分类。</p>
+<p>k值的选择、距离度量及分类决策规则是k-近邻算法的三个基本要素。</p>
+<p>算法的优缺点：</p>
+<ul>
+<li>精度高、对异常值不敏感、无数据输入假定</li>
+<li>计算复杂度高、空间复杂度高</li>
+<li>使用与数值型和标称型</li>
+</ul>
+<p>输入训练数据集：$T = {(x_{1},y_{1}),(x_{2},y_{2},\cdots,x_{N},y_{N})} $ </p>
+
       
     </div>
     
@@ -350,6 +366,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-leaning/" rel="tag"><i class="fa fa-tag"></i> Machine leaning</a>
+          
+        </div>
       
 
       
@@ -673,6 +695,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
