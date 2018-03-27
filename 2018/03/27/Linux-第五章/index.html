@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -79,13 +79,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿谢的BLOG">
-<meta property="og:url" content="http://yoursite.com/tags/影评/index.html">
+<meta name="description" content="《鸟哥的Linux私房菜》第五章小结">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-第五章">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/Linux-第五章/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="《鸟哥的Linux私房菜》第五章小结">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/03/27/Linux-第五章/1.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/27/Linux-第五章/2.JPG">
+<meta property="og:updated_time" content="2018-03-27T11:53:51.541Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿谢的BLOG">
+<meta name="twitter:title" content="Linux-第五章">
+<meta name="twitter:description" content="《鸟哥的Linux私房菜》第五章小结">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/27/Linux-第五章/1.JPG">
 
 
 
@@ -115,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/影评/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/27/Linux-第五章/"/>
 
 
 
 
 
-  <title>Tag: 影评 | 阿谢的BLOG</title>
+  <title>Linux-第五章 | 阿谢的BLOG</title>
   
 
 
@@ -140,7 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,54 +262,167 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>影评<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Linux-第五章/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/23/《小鞋子》/" itemprop="url">
-              
-                <span itemprop="name">《小鞋子》</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Linux-第五章</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-23T12:30:00+08:00"
-              content="2018-03-23" >
-          03-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T19:18:37+08:00">
+                2018-03-27
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《鸟哥的Linux私房菜》第五章小结<br><a id="more"></a></p>
+<hr>
+<p>Linux共有七种系统运作模式，最重要的四种执行等级为：</p>
+<ul>
+<li>run level 0 ：关机</li>
+<li>run level 3 ：纯命令行模式</li>
+<li>run level 5 ：含有图形界面模式</li>
+<li>run level 6 ：重启</li>
+</ul>
+<p>通过以下命令可以进入不同模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]$ init ~</span><br></pre></td></tr></table></figure></p>
+<p>例如输入”init 3”,将进入以下界面<img src="/2018/03/27/Linux-第五章/1.JPG" alt="">命令行模式登陆后取得的程序成为shell，因为这个程序负责最外层的跟用户通信工作，戏称为shell</p>
+<p>一条执行命令有以下几点说明</p>
+<ul>
+<li>一条命令组成：command [-option] parameter1 parameter2 …</li>
+<li>第一个输入绝对是“command”或是可执行文件</li>
+<li>命令和参数和选项之间的不论几个空格都视为一格</li>
+<li>可以用反斜杠\转义[Enter]，使命令连续到下一行</li>
+<li>命令是区分大小写的</li>
+</ul>
+<p>例如通过以下命令查看自己主文件下的所有隐藏文件和相关文件属性,效果如图<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]$ls -al ~</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/03/27/Linux-第五章/2.JPG" alt=""></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/25/K-近邻算法/" rel="next" title="K-近邻算法">
+                <i class="fa fa-chevron-left"></i> K-近邻算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -309,6 +430,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -521,6 +646,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -578,26 +707,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
