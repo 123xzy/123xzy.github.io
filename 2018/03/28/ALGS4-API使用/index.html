@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="UVa," />
+  <meta name="keywords" content="ALGS4," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="UVa514">
-<meta name="keywords" content="UVa">
+<meta name="description" content="ALGS4初认识">
+<meta name="keywords" content="ALGS4">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UVa514">
-<meta property="og:url" content="http://yoursite.com/2018/03/12/UVa514/index.html">
+<meta property="og:title" content="ALGS4-API使用">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/ALGS4-API使用/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="UVa514">
+<meta property="og:description" content="ALGS4初认识">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-13T05:28:56.512Z">
+<meta property="og:updated_time" content="2018-03-28T11:41:55.200Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UVa514">
-<meta name="twitter:description" content="UVa514">
+<meta name="twitter:title" content="ALGS4-API使用">
+<meta name="twitter:description" content="ALGS4初认识">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/12/UVa514/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/28/ALGS4-API使用/"/>
 
 
 
 
 
-  <title>UVa514 | 阿谢的BLOG</title>
+  <title>ALGS4-API使用 | 阿谢的BLOG</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/UVa514/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/ALGS4-API使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">UVa514</h1>
+          <h1 class="post-title" itemprop="name headline">ALGS4-API使用</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T16:29:29+08:00">
-                2018-03-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-28T18:31:49+08:00">
+                2018-03-28
               </time>
             
 
@@ -340,13 +340,23 @@
       
 
       
-        <h1 id="UVa514"><a href="#UVa514" class="headerlink" title="UVa514"></a><a href="https://vjudge.net/problem/UVA-514" target="_blank" rel="noopener">UVa514</a></h1><a id="more"></a>
-<p>学完栈的知识后，第一次运用,也是第一次知道有现成的stack</p>
-<p>这是《算法竞赛入门经典》上的题目，但是书上的代码是过不了的，主要是输入输出的格式不对，但是思路是ok的</p>
-<p>根据题目意思描述，辅助铁轨C只能先进后出，符合栈的特性</p>
-<p>进入的火车要么进入C，要么直接出去<br>出去的火车要么从C出去，要么从A出去</p>
-<p>还有火车从C栈驶出之前，要判断栈是否为空，不然是会出错的</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 1005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,tar[MAXN];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n&amp;&amp;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;s;   <span class="comment">//看作是辅助铁轨C,先进后出 </span></span><br><span class="line">		<span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;tar[<span class="number">1</span>]&amp;&amp;tar[<span class="number">1</span>])</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;tar[i]);<span class="comment">//输入火车驶出的顺序 </span></span><br><span class="line">		<span class="keyword">int</span> a=<span class="number">1</span>,b=<span class="number">1</span>;<span class="comment">//标记铁轨a，b的顺序</span></span><br><span class="line">		<span class="keyword">int</span> flag=<span class="number">1</span>;<span class="comment">//标记能否成功 </span></span><br><span class="line">		<span class="keyword">while</span>(b&lt;=n)</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(tar[b]==a)</span><br><span class="line">			&#123;</span><br><span class="line">				a++;b++;<span class="comment">//火车从a直接驶出 </span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(!s.empty()&amp;&amp;tar[b]==s.top())</span><br><span class="line">			&#123;</span><br><span class="line">				s.pop();<span class="comment">//火车从c驶出 </span></span><br><span class="line">				b++;</span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(a&lt;=n) </span><br><span class="line">			&#123;</span><br><span class="line">				s.push(a);<span class="comment">//火车驶入c </span></span><br><span class="line">				a++; </span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				flag=<span class="number">0</span>;<span class="keyword">break</span>;<span class="comment">//说明顺序不对 </span></span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s\n"</span>,flag?<span class="string">"Yes"</span>:<span class="string">"No"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>ALGS4初认识<br><a id="more"></a></p>
+<hr>
+<p>初看这本书的时候，最让人头疼的就是作者自己写的标准库，但是自己对Java什么都不知道，就照抄书上的代码，每次编译错误就很让人心烦，于是又踏上了学习Java的路。<br>Java一个最佳实践就是每个静态方法库都包含一个main()函数来测试库中的方法，而有些编程语言是不支持多个main()方法的。<br>模块化编程的一个重要部分就是记录库方法的用法并供其他人参考的文档。这一点深有体会，因为随着代码量的增加，回头看很多代码，如果没有适当的注释、文档提示，要看懂曾经的代码需要很大的经历。因此写注释、写文档不仅对他人参考很重要，对自己也同样的重要。</p>
+<p>编写自己的库，作为日后一个可以重用的库</p>
+<ul>
+<li>编写用例</li>
+<li>明确API</li>
+<li>编写测试用例</li>
+</ul>
+<p>API的目的是为将调用和实现分离，除了API给出的信息，调用者不需要知道其他实现的细节，调用者只需要遵守API给出的这份契约就可以编写复杂的应用程序。除此之外，实现的代码和调用者代码分离，日后要是对要更好的实现，就能轻易替换。<br>因此接下来将自己实现本书中用到的方法库，分别如下：</p>
+<ul>
+<li>StdOut：标准静态输出库</li>
+<li>StdIn：标准静态输入库</li>
+<li>StdRandom：随机数静态库</li>
+<li>StdStats：数据分析静态方法库</li>
+<li>In和OUt：用于读取和写入数组的静态方法库</li>
+</ul>
 
       
     </div>
@@ -364,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UVa/" rel="tag"><i class="fa fa-tag"></i> UVa</a>
+            <a href="/tags/ALGS4/" rel="tag"><i class="fa fa-tag"></i> ALGS4</a>
           
         </div>
       
@@ -377,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/12/HDOJ1325/" rel="next" title="HDOJ1325">
-                <i class="fa fa-chevron-left"></i> HDOJ1325
+              <a href="/2018/03/27/Linux-第五章/" rel="next" title="Linux-第五章">
+                <i class="fa fa-chevron-left"></i> Linux-第五章
               </a>
             
           </div>
@@ -386,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/12/UVa572/" rel="prev" title="UVa572">
-                UVa572 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -441,17 +447,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -502,22 +499,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UVa514"><span class="nav-number">1.</span> <span class="nav-text">UVa514</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
