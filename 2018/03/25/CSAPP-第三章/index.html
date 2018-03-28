@@ -91,7 +91,8 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/2.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/3.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/4.jpg">
-<meta property="og:updated_time" content="2018-03-28T08:18:46.633Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/25/CSAPP-第三章/5.jpg">
+<meta property="og:updated_time" content="2018-03-28T13:38:31.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP-第三章">
 <meta name="twitter:description" content="梗概：汇编代码是机器代码的文本表示，对于严谨的程序员来说，能够阅读和理解汇编代码是一项很重要的技能">
@@ -409,6 +410,8 @@
 <li>*xp指针对应的就是地址，即将该指针放在寄存器%rdi，在内存中引用给寄存器(%rdi)，就是读取指针指向地址的值</li>
 <li>x局部变量是保存在寄存器(%rax)中的,而不是内存中，因为寄存器访问快</li>
 </ul>
+<p>假设sp和dp被申明为以下类型<br>str_t <em>sp;<br>dest_t </em>dp;<br>怎么选取适当的数据传送指令实现下面的操作<br><em>dp = (dest_t) </em>sp;<br>假设sp和dp的值分别存储在寄存器%rdi和%rsi中，给出下列实际类型写出对应的指令<br>其中第一条指令从内存中读数，并做适当的转换，第二条把%rax的适当部分写到内存</p>
+<h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h3><p>当强制类型转换涉及大小和符号变化时，先改变大小<img src="/2018/03/25/CSAPP-第三章/5.jpg" alt="">从这张图的第五行看出，从int强制转换成char时，第一步从内存的读取到%eax,第二步却从%eax的低位寄存器%al中读取到内存，显然%eax的高位被自动舍弃了，这就是C语言强制类型转换出错的原因</p>
 
       
     </div>
@@ -574,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据格式"><span class="nav-number">2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问信息"><span class="nav-number">3.</span> <span class="nav-text">访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数"><span class="nav-number">3.1.</span> <span class="nav-text">操作数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">3.2.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">3.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据格式"><span class="nav-number">2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问信息"><span class="nav-number">3.</span> <span class="nav-text">访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数"><span class="nav-number">3.1.</span> <span class="nav-text">操作数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">3.2.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">3.3.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重点"><span class="nav-number">3.3.1.</span> <span class="nav-text">重点</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
