@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Algorithm," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿谢的BLOG">
-<meta property="og:url" content="http://yoursite.com/tags/UVa572/index.html">
+<meta name="description" content="InsertionSort">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="插入排序">
+<meta property="og:url" content="http://yoursite.com/2018/03/30/插入排序/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="InsertionSort">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-30T04:26:15.794Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿谢的BLOG">
+<meta name="twitter:title" content="插入排序">
+<meta name="twitter:description" content="InsertionSort">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/UVa572/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/30/插入排序/"/>
 
 
 
 
 
-  <title>Tag: UVa572 | 阿谢的BLOG</title>
+  <title>插入排序 | 阿谢的BLOG</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,54 +259,156 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>UVa572<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/插入排序/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/12/UVa572/" itemprop="url">
-              
-                <span itemprop="name">UVa572</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">插入排序</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-12T16:30:48+08:00"
-              content="2018-03-12" >
-          03-12
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-30T11:13:47+08:00">
+                2018-03-30
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>InsertionSort<br><a id="more"></a></p>
+<hr>
+<p>插入排序类似于摸牌的时候人们整理牌的过程，摸牌结束时，手中的牌就是排序好的<br>伪代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IMSERTION_SORT(A)<span class="comment">//对数组A进行插入升序排序</span></span><br><span class="line"><span class="keyword">for</span> j = <span class="number">2</span> to A.length</span><br><span class="line">	key = A[j]</span><br><span class="line">	<span class="comment">//将A[j]插入已排序好的A[1..j-1]</span></span><br><span class="line">	i = j - <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i] &gt; key</span><br><span class="line">		A[i+<span class="number">1</span>] = A[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	A[i+<span class="number">1</span>] = key<span class="comment">//将正在排序的元素插入适当的位置</span></span><br></pre></td></tr></table></figure></p>
+<p>A[1..j-1]的这些性质形式地表示为一个循环不变式，它能保住证明算法的正确性</p>
+<ul>
+<li>初始化：首先在循环迭代开始前（j=2），子数组A[1..j-1]就是由单个数字组成，显然循环不变式成立</li>
+<li>保持：for循环将A[j-1]、A[j-2]、A[j-3]向右移动一个位置，直到A[j]找到合适的位置，最后将其插入</li>
+<li>终止：循环终止条件：j&gt;A.length,显然此时j=A.length+1,带入循环不变式得，A[1..A.length]以按序排列，该不变式即表示整个数组，验证了算法的正确性</li>
+</ul>
+<p>python代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</span><br><span class="line">	key = array[j]</span><br><span class="line">	i = j<span class="number">-1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> array[i] &gt; key:</span><br><span class="line">		array[i+<span class="number">1</span>] = array[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	array[i+<span class="number">1</span>] = key</span><br><span class="line">	print(array)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/CSAPP-3-5-3-8/" rel="next" title="CSAPP-3.5-3.8">
+                <i class="fa fa-chevron-left"></i> CSAPP-3.5-3.8
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -309,6 +416,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -521,6 +632,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -578,26 +693,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
