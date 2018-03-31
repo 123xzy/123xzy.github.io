@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="InsertionSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-30T04:26:15.794Z">
+<meta property="og:updated_time" content="2018-03-31T05:10:30.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="插入排序">
 <meta name="twitter:description" content="InsertionSort">
@@ -342,15 +342,18 @@
       
         <p>InsertionSort<br><a id="more"></a></p>
 <hr>
-<p>插入排序类似于摸牌的时候人们整理牌的过程，摸牌结束时，手中的牌就是排序好的<br>伪代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IMSERTION_SORT(A)<span class="comment">//对数组A进行插入升序排序</span></span><br><span class="line"><span class="keyword">for</span> j = <span class="number">2</span> to A.length</span><br><span class="line">	key = A[j]</span><br><span class="line">	<span class="comment">//将A[j]插入已排序好的A[1..j-1]</span></span><br><span class="line">	i = j - <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i] &gt; key</span><br><span class="line">		A[i+<span class="number">1</span>] = A[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	A[i+<span class="number">1</span>] = key<span class="comment">//将正在排序的元素插入适当的位置</span></span><br></pre></td></tr></table></figure></p>
-<p>A[1..j-1]的这些性质形式地表示为一个循环不变式，它能保住证明算法的正确性</p>
+<h1 id="算法形式"><a href="#算法形式" class="headerlink" title="算法形式"></a>算法形式</h1><p>插入排序类似于摸牌的时候人们整理牌的过程，摸牌结束时，手中的牌就是排序好的<br>伪代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IMSERTION_SORT(A)<span class="comment">//对数组A进行插入升序排序</span></span><br><span class="line"><span class="keyword">for</span> j = <span class="number">2</span> to A.length</span><br><span class="line">	key = A[j]</span><br><span class="line">	<span class="comment">//将A[j]插入已排序好的A[1..j-1]</span></span><br><span class="line">	i = j - <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i] &gt; key</span><br><span class="line">		A[i+<span class="number">1</span>] = A[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	A[i+<span class="number">1</span>] = key<span class="comment">//将正在排序的元素插入适当的位置</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>A[1..j-1]的这些性质形式地表示为一个循环不变式，它能证明算法的正确性</p>
 <ul>
 <li>初始化：首先在循环迭代开始前（j=2），子数组A[1..j-1]就是由单个数字组成，显然循环不变式成立</li>
 <li>保持：for循环将A[j-1]、A[j-2]、A[j-3]向右移动一个位置，直到A[j]找到合适的位置，最后将其插入</li>
 <li>终止：循环终止条件：j&gt;A.length,显然此时j=A.length+1,带入循环不变式得，A[1..A.length]以按序排列，该不变式即表示整个数组，验证了算法的正确性</li>
 </ul>
-<p>python代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</span><br><span class="line">	key = array[j]</span><br><span class="line">	i = j<span class="number">-1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> array[i] &gt; key:</span><br><span class="line">		array[i+<span class="number">1</span>] = array[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	array[i+<span class="number">1</span>] = key</span><br><span class="line">	print(array)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure></p>
-
+<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><p>每行语句的运行成本是由该语句运行一次的成本和运行次数决定的<br>设n=A.length,单次运行成本为$C_i$,$t_j$表示对j执行while循环的次数，因为该值和输入数据的形式相关，所以他是不确定的</p>
+<p>例如第二行for循环的单次运行成本为c$_1$,次数为n-1,则该行的的运行成本为c$_1$*(n-1)，对于while循环为:$c_4$($\sum_{j=2}^n t_j$)</p>
+<p>当我们考虑输入数据已经排好序了，即最佳情况时，while循环只进行一次，而内部操作则为零次<br>最终总时间为$T(n)=(c_1+c_2+c_3+c_4+C_7)n-(c_2+c_3+c_4+c_7)$,将语句代价$c_i$抽象为常量a,b等，则运行时间可表示为$T(n)=an+b$,它是n的线性函数</p>
+<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><h2 id="python代码"><a href="#python代码" class="headerlink" title="python代码"></a>python代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</span><br><span class="line">	key = array[j]</span><br><span class="line">	i = j<span class="number">-1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> array[i] &gt; key:</span><br><span class="line">		array[i+<span class="number">1</span>] = array[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	array[i+<span class="number">1</span>] = key</span><br><span class="line">	print(array)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+<h2 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h2>
       
     </div>
     
@@ -389,6 +392,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/31/归并排序/" rel="prev" title="归并排序">
+                归并排序 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -440,8 +447,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -456,7 +472,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -492,6 +508,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#python代码"><span class="nav-number">4.1.</span> <span class="nav-text">python代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java代码"><span class="nav-number">4.2.</span> <span class="nav-text">Java代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -693,6 +725,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
