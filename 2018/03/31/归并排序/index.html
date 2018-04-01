@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MergeSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-31T09:59:49.851Z">
+<meta property="og:updated_time" content="2018-04-01T09:03:50.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
 <meta name="twitter:description" content="MergeSort">
@@ -341,15 +341,17 @@
 
       
         <p>MergeSort<br><a id="more"></a></p>
-<p>分治法：<br>对于每次递归的调用自身去解决相关问题的子问题的算法，均遵循了分治法的思想：将原问题分解为规模较小的子问题（子问题的形式应该类似于原问题），递归求解子问题，然后合并子问题的解，形成原问题的解</p>
+<hr>
+<h1 id="算法形式"><a href="#算法形式" class="headerlink" title="算法形式"></a>算法形式</h1><p>分治法：<br>对于每次递归的调用自身去解决相关问题的子问题的算法，均遵循了分治法的思想：将原问题分解为规模较小的子问题（子问题的形式应该类似于原问题），递归求解子问题，然后合并子问题的解，形成原问题的解</p>
 <p>分治模式在每层递归是有三个步骤：</p>
 <ul>
 <li>分解</li>
 <li>解决</li>
 <li>合并</li>
 </ul>
-<p>对于归并排序算法</p>
-
+<p>对于归并排序算法,当序列被分解为长度1时，递归开始回升，算法的关键在于合并两个已经排列好的序列，调用MERGE(A,p,q,r)来完成这个操作，其中A[p..q]和A[q+1..r]都分别排序好，合并两个数组得到A[p,r],该合并操作最多执行$r-p+1$次操作，因此需要$\Theta(n)$的时间<br>伪代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">MERGE(A,p,q,r)</span><br><span class="line">n1 = q-p+1</span><br><span class="line">n2 = r-q</span><br><span class="line">let L[1..n1+1] and R[1..n2+1] be new arrays</span><br><span class="line">copy A[p..q],A[q+1..r] to L[1..n1],R[1..n2]</span><br><span class="line">L[n1+1] = Max</span><br><span class="line">R[n2+1] = Max</span><br><span class="line">i = 1</span><br><span class="line">j = 1</span><br><span class="line">for k = p to r</span><br><span class="line">	if L[i]&lt;=R[j]</span><br><span class="line">		A[k] = L[i]</span><br><span class="line">		i++</span><br><span class="line">	else A[k] = R[j]</span><br><span class="line">		j++</span><br></pre></td></tr></table></figure></p>
+<p>这里有个小技巧，就是将每堆底部放一张哨兵牌，并将其设置为$\infty$,因此当一堆出现$\infty$牌时，不可能出现比它大的牌，于是形式上相当于将另一堆直接放置到输出堆</p>
+<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1>
       
     </div>
     
@@ -443,8 +445,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -459,7 +470,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -472,7 +483,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -495,6 +506,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -696,6 +723,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
