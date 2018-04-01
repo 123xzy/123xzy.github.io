@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/5.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/6.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/7.JPG">
-<meta property="og:updated_time" content="2018-03-31T12:19:07.691Z">
+<meta property="og:updated_time" content="2018-04-01T14:43:58.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-第六章">
 <meta name="twitter:description" content="《鸟哥的Linux私房菜》第六章小结">
@@ -357,9 +357,9 @@
 <li>一个用户组的用户相对于另一个用户组的用户来说是others，others可以通过“结识”其他用户组的用户，来进入该用户组查看文件内容</li>
 <li>对于不同用户组，可以设置一个“上帝”，“上帝”可以同时查看不同用户组的文件内容。</li>
 </ul>
-<h1 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h1><p>通过命令<strong>ls -al ~</strong>查看所有文件的权限和属性<img src="/2018/03/31/Linux-第六章/1.JPG" alt="">接下来一列一列解释其中的含义</p>
+<h1 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h1><p>通过命令<code>ls -al ~</code>查看所有文件的权限和属性<img src="/2018/03/31/Linux-第六章/1.JPG" alt="">接下来一列一列解释其中的含义</p>
 <ul>
-<li>第一列有每行都有十个字符，第一个字符表示改文件是目录、文件还是链接文件，[d]-目录，[-]-文件，[l]-连接文件,[b]-设备文件里面的可供存储的接口设备，[c]-串行端口设备，例如键盘、鼠标；接下来九个字符，三个一组为’rwx‘参数的组合，[r]-可读，[w]-可写，[x]-可执行，三组分别对应文件所有者、同用户组和其他非本用户组的权限</li>
+<li>第一列有每行都有十个字符，第一个字符表示改文件是目录、文件还是链接文件，[d]-目录，[-]-文件，[l]-连接文件,[b]-设备文件里面的可供存储的接口设备，[c]-串行端口设备，例如键盘、鼠标；接下来九个字符，三个一组为<code>rwx</code>参数的组合，[r]-可读，[w]-可写，[x]-可执行，三组分别对应文件所有者、同用户组和其他非本用户组的权限</li>
 <li>第二列表示有多少文件连接到此节点，这个知识点不怎么明白</li>
 <li>表示文件所有者</li>
 <li>表示文件的所属用户组</li>
@@ -368,9 +368,9 @@
 <li>文件名</li>
 </ul>
 <h1 id="修改文件属性和权限"><a href="#修改文件属性和权限" class="headerlink" title="修改文件属性和权限"></a>修改文件属性和权限</h1><ul>
-<li>修改所属的用户组：chgrp（change group），从图中看到.bashrc文件的用户组从root变为了xzy<img src="/2018/03/31/Linux-第六章/2.JPG" alt=""></li>
-<li>修改文件的所有者：chown（change owner）<img src="/2018/03/31/Linux-第六章/3.JPG" alt=""></li>
-<li>数字类型改变权限：chmod，权限设置有数字和符号两种来表示，符号r对应数字4，w对应2，x对应1，例如权限rwxrwx—对应数字就是770，如下图所示.bashrc权限从rw-rw-r–变为了rwxrwxrwx<img src="/2018/03/31/Linux-第六章/4.JPG" alt=""></li>
+<li>修改所属的用户组：<code>chgrp（change group）</code>，从图中看到.bashrc文件的用户组从root变为了xzy<img src="/2018/03/31/Linux-第六章/2.JPG" alt=""></li>
+<li>修改文件的所有者：<code>chown（change owner）</code><img src="/2018/03/31/Linux-第六章/3.JPG" alt=""></li>
+<li>数字类型改变权限：<code>chmod</code>，权限设置有数字和符号两种来表示，符号r对应数字4，w对应2，x对应1，例如权限<code>rwxrwx---</code>对应数字就是770，如下图所示.bashrc权限从<code>rw-rw-r--</code>变为了<code>rwxrwxrwx</code><img src="/2018/03/31/Linux-第六章/4.JPG" alt=""></li>
 <li>符号类型修改文件权限：u，g，o分别对应三种身份，a代表全部身份，如下图所示<img src="/2018/03/31/Linux-第六章/5.JPG" alt=""></li>
 </ul>
 <h1 id="权限对文件的意义"><a href="#权限对文件的意义" class="headerlink" title="权限对文件的意义"></a>权限对文件的意义</h1><ul>
