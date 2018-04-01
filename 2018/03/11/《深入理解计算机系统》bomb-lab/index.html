@@ -85,12 +85,14 @@
 <meta property="og:url" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/4.jpg">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119231220470?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-03-31T15:23:36.736Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/2.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/4.JPG">
+<meta property="og:updated_time" content="2018-04-01T02:09:21.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入理解计算机系统》bomb_lab">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/4.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/1.jpg">
 
 
 
@@ -340,16 +342,26 @@
       
 
       
-        <p><img src="/2018/03/11/《深入理解计算机系统》bomb-lab/4.jpg" alt=""><br><a id="more"></a></p>
+        <p><img src="/2018/03/11/《深入理解计算机系统》bomb-lab/1.jpg" alt=""><br><a id="more"></a></p>
 <hr>
-<p>啃完了CSAPP的前四章，但是怎么能停在只是坑完了呢，当然要做配套的经典Lab,这次做实验把学到的都用起来了</p>
+<p>啃完了CSAPP的前四章，但是怎么能停在只是坑完了呢，当然要做配套的经典Lab,这次做实验把学到的都用起来了<br>因为实验会涉及到GDB的调试，可以参照<a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a></p>
 <ul>
 <li><a href="#1">phase_1</a></li>
+<li><a href="#2">phase_2</a></li>
 </ul>
 <h1 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a><span id="1">phase_1</span></h1><p>首先调用下面的语句对其进行反汇编,产生<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/bomb.txt" target="_blank" rel="noopener">bomb.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d bomp &gt; bomb.txt</span><br></pre></td></tr></table></figure></p>
-<p>我们在该文件中找到第一关（phase_1）的<a href="">代码</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp      //栈指针向栈顶移8字节</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi //设置%esi的值为$Ox402400</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;//调用strings_not_equal函数</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax      //比较%eax是否为0，%eax存储的是函数的返回值，即strings_not_equal的返回值</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt; //返回正确进入下一关</span><br><span class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt; //否则调用炸弹爆炸函数</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp      //恢复栈顶指针</span><br><span class="line">  400efb:	c3</span><br></pre></td></tr></table></figure></p>
-<p>从对汇编代码的分析看，$0x402400对于地址的值是破解的关键</p>
-<p><img src="http://img.blog.csdn.net/20180119231220470?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>解决easy</p>
+<p>我们在该文件中找到第一关（phase_1）的<a href="">代码</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp      //栈指针向栈顶移8字节</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi //设置%esi的值为$Ox402400</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;//调用strings_not_equal函数</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax      //比较%eax是否为0，%eax存储的是函数的返回值，即strings_not_equal的返回值</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt; //返回等于零进入下一关</span><br><span class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt; //否则调用炸弹爆炸函数</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp      //恢复栈顶指针</span><br><span class="line">  400efb:	c3</span><br></pre></td></tr></table></figure></p>
+<p>从对汇编代码的分析看，$0x402400地址的值是破解的关键</p>
+<ul>
+<li>我们先GDB该程序，并在phase_1函数开头设置一个断点，如下图所示<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/2.JPG" alt=""></li>
+<li><p>之后run该程序，就会在断点处停下，并随机输入一个字符串xzy<br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为-rw——-，因此我是没有权限去执行它的，具体修改权限可以参照<a href="/2018/03/31/Linux-第六章/" title="Linux-第六章">Linux-第六章</a>）<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/3.JPG" alt=""></p>
+</li>
+<li><p>我们的目的是要读取$0x402400地址的值，所以我们单步调试到mov语句之后，并读取该地址的值，我们可以看到写入的字符串xzy存在%eax，而我们要的信息存在%esi<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/4.JPG" alt=""></p>
+</li>
+<li><p>至此我们就找到破解第一关的密码了</p>
+</li>
+</ul>
+<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2">phase_2</span></h1><p>第二关（phase_2）的<a href="">代码</a><br>我们看到下面语句的时候,应该猜到第二关的密码是六个数字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">400f05:	e8 52 05 00 00       	callq  40145c &lt;read_six_numbers&gt;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -392,8 +404,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/11/Linux-GCC/" rel="prev" title="Linux GCC">
-                Linux GCC <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/11/GDB-GCC/" rel="prev" title="GDB GCC">
+                GDB GCC <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -484,7 +496,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -517,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-1"><span class="nav-number">1.</span> <span class="nav-text">phase_1</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-1"><span class="nav-number">1.</span> <span class="nav-text">phase_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-2"><span class="nav-number">2.</span> <span class="nav-text">phase_2</span></a></li></ol></div>
             
 
           </div>

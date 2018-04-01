@@ -89,7 +89,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-3-5-3-8/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-3-5-3-8/2.jpg">
-<meta property="og:updated_time" content="2018-03-31T07:25:47.912Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-3-5-3-8/3.jpg">
+<meta property="og:updated_time" content="2018-04-01T01:04:21.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP-3.5-3.8">
 <meta name="twitter:description" content="《CSAPP》第三章小结（续）">
@@ -368,7 +369,26 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">store_uprod:</span><br><span class="line">.LFB4:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	%rsi, %rax     //将x复制到%rax</span><br><span class="line">	mulq	%rdx           //y*x</span><br><span class="line">	movq	%rax, (%rdi)   //存储低8字节</span><br><span class="line">	movq	%rdx, 8(%rdi)  //存储高8字节</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
 <p>有符号除法指令idivl将寄存器%rdx（高64位）和%rax（低64位）中的128位数作为被除数，而除数作为指令的操作数给出，商存储在%rax，余数存在%rdx<br>对于64位除法来说，被除数也是64位值，这个值如上所述，存在%rax中，而%rdx的位设置为全0（无符号运算）或者%rax的符号位（有符号运算），该设置的指令将有cpto完成，具体如下所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void remdiv(long x,long y,long *pq,long *rq)</span><br><span class="line">&#123;</span><br><span class="line">	long q=x/y;</span><br><span class="line">	long r=x%y;</span><br><span class="line">	*pq=q;</span><br><span class="line">	*rq=r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//x in %rdi,y in %rsi,pq in %rdx,rp in %rcx</span><br><span class="line">remdiv:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	%rdx, %r8   //因为除法操作用到%rdx，所以copy pq to %r8</span><br><span class="line">	movq	%rdi, %rax  //move x to %rax</span><br><span class="line">	cqto                //扩展高8字节</span><br><span class="line">	idivq	%rsi        //x/y   </span><br><span class="line">	movq	%rax, (%r8) //存储商</span><br><span class="line">	movq	%rdx, (%rcx)//存储余数</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
-<h1 id="控制"><a href="#控制" class="headerlink" title="控制"></a><span id="2">控制</span></h1><h2 id="条件码"><a href="#条件码" class="headerlink" title="条件码"></a>条件码</h2>
+<h1 id="控制"><a href="#控制" class="headerlink" title="控制"></a><span id="2">控制</span></h1><h2 id="条件码"><a href="#条件码" class="headerlink" title="条件码"></a>条件码</h2><p>CPU维护着一组单个位的条件码寄存器，描述最近的算术或者逻辑操作的属性，可以通过检测这些条件码寄存器来执行条件分支指令。</p>
+<ul>
+<li>CF：进位标志，检查最高位是否产生进位，用来标志无符号溢出</li>
+<li>ZF：标志操作结果是否为0</li>
+<li>SF：操作结果是否为负数</li>
+<li>OF：操作是否导致补码溢出–正溢出或负溢出</li>
+</ul>
+<p>如本文一幅图所示，除了leap不改变条件码寄存器，其余操作均要设置条件码，还有两类操作也会设置条件码</p>
+<ul>
+<li>CMP：根据两个操作数之差设置条件码，除了不更新目的寄存器以外，和SUB指令行为一样</li>
+<li>TEST：和AND指令行为类似，例如testq %rax，%rax来检查%rax是负数还是0或者是整数</li>
+</ul>
+<p>一般有三种使用条件码的方法，第一种根据条件码的组合，将一个字节设置为0或1，这类指令成为SET指令，这类指令的后缀不代表操作数的大小，而是指明条件码的组合，如下图所示<img src="/2018/03/29/CSAPP-3-5-3-8/3.jpg" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int cmp(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	return a &gt; b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cmp:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	cmpl	%esi, %edi   //比较a，b</span><br><span class="line">	setg	%al          //设置低位单字节寄存器为0或1</span><br><span class="line">	movzbl	%al, %eax    //为了得到一个32位或64位结果，要进行零位扩展，将寄存器的高位清零</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><p>跳转的目的地一般用label表明，产生目标代码文件时，汇编器会确定所有带label指令的地址，并将目的指令的地址编码为跳转指令的一部分</p>
+<ul>
+<li>直接跳转：以label为目标直接跳转</li>
+<li>间接跳转：跳转目标从寄存器或者内存位置读出，一般带有*号</li>
+</ul>
+
       
     </div>
     
@@ -500,7 +520,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -533,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算术和逻辑操作"><span class="nav-number">1.</span> <span class="nav-text">算术和逻辑操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载有效地址leaq"><span class="nav-number">1.1.</span> <span class="nav-text">加载有效地址leaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一元和二元操作"><span class="nav-number">1.2.</span> <span class="nav-text">一元和二元操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移位操作"><span class="nav-number">1.3.</span> <span class="nav-text">移位操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊的算术操作"><span class="nav-number">1.4.</span> <span class="nav-text">特殊的算术操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制"><span class="nav-number">2.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件码"><span class="nav-number">2.1.</span> <span class="nav-text">条件码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算术和逻辑操作"><span class="nav-number">1.</span> <span class="nav-text">算术和逻辑操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载有效地址leaq"><span class="nav-number">1.1.</span> <span class="nav-text">加载有效地址leaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一元和二元操作"><span class="nav-number">1.2.</span> <span class="nav-text">一元和二元操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移位操作"><span class="nav-number">1.3.</span> <span class="nav-text">移位操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊的算术操作"><span class="nav-number">1.4.</span> <span class="nav-text">特殊的算术操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制"><span class="nav-number">2.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件码"><span class="nav-number">2.1.</span> <span class="nav-text">条件码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳转指令"><span class="nav-number">2.2.</span> <span class="nav-text">跳转指令</span></a></li></ol></li></ol></div>
             
 
           </div>

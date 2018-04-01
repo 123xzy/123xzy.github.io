@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux,GDB,GCC," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="影音 《小鞋子》 《二十二》   书 《月亮与六便士》">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life">
-<meta property="og:url" content="http://yoursite.com/Life/index.html">
+<meta name="keywords" content="Linux,GDB,GCC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GDB GCC">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/GDB-GCC/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="影音 《小鞋子》 《二十二》   书 《月亮与六便士》">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-25T08:19:38.583Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/GDB-GCC/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/GDB-GCC/2.jpg">
+<meta property="og:updated_time" content="2018-04-01T00:25:32.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life">
-<meta name="twitter:description" content="影音 《小鞋子》 《二十二》   书 《月亮与六便士》">
+<meta name="twitter:title" content="GDB GCC">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/11/GDB-GCC/1.jpg">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Life/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/GDB-GCC/"/>
 
 
 
 
 
-  <title>Life | 阿谢的BLOG</title>
+  <title>GDB GCC | 阿谢的BLOG</title>
   
 
 
@@ -260,43 +261,155 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/GDB-GCC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Life</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<h1 id="影音"><a href="#影音" class="headerlink" title="影音"></a>影音</h1><ul>
-<li><a href="/2018/03/23/《小鞋子》/" title="《小鞋子》">《小鞋子》</a></li>
-<li><a href="/2018/03/25/《二十二》/" title="《二十二》">《二十二》</a>
-</li>
-</ul>
-<h1 id="书"><a href="#书" class="headerlink" title="书"></a>书</h1><ul>
-<li><a href="/2018/03/24/《月亮与六便士》/" title="《月亮与六便士》">《月亮与六便士》</a>
-</li>
-</ul>
-
+          <h1 class="post-title" itemprop="name headline">GDB GCC</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T22:13:44+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><img src="/2018/03/11/GDB-GCC/1.jpg" alt=""><br><a id="more"></a></p>
+<p>这个星期作死的想要在linux下写c代码，结果花了大半天，不过还是很有收获的，至少以后可以在linux下写代码了，还有CSAPP上的案例也就可以动手操作了，哈哈哈<br>之前都是在CSAPP上看的汇编代码，今天终于看到了“真人”了。<br>还是总结一下这次烦人的操作<br>因为看书的时候，经常会看到gdb调试，就一直都想实验一下，但是windows安装实在烦人<br>首先是安装虚拟机，这步倒是很顺利；安装linux也是按照教程一步步就完成了，安装的是centos7<br>gcc，gdb的安装也是瞎操作一番就成功了，但是就是这个编译运行花了很长时间，<br>我写了一个文件hello.c保存在了home下的Documents，结果导致我运行gcc hello.c -o hello,一直提示No such file or directory，去百度的时候也是搜到一堆没用的东西，知道我想起来home，我尝试的将hello.c放到了home中，结果就成功了，就是手贱，要把它保存到Documents</p>
+<p>接下来就是要学习gdb的操作，熟悉linux<br>常见的GDB调试命令<img src="/2018/03/11/GDB-GCC/2.jpg" alt=""></p>
+<hr>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+            <a href="/tags/GDB/" rel="tag"><i class="fa fa-tag"></i> GDB</a>
+          
+            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/《深入理解计算机系统》bomb-lab/" rel="next" title="《深入理解计算机系统》bomb_lab">
+                <i class="fa fa-chevron-left"></i> 《深入理解计算机系统》bomb_lab
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/HDOJ1010/" rel="prev" title="HDOJ1010">
+                HDOJ1010 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -305,6 +418,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -325,17 +442,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -386,22 +494,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#影音"><span class="nav-number">1.</span> <span class="nav-text">影音</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#书"><span class="nav-number">2.</span> <span class="nav-text">书</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
