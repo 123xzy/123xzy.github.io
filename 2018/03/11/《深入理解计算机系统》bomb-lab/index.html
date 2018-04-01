@@ -89,7 +89,9 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/2.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/3.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/4.JPG">
-<meta property="og:updated_time" content="2018-04-01T08:02:28.214Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/5.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/6.jpg">
+<meta property="og:updated_time" content="2018-04-01T10:11:32.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入理解计算机系统》bomb_lab">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/1.jpg">
@@ -361,7 +363,8 @@
 <li><p>至此我们就找到破解第一关的密码了</p>
 </li>
 </ul>
-<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2">phase_2</span></h1><p>第二关（phase_2）的<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_2.txt" target="_blank" rel="noopener">代码</a><br>我们看到下面语句的时候,应该猜到第二关的密码是六个数字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">400f05:	e8 52 05 00 00       	callq  40145c &lt;read_six_numbers&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2">phase_2</span></h1><p>为了之后的做题带来方便，我们将答案存储在<a href="">ans.txt</a>,并在每次运行时作为参数输入，如下图所示<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/5.JPG" alt=""><br>这一关用到了一点栈操作的知识，前两行分别是将%rbp和%rbx压入栈中，%rsp始终是指向栈顶，栈的结构类似下图<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/6.jpg" alt=""><br>第二关（phase_2）的<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_2.txt" target="_blank" rel="noopener">代码</a><br>我们看到下面语句的时候,应该猜到第二关的密码是六个数字,并且读入的六个数字保存在%rsp到%rsp+28中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">400f05:	e8 52 05 00 00       	callq  40145c &lt;read_six_numbers&gt;</span><br></pre></td></tr></table></figure></p>
+<p>下一条语句比较1和%rsp指向的内存的值（也就是读入的第一个数字），如果相等则跳转到400f30 &lt;phase_2+0x34&gt;，该语句是设置寄存器值的操作，也就是将%rsp+4的值赋给%rbx，同理将%rsp+18的值赋给%rbp，继续跳转到400f17 &lt;phase_2+0x1b&gt;，该语句表示将（%rbx-4）地址所指向内存的值（即%rsp指向内存的值，也是第一个输入的数）赋给%eax，然后%eax自加后和%rbx（即第二个输入的值）比较，所以第二个数字应该是2，接下来就是一个循环，所以最后的结果应该是1 2 4 8 16 32</p>
 
       
     </div>
