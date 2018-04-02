@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/4.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/5.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/6.jpg">
-<meta property="og:updated_time" content="2018-04-01T23:33:40.678Z">
+<meta property="og:updated_time" content="2018-04-02T06:46:22.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入理解计算机系统》bomb_lab">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/11/《深入理解计算机系统》bomb-lab/1.jpg">
@@ -350,21 +350,32 @@
 <ul>
 <li><a href="#1">phase_1</a></li>
 <li><a href="#2">phase_2</a></li>
+<li><a href="#3">phase_3</a></li>
 </ul>
-<h1 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a><span id="1">phase_1</span></h1><p>首先调用下面的语句对其进行反汇编,产生<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/bomb.txt" target="_blank" rel="noopener">bomb.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d bomp &gt; bomb.txt</span><br></pre></td></tr></table></figure></p>
-<p>我们在该文件中找到第一关（phase_1）的<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_1.txt" target="_blank" rel="noopener">代码</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp      //栈指针向栈顶移8字节</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi //设置%esi的值为$Ox402400</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;//调用strings_not_equal函数</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax      //比较%eax是否为0，%eax存储的是函数的返回值，即strings_not_equal的返回值</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt; //返回等于零进入下一关</span><br><span class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt; //否则调用炸弹爆炸函数</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp      //恢复栈顶指针</span><br><span class="line">  400efb:	c3</span><br></pre></td></tr></table></figure></p>
+<h1 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a><span id="1"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_1.txt" target="_blank" rel="noopener">phase_1</a></span></h1><p>首先调用<code>objdump -d bomp &gt; bomb.txt</code>语句对其进行反汇编,产生<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/bomb.txt" target="_blank" rel="noopener">bomb.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp      //栈指针向栈顶移8字节</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi //设置%esi的值为$Ox402400</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;//调用strings_not_equal函数</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax      //比较%eax是否为0，%eax存储的是函数的返回值，即strings_not_equal的返回值</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt; //返回等于零进入下一关</span><br><span class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt; //否则调用炸弹爆炸函数</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp      //恢复栈顶指针</span><br><span class="line">  400efb:	c3</span><br></pre></td></tr></table></figure></p>
 <p>从对汇编代码的分析看，<code>$0x402400</code>地址的值是破解的关键</p>
 <ul>
 <li>我们先<code>GDB</code>该程序，并在<code>phase_1</code>函数开头设置一个断点，如下图所示<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/2.JPG" alt=""></li>
-<li><p>之后<code>run</code>该程序，就会在断点处停下，并随机输入一个字符串<code>xzy</code><br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为-rw——-，因此我是没有权限去执行它的，具体修改权限可以参照<a href="/2018/03/31/Linux-第六章/" title="Linux-第六章">Linux-第六章</a>）<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/3.JPG" alt=""></p>
+<li><p>之后<code>run</code>该程序，就会在断点处停下，并随机输入一个字符串<code>xzy</code><br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为<code>-rw-------</code>，因此我是没有权限去执行它的，具体修改权限可以参照<a href="/2018/03/31/Linux-第六章/" title="Linux-第六章">Linux-第六章</a>）<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/3.JPG" alt=""></p>
 </li>
 <li><p>我们的目的是要读取<code>$0x402400</code>地址的值，所以我们单步调试到mov语句之后，并读取该地址的值，我们可以看到写入的字符串xzy存在<code>%eax</code>，而我们要的信息存在<code>%esi</code><img src="/2018/03/11/《深入理解计算机系统》bomb-lab/4.JPG" alt=""></p>
 </li>
 <li><p>至此我们就找到破解第一关的密码了</p>
 </li>
 </ul>
-<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2">phase_2</span></h1><p>为了之后的做题带来方便，我们将答案存储在<a href="">ans.txt</a>,并在每次运行时作为参数输入，如下图所示<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/5.JPG" alt=""><br>这一关用到了一点栈操作的知识，前两行分别是将<code>%rbp</code>和<code>%rbx</code>压入栈中，<code>%rsp</code>始终是指向栈顶，栈的结构类似下图<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/6.jpg" alt=""><br>第二关（phase_2）的<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_2.txt" target="_blank" rel="noopener">代码</a><br>我们看到<code>400f05:    e8 52 05 00 00           callq  40145c &lt;read_six_numbers&gt;</code>语句的时候,应该猜到第二关的密码是六个数字,并且读入的六个数字保存在<code>%rsp</code>到<code>%rsp+28</code>中</p>
+<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_2.txt" target="_blank" rel="noopener">phase_2</a></span></h1><p>为了之后的做题带来方便，我们将答案存储在<a href="">ans.txt</a>,并在每次运行时作为参数输入，如下图所示<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/5.JPG" alt="">这一关用到了一点栈操作的知识，前两行分别是将<code>%rbp</code>和<code>%rbx</code>压入栈中，<code>%rsp</code>始终是指向栈顶，栈的结构类似下图<img src="/2018/03/11/《深入理解计算机系统》bomb-lab/6.jpg" alt=""><br>我们看到<code>400f05:    e8 52 05 00 00           callq  40145c &lt;read_six_numbers&gt;</code>语句的时候,应该猜到第二关的密码是六个数字,并且读入的六个数字保存在<code>%rsp</code>到<code>%rsp+28</code>中</p>
 <p>下一条语句比较1和<code>%rsp</code>指向的内存的值（也就是读入的第一个数字），如果相等则跳转到<code>400f30 &lt;phase_2+0x34&gt;</code>，该语句是设置寄存器值的操作，也就是将<code>%rsp+4</code>的值赋给<code>%rbx</code>，同理将<code>%rsp+18</code>的值赋给<code>%rbp</code>，继续跳转到<code>400f17 &lt;phase_2+0x1b&gt;</code>，该语句表示将（%rbx-4）地址所指向内存的值（即<code>%rsp</code>指向内存的值，也是第一个输入的数）赋给<code>%eax</code>，然后<code>%eax</code>自加后和<code>%rbx</code>（即第二个输入的值）比较，所以第二个数字应该是2，接下来就是一个循环，所以最后的结果应该是1 2 4 8 16 32</p>
+<h1 id="phase-3"><a href="#phase-3" class="headerlink" title="phase_3"></a><span id="3"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_3.txt" target="_blank" rel="noopener">phase_3</a></span></h1><p>经过两关的练习，做第三关的时候明显感到容易起来了</p>
+<ul>
+<li>前几行依旧是栈的预处理，直到我们看到这一行<code>400f51:    be cf 25 40 00           mov    $0x4025cf,%esi</code>,又在将某个东西传进来了，所以本着好奇的原则我们取查看一下<code>%esi</code>存了点什么东西，所有当调用<code>(gdb) x/s $esi</code>发现了点线索，提示<code>0x4025cf:    &quot;%d %d&quot;</code>,我们猜测这一关的密码应该是两个数字，继续往下看</li>
+<li><code>400f6a:    83 7c 24 08 07           cmpl   $0x7,0x8(%rsp)</code>这句话是将7和<code>%rsp+8</code>进行比较，但我们暂时还不知道他的作用是什么，但如果超过7就会跳转到炸弹爆炸函数</li>
+<li>继续往下看看，<code>400f75:    ff 24 c5 70 24 40 00     jmpq   *0x402470(,%rax,8)</code>这句话是这一关的关键，他会间接跳转，并且以%rax作为偏移量，跳转到<code>0x402470+8*%rax</code>，所以后面很工整的语句类似于switch语句</li>
+<li>回到第二点，应该就是表示第一个数字不能大于7，否则爆炸，而第二个数字的值是由第一个数字决定的</li>
+</ul>
+<p>其他一些语句的意思<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//判读sccanf函数的返回值是否大于1，如果大于1则继续，否则爆炸，这一点也肯定了我们要输入的是两个数</span><br><span class="line"> 400f56:	b8 00 00 00 00       	mov    $0x0,%eax      </span><br><span class="line"> 400f5b:	e8 90 fc ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line"> 400f60:	83 f8 01             	cmp    $0x1,%eax              </span><br><span class="line"> 400f63:	7f 05                	jg     400f6a &lt;phase_3+0x27&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>接下来就是找出第二个数的值，可以通过看代码计算出来，可以切断点去查看1-7分别对应的数字，最终结果是<code>0 207 || 1 311 || 2 707 || 3 256 || 4 389 || 5 206 || 6 682 || 7 327</code></li>
+</ul>
 
       
     </div>
@@ -532,7 +543,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-1"><span class="nav-number">1.</span> <span class="nav-text">phase_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-2"><span class="nav-number">2.</span> <span class="nav-text">phase_2</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-1"><span class="nav-number">1.</span> <span class="nav-text">phase_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-2"><span class="nav-number">2.</span> <span class="nav-text">phase_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-3"><span class="nav-number">3.</span> <span class="nav-text">phase_3</span></a></li></ol></div>
             
 
           </div>
