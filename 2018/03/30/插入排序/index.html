@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="InsertionSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-01T08:33:46.160Z">
+<meta property="og:updated_time" content="2018-04-06T10:22:57.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="插入排序">
 <meta name="twitter:description" content="InsertionSort">
@@ -353,8 +353,11 @@
 <p>例如第二行for循环的单次运行成本为c$_1$,次数为n-1,则该行的的运行成本为c$_1$*(n-1)，对于while循环为:$c_4$($\sum_{j=2}^n t_j$)</p>
 <p>当我们考虑输入数据已经排好序了，即最佳情况时，while循环只进行一次，而内部操作则为零次<br>最终总时间为$T(n)=(c_1+c_2+c_3+c_4+C_7)n-(c_2+c_3+c_4+c_7)$,将语句代价$c_i$抽象为常量a,b等，则运行时间可表示为$T(n)=an+b$,它是n的线性函数</p>
 <p>如果数组是反向排序，即遇到了最坏的情况，此时上文设置的$t_j=j$,所有最终结果为$T(n)=an^2+bn+c$,是n的二次函数</p>
-<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><h2 id="python代码"><a href="#python代码" class="headerlink" title="python代码"></a>python代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</span><br><span class="line">	key = array[j]</span><br><span class="line">	i = j<span class="number">-1</span></span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> array[i] &gt; key:</span><br><span class="line">		array[i+<span class="number">1</span>] = array[i]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">	array[i+<span class="number">1</span>] = key</span><br><span class="line">	print(array)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
-<h2 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertsort</span><span class="params">(<span class="keyword">int</span>* a,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> key = a[i];</span><br><span class="line">		<span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; key)</span><br><span class="line">		&#123;</span><br><span class="line">			a[j + <span class="number">1</span>] = a[j];</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">		a[j+<span class="number">1</span>] = key;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[] = &#123; <span class="number">4</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span> &#125;;</span><br><span class="line">	insertsort(a,<span class="number">7</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>, a[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><ul>
+<li><a href="https://github.com/123xzy/CLRS/blob/master/C02/Insertionsort.py" target="_blank" rel="noopener">python</a></li>
+<li><a href="https://github.com/123xzy/CLRS/blob/master/C02/insertsort.cpp" target="_blank" rel="noopener">C++</a></li>
+</ul>
+
       
     </div>
     
@@ -473,7 +476,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -519,7 +522,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#python代码"><span class="nav-number">4.1.</span> <span class="nav-text">python代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C代码"><span class="nav-number">4.2.</span> <span class="nav-text">C代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
             
 
           </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MergeSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-01T14:41:21.220Z">
+<meta property="og:updated_time" content="2018-04-06T10:30:36.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
 <meta name="twitter:description" content="MergeSort">
@@ -351,7 +351,22 @@
 </ul>
 <p>对于归并排序算法,当序列被分解为长度1时，递归开始回升，算法的关键在于合并两个已经排列好的序列，调用MERGE(A,p,q,r)来完成这个操作，其中A[p..q]和A[q+1..r]都分别排序好，合并两个数组得到A[p,r],该合并操作最多执行$r-p+1$次操作，因此需要$\Theta(n)$的时间<br>伪代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">MERGE(A,p,q,r)</span><br><span class="line">n1 = q-p+1</span><br><span class="line">n2 = r-q</span><br><span class="line">let L[1..n1+1] and R[1..n2+1] be new arrays</span><br><span class="line">copy A[p..q],A[q+1..r] to L[1..n1],R[1..n2]</span><br><span class="line">L[n1+1] = Max</span><br><span class="line">R[n2+1] = Max</span><br><span class="line">i = 1</span><br><span class="line">j = 1</span><br><span class="line">for k = p to r</span><br><span class="line">	if L[i]&lt;=R[j]</span><br><span class="line">		A[k] = L[i]</span><br><span class="line">		i++</span><br><span class="line">	else A[k] = R[j]</span><br><span class="line">		j++</span><br></pre></td></tr></table></figure></p>
 <p>这里有个小技巧，就是将每堆底部放一张哨兵牌，并将其设置为$\infty$,因此当一堆出现$\infty$牌时，不可能出现比它大的牌，于是形式上相当于将另一堆直接放置到输出堆</p>
-<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1>
+<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>循环不变式:$A[p..k-1]$按从小到大的顺序包含$L[1..n1+1]$和$R[1..n2+1]$中的k-p个最小元素，$L[i]$和$R[j]$是各自数组中未被复制回A数组的最小元素</p>
+<ul>
+<li>初始化：A数组为空，$L[1]$和$R[1]$都是各自数组的最小元素</li>
+<li>保持：假设$L[i] \le R[j]$,这时$A[p..k-1]$包含$k-p个$最小元素，将$L[i]$复制到$A[k],A[p..k]$包含$k-p+1个$元素，更新$k$和$i$，可见循环不变式依旧成立</li>
+<li>终止：$k=r+1$,$A[p..r]$即按从小到大排列，数组$L$和$R$只剩下哨兵没有被赋值会数组A</li>
+</ul>
+<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><ul>
+<li>解决子问题需要$2T(n/2)$的运行时间</li>
+<li>合并一个n大小的数组需要$\Theta(n)$</li>
+<li>因此归并排序的最坏运行时间$T(n)=2T(n/2)+\Theta(n)(n&gt;1)$</li>
+</ul>
+<p>通过递归树、主定理等方法可以求得$T(n)=\Theta(nlgn)$</p>
+<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><ul>
+<li><a href="https://github.com/123xzy/CLRS/blob/master/C02/mergesort.cpp" target="_blank" rel="noopener">C++</a></li>
+</ul>
+
       
     </div>
     
@@ -470,7 +485,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
