@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MergeSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-06T10:30:36.309Z">
+<meta property="og:updated_time" content="2018-04-07T02:21:59.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
 <meta name="twitter:description" content="MergeSort">
@@ -362,11 +362,12 @@
 <li>合并一个n大小的数组需要$\Theta(n)$</li>
 <li>因此归并排序的最坏运行时间$T(n)=2T(n/2)+\Theta(n)(n&gt;1)$</li>
 </ul>
-<p>通过递归树、主定理等方法可以求得$T(n)=\Theta(nlgn)$</p>
+<p>通过画递归树，每层的代价都是$cn$,总层数为$lgn+1$,总代价即为$cn(lgn+1)=cnlgn+cn$,忽略低阶项和常量$c$便得出$T(n)=\Theta(nlgn)$</p>
 <h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><ul>
 <li><a href="https://github.com/123xzy/CLRS/blob/master/C02/mergesort.cpp" target="_blank" rel="noopener">C++</a></li>
 </ul>
-
+<h1 id="习题解答"><a href="#习题解答" class="headerlink" title="习题解答"></a>习题解答</h1><h2 id="Ex2-3-3"><a href="#Ex2-3-3" class="headerlink" title="Ex2.3-3"></a>Ex2.3-3</h2><p>当n刚好是2的幂时，用数学归纳法证明下列递归式的解是$T(n)=nlgn$<br>$$T(n)=<br>\begin{cases}<br>2&amp; \text{n=2}\<br>2T(n/2)+n&amp; \text{$n=2^k$,k&gt;1}<br>\end{cases}$$</p>
+<h2 id="Ex2-3-4"><a href="#Ex2-3-4" class="headerlink" title="Ex2.3-4"></a>Ex2.3-4</h2>
       
     </div>
     
@@ -485,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -531,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#习题解答"><span class="nav-number">5.</span> <span class="nav-text">习题解答</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-3"><span class="nav-number">5.1.</span> <span class="nav-text">Ex2.3-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-4"><span class="nav-number">5.2.</span> <span class="nav-text">Ex2.3-4</span></a></li></ol></li></ol></div>
             
 
           </div>
