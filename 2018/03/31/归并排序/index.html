@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MergeSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-07T11:30:24.625Z">
+<meta property="og:updated_time" content="2018-04-08T09:31:45.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
 <meta name="twitter:description" content="MergeSort">
@@ -370,6 +370,13 @@
 <h2 id="Ex2-3-4"><a href="#Ex2-3-4" class="headerlink" title="Ex2.3-4"></a>Ex2.3-4</h2><p>为插入排序的递归版本的最坏情况写一个递归式<br>$T(n)=T(n-1)+n-1(n&gt;1)$</p>
 <h2 id="Ex2-3-5"><a href="#Ex2-3-5" class="headerlink" title="Ex2.3-5"></a>Ex2.3-5</h2><p>为二分查找写递归的伪代码，并判断最坏情况的运行时间为$\Theta(lgn)$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">binary_search(A,low,high,key)</span><br><span class="line">mid=(low+high)/2</span><br><span class="line">if(A[mid]=key)return mid</span><br><span class="line">else if(A[mid]&lt;key)</span><br><span class="line">    binary_search(A,mid,high,key)</span><br><span class="line">else if(A[mid]&gt;key)</span><br><span class="line">    binary_search(A,low,mid,key)</span><br><span class="line">return null</span><br></pre></td></tr></table></figure></p>
 <p>利用与Ex2.3-3类似的数学归纳法可证明结论成立</p>
+<h1 id="算法改进"><a href="#算法改进" class="headerlink" title="算法改进"></a>算法改进</h1><p>在归并算法中对小数组采用插入排序，当子问题足够小时，采用插入排序来使递归的叶变粗</p>
+<ul>
+<li>使用插入排序来排序长度为k的n/k个子表，然后使用标准合并机制来合并这些子表，最坏的情况是在$n/k\Theta(k^2)=\Theta(nk)$的时间内完成排序</li>
+<li>最坏的情况下能在$\Theta(nlg(n/k))$的时间内合并子表</li>
+<li>修改后的归并排序算法最坏运行时间为$\Theta(nk+nlg(n/k))$,并且$k&lt;\Theta(lgn)$,否则增长率将超过原来的算法</li>
+<li>对于k的取值，因为我们选取插入算法是为了改善，所以原本应该使用归并算法的部分应有$c_1k^2&lt;c_2klgk$,得到k的取值范围</li>
+</ul>
 
       
     </div>
@@ -535,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#习题解答"><span class="nav-number">5.</span> <span class="nav-text">习题解答</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-3"><span class="nav-number">5.1.</span> <span class="nav-text">Ex2.3-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-4"><span class="nav-number">5.2.</span> <span class="nav-text">Ex2.3-4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-5"><span class="nav-number">5.3.</span> <span class="nav-text">Ex2.3-5</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#习题解答"><span class="nav-number">5.</span> <span class="nav-text">习题解答</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-3"><span class="nav-number">5.1.</span> <span class="nav-text">Ex2.3-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-4"><span class="nav-number">5.2.</span> <span class="nav-text">Ex2.3-4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-5"><span class="nav-number">5.3.</span> <span class="nav-text">Ex2.3-5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法改进"><span class="nav-number">6.</span> <span class="nav-text">算法改进</span></a></li></ol></div>
             
 
           </div>
