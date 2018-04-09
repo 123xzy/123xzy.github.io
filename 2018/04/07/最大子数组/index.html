@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="Maximum subarray">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-08T09:35:00.437Z">
+<meta property="og:updated_time" content="2018-04-09T14:44:23.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大子数组">
 <meta name="twitter:description" content="Maximum subarray">
@@ -341,7 +341,15 @@
 
       
         <p>Maximum subarray<br><a id="more"></a></p>
-
+<h1 id="算法形式"><a href="#算法形式" class="headerlink" title="算法形式"></a>算法形式</h1><p>例如对于不对变化的股票，要怎么买入买出才能是效益最大化，将问题从寻找数据的最大值最小值变成考察数据相对于前一个点的变化大小，这样问题就变为了寻找最大的非空连续子数组，即最大子数组<br>依旧采取分治策略来求解，假设我们要寻找子数组A[low..high]的最大子数组，根据分治思想将该数组分为两个规模相等的子数组，设切分点为mid，则最大子数组必然出现在以下三种情况中</p>
+<ul>
+<li>完全位于A[low..mid]中</li>
+<li>完全位于A[mid..high]中</li>
+<li>介于中间</li>
+</ul>
+<p>递归求解前两种情况的子问题和母问题相同，问题在于介于中间这种情况，假设该数组为A[i..mid..j]，因为必须过mid这个点，所以分别向左和向右寻找最大子数组，然后合并即可，该过程可以在线性时间内完成</p>
+<pre><code>
+</code></pre>
       
     </div>
     
@@ -435,8 +443,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -451,7 +468,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -487,6 +504,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
