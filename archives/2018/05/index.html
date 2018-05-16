@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,GDB,GCC," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="keywords" content="Linux,GDB,GCC">
-<meta property="og:type" content="article">
-<meta property="og:title" content="GDB GCC">
-<meta property="og:url" content="http://yoursite.com/2018/03/11/GDB-GCC/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="阿谢的BLOG">
+<meta property="og:url" content="http://yoursite.com/archives/2018/05/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/03/11/GDB-GCC/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/03/11/GDB-GCC/2.jpg">
-<meta property="og:updated_time" content="2018-04-01T23:35:21.189Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GDB GCC">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/11/GDB-GCC/1.jpg">
+<meta name="twitter:title" content="阿谢的BLOG">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/11/GDB-GCC/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2018/05/"/>
 
 
 
 
 
-  <title>GDB GCC | 阿谢的BLOG</title>
+  <title>Archive | 阿谢的BLOG</title>
   
 
 
@@ -145,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,159 +254,110 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+         
+          
+        Nice! 53 posts in total. Keep on posting.
+      </span>
 
-  
-  
-  
+      
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2018">2018</h1>
+          </div>
+        
+        
+
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/GDB-GCC/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="123xie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿谢的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">GDB GCC</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/05/16/csapp-buflab/" itemprop="url">
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span itemprop="name">csapp_buflab</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T22:13:44+08:00">
-                2018-03-11
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-05-16T23:12:12+08:00"
+              content="2018-05-16" >
+          05-16
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2018/03/11/GDB-GCC/1.jpg" alt=""><br><a id="more"></a></p>
-<hr>
-<p>这个星期作死的想要在linux下写c代码，结果花了大半天，不过还是很有收获的，至少以后可以在linux下写代码了，还有CSAPP上的案例也就可以动手操作了，哈哈哈<br>之前都是在CSAPP上看的汇编代码，今天终于看到了“真人”了。<br>还是总结一下这次烦人的操作<br>因为看书的时候，经常会看到gdb调试，就一直都想实验一下，但是windows安装实在烦人<br>首先是安装虚拟机，这步倒是很顺利；安装linux也是按照教程一步步就完成了，安装的是centos7<br>gcc，gdb的安装也是瞎操作一番就成功了，但是就是这个编译运行花了很长时间，<br>我写了一个文件<code>hello.c</code>保存在了<code>home</code>下的<code>Documents</code>，结果导致我运行<code>gcc hello.c -o hello</code>,一直提示<code>No such file or directory</code>，去百度的时候也是搜到一堆没用的东西，知道我想起来home，我尝试的将hello.c放到了home中，结果就成功了，就是手贱，要把它保存到Documents</p>
-<p>接下来就是要学习gdb的操作，熟悉linux<br>常见的GDB调试命令<img src="/2018/03/11/GDB-GCC/2.jpg" alt=""></p>
-<hr>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-          
-            <a href="/tags/GDB/" rel="tag"><i class="fa fa-tag"></i> GDB</a>
-          
-            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/11/《深入理解计算机系统》bomb-lab/" rel="next" title="《深入理解计算机系统》bomb_lab">
-                <i class="fa fa-chevron-left"></i> 《深入理解计算机系统》bomb_lab
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/12/HDOJ1010/" rel="prev" title="HDOJ1010">
-                HDOJ1010 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
+        
+        
+        
+
+        
+        
+
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/05/16/csapp-malloclab/" itemprop="url">
+              
+                <span itemprop="name">csapp_malloclab</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-05-16T23:10:41+08:00"
+              content="2018-05-16" >
+          05-16
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+      
+
     </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -419,10 +365,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -635,10 +577,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -696,6 +634,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
