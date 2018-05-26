@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSAPP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《CSAPP》第三章小结（续）">
+<meta name="keywords" content="CSAPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP-第三章（2）">
+<meta property="og:url" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="《CSAPP》第三章小结（续）">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/CSAPP-3-5-3-7/6.jpg">
+<meta property="og:updated_time" content="2018-05-26T12:38:50.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSAPP-第三章（2）">
+<meta name="twitter:description" content="《CSAPP》第三章小结（续）">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/"/>
+
+
+
+
+
+  <title>CSAPP-第三章（2） | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/CSAPP-第三章（2）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSAPP-第三章（2）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T15:06:35+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《CSAPP》第三章小结（续）<br><a id="more"></a></p>
+<hr>
+<p>目录：</p>
+<ul>
+<li><a href="#1">算术和逻辑操作</a></li>
+<li><a href="#2">控制</a></li>
+</ul>
+<h1 id="算术和逻辑操作"><a href="#算术和逻辑操作" class="headerlink" title="算术和逻辑操作"></a><span id="1">算术和逻辑操作</span></h1><p>下图是常见的指令<img src="/2018/03/29/CSAPP-第三章（2）/1.jpg" alt=""></p>
+<h2 id="加载有效地址leaq"><a href="#加载有效地址leaq" class="headerlink" title="加载有效地址leaq"></a>加载有效地址leaq</h2><p>该指令实际是<code>movq</code>的变形，但它实际上根本没有引用内存，并不是从第一个操作数指定的位置读入数据，而是将有效地址写入目的操作数,例如<code>%rax</code>的值为x，那么指令<code>leaq 7(%rdx,%rdx,4),%rax</code>将设置寄存器<code>%rax</code>的值为5*x+7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">long scale(long x,long y,long z)</span><br><span class="line">&#123;</span><br><span class="line">	long t = x+4*y+12*z;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scale:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	leaq	(%rdi,%rsi,4), %rcx  //x+4*y</span><br><span class="line">	leaq	(%rdx,%rdx,2), %rax  //z+2*z</span><br><span class="line">	salq	$2, %rax      //3*z左移两位为12*z </span><br><span class="line">	addq	%rcx, %rax    //x+4*y+12*z</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h2 id="一元和二元操作"><a href="#一元和二元操作" class="headerlink" title="一元和二元操作"></a>一元和二元操作</h2><p>一元操作的操作数既是源又是目的，可以是内存也可以是寄存器。例如<code>incp(%rsp)</code>将是栈顶的八字节加一，类似于c语言中的++和–运算符<br>二元操作的第二个操作数既是源又是目的，类似于x-=y。不过源操作数是第一个，目的操作数第二个，例如指令<code>subq %rax,%rdx</code>是从<code>%rdx</code>中减去<code>%rax</code>，第二个操作数不能是立即数，并且如果是内存地址时，必须先读出值，执行操作，再写入内存</p>
+<h2 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h2><p>先是移位量，再是要移位的数，移位量可以是立即数，或者放在<code>%cl</code>寄存器中，特别规定只能以该寄存器作为操作数。<br>移位操作对w位长的数据值进行操作，移位量是由寄存器的低m位决定的，并且$2^m=w$,高位自动忽略。例如<code>%cl</code>的值为OxFF时，指令<code>salb</code>左移7位，<code>salw</code>左移15位，<code>sall</code>左移31位，<code>salq</code>左移63位，这块地方依旧有些不明白。<br>左移指令有<code>SA</code>L和<code>SHL</code>，效果相同，都是右边补0<br>右移指令有<code>SAP</code>和<code>SHR</code>，<code>SAR</code>执行算术移位（填上符号位），<code>SHR</code>执行逻辑移位（填上0）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">long shift(long x,long n)</span><br><span class="line">&#123;</span><br><span class="line">	x&lt;&lt;=4;</span><br><span class="line">	x&gt;&gt;=n;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">shift:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	%rdi, %rax</span><br><span class="line">	salq	$4, %rax</span><br><span class="line">	movl	%esi, %ecx</span><br><span class="line">	sarq	%cl, %rax</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>另一个例子,寄存器<code>%rax</code>分别存储了不同的程序值，并在寄存器之间传送程序值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">long arith(long x,long y,long z)</span><br><span class="line">&#123;</span><br><span class="line">	long t1 = x^y;</span><br><span class="line">	long t2 = z*48;</span><br><span class="line">	long t3 = t1 &amp; 252645135;</span><br><span class="line">	long t4 = t2 -t3;</span><br><span class="line">	return t4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//x,y,z分别放在%rdi，%rsi，%rdx</span><br><span class="line">arith:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	xorq	%rsi, %rdi          //x^y异或</span><br><span class="line">	leaq	(%rdx,%rdx,2), %rax //3*z</span><br><span class="line">	salq	$4, %rax            //16*(3*z)</span><br><span class="line">	andl	$252645135, %edi    //t1 &amp; Ox252645135</span><br><span class="line">	subq	%rdi, %rax          //t2-t3</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>一个小技巧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xorq %rdx,%rdx </span><br><span class="line">根据异或的特性，相同取0，不同取1，对自己异或就是清零</span><br><span class="line">也可以用movq $0,%rax 来实现</span><br><span class="line">两种操作的字节长度不同，这里有点不明白</span><br></pre></td></tr></table></figure></p>
+<h2 id="特殊的算术操作"><a href="#特殊的算术操作" class="headerlink" title="特殊的算术操作"></a>特殊的算术操作</h2><p>两个64位有符号或无符号整数相乘得到的乘机需要128位来表示，下图描述的就是产生两个64位数字的全128位乘机以及整数除法的指令<img src="/2018/03/29/CSAPP-第三章（2）/2.jpg" alt=""><br><code>imulq</code>指令有两种形式</p>
+<ul>
+<li>一种是<code>IMUL</code>类中双操作数的一种，他将从两个64位操作数产生一个64位乘积</li>
+<li>另一种则是单操作数指令，计算两个64位值的全128位乘机，一个是无符号乘积<code>mulq</code>，另一是补码乘法<code>imulq</code>。这两条指令都要求一个参数必须在寄存器%rax中，另一个作为指令的源操作数给出，然后将乘积放在<code>%rdx</code>（高64位）和<code>%rax</code>（低64位）中<br>汇编器会自动分辨该使用上述那条指令</li>
+</ul>
+<p>例子展示将两个无符号64位数字乘积生成128位数字,首先显式的定义两个64位数字x、y，并用typedef定义<code>uint128_t</code>，指明乘积放在指针<code>dest</code>指向的16字节处<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;inttypes.h&gt;</span><br><span class="line"></span><br><span class="line">typedef unsigned __int128 uint128_t;</span><br><span class="line"></span><br><span class="line">void store_uprod(uint128_t *dest,uint64_t x,uint64_t y)</span><br><span class="line">&#123;</span><br><span class="line">	*dest=x*(uint128_t)y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">store_uprod:</span><br><span class="line">.LFB4:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	%rsi, %rax     //将x复制到%rax</span><br><span class="line">	mulq	%rdx           //y*x</span><br><span class="line">	movq	%rax, (%rdi)   //存储低8字节</span><br><span class="line">	movq	%rdx, 8(%rdi)  //存储高8字节</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>有符号除法指令<code>idivl</code>将寄存器<code>%rdx</code>（高64位）和<code>%rax</code>（低64位）中的128位数作为被除数，而除数作为指令的操作数给出，商存储在<code>%rax</code>，余数存在<code>%rdx</code><br>对于64位除法来说，被除数也是64位值，这个值如上所述，存在<code>%rax</code>中，而<code>%rdx</code>的位设置为全0（无符号运算）或者<code>%rax</code>的符号位（有符号运算），该设置的指令将有<code>cpto</code>完成，具体如下所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void remdiv(long x,long y,long *pq,long *rq)</span><br><span class="line">&#123;</span><br><span class="line">	long q=x/y;</span><br><span class="line">	long r=x%y;</span><br><span class="line">	*pq=q;</span><br><span class="line">	*rq=r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//x in %rdi,y in %rsi,pq in %rdx,rp in %rcx</span><br><span class="line">remdiv:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	%rdx, %r8   //因为除法操作用到%rdx，所以copy pq to %r8</span><br><span class="line">	movq	%rdi, %rax  //move x to %rax</span><br><span class="line">	cqto                //扩展高8字节</span><br><span class="line">	idivq	%rsi        //x/y   </span><br><span class="line">	movq	%rax, (%r8) //存储商</span><br><span class="line">	movq	%rdx, (%rcx)//存储余数</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h1 id="控制"><a href="#控制" class="headerlink" title="控制"></a><span id="2">控制</span></h1><h2 id="条件码"><a href="#条件码" class="headerlink" title="条件码"></a>条件码</h2><p>CPU维护着一组单个位的条件码寄存器，描述最近的算术或者逻辑操作的属性，可以通过检测这些条件码寄存器来执行条件分支指令。</p>
+<ul>
+<li>CF：进位标志，检查最高位是否产生进位，用来标志无符号溢出</li>
+<li>ZF：标志操作结果是否为0</li>
+<li>SF：操作结果是否为负数</li>
+<li>OF：操作是否导致补码溢出–正溢出或负溢出</li>
+</ul>
+<p>如本文一幅图所示，除了<code>leap</code>不改变条件码寄存器，其余操作均要设置条件码，还有两类操作也会设置条件码</p>
+<ul>
+<li>CMP：根据两个操作数之差设置条件码，除了不更新目的寄存器以外，和SUB指令行为一样</li>
+<li>TEST：和AND指令行为类似，例如<code>testq %rax，%rax</code>来检查<code>%rax</code>是负数还是0或者是整数</li>
+</ul>
+<p>一般有三种使用条件码的方法，第一种根据条件码的组合，将一个字节设置为0或1，这类指令成为SET指令，这类指令的后缀不代表操作数的大小，而是指明条件码的组合，如下图所示<img src="/2018/03/29/CSAPP-第三章（2）/3.jpg" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int cmp(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	return a &gt; b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cmp:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	cmpl	%esi, %edi   //比较a，b</span><br><span class="line">	setg	%al          //设置低位单字节寄存器为0或1</span><br><span class="line">	movzbl	%al, %eax    //为了得到一个32位或64位结果，要进行零位扩展，将寄存器的高位清零</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><p>跳转的目的地一般用label表明，产生目标代码文件时，汇编器会确定所有带label指令的地址，并将目的指令的地址编码为跳转指令的一部分</p>
+<ul>
+<li>直接跳转：以label为目标直接跳转</li>
+<li>间接跳转：跳转目标从寄存器或者内存位置读出，一般带有*号</li>
+</ul>
+<p>最常见的是PC相对编码，将目标指令的地址与紧跟在跳转指令后面那条指令的地址的差作为编码，另一种则是给出绝对地址，用四字节直接指定目标，汇编器和链接器会选择合适的跳转目的编码，所以跳转指令的地址=目标指令的地址-跳转指令后一条指令的地址，当执行PC相对寻址时，程序计数器的值是跳转指令后面的那条指令的的地址，而不是跳转指令本身的地址<br>通过PC相对的跳转目标编码，将很容易将目标代码迁移至内存中<img src="/2018/03/29/CSAPP-第三章（2）/4.jpg" alt="">该图是链接后的反汇编版本，其中有两个跳转指令<code>jmp</code>、<code>jg</code>,其中<code>jmp</code>目的地址等于下一条指令地址<code>0x4004d5</code>加上相对编码<code>03</code>得到<code>0x4004d8</code>,同理<code>jg</code>的目的地址等于<code>0xd</code>+<code>0xf8</code>=<code>0xd5</code>,因为<code>f8</code>对应十进制<code>-8</code></p>
+<h3 id="条件控制实现条件分支"><a href="#条件控制实现条件分支" class="headerlink" title="条件控制实现条件分支"></a>条件控制实现条件分支</h3><p>刚学习的时候比较语句例如<code>cmpq    $-3, %rdi</code>和<code>jge    .L2</code>其实合起来相当于是else的条件而不是if的条件，当时理解的时候出现了偏差<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">test</span><span class="params">(<span class="keyword">long</span> x,<span class="keyword">long</span> y,<span class="keyword">long</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> val = x+y+z;</span><br><span class="line">	<span class="keyword">if</span>(x&lt;<span class="number">-3</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&lt;z)</span><br><span class="line">			val=x*y;</span><br><span class="line">		<span class="keyword">else</span> val = y*z;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (x&gt;<span class="number">2</span>)</span><br><span class="line">		val = x*z;</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">test:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	leaq	(%rdi,%rsi), %rax</span><br><span class="line">	addq	%rdx, %rax</span><br><span class="line">	cmpq	$-3, %rdi</span><br><span class="line">	jge	.L2</span><br><span class="line">	cmpq	%rdx, %rsi</span><br><span class="line">	jge	.L3</span><br><span class="line">	movq	%rdi, %rax</span><br><span class="line">	imulq	%rsi, %rax</span><br><span class="line">	ret</span><br><span class="line">.L3:</span><br><span class="line">	movq	%rsi, %rax</span><br><span class="line">	imulq	%rdx, %rax</span><br><span class="line">	ret</span><br><span class="line">.L2:</span><br><span class="line">	cmpq	$2, %rdi</span><br><span class="line">	jle	.L4</span><br><span class="line">	movq	%rdi, %rax</span><br><span class="line">	imulq	%rdx, %rax</span><br><span class="line">.L4:</span><br><span class="line">	rep ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h3 id="条件传送来实现条件分支"><a href="#条件传送来实现条件分支" class="headerlink" title="条件传送来实现条件分支"></a>条件传送来实现条件分支</h3><p>基于条件数据传送的代码会比基于条件控制转移的代码性能更好，这种方法计算一个条件操作的两种结果，然后再根据条件是否满足从中选取一个。<br>为什么条件数据传送的代码性能好：</p>
+<ul>
+<li>处理器通过该使用流水线的重叠连续指令来获得高性能</li>
+<li>当机器遇到条件跳转时，一般是在分支条件求值完成后，决定分支往哪走，但是处理区采用非常精密的分支预测逻辑才猜测每条跳转指令是否执行</li>
+<li>但是如果预测错误，就要丢掉处理器为该跳转指令后所有指令做的工作然后回到正确位置重新计算，这一步的代价是很高的</li>
+<li>因此如果是采用条件控制转移猜测<code>x&gt;y</code>时，猜对的概率也只有%50，而分支中的操作只需要很小消耗时，分支预测错误就主导了函数的性能，</li>
+<li>但是如果我们先计算出分支条件，就不存在预测错误的机会</li>
+<li>条件传送使用的限制很多，比如分支操作不能有副作用、求值计算不能太多</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OP /</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">arith</span><span class="params">(<span class="keyword">long</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x OP <span class="number">8</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该程序创建一个临时值为x+7，预计x为负。当<code>cmovns</code>指令在<code>x&gt;=0</code>成立时才把临时值修改为x，再算术右移3位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">arith:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	leaq	7(%rdi), %rax   temp=x+7</span><br><span class="line">	testq	%rdi, %rdi      Test x</span><br><span class="line">	cmovns	%rdi, %rax      if x&gt;= 0 ,temp=x</span><br><span class="line">	sarq	$3, %rax        return temp&gt;&gt;4=3</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure></p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>汇编中没有相应的指令存在，可以用条件测试和跳转组合起来实现循环的效果</p>
+<ul>
+<li>do-while循环</li>
+<li>while循环：有两种翻译方式，跳转到中间(jumo to middle)和guarded-do，当较高级优化时，<code>GCC</code>会采取后者这种策略</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//jumo to middle的goto代码模板</span></span><br><span class="line">	<span class="keyword">goto</span> test</span><br><span class="line">loop:</span><br><span class="line">	body-statement</span><br><span class="line">test:</span><br><span class="line">	t=test-expr;</span><br><span class="line">	<span class="keyword">if</span>(t)</span><br><span class="line">		<span class="keyword">goto</span> loop;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guarded-do的goto代码模板</span></span><br><span class="line">t=test-expr;</span><br><span class="line"><span class="keyword">if</span>(!t)</span><br><span class="line">	<span class="keyword">goto</span> done;</span><br><span class="line">loop:</span><br><span class="line">	body-statement</span><br><span class="line">	t=test-expr;</span><br><span class="line">	<span class="keyword">if</span>(t)</span><br><span class="line">		<span class="keyword">goto</span> loop;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure>
+<p>这段代码使用jump to middle翻译方法产生以下汇编代码，该代码计算x的奇偶性，也就是如果x中有奇数个1，就返回1，如果有偶数个1，就返回0,这段代码还是不理解<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fun_a</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> val = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</span><br><span class="line">		val ^= x;</span><br><span class="line">		x &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> val &amp; <span class="number">0x1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">fun_a:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	jmp	.L2</span><br><span class="line">.L3:</span><br><span class="line">	xorq	%rdi, %rax</span><br><span class="line">	shrq	%rdi</span><br><span class="line">.L2:</span><br><span class="line">	testq	%rdi, %rdi</span><br><span class="line">	jne	.L3</span><br><span class="line">	andl	$1, %eax</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>for循环:可以转化成while循环</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//jump to middle的goto模板</span><br><span class="line">init-expr;</span><br><span class="line">goto test;</span><br><span class="line">loop:</span><br><span class="line">	body-statement;</span><br><span class="line">	update-expr;</span><br><span class="line">test:</span><br><span class="line">	t=test-expr;</span><br><span class="line">	if(t)</span><br><span class="line">		goto loop;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//guarder-to的goto模板</span><br><span class="line">init=expr;</span><br><span class="line">t=test-expr;</span><br><span class="line">if(!t)</span><br><span class="line">	goto done;</span><br><span class="line">loop:</span><br><span class="line">	body-statement;</span><br><span class="line">	update-expr;</span><br><span class="line">	t=test-expr;</span><br><span class="line">	if(t)</span><br><span class="line">		goto loop;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure>
+<p>这段代码是将x的位反转，产生镜像，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fun_b</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> val = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> i ;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">64</span>; i != <span class="number">0</span> ; i++)&#123;</span><br><span class="line">		val = (val &lt;&lt; <span class="number">1</span>) | (x &amp; <span class="number">0x1</span>);</span><br><span class="line">		x &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">fun_b:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movl	$64, %edx</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	jmp	.L2</span><br><span class="line">.L3:</span><br><span class="line">	addq	%rax, %rax</span><br><span class="line">	movq	%rdi, %rcx</span><br><span class="line">	andl	$1, %ecx</span><br><span class="line">	orq	%rcx, %rax</span><br><span class="line">	shrq	%rdi</span><br><span class="line">	addl	$1, %edx</span><br><span class="line">.L2:</span><br><span class="line">	testl	%edx, %edx</span><br><span class="line">	jne	.L3</span><br><span class="line">	rep ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h3 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h3><p>通过使用跳转表，实现多重分支，这样switch即使有上百种情况，也能只用一次跳转表访问处理<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">switch_eg</span><span class="params">(<span class="keyword">long</span> x,<span class="keyword">long</span> n,<span class="keyword">long</span> *dest)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> val = x;</span><br><span class="line">	<span class="keyword">switch</span>(n)&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">100</span>:</span><br><span class="line">		val*=<span class="number">13</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">102</span>:</span><br><span class="line">		val+=<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">103</span>:</span><br><span class="line">		val+=<span class="number">11</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">104</span>:</span><br><span class="line">	<span class="keyword">case</span> <span class="number">106</span>:</span><br><span class="line">		val*=val;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		val=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	*dest=val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">switch_eg:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	subq	$100, %rsi</span><br><span class="line">	cmpq	$6, %rsi</span><br><span class="line">	ja	.L8</span><br><span class="line">	jmp	*.L4(,%rsi,8)   //间接跳转</span><br><span class="line">	.section	.rodata //只读的目标代码文件的段中</span><br><span class="line">	.align 8</span><br><span class="line">	.align 4</span><br><span class="line">.L4:                    //标记分配地址的开始，作为间接跳转的基地址 </span><br><span class="line">	.quad	.L3</span><br><span class="line">	.quad	.L8</span><br><span class="line">	.quad	.L5</span><br><span class="line">	.quad	.L6</span><br><span class="line">	.quad	.L7</span><br><span class="line">	.quad	.L8</span><br><span class="line">	.quad	.L7</span><br><span class="line">	.text</span><br><span class="line">.L3:</span><br><span class="line">	leaq	(%rdi,%rdi,2), %rax</span><br><span class="line">	leaq	(%rdi,%rax,4), %rdi</span><br><span class="line">	jmp	.L2</span><br><span class="line">.L5:</span><br><span class="line">	addq	$10, %rdi</span><br><span class="line">.L6:</span><br><span class="line">	addq	$11, %rdi</span><br><span class="line">	jmp	.L2</span><br><span class="line">.L7:</span><br><span class="line">	imulq	%rdi, %rdi</span><br><span class="line">	jmp	.L2</span><br><span class="line">.L8:</span><br><span class="line">	movl	$0, %edi</span><br><span class="line">.L2:</span><br><span class="line">	movq	%rdi, (%rdx)</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>是一种很重要的抽象，提供一种封装代码的方式，来实现摸个特定的功能，但却隐藏行为的具体实现，又提供清晰间接的接口定义。过程调用主要有以下几个机制：</p>
+<ul>
+<li>传递控制</li>
+<li>传递数据</li>
+<li>分配和释放内存</li>
+</ul>
+<h2 id="过程调用机制"><a href="#过程调用机制" class="headerlink" title="过程调用机制"></a>过程调用机制</h2><p>该机制的关键在于使用了栈数据结构提供的先进先出的内存管理机制<br>例如在Q执行时，先前调用Q的P调用链处在挂起的状态，Q可以在属于自己的存储空间中分配，当Q返回时，所分配的局部存储空间都可以被释放。<br>可以通过减小栈指针来分配空间，通过增加栈指针来释放空间，如果寄存器不够拿来分配，就会在栈中分配空间，如下图所示<img src="/2018/03/29/CSAPP-第三章（2）/5.jpg" alt=""></p>
+<p>通过<code>call</code>指令来实现，该指令<code>call Q</code>会将PC设置为<code>Q</code>的起始地址，将紧跟在<code>call</code>指令后面的那条指令压入栈中，成为返回地址。对应<code>ret</code>指令会从栈中弹出返回地址,并将会PC设置为返回地址</p>
+<h2 id="数据传送"><a href="#数据传送" class="headerlink" title="数据传送"></a>数据传送</h2><p>数据传送大多通过寄存器实现，并最多传递6个整数，寄存器的使用也是有特殊顺序的，如下图所示<img src="/2018/03/29/CSAPP-第三章（2）/CSAPP-3-5-3-7/6.jpg" alt="">超过6个的部分就要通过栈来传递<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">proc</span><span class="params">(<span class="keyword">long</span> a1,<span class="keyword">long</span> *a1p,</span></span></span><br><span class="line"><span class="function"><span class="params">	  <span class="keyword">int</span> a2,<span class="keyword">int</span> *a2p,</span></span></span><br><span class="line"><span class="function"><span class="params">	  <span class="keyword">short</span> a3,<span class="keyword">short</span> *a3p,</span></span></span><br><span class="line"><span class="function"><span class="params">	  <span class="keyword">char</span> a4,<span class="keyword">char</span> *a4p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	*a1p+=a1;</span><br><span class="line">	*a2p+=a2;</span><br><span class="line">	*a3p+=a3;</span><br><span class="line">	*a4p+=a4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">proc:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	16(%rsp), %rax</span><br><span class="line">	addq	%rdi, (%rsi)</span><br><span class="line">	addl	%edx, (%rcx)</span><br><span class="line">	addw	%r8w, (%r9)</span><br><span class="line">	movl	8(%rsp), %edx</span><br><span class="line">	addb	%dl, (%rax)</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>这个实例说明第7和8个参数位于栈指针距离8和16的位置上，返回地址也被压入栈中</p>
+<h2 id="局部数据"><a href="#局部数据" class="headerlink" title="局部数据"></a>局部数据</h2><p>有些时候需要将局部数据存放在内存中,例如</p>
+<ul>
+<li>寄存器不够存放本地数据</li>
+<li>需要地址运算符<code>&amp;</code>，此时就必须为它产生一个地址</li>
+<li>数组或者结构时，需要通过数组或结构引用才能访问到</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">call_proc</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> x1 =<span class="number">1</span>;<span class="keyword">int</span> x2 = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">short</span> x3 = <span class="number">3</span>;<span class="keyword">char</span> x4 = <span class="number">4</span>;</span><br><span class="line">	proc(x1,&amp;x1,x2,&amp;x2,x3,&amp;x3,x4,&amp;x4);</span><br><span class="line">	<span class="keyword">return</span> (x1+x2)*(x3-x4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">call_proc:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	subq	$40, %rsp</span><br><span class="line">	.cfi_def_cfa_offset 48</span><br><span class="line">	movq	$1, 24(%rsp)</span><br><span class="line">	movl	$2, 20(%rsp)</span><br><span class="line">	movw	$3, 18(%rsp)</span><br><span class="line">	movb	$4, 17(%rsp)</span><br><span class="line">	leaq	17(%rsp), %rax</span><br><span class="line">	movq	%rax, 8(%rsp)</span><br><span class="line">	movl	$4, (%rsp)</span><br><span class="line">	leaq	18(%rsp), %r9</span><br><span class="line">	movl	$3, %r8d</span><br><span class="line">	leaq	20(%rsp), %rcx</span><br><span class="line">	movl	$2, %edx</span><br><span class="line">	leaq	24(%rsp), %rsi</span><br><span class="line">	movl	$1, %edi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	proc</span><br><span class="line">	movslq	20(%rsp), %rdx</span><br><span class="line">	addq	24(%rsp), %rdx</span><br><span class="line">	movswl	18(%rsp), %eax</span><br><span class="line">	movsbl	17(%rsp), %ecx</span><br><span class="line">	subl	%ecx, %eax</span><br><span class="line">	cltq</span><br><span class="line">	imulq	%rdx, %rax</span><br><span class="line">	addq	$40, %rsp</span><br><span class="line">	.cfi_def_cfa_offset 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>大部分指令都在为调用<code>proc</code>做准备</p>
+<p>由于寄存器是所有过程共享的资源，为了防止过程之间修改互相的寄存器值，根据惯例规定，寄存器<code>%rbx</code> <code>%rbp</code> <code>%r12~%r15</code>都被划分为被调用者保存寄存器，当过程Q保存一个寄存器的值时，要么不去改变，要么把原始值先压入栈中，然后改变寄存器的值，然后再返回前从栈中弹出旧值，压入的值存在栈帧中“保存的寄存器”的特殊部分，这样调用者就能把值安全得保存在寄存器中</p>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>递归调用一个函数本身与调用其他函数是一样的，每次函数调用都有它自己的私有状态信息存储空间</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/CSAPP-第三章（1）/" rel="next" title="CSAPP-第三章（1）">
+                <i class="fa fa-chevron-left"></i> CSAPP-第三章（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/30/CLRS-插入排序/" rel="prev" title="插入排序">
+                插入排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算术和逻辑操作"><span class="nav-number">1.</span> <span class="nav-text">算术和逻辑操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载有效地址leaq"><span class="nav-number">1.1.</span> <span class="nav-text">加载有效地址leaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一元和二元操作"><span class="nav-number">1.2.</span> <span class="nav-text">一元和二元操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移位操作"><span class="nav-number">1.3.</span> <span class="nav-text">移位操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊的算术操作"><span class="nav-number">1.4.</span> <span class="nav-text">特殊的算术操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制"><span class="nav-number">2.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件码"><span class="nav-number">2.1.</span> <span class="nav-text">条件码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳转指令"><span class="nav-number">2.2.</span> <span class="nav-text">跳转指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#条件控制实现条件分支"><span class="nav-number">2.2.1.</span> <span class="nav-text">条件控制实现条件分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件传送来实现条件分支"><span class="nav-number">2.2.2.</span> <span class="nav-text">条件传送来实现条件分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环"><span class="nav-number">2.2.3.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch语句"><span class="nav-number">2.2.4.</span> <span class="nav-text">switch语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过程"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#过程调用机制"><span class="nav-number">3.1.</span> <span class="nav-text">过程调用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据传送"><span class="nav-number">3.2.</span> <span class="nav-text">数据传送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部数据"><span class="nav-number">3.3.</span> <span class="nav-text">局部数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">3.4.</span> <span class="nav-text">递归</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

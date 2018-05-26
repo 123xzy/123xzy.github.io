@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSAPP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《CSAPP》第三章小结">
+<meta name="keywords" content="CSAPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP-第三章（1）">
+<meta property="og:url" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="《CSAPP》第三章小结">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/5.jpg">
+<meta property="og:updated_time" content="2018-05-26T12:37:44.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSAPP-第三章（1）">
+<meta name="twitter:description" content="《CSAPP》第三章小结">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/"/>
+
+
+
+
+
+  <title>CSAPP-第三章（1） | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/CSAPP-第三章（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSAPP-第三章（1）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T14:58:26+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《CSAPP》第三章小结<br><a id="more"></a><br>梗概：汇编代码是机器代码的文本表示，对于严谨的程序员来说，能够阅读和理解汇编代码是一项很重要的技能</p>
+<p>目录：</p>
+<ul>
+<li><a href="#1">程序编码</a></li>
+<li><a href="#2">数据格式</a></li>
+<li><a href="#3">访问信息</a></li>
+</ul>
+<h1 id="程序编码"><a href="#程序编码" class="headerlink" title="程序编码"></a><span id="1">程序编码</span></h1><p>对于机器级编程，两种抽象极其重要</p>
+<ul>
+<li>一种是指令集体系结构或指令集架构：定义了处理器状态、指令格式，以及每条指令对状态的影响</li>
+<li>另一种是使用的内存地址是虚拟地址，提供的内存模型看上去是一个连续很大的字节数组</li>
+</ul>
+<p>一些对程序员隐藏的处理器状态将会在机器代码中可见</p>
+<ul>
+<li>程序计数器（PC，%rip）：表示将要执行的下一条指令在内存的地址</li>
+<li>整数寄存器文件：存储地址（对于与c语言的指针）或是整数数据，有的记录重要的程序状态，有的保存临时数据，如过程参数、局部变量和函数返回值</li>
+<li>条件码寄存器：保存算术或者逻辑指令的状态信息，实现控制或者数据流的条件变化</li>
+<li>向量寄存器：存放整数或浮点数值</li>
+</ul>
+<p>c语言中可以声明各种数据类型，但在机器代码中，这些对象只是一个很大的字节数组，机器代码不区分有符号无符号，也不区分指针和整数</p>
+<p>假设有一个mstore.c文件，包含以下内容<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">mult2</span><span class="params">(<span class="keyword">long</span>,<span class="keyword">long</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">multstore</span><span class="params">(<span class="keyword">long</span> x,<span class="keyword">long</span> y ,<span class="keyword">long</span> *dest)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> t = mult2(x,y);</span><br><span class="line">	*dest = t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输入以下命令，就将产生一个汇编文件mstore.s<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]# gcc -Og -S mstore.c</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//汇编文件mstore.s，所有以&quot;.&quot;开头的都是指导汇编器和链接器工作的伪指令，阅读时可忽略</span><br><span class="line"></span><br><span class="line">multstore:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 3, -16</span><br><span class="line">	movq	%rdx, %rbx</span><br><span class="line">	call	mult2</span><br><span class="line">	movq	%rax, (%rbx)</span><br><span class="line">	popq	%rbx</span><br><span class="line">	.cfi_def_cfa_offset 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
+<p>如果进一步使用以下指令，将产生目标代码文件mstore.o，对于这类二进制格式，一般是无法查看的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]# gcc -Og -c mstore.c</span><br></pre></td></tr></table></figure></p>
+<p>但我们可以通过反汇编器，根据机器代码产生类似于汇编代码的格式，例如我们可以输入以下命令，查看mstore.o<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]# objdump -d mstore.o</span><br></pre></td></tr></table></figure></p>
+<p>产生如下文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mstore.o:     file format elf64-x86-64</span><br><span class="line"></span><br><span class="line">Disassembly of section .text:</span><br><span class="line"></span><br><span class="line">0000000000000000 &lt;multstore&gt;:</span><br><span class="line">   0:	53                   	push   %rbx</span><br><span class="line">   1:	48 89 d3             	mov    %rdx,%rbx</span><br><span class="line">   4:	e8 00 00 00 00       	callq  9 &lt;multstore+0x9&gt;</span><br><span class="line">   9:	48 89 03             	mov    %rax,(%rbx)</span><br><span class="line">   c:	5b                   	pop    %rbx</span><br><span class="line">   d:	c3                   	retq</span><br></pre></td></tr></table></figure></p>
+<p>其中左边给出的就是二进制文件中的14个十六进制字节值，每行都对应右边的汇编语言，表示一条指令，且这些写反汇编语言具有以下特性:</p>
+<ul>
+<li>指令长度从1到15个字节不等</li>
+<li>从某一位置开始，将字节唯一地解码成机器指令，例如push %rbx就是从字节值53开头</li>
+<li>反汇编器是根据机器代码文件中（mstore.o）的字节序列确定的汇编代码，不需要访问源代码或者汇编代码</li>
+<li>反汇编代码和汇编代码还是有一些细微差别，如push和pushq，q表示操作数大小指示符大多数情况可以省略</li>
+</ul>
+<p>要生成可执行代码还需要运行链接器去链接一组目标代码文件，并且这组目标代码文件中有且只有一个main函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mulstore</span><span class="params">(<span class="keyword">long</span>,<span class="keyword">long</span>,<span class="keyword">long</span>*)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> d;</span><br><span class="line">	multstore(<span class="number">2</span>,<span class="number">3</span>,&amp;d);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"2*3 --&gt; &amp;ld\n"</span>,d);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">mult2</span><span class="params">(<span class="keyword">long</span> a,<span class="keyword">long</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> s = a*b;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过以下命令就能生成可执行文件prog<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[xzy]# gcc -Og -o prog main.c mstore.c</span><br></pre></td></tr></table></figure></p>
+<p>通过反汇编查看prog文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost xzy]# objdump -d prog</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br></pre></td><td class="code"><pre><span class="line">prog:     file format elf64-x86-64</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disassembly of section .init:</span><br><span class="line"></span><br><span class="line">00000000004003e0 &lt;_init&gt;:</span><br><span class="line">  4003e0:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  4003e4:	48 8b 05 0d 0c 20 00 	mov    0x200c0d(%rip),%rax        # 600ff8 &lt;_DYNAMIC+0x1d0&gt;</span><br><span class="line">  4003eb:	48 85 c0             	test   %rax,%rax</span><br><span class="line">  4003ee:	74 05                	je     4003f5 &lt;_init+0x15&gt;</span><br><span class="line">  4003f0:	e8 3b 00 00 00       	callq  400430 &lt;__gmon_start__@plt&gt;</span><br><span class="line">  4003f5:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  4003f9:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">Disassembly of section .plt:</span><br><span class="line"></span><br><span class="line">0000000000400400 &lt;printf@plt-0x10&gt;:</span><br><span class="line">  400400:	ff 35 02 0c 20 00    	pushq  0x200c02(%rip)        # 601008 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;</span><br><span class="line">  400406:	ff 25 04 0c 20 00    	jmpq   *0x200c04(%rip)        # 601010 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;</span><br><span class="line">  40040c:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">0000000000400410 &lt;printf@plt&gt;:</span><br><span class="line">  400410:	ff 25 02 0c 20 00    	jmpq   *0x200c02(%rip)        # 601018 &lt;_GLOBAL_OFFSET_TABLE_+0x18&gt;</span><br><span class="line">  400416:	68 00 00 00 00       	pushq  $0x0</span><br><span class="line">  40041b:	e9 e0 ff ff ff       	jmpq   400400 &lt;_init+0x20&gt;</span><br><span class="line"></span><br><span class="line">0000000000400420 &lt;__libc_start_main@plt&gt;:</span><br><span class="line">  400420:	ff 25 fa 0b 20 00    	jmpq   *0x200bfa(%rip)        # 601020 &lt;_GLOBAL_OFFSET_TABLE_+0x20&gt;</span><br><span class="line">  400426:	68 01 00 00 00       	pushq  $0x1</span><br><span class="line">  40042b:	e9 d0 ff ff ff       	jmpq   400400 &lt;_init+0x20&gt;</span><br><span class="line"></span><br><span class="line">0000000000400430 &lt;__gmon_start__@plt&gt;:</span><br><span class="line">  400430:	ff 25 f2 0b 20 00    	jmpq   *0x200bf2(%rip)        # 601028 &lt;_GLOBAL_OFFSET_TABLE_+0x28&gt;</span><br><span class="line">  400436:	68 02 00 00 00       	pushq  $0x2</span><br><span class="line">  40043b:	e9 c0 ff ff ff       	jmpq   400400 &lt;_init+0x20&gt;</span><br><span class="line"></span><br><span class="line">Disassembly of section .text:</span><br><span class="line"></span><br><span class="line">0000000000400440 &lt;_start&gt;:</span><br><span class="line">  400440:	31 ed                	xor    %ebp,%ebp</span><br><span class="line">  400442:	49 89 d1             	mov    %rdx,%r9</span><br><span class="line">  400445:	5e                   	pop    %rsi</span><br><span class="line">  400446:	48 89 e2             	mov    %rsp,%rdx</span><br><span class="line">  400449:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp</span><br><span class="line">  40044d:	50                   	push   %rax</span><br><span class="line">  40044e:	54                   	push   %rsp</span><br><span class="line">  40044f:	49 c7 c0 f0 05 40 00 	mov    $0x4005f0,%r8</span><br><span class="line">  400456:	48 c7 c1 80 05 40 00 	mov    $0x400580,%rcx</span><br><span class="line">  40045d:	48 c7 c7 2d 05 40 00 	mov    $0x40052d,%rdi</span><br><span class="line">  400464:	e8 b7 ff ff ff       	callq  400420 &lt;__libc_start_main@plt&gt;</span><br><span class="line">  400469:	f4                   	hlt    </span><br><span class="line">  40046a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)</span><br><span class="line"></span><br><span class="line">0000000000400470 &lt;deregister_tm_clones&gt;:</span><br><span class="line">  400470:	b8 3f 10 60 00       	mov    $0x60103f,%eax</span><br><span class="line">  400475:	55                   	push   %rbp</span><br><span class="line">  400476:	48 2d 38 10 60 00    	sub    $0x601038,%rax</span><br><span class="line">  40047c:	48 83 f8 0e          	cmp    $0xe,%rax</span><br><span class="line">  400480:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  400483:	77 02                	ja     400487 &lt;deregister_tm_clones+0x17&gt;</span><br><span class="line">  400485:	5d                   	pop    %rbp</span><br><span class="line">  400486:	c3                   	retq   </span><br><span class="line">  400487:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  40048c:	48 85 c0             	test   %rax,%rax</span><br><span class="line">  40048f:	74 f4                	je     400485 &lt;deregister_tm_clones+0x15&gt;</span><br><span class="line">  400491:	5d                   	pop    %rbp</span><br><span class="line">  400492:	bf 38 10 60 00       	mov    $0x601038,%edi</span><br><span class="line">  400497:	ff e0                	jmpq   *%rax</span><br><span class="line">  400499:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">00000000004004a0 &lt;register_tm_clones&gt;:</span><br><span class="line">  4004a0:	b8 38 10 60 00       	mov    $0x601038,%eax</span><br><span class="line">  4004a5:	55                   	push   %rbp</span><br><span class="line">  4004a6:	48 2d 38 10 60 00    	sub    $0x601038,%rax</span><br><span class="line">  4004ac:	48 c1 f8 03          	sar    $0x3,%rax</span><br><span class="line">  4004b0:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  4004b3:	48 89 c2             	mov    %rax,%rdx</span><br><span class="line">  4004b6:	48 c1 ea 3f          	shr    $0x3f,%rdx</span><br><span class="line">  4004ba:	48 01 d0             	add    %rdx,%rax</span><br><span class="line">  4004bd:	48 d1 f8             	sar    %rax</span><br><span class="line">  4004c0:	75 02                	jne    4004c4 &lt;register_tm_clones+0x24&gt;</span><br><span class="line">  4004c2:	5d                   	pop    %rbp</span><br><span class="line">  4004c3:	c3                   	retq   </span><br><span class="line">  4004c4:	ba 00 00 00 00       	mov    $0x0,%edx</span><br><span class="line">  4004c9:	48 85 d2             	test   %rdx,%rdx</span><br><span class="line">  4004cc:	74 f4                	je     4004c2 &lt;register_tm_clones+0x22&gt;</span><br><span class="line">  4004ce:	5d                   	pop    %rbp</span><br><span class="line">  4004cf:	48 89 c6             	mov    %rax,%rsi</span><br><span class="line">  4004d2:	bf 38 10 60 00       	mov    $0x601038,%edi</span><br><span class="line">  4004d7:	ff e2                	jmpq   *%rdx</span><br><span class="line">  4004d9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">00000000004004e0 &lt;__do_global_dtors_aux&gt;:</span><br><span class="line">  4004e0:	80 3d 4d 0b 20 00 00 	cmpb   $0x0,0x200b4d(%rip)        # 601034 &lt;_edata&gt;</span><br><span class="line">  4004e7:	75 11                	jne    4004fa &lt;__do_global_dtors_aux+0x1a&gt;</span><br><span class="line">  4004e9:	55                   	push   %rbp</span><br><span class="line">  4004ea:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  4004ed:	e8 7e ff ff ff       	callq  400470 &lt;deregister_tm_clones&gt;</span><br><span class="line">  4004f2:	5d                   	pop    %rbp</span><br><span class="line">  4004f3:	c6 05 3a 0b 20 00 01 	movb   $0x1,0x200b3a(%rip)        # 601034 &lt;_edata&gt;</span><br><span class="line">  4004fa:	f3 c3                	repz retq </span><br><span class="line">  4004fc:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">0000000000400500 &lt;frame_dummy&gt;:</span><br><span class="line">  400500:	48 83 3d 18 09 20 00 	cmpq   $0x0,0x200918(%rip)        # 600e20 &lt;__JCR_END__&gt;</span><br><span class="line">  400507:	00 </span><br><span class="line">  400508:	74 1e                	je     400528 &lt;frame_dummy+0x28&gt;</span><br><span class="line">  40050a:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  40050f:	48 85 c0             	test   %rax,%rax</span><br><span class="line">  400512:	74 14                	je     400528 &lt;frame_dummy+0x28&gt;</span><br><span class="line">  400514:	55                   	push   %rbp</span><br><span class="line">  400515:	bf 20 0e 60 00       	mov    $0x600e20,%edi</span><br><span class="line">  40051a:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  40051d:	ff d0                	callq  *%rax</span><br><span class="line">  40051f:	5d                   	pop    %rbp</span><br><span class="line">  400520:	e9 7b ff ff ff       	jmpq   4004a0 &lt;register_tm_clones&gt;</span><br><span class="line">  400525:	0f 1f 00             	nopl   (%rax)</span><br><span class="line">  400528:	e9 73 ff ff ff       	jmpq   4004a0 &lt;register_tm_clones&gt;</span><br><span class="line"></span><br><span class="line">000000000040052d &lt;main&gt;:</span><br><span class="line">  40052d:	48 83 ec 18          	sub    $0x18,%rsp</span><br><span class="line">  400531:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  400536:	be 03 00 00 00       	mov    $0x3,%esi</span><br><span class="line">  40053b:	bf 02 00 00 00       	mov    $0x2,%edi</span><br><span class="line">  400540:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400545:	e8 26 00 00 00       	callq  400570 &lt;multstore&gt;</span><br><span class="line">  40054a:	48 8b 74 24 08       	mov    0x8(%rsp),%rsi</span><br><span class="line">  40054f:	bf 10 06 40 00       	mov    $0x400610,%edi</span><br><span class="line">  400554:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400559:	e8 b2 fe ff ff       	callq  400410 &lt;printf@plt&gt;</span><br><span class="line">  40055e:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400563:	48 83 c4 18          	add    $0x18,%rsp</span><br><span class="line">  400567:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">0000000000400568 &lt;mult2&gt;:</span><br><span class="line">  400568:	48 89 f8             	mov    %rdi,%rax</span><br><span class="line">  40056b:	48 0f af c6          	imul   %rsi,%rax</span><br><span class="line">  40056f:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">0000000000400570 &lt;multstore&gt;:</span><br><span class="line">  400570:	53                   	push   %rbx</span><br><span class="line">  400571:	48 89 d3             	mov    %rdx,%rbx</span><br><span class="line">  400574:	e8 ef ff ff ff       	callq  400568 &lt;mult2&gt;</span><br><span class="line">  400579:	48 89 03             	mov    %rax,(%rbx)</span><br><span class="line">  40057c:	5b                   	pop    %rbx</span><br><span class="line">  40057d:	c3                   	retq   </span><br><span class="line">  40057e:	66 90                	xchg   %ax,%ax</span><br><span class="line"></span><br><span class="line">0000000000400580 &lt;__libc_csu_init&gt;:</span><br><span class="line">  400580:	41 57                	push   %r15</span><br><span class="line">  400582:	41 89 ff             	mov    %edi,%r15d</span><br><span class="line">  400585:	41 56                	push   %r14</span><br><span class="line">  400587:	49 89 f6             	mov    %rsi,%r14</span><br><span class="line">  40058a:	41 55                	push   %r13</span><br><span class="line">  40058c:	49 89 d5             	mov    %rdx,%r13</span><br><span class="line">  40058f:	41 54                	push   %r12</span><br><span class="line">  400591:	4c 8d 25 78 08 20 00 	lea    0x200878(%rip),%r12        # 600e10 &lt;__frame_dummy_init_array_entry&gt;</span><br><span class="line">  400598:	55                   	push   %rbp</span><br><span class="line">  400599:	48 8d 2d 78 08 20 00 	lea    0x200878(%rip),%rbp        # 600e18 &lt;__init_array_end&gt;</span><br><span class="line">  4005a0:	53                   	push   %rbx</span><br><span class="line">  4005a1:	4c 29 e5             	sub    %r12,%rbp</span><br><span class="line">  4005a4:	31 db                	xor    %ebx,%ebx</span><br><span class="line">  4005a6:	48 c1 fd 03          	sar    $0x3,%rbp</span><br><span class="line">  4005aa:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  4005ae:	e8 2d fe ff ff       	callq  4003e0 &lt;_init&gt;</span><br><span class="line">  4005b3:	48 85 ed             	test   %rbp,%rbp</span><br><span class="line">  4005b6:	74 1e                	je     4005d6 &lt;__libc_csu_init+0x56&gt;</span><br><span class="line">  4005b8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)</span><br><span class="line">  4005bf:	00 </span><br><span class="line">  4005c0:	4c 89 ea             	mov    %r13,%rdx</span><br><span class="line">  4005c3:	4c 89 f6             	mov    %r14,%rsi</span><br><span class="line">  4005c6:	44 89 ff             	mov    %r15d,%edi</span><br><span class="line">  4005c9:	41 ff 14 dc          	callq  *(%r12,%rbx,8)</span><br><span class="line">  4005cd:	48 83 c3 01          	add    $0x1,%rbx</span><br><span class="line">  4005d1:	48 39 eb             	cmp    %rbp,%rbx</span><br><span class="line">  4005d4:	75 ea                	jne    4005c0 &lt;__libc_csu_init+0x40&gt;</span><br><span class="line">  4005d6:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  4005da:	5b                   	pop    %rbx</span><br><span class="line">  4005db:	5d                   	pop    %rbp</span><br><span class="line">  4005dc:	41 5c                	pop    %r12</span><br><span class="line">  4005de:	41 5d                	pop    %r13</span><br><span class="line">  4005e0:	41 5e                	pop    %r14</span><br><span class="line">  4005e2:	41 5f                	pop    %r15</span><br><span class="line">  4005e4:	c3                   	retq   </span><br><span class="line">  4005e5:	90                   	nop</span><br><span class="line">  4005e6:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line">  4005ed:	00 00 00 </span><br><span class="line"></span><br><span class="line">00000000004005f0 &lt;__libc_csu_fini&gt;:</span><br><span class="line">  4005f0:	f3 c3                	repz retq </span><br><span class="line"></span><br><span class="line">Disassembly of section .fini:</span><br><span class="line"></span><br><span class="line">00000000004005f4 &lt;_fini&gt;:</span><br><span class="line">  4005f4:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line">  4005f8:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line">  4005fc:	c3                   	retq</span><br></pre></td></tr></table></figure>
+<p>这份完整代码不仅包括两个函数，还包括启动和终止程序的代码，以及用来与操作系统交互的代码，其中一段节选和之前看到的mstore.c反汇编产生的代码几乎一样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0000000000400570 &lt;multstore&gt;:</span><br><span class="line">  400570:	53                   	push   %rbx</span><br><span class="line">  400571:	48 89 d3             	mov    %rdx,%rbx</span><br><span class="line">  400574:	e8 ef ff ff ff       	callq  400568 &lt;mult2&gt;</span><br><span class="line">  400579:	48 89 03             	mov    %rax,(%rbx)</span><br><span class="line">  40057c:	5b                   	pop    %rbx</span><br><span class="line">  40057d:	c3                   	retq   </span><br><span class="line">  40057e:	66 90                	xchg   %ax,%ax</span><br></pre></td></tr></table></figure></p>
+<p>但是依旧有几点很重要的区别</p>
+<ul>
+<li>左边的地址不同，链接器将这段代码的地址移到了一段不同的地址范围中</li>
+<li>链接器为callq指令调用函数mult2填写了需要的地址400568</li>
+<li>多了最后一行代码，虽然和书中实例不同，但应该是出于存储器系统性能考虑，使函数代码变为16字节</li>
+</ul>
+<h1 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a><span id="2">数据格式</span></h1><p><img src="/2018/03/29/CSAPP-第三章（1）/1.jpg" alt="">用字（word）表示16位数据类型，32位数为双字，64位为四字。汇编代码指令都有一个字符的后缀，表明操作数的大小。如movb（传送字节），movw（传送字），movl（传送双字），movq（传送四字）</p>
+<h1 id="访问信息"><a href="#访问信息" class="headerlink" title="访问信息"></a><span id="3">访问信息</span></h1><p>一个CPU包含一组16个存储64位值的通用目的寄存器，用来存储整数数据和指针。<img src="/2018/03/29/CSAPP-第三章（1）/2.jpg" alt="">图中不同颜色的方框标明，指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作，字节级操作可以访问最低的字节，16位操作可以访问最低的2个字节，32位操作可以访问最低的4个字节，64位则可以访问整个寄存器。<br>所有寄存器中最特别的是栈指针%rsp，用来标明运行时栈的结束位置</p>
+<h2 id="操作数"><a href="#操作数" class="headerlink" title="操作数"></a>操作数</h2><p>一个指令往往有多于一个的操作数，操作数可分为三种类型</p>
+<ul>
+<li>立即数：用来表示常数值，如$-577或者$Ox1F</li>
+<li>寄存器：R[r]表示寄存器的值</li>
+<li>内存引用：根据计算出来的地址访问某个内存位置，M[Addr]表示地址Addr的值，并且有多种寻址模式，如下图所示<img src="/2018/03/29/CSAPP-第三章（1）/3.jpg" alt="">例题如下<img src="/2018/03/29/CSAPP-第三章（1）/4.jpg" alt="">计算结果如下：Ox100、OxAB、Ox108、OxFF、(Ox100+a)=(Ox104)=OxAB、(9+Ox100+Ox3)=(Ox10C)=Ox11、(260+Ox1+Ox3)=(Ox108)=Ox13、(OxFC+Ox1<em>4)=(Ox100)=OxFF、(Ox100+Ox3</em>4)=(Ox10C)=Ox11</li>
+</ul>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>我们将具有相同操作效果但操作数不同的指令划为一类<br>最简单的数据传输指令-MOV类，把数据从源位置复制到目的位置，有movb、movw、movl、movq，分别对应操作数大小为1、2、4、8字节。<br>源操作数指定的值是一个立即数，存储在寄存器或者内存中。目的操作数指定一个寄存器或者一个内存位置。指令最后一个一个字符必须与寄存器的大小匹配。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">movl $Ox4050,%eax		立即数-&gt;寄存器</span><br><span class="line">movw %bp,%sp   			寄存器-&gt;寄存器</span><br><span class="line">movb (%rdi,%rcx),%al 		内存-&gt;寄存器</span><br><span class="line">movb $-17,(%rsp)	 	立即数-&gt;内存</span><br><span class="line">movq %rax,-12(%rbp)	  	寄存器-&gt;内存</span><br></pre></td></tr></table></figure></p>
+<p>通过指令将较小的源值复制到较大的目的，这种指令分为两类：MOVZ类和MOVS类。MOVZ类将目的中的剩余字节填充为0，而MOVS类通过符号扩展来填充。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//注意-1的十六进制表示为FF...FFF</span><br><span class="line">movabsq $Ox0011223344556677,%rax %rax = 0011223344556677 //初始化为位模式</span><br><span class="line">movl $-1,%al		%rax = 00112233445566FF  //把%rax的低位字节设置为FF</span><br><span class="line">movl $-1,%ax		%rax = 001122334455FFFF  //把低2位字节设置为FFFF</span><br><span class="line">movl $-1,%eax	    %rax = 00000000FFFFFFFF  //movl以寄存器作为目的时，会把寄存器的高位4字节设为0</span><br><span class="line">movl $-1,%rax		%rax = FFFFFFFFFFFFFFFF  ///则把整个寄存器设为F</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//展示了MOVS和MOVZ指令的区别</span><br><span class="line">movabsq $Ox0011223344556677,%rax %rax = 0011223344556677</span><br><span class="line">movb $OxAA,%dl 			%dl = AA</span><br><span class="line">movb %dl,%al 			%rax = 0011223344556677</span><br><span class="line">movsbq %dl,%rax 		%rax = FFFFFFFFFFFFFFAA</span><br><span class="line">movzbq $dl,%rax 		%rax = 00000000000000AA</span><br></pre></td></tr></table></figure>
+<p>下面是寄存器的错误使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">movb $OxF,(%ebx)     //%ebx不能作为地址寄存器</span><br><span class="line">movl %rax,(%rsp)     //指令后缀和寄存器ID%rax不匹配，应该是movq</span><br><span class="line">movw (%rax),4(%rsp)  //不能同时指向内存位置</span><br><span class="line">movb %al,%sl         //不存在%sl</span><br><span class="line">movq %rax,$Ox123     //立即数不能作为目的位置</span><br><span class="line">movl %eax,%rdx       //目的操作数大小不对</span><br><span class="line">movb %si,8(%rbp)     //指令后缀和寄存器ID%si不匹配，应该是movw</span><br></pre></td></tr></table></figure></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">long exchange(long *xp,long y)</span><br><span class="line">&#123;</span><br><span class="line">	long x = *xp;</span><br><span class="line">	*xp = y;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>汇编后产生以下节选代码，函数由三条指令构成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//参数xp和y分别存储在%rdi和%rsi中</span><br><span class="line"></span><br><span class="line">exchange:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	movq	(%rdi), %rax    //把x的值放在%rax或其低位部分，而%rax是返回值的寄存器，因此最后返回x</span><br><span class="line">	movq	%rsi, (%rdi)   //将y写入到寄存器%rdi的xp指向的内存位置</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure></p>
+<p>这段汇编代码有几点注意：</p>
+<ul>
+<li>说明了从内存读值到寄存器，和从寄存器写到内存</li>
+<li>xp指针对应的就是地址，即将该指针放在寄存器%rdi，在内存中引用给寄存器(%rdi)就是读取指针指向地址的值</li>
+<li>x局部变量是保存在寄存器(%rax)中的,而不是内存中，因为寄存器访问快<br>假设sp和dp被申明为以下类型<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str_t *sp;</span><br><span class="line">dest_t *dp;</span><br><span class="line">怎么选取适当的数据传送指令实现下面的操作</span><br><span class="line">*dp = (dest_t) *sp;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>假设sp和dp的值分别存储在寄存器%rdi和%rsi中，给出下列实际类型写出对应的指令<br>其中第一条指令从内存中读数，并做适当的转换，第二条把%rax的适当部分写到内存</p>
+<h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h3><p>当强制类型转换涉及大小和符号变化时，先改变大小<img src="/2018/03/29/CSAPP-第三章（1）/5.jpg" alt="">从这张图的第五行看出，从int强制转换成char时，第一步从内存的读取到%eax,第二步却从%eax的低位寄存器%al中读取到内存，显然%eax的高位被自动舍弃了，这就是C语言强制类型转换出错的原因</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/27/Linux-第五章/" rel="next" title="Linux-第五章">
+                <i class="fa fa-chevron-left"></i> Linux-第五章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/CSAPP-第三章（2）/" rel="prev" title="CSAPP-第三章（2）">
+                CSAPP-第三章（2） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序编码"><span class="nav-number">1.</span> <span class="nav-text">程序编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据格式"><span class="nav-number">2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问信息"><span class="nav-number">3.</span> <span class="nav-text">访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数"><span class="nav-number">3.1.</span> <span class="nav-text">操作数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">3.2.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">3.3.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重点"><span class="nav-number">3.3.1.</span> <span class="nav-text">重点</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
