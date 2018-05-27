@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSAPP,LAB," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="CSAPP,LAB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bomblab">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/lab-bomb/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/2.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/4.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/5.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/6.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/7.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/11/lab-bomb/8.JPG">
+<meta property="og:updated_time" content="2018-05-27T06:11:56.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bomblab">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/11/lab-bomb/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/lab-bomb/"/>
+
+
+
+
+
+  <title>bomblab | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/lab-bomb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bomblab</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T21:45:26+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/03/11/lab-bomb/1.jpg" alt=""><br><a id="more"></a></p>
+<hr>
+<p>啃完了CSAPP的前四章，但是怎么能停在只是坑完了呢，当然要做配套的经典Lab,这次做实验把学到的都用起来了<br>因为实验会涉及到<code>GDB</code>的调试，可以参照<a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a></p>
+<ul>
+<li><a href="#1">phase_1</a></li>
+<li><a href="#2">phase_2</a></li>
+<li><a href="#3">phase_3</a></li>
+<li><a href="#4">phase_4</a></li>
+<li><a href="#5">phase_5</a></li>
+<li><a href="#6">phase_6</a></li>
+</ul>
+<h1 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a><span id="1"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_1.txt" target="_blank" rel="noopener">phase_1</a></span></h1><p>首先调用<code>objdump -d bomp &gt; bomb.txt</code>语句对其进行反汇编,产生<a href="https://github.com/123xzy/CSAPP/blob/master/bomb/bomb.txt" target="_blank" rel="noopener">bomb.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">0000000000400ee0 &lt;phase_1&gt;:</span><br><span class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp      //栈指针向栈顶移8字节</span><br><span class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi //设置%esi的值为$Ox402400</span><br><span class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;//调用strings_not_equal函数</span><br><span class="line">  400eee:	85 c0                	test   %eax,%eax      //比较%eax是否为0，%eax存储的是函数的返回值，即strings_not_equal的返回值</span><br><span class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt; //返回等于零进入下一关</span><br><span class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt; //否则调用炸弹爆炸函数</span><br><span class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp      //恢复栈顶指针</span><br><span class="line">  400efb:	c3</span><br></pre></td></tr></table></figure></p>
+<p>从对汇编代码的分析看，<code>$0x402400</code>地址的值是破解的关键</p>
+<ul>
+<li>我们先<code>GDB</code>该程序，并在<code>phase_1</code>函数开头设置一个断点，如下图所示<img src="/2018/03/11/lab-bomb/2.JPG" alt=""></li>
+<li><p>之后<code>run</code>该程序，就会在断点处停下，并随机输入一个字符串<code>xzy</code><br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为<code>-rw-------</code>，因此我是没有权限去执行它的，具体修改权限可以参照<a href="/2018/03/31/Linux-第六章/" title="Linux-第六章">Linux-第六章</a>）<img src="/2018/03/11/lab-bomb/3.JPG" alt=""></p>
+</li>
+<li><p>我们的目的是要读取<code>$0x402400</code>地址的值，所以我们单步调试到mov语句之后，并读取该地址的值，我们可以看到写入的字符串xzy存在<code>%eax</code>，而我们要的信息存在<code>%esi</code><img src="/2018/03/11/lab-bomb/4.JPG" alt=""></p>
+</li>
+<li><p>至此我们就找到破解第一关的密码了</p>
+</li>
+</ul>
+<h1 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a><span id="2"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_2.txt" target="_blank" rel="noopener">phase_2</a></span></h1><p>为了之后的做题带来方便，我们将答案存储在<a href="">ans.txt</a>,并在每次运行时作为参数输入，如下图所示<img src="/2018/03/11/lab-bomb/5.JPG" alt="">这一关用到了一点栈操作的知识，前两行分别是将<code>%rbp</code>和<code>%rbx</code>压入栈中，<code>%rsp</code>始终是指向栈顶，栈的结构类似下图<img src="/2018/03/11/lab-bomb/6.jpg" alt=""><br>我们看到<code>400f05:    e8 52 05 00 00           callq  40145c &lt;read_six_numbers&gt;</code>语句的时候,应该猜到第二关的密码是六个数字,并且读入的六个数字保存在<code>%rsp</code>到<code>%rsp+28</code>中</p>
+<p>下一条语句比较1和<code>%rsp</code>指向的内存的值（也就是读入的第一个数字），如果相等则跳转到<code>400f30 &lt;phase_2+0x34&gt;</code>，该语句是设置寄存器值的操作，也就是将<code>%rsp+4</code>的值赋给<code>%rbx</code>，同理将<code>%rsp+18</code>的值赋给<code>%rbp</code>，继续跳转到<code>400f17 &lt;phase_2+0x1b&gt;</code>，该语句表示将（%rbx-4）地址所指向内存的值（即<code>%rsp</code>指向内存的值，也是第一个输入的数）赋给<code>%eax</code>，然后<code>%eax</code>自加后和<code>%rbx</code>（即第二个输入的值）比较，所以第二个数字应该是2，接下来就是一个循环，所以最后的结果应该是1 2 4 8 16 32</p>
+<h1 id="phase-3"><a href="#phase-3" class="headerlink" title="phase_3"></a><span id="3"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_3.txt" target="_blank" rel="noopener">phase_3</a></span></h1><p>经过两关的练习，做第三关的时候明显感到容易起来了</p>
+<ul>
+<li>前几行依旧是栈的预处理，直到我们看到这一行<code>400f51:    be cf 25 40 00           mov    $0x4025cf,%esi</code>,又在将某个东西传进来了，所以本着好奇的原则我们取查看一下<code>%esi</code>存了点什么东西，所有当调用<code>(gdb) x/s $esi</code>发现了点线索，提示<code>0x4025cf:    &quot;%d %d&quot;</code>,我们猜测这一关的密码应该是两个数字，继续往下看</li>
+<li><code>400f6a:    83 7c 24 08 07           cmpl   $0x7,0x8(%rsp)</code>这句话是将7和<code>%rsp+8</code>进行比较，但我们暂时还不知道他的作用是什么，但如果超过7就会跳转到炸弹爆炸函数</li>
+<li>继续往下看看，<code>400f75:    ff 24 c5 70 24 40 00     jmpq   *0x402470(,%rax,8)</code>这句话是这一关的关键，他会间接跳转，并且以%rax作为偏移量，跳转到<code>0x402470+8*%rax</code>，所以后面很工整的语句类似于switch语句</li>
+<li>回到第二点，应该就是表示第一个数字不能大于7，否则爆炸，而第二个数字的值是由第一个数字决定的</li>
+</ul>
+<p>其他一些语句的意思<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//判读sccanf函数的返回值是否大于1，如果大于1则继续，否则爆炸，这一点也肯定了我们要输入的是两个数</span><br><span class="line"> 400f56:	b8 00 00 00 00       	mov    $0x0,%eax      </span><br><span class="line"> 400f5b:	e8 90 fc ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line"> 400f60:	83 f8 01             	cmp    $0x1,%eax              </span><br><span class="line"> 400f63:	7f 05                	jg     400f6a &lt;phase_3+0x27&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>接下来就是找出第二个数的值，可以通过看代码计算出来，可以切断点去查看1-7分别对应的数字，最终结果是<code>0 207 || 1 311 || 2 707 || 3 256 || 4 389 || 5 206 || 6 682 || 7 327</code></li>
+</ul>
+<h1 id="phase-4"><a href="#phase-4" class="headerlink" title="phase_4"></a><span id="4"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_4.txt" target="_blank" rel="noopener">phase_4</a></span></h1><p>首先依旧是通过前几行去找出密码的形式是什么如图<img src="/2018/03/11/lab-bomb/7.JPG" alt="">所以这一关的密码就是两个数字，之后通过调用scanf函数，并且检查返回值是否为2（即输入值的个数是否为2），之后连着的三条<code>mov</code>语句应该是设置<code>func4</code>函数的参数，我们设参数为<code>a,b</code>，输入值<code>x</code>,返回值为<code>result</code>,我们先跳过<code>callq</code>语句，接着往下看，检查返回值是否为0，比较第二个输入值是否为零，因此我们判断第二个数字就是0，接下来着重分析<code>func4</code>函数,其实该函数是递归函数,并将汇编代码大致翻译成如下的c语言版本<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">a in %edx,b in %esi,x in %edi,result in %eax,t in %ecx</span><br><span class="line">func4(<span class="keyword">int</span> a ,<span class="keyword">int</span> b,<span class="keyword">int</span> x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> t,result;               sub    $<span class="number">0x8</span>,%rsp</span><br><span class="line">  result = a;                 mov    %edx,%eax</span><br><span class="line">  result -= b;                sub    %esi,%eax</span><br><span class="line">  t = result;                 mov    %eax,%ecx</span><br><span class="line">  t = t &gt;&gt; <span class="number">31</span>;                shr    $<span class="number">0x1f</span>,%ecx</span><br><span class="line">  result = result + t;        add    %ecx,%eax</span><br><span class="line">  result /= <span class="number">2</span>;                sar    %eax</span><br><span class="line">  t = result + b;             lea    (%rax,%rsi,<span class="number">1</span>),%ecx</span><br><span class="line">  <span class="keyword">if</span>(x &lt;= t)                  cmp    %edi,%ecx</span><br><span class="line">  &#123;                           jle    <span class="number">400f</span>f2 &lt;func4+<span class="number">0x24</span>&gt;</span><br><span class="line">    result = <span class="number">0</span>;               mov    $<span class="number">0x0</span>,%eax</span><br><span class="line">    <span class="keyword">if</span>(x &gt;= t)                cmp    %edi,%ecx</span><br><span class="line">      <span class="keyword">return</span> result;          jge    <span class="number">401007</span> &lt;func4+<span class="number">0x39</span>&gt;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      b = t + <span class="number">1</span>;              lea    <span class="number">0x1</span>(%rcx),%esi</span><br><span class="line">      result = func4(a,b,x);  callq  <span class="number">400f</span>ce &lt;func4&gt;</span><br><span class="line">      result = <span class="number">2</span>*result + <span class="number">1</span>;  lea    <span class="number">0x1</span>(%rax,%rax,<span class="number">1</span>),%eax</span><br><span class="line">  &#125;   </span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    a = t - <span class="number">1</span>;              lea    <span class="number">-0x1</span>(%rcx),%edx</span><br><span class="line">    result = func4(a,b,x);  callq  <span class="number">400f</span>ce &lt;func4&gt;</span><br><span class="line">    result = result*<span class="number">2</span>;      add    %eax,%eax</span><br><span class="line">  &#125;      </span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>初次调用<code>fun4</code>函数时为<code>func(14,0,x)</code>,其中x为输入值<br>最后得到结果为<code>7 0</code></p>
+<h1 id="phase-5"><a href="#phase-5" class="headerlink" title="phase_5"></a><span id="5"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_5.txt" target="_blank" rel="noopener">phase_5</a></span></h1><p>这一关还是有点难度，思路很难去想，也是看了好久的解题思路<br>首先早早就发现了这关的密码是长度为6的字符串，但是一开始以为密码就是单纯的保存在寄存器或者那个浅显的地址当中，导致但是看到两个明显的地址，就去尝试，如下图所示，但是显然这不是正确的密码<img src="/2018/03/11/lab-bomb/8.JPG" alt="">这条线索很快就找到了，但是看不懂和密码之间的关系，后来就看到题解和ASCII码有关，就沿着这个思路去寻找答案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">A[] in %rbx</span><br><span class="line">int phase_5(int* A)</span><br><span class="line">&#123;</span><br><span class="line">  push   %rbx                    </span><br><span class="line">  sub    $0x20,%rsp</span><br><span class="line">  mov    %rdi,%rbx</span><br><span class="line">  mov    %fs:0x28,%rax                                      </span><br><span class="line">  mov    %rax,0x18(%rsp)                                      </span><br><span class="line">  xor    %eax,%eax                                      </span><br><span class="line">  callq  40131b &lt;string_length&gt;                                             </span><br><span class="line">  cmp    $0x6,%eax                                                                          </span><br><span class="line">  je     4010d2 &lt;phase_5+0x70&gt;          if(A.length != 6)   </span><br><span class="line">  callq  40143a &lt;explode_bomb&gt;                explode_bomb</span><br><span class="line">  jmp    4010d2 &lt;phase_5+0x70&gt;          int i = 0;</span><br><span class="line">  movzbl (%rbx,%rax,1),%ecx             char c = A[i];</span><br><span class="line">  mov    %cl,(%rsp)                     取字符c的低四位</span><br><span class="line">  mov    (%rsp),%rdx                    0000-1111 即0-15</span><br><span class="line">  and    $0xf,%edx                     </span><br><span class="line">  movzbl 0x4024b0(%rdx),%edx            找出字符串0x4024b0对应数字的字符        </span><br><span class="line">  mov    %dl,0x10(%rsp,%rax,1) </span><br><span class="line">  add    $0x1,%rax                      i++；</span><br><span class="line">  cmp    $0x6,%rax                      while(i&lt;=6)</span><br><span class="line">  jne    40108b &lt;phase_5+0x29&gt;</span><br><span class="line">  movb   $0x0,0x16(%rsp)                </span><br><span class="line">  mov    $0x40245e,%esi                 将字符串flyers作为函数调用的参数</span><br><span class="line">  lea    0x10(%rsp),%rdi                将输入的字符串作为另外一个参数</span><br><span class="line">  callq  401338 &lt;strings_not_equal&gt;     比较两个参数是否相等</span><br><span class="line">  test   %eax,%eax</span><br><span class="line">  je     4010d9 &lt;phase_5+0x77&gt;</span><br><span class="line">  callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">  nopl   0x0(%rax,%rax,1)</span><br><span class="line">  jmp    4010d9 &lt;phase_5+0x77&gt;</span><br><span class="line">  mov    $0x0,%eax</span><br><span class="line">  jmp    40108b &lt;phase_5+0x29&gt;</span><br><span class="line">  mov    0x18(%rsp),%rax</span><br><span class="line">  xor    %fs:0x28,%rax</span><br><span class="line">  callq  400b30 &lt;__stack_chk_fail@plt&gt;</span><br><span class="line">  add    $0x20,%rsp</span><br><span class="line">  pop    %rbx</span><br><span class="line">  retq                                                                                                                   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看懂了反汇编代码，我们就要去找<code>0x40245e&quot;flyers&quot;</code>每个字母对应<code>ASCII</code>码的低四位，并根据这个去找在字符串<code>0x4024b0&quot;maduiersnfotvbyl</code>对应的字母，最后答案有好几种,其中一个是<code>ionefg</code></p>
+<h1 id="phase-6"><a href="#phase-6" class="headerlink" title="phase_6"></a><span id="6"><a href="https://github.com/123xzy/CSAPP/blob/master/bomb/phase_6.txt" target="_blank" rel="noopener">phase_6</a></span></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">push   %r14                        </span><br><span class="line">push   %r13</span><br><span class="line">push   %r12</span><br><span class="line">push   %rbp</span><br><span class="line">push   %rbx</span><br><span class="line">sub    $0x50,%rsp</span><br><span class="line">mov    %rsp,%r13</span><br><span class="line">mov    %rsp,%rsi</span><br><span class="line">callq  40145c &lt;read_six_numbers&gt;</span><br><span class="line">mov    %rsp,%r14</span><br><span class="line">mov    $0x0,%r12d</span><br><span class="line">mov    %r13,%rbp</span><br><span class="line">mov    0x0(%r13),%eax</span><br><span class="line">sub    $0x1,%eax</span><br><span class="line">cmp    $0x5,%eax</span><br><span class="line">jbe    401128 &lt;phase_6+0x34&gt;</span><br><span class="line">callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">add    $0x1,%r12d</span><br><span class="line">cmp    $0x6,%r12d</span><br><span class="line">je     401153 &lt;phase_6+0x5f&gt;</span><br><span class="line">mov    %r12d,%ebx</span><br><span class="line">movslq %ebx,%rax</span><br><span class="line">mov    (%rsp,%rax,4),%eax</span><br><span class="line">cmp    %eax,0x0(%rbp)</span><br><span class="line">jne    401145 &lt;phase_6+0x51&gt;</span><br><span class="line">callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">add    $0x1,%ebx</span><br><span class="line">cmp    $0x5,%ebx</span><br><span class="line">jle    401135 &lt;phase_6+0x41&gt;</span><br><span class="line">add    $0x4,%r13</span><br><span class="line">jmp    401114 &lt;phase_6+0x20&gt;</span><br><span class="line">lea    0x18(%rsp),%rsi</span><br><span class="line">mov    %r14,%rax</span><br><span class="line">mov    $0x7,%ecx</span><br><span class="line">mov    %ecx,%edx</span><br><span class="line">sub    (%rax),%edx</span><br><span class="line">mov    %edx,(%rax)</span><br><span class="line">add    $0x4,%rax</span><br><span class="line">cmp    %rsi,%rax</span><br><span class="line">jne    401160 &lt;phase_6+0x6c&gt;</span><br><span class="line">mov    $0x0,%esi</span><br><span class="line">jmp    401197 &lt;phase_6+0xa3&gt;</span><br><span class="line">mov    0x8(%rdx),%rdx</span><br><span class="line">add    $0x1,%eax</span><br><span class="line">cmp    %ecx,%eax</span><br><span class="line">jne    401176 &lt;phase_6+0x82&gt;</span><br><span class="line">jmp    401188 &lt;phase_6+0x94&gt;</span><br><span class="line">mov    $0x6032d0,%edx</span><br><span class="line">mov    %rdx,0x20(%rsp,%rsi,2)</span><br><span class="line">add    $0x4,%rsi</span><br><span class="line">cmp    $0x18,%rsi</span><br><span class="line">je     4011ab &lt;phase_6+0xb7&gt;</span><br><span class="line">mov    (%rsp,%rsi,1),%ecx</span><br><span class="line">cmp    $0x1,%ecx</span><br><span class="line">jle    401183 &lt;phase_6+0x8f&gt;</span><br><span class="line">mov    $0x1,%eax</span><br><span class="line">mov    $0x6032d0,%edx</span><br><span class="line">jmp    401176 &lt;phase_6+0x82&gt;</span><br><span class="line">mov    0x20(%rsp),%rbx</span><br><span class="line">lea    0x28(%rsp),%rax</span><br><span class="line">lea    0x50(%rsp),%rsi</span><br><span class="line">mov    %rbx,%rcx</span><br><span class="line">mov    (%rax),%rdx</span><br><span class="line">mov    %rdx,0x8(%rcx)</span><br><span class="line">add    $0x8,%rax</span><br><span class="line">cmp    %rsi,%rax</span><br><span class="line">je     4011d2 &lt;phase_6+0xde&gt;</span><br><span class="line">mov    %rdx,%rcx</span><br><span class="line">jmp    4011bd &lt;phase_6+0xc9&gt;</span><br><span class="line">movq   $0x0,0x8(%rdx)                                 </span><br><span class="line">mov    $0x5,%ebp</span><br><span class="line">mov    0x8(%rbx),%rax</span><br><span class="line">mov    (%rax),%eax</span><br><span class="line">cmp    %eax,(%rbx)</span><br><span class="line">jge    4011ee &lt;phase_6+0xfa&gt;</span><br><span class="line">callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">mov    0x8(%rbx),%rbx</span><br><span class="line">sub    $0x1,%ebp</span><br><span class="line">jne    4011df &lt;phase_6+0xeb&gt;</span><br><span class="line">add    $0x50,%rsp</span><br><span class="line">pop    %rbx</span><br><span class="line">pop    %rbp</span><br><span class="line">pop    %r12</span><br><span class="line">pop    %r13</span><br><span class="line">pop    %r14</span><br></pre></td></tr></table></figure>
+<p>输入的六个数字有以下条件</p>
+<ul>
+<li>每个数字都不能大于6并且都大于0</li>
+<li>六个数字各不相同</li>
+<li>前五个数字做7-x反转</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+          
+            <a href="/tags/LAB/" rel="tag"><i class="fa fa-tag"></i> LAB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/10/阿谢的BLOG-Beta3-9版-发布说明/" rel="next" title="阿谢的BLOG Beta3.9版 发布说明">
+                <i class="fa fa-chevron-left"></i> 阿谢的BLOG Beta3.9版 发布说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/GDB-GCC/" rel="prev" title="GDB GCC">
+                GDB GCC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-1"><span class="nav-number">1.</span> <span class="nav-text">phase_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-2"><span class="nav-number">2.</span> <span class="nav-text">phase_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-3"><span class="nav-number">3.</span> <span class="nav-text">phase_3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-4"><span class="nav-number">4.</span> <span class="nav-text">phase_4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-5"><span class="nav-number">5.</span> <span class="nav-text">phase_5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phase-6"><span class="nav-number">6.</span> <span class="nav-text">phase_6</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/5.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/6.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/Linux-第六章/7.JPG">
-<meta property="og:updated_time" content="2018-04-06T12:54:22.068Z">
+<meta property="og:updated_time" content="2018-05-27T15:13:39.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-第六章">
 <meta name="twitter:description" content="《鸟哥的Linux私房菜》第六章小结">
@@ -374,7 +374,7 @@
 <li>符号类型修改文件权限：u，g，o分别对应三种身份，a代表全部身份，如下图所示<img src="/2018/03/31/Linux-第六章/5.JPG" alt=""></li>
 </ul>
 <h1 id="权限对文件的意义"><a href="#权限对文件的意义" class="headerlink" title="权限对文件的意义"></a>权限对文件的意义</h1><ul>
-<li>r:可以读取文件的实际内容</li>
+<li>r：可以读取文件的实际内容</li>
 <li>w：可以编辑、修改文件内容，但不能删除文件</li>
 <li>x：具有可执行的权限</li>
 </ul>
@@ -385,8 +385,34 @@
 </li>
 </ul>
 <p>刚创建的文件、目录均属于root，那对一般用户具有什么权限呢？<img src="/2018/03/31/Linux-第六章/6.JPG" alt="">从图中可以看到虽有具有r权限，但仍然无法查看，又因为不具有x权限，自然没有进入的权限<br>当我们修改文件的归属，就可以进入该文件，并进行删除，x和能否进入该目录有关，而w则能对文件进行操作<img src="/2018/03/31/Linux-第六章/7.JPG" alt=""></p>
+<h1 id="文件种类和扩展名"><a href="#文件种类和扩展名" class="headerlink" title="文件种类和扩展名"></a>文件种类和扩展名</h1><p>常见文件种类，如普通文件，纯文本文件，二进制文件<br>再比如数据格式文件，目录，连接文件，设备与设备文件（块设备文件如硬盘，字符设备文件如鼠标），套接字，管道</p>
+<p>在Windows下，能被执行的文件扩展名有<code>.com</code>,<code>.exe</code>,<code>.bat</code>，但在linux下文件能否被执行取决于文件是否有<code>x</code>权限，但执行是否成功则取决于文件本身，因此扩展名能反映在能执行的条件下，文件能否执行成功，常见扩展名如<code>*.sh</code>,<code>*.Z</code>,<code>*.tar</code>,<code>.html</code>等</p>
+<h1 id="目录配置（FHS）"><a href="#目录配置（FHS）" class="headerlink" title="目录配置（FHS）"></a>目录配置（FHS）</h1><p>对于不同的distributions目录配置为什么都极其相似，因为他们都遵循FHS标准</p>
+<p>目录有四种交互形态：</p>
 <ul>
-<li>列表项</li>
+<li>可分享的：能供网络上其他主机挂载使用的目录，如<code>/var/mail</code>（用户邮件）</li>
+<li>不可分享的：和自己的机器或者程序相关的设备文件，如<code>/boot</code></li>
+<li>不变的：如函数库</li>
+<li>可变动的：如登录文件</li>
+</ul>
+<p>FHS仅定义出三层目录下应该放置什么东西</p>
+<ul>
+<li><code>/</code>：根目录，与开机系统相关，所有目录都由根目录衍生出来，根目录还和开机、还原、系统修复相关，由于其重要性，将根目录所在分区尽量最小化，不要和其他文件混合在一起，防止出错</li>
+<li><code>/usr</code>：UNIX software resource,与软件安装执行相关</li>
+<li><code>/var</code>：与系统运作过程相关</li>
+</ul>
+<p>重要子目录</p>
+<ul>
+<li><code>/bin</code>：放置在其下的命令在单用户模式下，被root和一般用户使用，如<code>cat</code>,<code>chmod</code></li>
+<li><code>/boot</code>：放置开机会使用到的文件，如Linux内核文件及其开机菜单</li>
+<li><code>/dev</code>：只有通过访问该目录下的文件，才可以访问对应的设备和接口设备</li>
+<li><code>/etc</code>：系统的配置文件</li>
+<li><code>/home</code>：用户的主文件夹，子目录中包含各用户的文件夹</li>
+<li><code>/lib</code>：放置开机时用到的函数库</li>
+<li><p><code>/sbin</code>：放置开机时需要的命令，用来设置系统，如<code>fdisk</code>,<code>fsck</code></p>
+</li>
+<li><p><code>/usr</code>：注意usr不是用户数据的意思，而是UNIX操作系统软件资源</p>
+</li>
 </ul>
 
       
@@ -553,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用户和用户组"><span class="nav-number">1.</span> <span class="nav-text">用户和用户组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件权限"><span class="nav-number">2.</span> <span class="nav-text">文件权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改文件属性和权限"><span class="nav-number">3.</span> <span class="nav-text">修改文件属性和权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权限对文件的意义"><span class="nav-number">4.</span> <span class="nav-text">权限对文件的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权限对目录的意义"><span class="nav-number">5.</span> <span class="nav-text">权限对目录的意义</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用户和用户组"><span class="nav-number">1.</span> <span class="nav-text">用户和用户组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件权限"><span class="nav-number">2.</span> <span class="nav-text">文件权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改文件属性和权限"><span class="nav-number">3.</span> <span class="nav-text">修改文件属性和权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权限对文件的意义"><span class="nav-number">4.</span> <span class="nav-text">权限对文件的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权限对目录的意义"><span class="nav-number">5.</span> <span class="nav-text">权限对目录的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件种类和扩展名"><span class="nav-number">6.</span> <span class="nav-text">文件种类和扩展名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录配置（FHS）"><span class="nav-number">7.</span> <span class="nav-text">目录配置（FHS）</span></a></li></ol></div>
             
 
           </div>
