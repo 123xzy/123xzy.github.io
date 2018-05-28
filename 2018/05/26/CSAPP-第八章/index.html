@@ -79,15 +79,18 @@
 
 
 
+<meta name="description" content="《CSAPP》第八章：异常控制流">
 <meta name="keywords" content="CSAPP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSAPP-第八章">
+<meta property="og:title" content="第八章：异常控制流">
 <meta property="og:url" content="http://yoursite.com/2018/05/26/CSAPP-第八章/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="《CSAPP》第八章：异常控制流">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-26T12:31:53.713Z">
+<meta property="og:updated_time" content="2018-05-28T12:52:56.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSAPP-第八章">
+<meta name="twitter:title" content="第八章：异常控制流">
+<meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
 
 
 
@@ -123,7 +126,7 @@
 
 
 
-  <title>CSAPP-第八章 | 阿谢的BLOG</title>
+  <title>第八章：异常控制流 | 阿谢的BLOG</title>
   
 
 
@@ -287,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CSAPP-第八章</h1>
+          <h1 class="post-title" itemprop="name headline">第八章：异常控制流</h1>
         
 
         <div class="post-meta">
@@ -337,7 +340,43 @@
       
 
       
-        
+        <p>《CSAPP》第八章：异常控制流<br><a id="more"></a></p>
+<hr>
+<p>控制流的定义：程序计数器中保存有一个关于指令地址的序列，从序列中的第k项转移到第k+1项称为控制转移，这样的序列就叫做控制流</p>
+<p>程序内部的语句会对指令造成变化，与此同时，系统在必要的时候也要对系统状态做出反应，也会对指令做出变化，这些变化的改变和所写程序并不一定相关，造成突变的控制流我们成为异常控制流（ECF），这个概念发生在计算机系统的各个层次当中，如硬件层，当硬件检测的事件发生变化时，会触发异常处理程序，如操作系统层，内核通过上下文切换，将控制从一个用户转移到另一个用户上</p>
+<h1 id="理解ECF的作用"><a href="#理解ECF的作用" class="headerlink" title="理解ECF的作用"></a>理解ECF的作用</h1><ul>
+<li>对理解虚拟内存、I/O、进程等有帮助</li>
+<li>理解应用程序和操作系统的交互</li>
+<li>编写Unix Shell和Web服务器等应用</li>
+<li>理解并发</li>
+<li>理解C++和Java中异常机制的实现</li>
+</ul>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>异常是ECF的一种形式，指控制流的突变，用来响应处理器状态中的某些变化</p>
+<p>首先处理器中会保存有状态的编码，当状态变化（即事件）时，如发生虚拟内存缺页，算术溢出时，都会导致编码的变化（即状态），处理器会通过一张叫异常表的跳转表，进行间接过程调用（异常），到一个专门设计用来处理状态变化的程序中，程序执行完后，根据事件的类型决定接下来做什么</p>
+<ul>
+<li>异常处理程序将控制返回给事件发生时执行的指令</li>
+<li>将控制返回给事件发生时执行的指令的下一条指令</li>
+<li>直接中断程序</li>
+</ul>
+<h2 id="异常表"><a href="#异常表" class="headerlink" title="异常表"></a>异常表</h2><p>系统对每种可能出现的异常都分配了一个唯一的非负整数异常号，前一部分由处理器设计师分配，如零除，缺页，内存访问违例，其他号码由操作系统内核设计师分配，如系统调用和外部I/O信号<br>异常表中的表目k就对应着异常k的处理程序代码的地址，异常表的起始地址放在一个叫做异常表基址寄存器的特殊寄存器中<br>当处理器检测到事件的发生，并确定事件发生对应的异常号后，处理器通过执行间接过程调用，触发异常，并通过异常表上的对应程序进行处理</p>
+<h2 id="异常和过程调用的区别"><a href="#异常和过程调用的区别" class="headerlink" title="异常和过程调用的区别"></a>异常和过程调用的区别</h2><ul>
+<li>异常处理程序运行在内核模式下，因此对系统资源有完全的访问权限</li>
+<li>处理程序如果从用户程序转移到内核，则处理程序将被压入内核栈中，而不是用户栈中</li>
+<li>处理器会把一些额外的处理器状态压入栈中，当重新执行程序时需要这些状态</li>
+<li>过程调用在跳转到处理程序之前，将返回地址压入栈中，异常处理则根据类型，返回地址要么是当前指令，要么是下一条指令</li>
+</ul>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>异步异常是指是来自处理器外部的I/O设备的信号的结果，不是由任意一条专门的指令造成的，同步异常是执行一条指令的直接产物</p>
+<ul>
+<li><p>中断<br>该异常是异步的，例如网络适配器、磁盘控制器等向处理器芯片的一个引脚发送信号，并将异常号放在系统总线上，当当前指令完成执行后，处理器注意到引脚电压升高，就从系统总线读取异常号，并调用适当的中断处理程序，完成后，将控制返回给下一条指令，继续执行。</p>
+</li>
+<li><p>陷阱<br>最重要的用途是在用户程序和内核之间提供一个像过程一样的接口，叫做系统调用<br>用户经常需要向内核请求服务，如读一个文件（read）， 创建新的进程（fork），终止当前进程（exit）。为了允许用户对内核服务的受控访问，处理器提供一条<code>syscall n</code>指令，执行该指令会导致一个到异常处理程序的陷阱，该处理程序能解析参数n，并调用内核程序。<br>写程序的时候，系统调用和普通的函数调用并没有什么不一样，但实际上的实现却大不一样，主要区别在于一个运行在用户模式，一个是在内核模式</p>
+</li>
+<li><p>故障<br>最常见的故障就是缺页异常，当指令引用一个虚拟地址时，如果该地址对应的物理页面不在内存中，就会引发异常，并尝试从磁盘中读入内存，如果加载顺利，就将控制返回引发故障的当前指令，该指令再次执行的时候，虚拟地址对应的物理也页就存在于内存中了，但是如果加载失败，异常处理程序返回到内核中的<code>abort</code>例程，并终止该程序</p>
+</li>
+<li><p>终止<br>通常是一些致命的错误导致的，如DRAM损坏等，处理程序直接将控制返回个一个<code>abort</code>例程，并终止该程序</p>
+</li>
+</ul>
+
       
     </div>
     
@@ -376,6 +415,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/28/CSAPP-第九章/" rel="prev" title="第九章：虚拟内存">
+                第九章：虚拟内存 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -427,8 +470,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -443,7 +495,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -479,6 +531,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
