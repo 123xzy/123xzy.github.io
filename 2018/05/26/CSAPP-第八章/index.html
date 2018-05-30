@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第八章：异常控制流">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-28T12:52:56.703Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
+<meta property="og:updated_time" content="2018-05-30T15:20:18.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第八章：异常控制流">
 <meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
 
 
 
@@ -376,7 +378,25 @@
 <li><p>终止<br>通常是一些致命的错误导致的，如DRAM损坏等，处理程序直接将控制返回个一个<code>abort</code>例程，并终止该程序</p>
 </li>
 </ul>
-
+<h1 id="Linux的异常"><a href="#Linux的异常" class="headerlink" title="Linux的异常"></a>Linux的异常</h1><h2 id="常见故障和终止"><a href="#常见故障和终止" class="headerlink" title="常见故障和终止"></a>常见故障和终止</h2><ul>
+<li>除法错误（异常号0）：除以零，或者目标操作数太大时都会发生，显然该故障不能由机器自动修复，只能选择终止程序，Linux shell报告为”Floating exception”</li>
+<li>一般保护程序（异常号13）：如引用未定义的虚拟内存等都为导致该故障，Linux shell报告为”Segmentation fault”</li>
+<li>缺页（异常号14）：将在虚拟内存章节详细讲解</li>
+<li>机器检查（异常号18）：检测到硬件导致的致命错误</li>
+</ul>
+<h2 id="系统调用（陷阱）"><a href="#系统调用（陷阱）" class="headerlink" title="系统调用（陷阱）"></a>系统调用（陷阱）</h2><p>Linux提供上百种系统调用供应用程序请求内核服务时调用。标准C库提供一系列的包装函数，来调用系统调用。包装函数将参数和系统调用打包，并根据系统调用陷入内核程序，并将系统调用的返回状态转递给调用程序。常见系统调用实例如下图所示<img src="/2018/05/26/CSAPP-第八章/1.JPG" alt=""></p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><p>异常是允许操作系统内核提供进程概念的基本构造块</p>
+<p>进程的定义就是一个执行中的程序实例，通过进程能给我们提供一个假象，好像当前程序是系统中唯一运行的程序一样，好像该程序能独占处理器和内存。但其实每个程序都运行在某个进程的上下文中（上下文包括程序代码和数据，栈、通用目的寄存器的内容，程序计数器，环境变量等）</p>
+<p>例如当在shell中输入<code>./hello</code>时，shell就会创建一个新的进程，并在该进程的上下文中执行它</p>
+<p>进程为应用程序提供了关键两点抽象</p>
+<ul>
+<li>独立的逻辑控制流：程序独占处理器的假象</li>
+<li>私有的地址空间：程序独占内存系统的假象</li>
+</ul>
+<h2 id="逻辑控制流"><a href="#逻辑控制流" class="headerlink" title="逻辑控制流"></a>逻辑控制流</h2><p>又称逻辑流（注意其和控制流的区别），当我们单步调试程序时，看到的一系列程序计数器的值，对于程序中的指令，这个值的序列就叫做逻辑控制流。</p>
+<p>处理器的一个物理控制流（也就是文章开头提到的控制流），被分成多个逻辑流，每个进程对应一个逻辑流，进程轮流使用处理器，然后被暂时挂起，换做其他进程使用处理器</p>
+<p>逻辑流之所以叫逻辑流，因为它并不是实际上的流，实际上它是间断的，而是逻辑抽象上的流，但是处理器的物理控制流是持续不断地，这个流会不停的被不同的逻辑流填充</p>
+<h2 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h2>
       
     </div>
     
@@ -495,7 +515,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -508,7 +528,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -541,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li></ol></li></ol></div>
             
 
           </div>
