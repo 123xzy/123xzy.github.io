@@ -88,7 +88,8 @@
 <meta property="og:description" content="《CSAPP》第八章：异常控制流">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
-<meta property="og:updated_time" content="2018-05-30T15:20:18.038Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/2.JPG">
+<meta property="og:updated_time" content="2018-05-31T11:49:54.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第八章：异常控制流">
 <meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
@@ -371,7 +372,7 @@
 <ul>
 <li><p>中断<br>该异常是异步的，例如网络适配器、磁盘控制器等向处理器芯片的一个引脚发送信号，并将异常号放在系统总线上，当当前指令完成执行后，处理器注意到引脚电压升高，就从系统总线读取异常号，并调用适当的中断处理程序，完成后，将控制返回给下一条指令，继续执行。</p>
 </li>
-<li><p>陷阱<br>最重要的用途是在用户程序和内核之间提供一个像过程一样的接口，叫做系统调用<br>用户经常需要向内核请求服务，如读一个文件（read）， 创建新的进程（fork），终止当前进程（exit）。为了允许用户对内核服务的受控访问，处理器提供一条<code>syscall n</code>指令，执行该指令会导致一个到异常处理程序的陷阱，该处理程序能解析参数n，并调用内核程序。<br>写程序的时候，系统调用和普通的函数调用并没有什么不一样，但实际上的实现却大不一样，主要区别在于一个运行在用户模式，一个是在内核模式</p>
+<li><p>陷阱<br>最重要的用途是在用户程序和内核之间提供一个像过程一样的接口，叫做系统调用，用户经常需要向内核请求服务，如读一个文件（read）， 创建新的进程（fork），终止当前进程（exit）。为了允许用户对内核服务的受控访问，处理器提供一条<code>syscall n</code>指令，执行该指令会导致一个到异常处理程序的陷阱，该处理程序能解析参数n，并调用内核程序。<br>写程序的时候，系统调用和普通的函数调用并没有什么不一样，但实际上的实现却大不一样，主要区别在于一个运行在用户模式，一个是在内核模式</p>
 </li>
 <li><p>故障<br>最常见的故障就是缺页异常，当指令引用一个虚拟地址时，如果该地址对应的物理页面不在内存中，就会引发异常，并尝试从磁盘中读入内存，如果加载顺利，就将控制返回引发故障的当前指令，该指令再次执行的时候，虚拟地址对应的物理也页就存在于内存中了，但是如果加载失败，异常处理程序返回到内核中的<code>abort</code>例程，并终止该程序</p>
 </li>
@@ -393,10 +394,48 @@
 <li>独立的逻辑控制流：程序独占处理器的假象</li>
 <li>私有的地址空间：程序独占内存系统的假象</li>
 </ul>
-<h2 id="逻辑控制流"><a href="#逻辑控制流" class="headerlink" title="逻辑控制流"></a>逻辑控制流</h2><p>又称逻辑流（注意其和控制流的区别），当我们单步调试程序时，看到的一系列程序计数器的值，对于程序中的指令，这个值的序列就叫做逻辑控制流。</p>
+<h2 id="逻辑控制流"><a href="#逻辑控制流" class="headerlink" title="逻辑控制流"></a>逻辑控制流</h2><p>又称逻辑流（注意其和控制流的区别），当我们单步调试程序时，看到的一系列程序计数器的值，对应程序中的指令，这个值的序列就叫做逻辑控制流</p>
 <p>处理器的一个物理控制流（也就是文章开头提到的控制流），被分成多个逻辑流，每个进程对应一个逻辑流，进程轮流使用处理器，然后被暂时挂起，换做其他进程使用处理器</p>
-<p>逻辑流之所以叫逻辑流，因为它并不是实际上的流，实际上它是间断的，而是逻辑抽象上的流，但是处理器的物理控制流是持续不断地，这个流会不停的被不同的逻辑流填充</p>
-<h2 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h2>
+<p>逻辑流之所以叫逻辑流，因为它并不是实际上的流，它是间断的，而是逻辑抽象上的流，但是处理器的物理控制流是持续不断地，这个流会不停的被不同的逻辑流填充</p>
+<p>异常处理流、进程、信号处理程序、线程和Java进程都是逻辑流的例子</p>
+<h2 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h2><p>一个逻辑流的执行时间与另一个流重叠，成为并发流，这两个流被称为并发地运行，准确说两个流的执行时间有交集时，成为并发</p>
+<p>多个流并发执行的一般现象称为并发，多个进程轮流运行称为多任务</p>
+<p>进程执行它的控制流的一部分的时间段叫做时间片，多任务也叫做时间分片</p>
+<p>另一个概念叫并行流，它是出现在多个处理器时，它是并发流的真子集，如果两个流并发运行在不同处理器上，称为并行流，其实也是并发流，因为执行时间重叠，就称为并发</p>
+<h2 id="私有地址空间"><a href="#私有地址空间" class="headerlink" title="私有地址空间"></a>私有地址空间</h2><p>前面提到进程为程序提供独占系统内存的假象，下图是Linux进程的地址空间的组织结构<img src="/2018/05/26/CSAPP-第八章/2.JPG" alt="">地址空间底部是保留给用户程序的，包括通常的代码、数据、堆、栈段，顶部是保留给内核，包含了内核在代表进程执行指令时使用的代码数据等</p>
+<h2 id="用户模式和内核模式"><a href="#用户模式和内核模式" class="headerlink" title="用户模式和内核模式"></a>用户模式和内核模式</h2><p>处理器用一个控制寄存器的一个模式位来限制应用可以执行的指令及其可以访问的地址空间范围，当设置了模式位，进程就处在内核模式中，并且可以执行指令集的任何指令，访问任何的内存位置</p>
+<p>处在用户模式的进程不允许执行特权指令，例如停止处理器、改变模式位、或者发起一个人I/O操作，也不允许访问地址空间中内核区的数据，反之用户需要通过系统调用接口来间接的访问内核代码和数据</p>
+<p>用户模式进入内核模式的唯一方法就是通过异常，当异常发生时，进入异常处理程序，就从用户模式进入了内核模式，处理程序返回时，又切换回用户模式</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>如前所示，上下文包括通用目的寄存器、浮点寄存器、程序计数器、用户栈等信息，它是内核重新启动一个被强占的进程所必须的信息</p>
+<p>操作系统内核使用上下文切换的较高层次的异常控制流来实现多任务</p>
+<p>由内核来决定抢占当前进程，并重新执行之前被抢占的进程的这一决策过程称之为调度，由内核中称之为调度器的代码执行，当调度发生时，将采取上下文切换机制来将控制转移到新的进程中</p>
+<p>上下文切换包含三个步骤</p>
+<ul>
+<li>保存当前进程的上下文</li>
+<li>恢复即将执行进程的上下文</li>
+<li>将控制转移给新的进程</li>
+</ul>
+<p>实例一：用户程序进行系统调用，想要read磁盘文件，这时候系统调用可能会发生阻塞（因为读取磁盘文件需要时间），内核就会进行上下文切换，让当前进程休眠，运行其他程序，而不是等待磁盘数据，运行一段时间之后，磁盘发出一个中断信号，表示数据传输完成，内核就又切换回之前的进程，并继续运行</p>
+<p>实例二：程序显示进行sleep系统调用，让进程休眠，内核自然会切换进程</p>
+<h1 id="系统调用错误处理"><a href="#系统调用错误处理" class="headerlink" title="系统调用错误处理"></a>系统调用错误处理</h1><p>Unix系统级函数遇到错误时，都会返回-1，并设置全局整数变量errno来表示对应错误类型，并且通过错误包装函数可以简化代码</p>
+<h1 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h1><p>给出了一些重要函数来进行进程控制</p>
+<h2 id="获取进程ID"><a href="#获取进程ID" class="headerlink" title="获取进程ID"></a>获取进程ID</h2><p>每个进程都对应了唯一的正数进程ID（PID），通过<code>getpid</code>和<code>getppid</code>函数可以分别返回调用进程的ID和父进程的ID，返回值类型为<code>pid_t</code>，在Linux中该类型被定义为int</p>
+<h2 id="创建和终止进程"><a href="#创建和终止进程" class="headerlink" title="创建和终止进程"></a>创建和终止进程</h2><p>进程的三种状态</p>
+<ul>
+<li>运行：在处理器中执行，或者等待被执行被最终会被内核调度</li>
+<li>停止：进程被挂起，且不会被调度，说明他已经脱离流的执行队伍当中，知道收到信号才又会被执行</li>
+<li>终止：收到信号，且默认行为就是终止进程；从主程序返回；调用exit函数，以上三种行为都会导师进程终止</li>
+</ul>
+<p>父进程通过fork函数创建新的子进程，新创建的子进程拥有父进程用户级虚拟地址空间的副本和父进程打开文件描述符相同的副本（即子进程可以读取任何父进程打开的文件），两者最大的区别在于两者的PID不同</p>
+<p>fork函数的特性</p>
+<ul>
+<li>调用一次，返回两次，一次返回到父进程，一次返回到新创建的子进程</li>
+<li>并发执行，父进程和子进程是并发执行的独立程序，内核以任意方式来交替执行父子进程中的指令</li>
+<li>相同但是独立的地址空间</li>
+<li>共享文件，父子进程都能讲结果输出到屏幕，因为父进程中，stdout文件是打开的，并指向屏幕，子进程自然继承这个文件，将结果输出到stdout</li>
+</ul>
+<p>对于有多个fork实例的程序就需要仔细推敲</p>
+<h2 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h2>
       
     </div>
     
@@ -561,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有地址空间"><span class="nav-number">4.3.</span> <span class="nav-text">私有地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户模式和内核模式"><span class="nav-number">4.4.</span> <span class="nav-text">用户模式和内核模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.5.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统调用错误处理"><span class="nav-number">5.</span> <span class="nav-text">系统调用错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程控制"><span class="nav-number">6.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取进程ID"><span class="nav-number">6.1.</span> <span class="nav-text">获取进程ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和终止进程"><span class="nav-number">6.2.</span> <span class="nav-text">创建和终止进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收子进程"><span class="nav-number">6.3.</span> <span class="nav-text">回收子进程</span></a></li></ol></li></ol></div>
             
 
           </div>

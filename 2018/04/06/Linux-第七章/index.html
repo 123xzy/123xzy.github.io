@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《鸟哥的Linux私房菜》第七章小结">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-06T14:00:52.268Z">
+<meta property="og:updated_time" content="2018-05-31T13:20:51.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-第七章">
 <meta name="twitter:description" content="《鸟哥的Linux私房菜》第七章小结">
@@ -370,6 +370,13 @@
 <h2 id="rmdir：删除空目录"><a href="#rmdir：删除空目录" class="headerlink" title="rmdir：删除空目录"></a>rmdir：删除空目录</h2><ul>
 <li><code>-p</code>参数，连同上层的空的目录一起删除</li>
 </ul>
+<h2 id="执行文件路径的变量"><a href="#执行文件路径的变量" class="headerlink" title="执行文件路径的变量"></a>执行文件路径的变量</h2><p>为什么在任何地方都可以执行一个特定的命令，而不会出现找不到该命令呢，这都是因为环境变量PATH的作用</p>
+<p>当需要执行一个命令时，系统会依照$PATH的设置值去查询命令的可执行文件，若出现同名的命令，先找到先执行</p>
+<ul>
+<li>不同身份的用户默认的PATH不同，能执行的命令也不同</li>
+<li>PATH可修改，如<code>PATH=&quot;$PATH&quot;:/root</code></li>
+<li>如果知道命令执行文件的绝对路径，当然也可以执行</li>
+</ul>
 <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><h2 id="ls：查看"><a href="#ls：查看" class="headerlink" title="ls：查看"></a>ls：查看</h2><ul>
 <li><code>-a</code>全部文件，包括隐藏文件</li>
 <li><code>-l</code>列出文件属性和权限</li>
@@ -391,7 +398,29 @@
 <li><code>--time=atime</code>输出访问时间</li>
 <li><code>--time=ctime</code>输出修改权限时的时间</li>
 </ul>
-<h2 id="cp：复制"><a href="#cp：复制" class="headerlink" title="cp：复制"></a>cp：复制</h2>
+<h2 id="cp：复制"><a href="#cp：复制" class="headerlink" title="cp：复制"></a>cp：复制</h2><ul>
+<li><code>-a</code>相当于<code>-pdr</code></li>
+<li><code>-i</code>如果目标文件已经存在，在覆盖前先询问</li>
+<li><code>-r</code>递归连续复制，常用于目录的复制</li>
+<li><code>-d</code>源文件如果是链接文件，复制连接属性，而不是文件本身</li>
+<li><code>-f</code>强制执行的意思</li>
+<li><code>-p</code>连通文件的属性一起复制，而不是使用默认属性</li>
+<li><code>-s</code>复制成为符号链接文件，即Windows下的快捷方式</li>
+<li><code>-u</code>如果目的文件比源文件就才更新目的文件</li>
+</ul>
+<h2 id="rm：移除文件或目录"><a href="#rm：移除文件或目录" class="headerlink" title="rm：移除文件或目录"></a>rm：移除文件或目录</h2><ul>
+<li><code>-f</code>强制执行</li>
+<li><code>-i</code>删除前询问用户以确认</li>
+<li><code>-r</code>递归删除，不建议使用</li>
+</ul>
+<h2 id="mv：移动文件或者更名"><a href="#mv：移动文件或者更名" class="headerlink" title="mv：移动文件或者更名"></a>mv：移动文件或者更名</h2><ul>
+<li><code>-f</code>强制执行</li>
+<li><code>-i</code>如果目标文件已经存在，询问是否覆盖</li>
+<li><code>-u</code>只有源文件更加新的时候，才更新</li>
+</ul>
+<p><code>mv</code>除了移动文件之外，也可用于更改文件名称</p>
+<p>还可以通过<code>basename</code>来获取一个路径中的文件名，<code>dirname</code>则获取路径中的目录名</p>
+<h1 id="文件内容查询"><a href="#文件内容查询" class="headerlink" title="文件内容查询"></a>文件内容查询</h1><h2 id="cat：查看"><a href="#cat：查看" class="headerlink" title="cat：查看"></a>cat：查看</h2>
       
     </div>
     
@@ -556,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录的相关操作"><span class="nav-number">1.</span> <span class="nav-text">目录的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cd：切换目录"><span class="nav-number">1.1.</span> <span class="nav-text">cd：切换目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwd：显示当前目录"><span class="nav-number">1.2.</span> <span class="nav-text">pwd：显示当前目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir：新建目录"><span class="nav-number">1.3.</span> <span class="nav-text">mkdir：新建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rmdir：删除空目录"><span class="nav-number">1.4.</span> <span class="nav-text">rmdir：删除空目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件操作"><span class="nav-number">2.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls：查看"><span class="nav-number">2.1.</span> <span class="nav-text">ls：查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp：复制"><span class="nav-number">2.2.</span> <span class="nav-text">cp：复制</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录的相关操作"><span class="nav-number">1.</span> <span class="nav-text">目录的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cd：切换目录"><span class="nav-number">1.1.</span> <span class="nav-text">cd：切换目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwd：显示当前目录"><span class="nav-number">1.2.</span> <span class="nav-text">pwd：显示当前目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir：新建目录"><span class="nav-number">1.3.</span> <span class="nav-text">mkdir：新建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rmdir：删除空目录"><span class="nav-number">1.4.</span> <span class="nav-text">rmdir：删除空目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行文件路径的变量"><span class="nav-number">1.5.</span> <span class="nav-text">执行文件路径的变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件操作"><span class="nav-number">2.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls：查看"><span class="nav-number">2.1.</span> <span class="nav-text">ls：查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp：复制"><span class="nav-number">2.2.</span> <span class="nav-text">cp：复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm：移除文件或目录"><span class="nav-number">2.3.</span> <span class="nav-text">rm：移除文件或目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv：移动文件或者更名"><span class="nav-number">2.4.</span> <span class="nav-text">mv：移动文件或者更名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件内容查询"><span class="nav-number">3.</span> <span class="nav-text">文件内容查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cat：查看"><span class="nav-number">3.1.</span> <span class="nav-text">cat：查看</span></a></li></ol></li></ol></div>
             
 
           </div>
