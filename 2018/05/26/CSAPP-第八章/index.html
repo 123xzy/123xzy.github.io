@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/2.JPG">
-<meta property="og:updated_time" content="2018-06-02T13:18:15.685Z">
+<meta property="og:updated_time" content="2018-06-05T11:29:31.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第八章：异常控制流">
 <meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
@@ -451,7 +451,7 @@
 <li>WNOHANG：等待集合中没有子进程终止，就立即返回值0。如果不想等待子进程终止，而是想要做其他事情，这个选项有用</li>
 <li>WUNTRACED：该参数和默认行为的唯一区别在于，默认行为是返回终止的子进程的PID，而这个参数是返回终止或者被停止的进程的PID</li>
 <li>WCONTINUED：挂起调用进程的执行，直到等待集合中的进程终止或者集合中的一个被停止的进程收到SIGCONT信号重新开始执行</li>
-<li>WNOHANG|WUNTRACED：</li>
+<li>WNOHANG|WUNTRACED：立即返回，如果等待集合中的子进程没有终止或者停止，返回值为0；如果有一个终止或者停止，返回该进程的PID</li>
 </ul>
 
       
@@ -572,7 +572,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

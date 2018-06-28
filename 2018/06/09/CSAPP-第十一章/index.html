@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="链接：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行">
+<meta name="description" content="《CSAPP》第八章：网络编程">
 <meta name="keywords" content="CSAPP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第七章：链接">
-<meta property="og:url" content="http://yoursite.com/2018/03/23/CSAPP-第七章/index.html">
+<meta property="og:title" content="第十一章：网络编程">
+<meta property="og:url" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="链接：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行">
+<meta property="og:description" content="《CSAPP》第八章：网络编程">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/03/23/CSAPP-第七章/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/03/23/CSAPP-第七章/2.jpg">
-<meta property="og:updated_time" content="2018-06-05T11:29:31.357Z">
+<meta property="og:updated_time" content="2018-06-21T12:50:08.299Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第七章：链接">
-<meta name="twitter:description" content="链接：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/23/CSAPP-第七章/1.jpg">
+<meta name="twitter:title" content="第十一章：网络编程">
+<meta name="twitter:description" content="《CSAPP》第八章：网络编程">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/23/CSAPP-第七章/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/09/CSAPP-第十一章/"/>
 
 
 
 
 
-  <title>第七章：链接 | 阿谢的BLOG</title>
+  <title>第十一章：网络编程 | 阿谢的BLOG</title>
   
 
 
@@ -276,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/23/CSAPP-第七章/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/09/CSAPP-第十一章/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xie">
@@ -293,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第七章：链接</h1>
+          <h1 class="post-title" itemprop="name headline">第十一章：网络编程</h1>
         
 
         <div class="post-meta">
@@ -305,8 +302,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-23T20:25:00+08:00">
-                2018-03-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-09T19:09:15+08:00">
+                2018-06-09
               </time>
             
 
@@ -343,54 +340,9 @@
       
 
       
-        <p><strong>链接</strong>：将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载（复制）到内存并执行<br><a id="more"></a></p>
+        <p>《CSAPP》第八章：网络编程<br><a id="more"></a></p>
 <hr>
-<h1 id="链接的好处"><a href="#链接的好处" class="headerlink" title="链接的好处"></a>链接的好处</h1><ul>
-<li>帮助构建大型程序</li>
-<li>避免危险的编程错误</li>
-<li>理解语言的作用域规则的实现原理</li>
-<li>理解其他的系统概念</li>
-<li>利用共享库</li>
-</ul>
-<h1 id="编译器驱动程序"><a href="#编译器驱动程序" class="headerlink" title="编译器驱动程序"></a>编译器驱动程序</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val = sum(<span class="built_in">array</span>,<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sum.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,s=<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i =<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;	</span><br><span class="line">		s+=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过GCC编译器驱动程序，可以调用语言预处理器、编译器、汇编器和链接器。<br>在shell中输入下列命令，驱动程序会将main.c和sum.c翻译成可执行目标文件prog<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[linux]$ gcc -Og -o prog main.c sum.c</span><br></pre></td></tr></table></figure></p>
-<p>下图概括了具体步骤：</p>
-<ul>
-<li>运行C预处理器（cpp），将main.c翻译成中间文件main.i</li>
-<li>运行C编译器（cc1），将main.i翻译成一个ASCII汇编语言文件main.s</li>
-<li>运行汇编器（as），将main.s翻译成一个可重定向目标文件main.o</li>
-<li>以相同的步骤生成sum.o</li>
-<li>运行链接器程序ld，将main.o和sum.o以及必要的系统目标文件组合，生成一个可执行目标文件prog</li>
-<li>输入“linux&gt; ./prog”，系统将调用加载器，将prog中的代码和数据复制到内存，并将控制移至程序开头<br><img src="/2018/03/23/CSAPP-第七章/1.jpg" alt=""></li>
-</ul>
-<h1 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h1><p>通过静态链接器以一组可重定位目标文件和命令行参数作为输入，生成完全链接、可加载和运行的可执行目标文件作为输出。<br>要完成以上任务，链接器需完成以下步骤：</p>
-<ul>
-<li>符号解析：将每个符号引用和符号定义关联起来</li>
-<li>重定位：把每个符号定义和一个内存位置关联起来，然后修改所有符号引用，使它们指向这个内存位置</li>
-</ul>
-<h1 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h1><p>纯粹就是字节块的集合，这些块中，有些包含程序代码，有些包含数据，其他则包含引导链接器和加载器的数据结构。链接器将这些块重新组合，确定它们的运行位置。</p>
-<ul>
-<li>可重定位目标文件：包含二进制代码和数据</li>
-<li>可执行目标文件：可直接被复制进内存并运行</li>
-<li>共享目标文件：特殊的可重定位目标文件，可以在加载和运行时被动态地加载进内存并链接</li>
-</ul>
-<p>下图是一个典型的可执行可链接格式（ELF）可重定位目标文件格式<br><img src="/2018/03/23/CSAPP-第七章/2.jpg" alt=""></p>
-<ul>
-<li>ELF头：以一个16字节的序列开始，描述了生成该文件的系统的字的大小和字节顺序。其次还包括ELF头的大小、目标文件的类型、机器类型（x86-64）、节头部表的文件偏移、节头部表中的条目大小和数量</li>
-<li>节头部表：描述不同节的位置和大小</li>
-<li>.text：以编译程序的机器代码</li>
-<li>.rodata：只读数据</li>
-<li>.data：已初始化的全局和静态C变量</li>
-<li>.bss：未初始化的全局和静态变量，以及初始化为0的全局或静态变量。这个节不占据实际空间，仅仅是占位符，所以在运行时，这些变量被初始化为0</li>
-<li>.symtab：符号表，包含在定义和引用的函数和全局变量的信息。但是不包含局部变量的条目</li>
-<li>.rel.text：通常省略</li>
-<li>.rel.data：被引用的或定义的所有全局变量的重定位信息</li>
-<li>.debug：调试符号表，只有以-g调用编译器驱动程序时才会得到这种表，其条目是局部变量和类型定义，程序中定义和引用的全局变量，以及原始的c源文件</li>
-<li>.line：原始c源程序和.text节中机器指令之间的映射，同样要以-g调用时才能得到</li>
-<li>.strlab：字符串表，包括.symlab和.debug节中的符号表，以及节头部中的节名字</li>
-</ul>
-<h1 id="可重定位目标文件"><a href="#可重定位目标文件" class="headerlink" title="可重定位目标文件"></a>可重定位目标文件</h1>
+
       
     </div>
     
@@ -420,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/23/《鸟哥的Linux私房菜》/" rel="next" title="《鸟哥的Linux私房菜》">
-                <i class="fa fa-chevron-left"></i> 《鸟哥的Linux私房菜》
+              <a href="/2018/06/01/CLRS-红黑树/" rel="next" title="红黑树">
+                <i class="fa fa-chevron-left"></i> 红黑树
               </a>
             
           </div>
@@ -429,10 +381,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/24/《月亮与六便士》/" rel="prev" title="《月亮与六便士》">
-                《月亮与六便士》 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -484,17 +432,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -545,22 +484,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#链接的好处"><span class="nav-number">1.</span> <span class="nav-text">链接的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器驱动程序"><span class="nav-number">2.</span> <span class="nav-text">编译器驱动程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态链接"><span class="nav-number">3.</span> <span class="nav-text">静态链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标文件"><span class="nav-number">4.</span> <span class="nav-text">目标文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可重定位目标文件"><span class="nav-number">5.</span> <span class="nav-text">可重定位目标文件</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

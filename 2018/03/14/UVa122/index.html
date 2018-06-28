@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="UVa122">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-19T14:19:05.739Z">
+<meta property="og:updated_time" content="2018-06-03T00:40:50.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UVa122（附sscanf函数）">
 <meta name="twitter:description" content="UVa122">
@@ -340,14 +340,22 @@
       
 
       
-        <h1 id="UVa122"><a href="#UVa122" class="headerlink" title="UVa122"></a><a href="https://vjudge.net/problem/UVA-122" target="_blank" rel="noopener">UVa122</a></h1><a id="more"></a>
-<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p>通过链表来实现二叉树</p>
+        <p><a href="https://vjudge.net/problem/UVA-122" target="_blank" rel="noopener">UVa122</a></p>
+<a id="more"></a>
+<p>题意：根据输入构造二叉树，并根据二叉树从上到下，从左到右输出节点的值</p>
+<p>样例输入：<br>(11,LL) (7,LLL) (8,R)<br>(5,) (4,L) (13,RL) (2,LLR) (1,RRR) (4,RR) ()</p>
+<p>输出：<br>5 4 8 11 13 4 7 2 1</p>
+<p>Tips：</p>
+<ul>
+<li>通过链表来实现二叉树<br>*</li>
+</ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//二叉树节点的定义</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">	<span class="keyword">bool</span> flag;			<span class="comment">//标记是否被赋值</span></span><br><span class="line">	<span class="keyword">int</span> value;			<span class="comment">//节点值</span></span><br><span class="line">	Node* left, *right; <span class="comment">//左右节点</span></span><br><span class="line">	Node() :flag(<span class="literal">false</span>), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;<span class="comment">//构造函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>解析输入的字符串<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取输入数据</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">readin</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	failed = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%s"</span>,s))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(s, <span class="string">"()"</span>))<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">int</span> v;</span><br><span class="line">		<span class="built_in">sscanf</span>(&amp;s[<span class="number">1</span>], <span class="string">"%d"</span>, &amp;v);<span class="comment">//从字符串中读取节点的数值,任意指向字符的指针看出是字符串</span></span><br><span class="line">		addnode(v, <span class="built_in">strchr</span>(s, <span class="string">','</span>) + <span class="number">1</span>);<span class="comment">//找到逗号所在位置，然后加一为后面的字符串</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>对于读取的每个节点将其加入的二叉树中<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addnode</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">char</span>* s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="built_in">strlen</span>(s);</span><br><span class="line">	Node* u = root;<span class="comment">//顺着根节点向下走</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (s[i] == <span class="string">'L'</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (u-&gt;left == <span class="literal">NULL</span>)u-&gt;left = newnode();<span class="comment">//节点不存在</span></span><br><span class="line">			u = u-&gt;left;<span class="comment">//继续向左走</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">'R'</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (u-&gt;right == <span class="literal">NULL</span>)u-&gt;right = newnode();<span class="comment">//节点不存在</span></span><br><span class="line">			u = u-&gt;right;<span class="comment">//继续向右走</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (u-&gt;flag)failed = <span class="literal">true</span>;</span><br><span class="line">	u-&gt;value = v;<span class="comment">//节点赋值</span></span><br><span class="line">	u-&gt;flag = <span class="literal">true</span>;<span class="comment">//修改标记，表明已经赋值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>对于已经生成的二叉树进行广度优先搜索<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">bfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ans)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">queue</span>&lt;Node*&gt;q;</span><br><span class="line">	ans.clear();</span><br><span class="line">	q.push(root);</span><br><span class="line">	<span class="keyword">while</span> (!q.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		Node* u = q.front();</span><br><span class="line">		q.pop();</span><br><span class="line">		<span class="keyword">if</span> (!u-&gt;flag)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		ans.push_back(u-&gt;value);</span><br><span class="line">		<span class="keyword">if</span> (u-&gt;left != <span class="literal">NULL</span>)q.push(u-&gt;left);</span><br><span class="line">		<span class="keyword">if</span> (u-&gt;right != <span class="literal">NULL</span>)q.push(u-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>主函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		root = newnode();</span><br><span class="line">		<span class="keyword">if</span> (!readin())<span class="keyword">break</span>;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">		<span class="keyword">if</span> (!failed&amp;&amp;bfs(ans))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> len = ans.size();</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%d%c"</span>, ans[i], i == len - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"not complete\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="sscanf函数："><a href="#sscanf函数：" class="headerlink" title="sscanf函数："></a>sscanf函数：</h2>
+<p>sscanf函数：</p>
+
       
     </div>
     
@@ -443,17 +451,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -468,7 +467,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -504,22 +503,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UVa122"><span class="nav-number">1.</span> <span class="nav-text">UVa122</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题解："><span class="nav-number">1.1.</span> <span class="nav-text">题解：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sscanf函数："><span class="nav-number">1.2.</span> <span class="nav-text">sscanf函数：</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
