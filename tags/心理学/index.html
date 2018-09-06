@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Algorithm," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="description" content="QuickSort">
-<meta name="keywords" content="Algorithm">
-<meta property="og:type" content="article">
-<meta property="og:title" content="快速排序">
-<meta property="og:url" content="http://yoursite.com/2018/04/27/CLRS-快速排序/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="阿谢的BLOG">
+<meta property="og:url" content="http://yoursite.com/tags/心理学/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="QuickSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-29T14:57:59.017Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="快速排序">
-<meta name="twitter:description" content="QuickSort">
+<meta name="twitter:title" content="阿谢的BLOG">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/27/CLRS-快速排序/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/心理学/"/>
 
 
 
 
 
-  <title>快速排序 | 阿谢的BLOG</title>
+  <title>Tag: 心理学 | 阿谢的BLOG</title>
   
 
 
@@ -145,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,171 +254,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>心理学<small>Tag</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/CLRS-快速排序/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="123xzy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿谢的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">快速排序</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/09/06/《乌合之众》/" itemprop="url">
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span itemprop="name">《乌合之众》</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-27T22:06:03+08:00">
-                2018-04-27
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-09-06T13:43:33+08:00"
+              content="2018-09-06" >
+          09-06
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>QuickSort<br><a id="more"></a></p>
-<hr>
-<ul>
-<li>特点：虽然最坏情况下时间复杂度为$\Theta(n^2)$，但在实际应用中效果却很好（这一点后面会解释），它的期望时间复杂度是$\Theta(nlgn)$，而且隐含的常数因子非常小，另外就是原址排序</li>
-</ul>
-<h1 id="算法形式"><a href="#算法形式" class="headerlink" title="算法形式"></a>算法形式</h1><p>快速排序依旧采取分治思想</p>
-<ul>
-<li>分解：数组A[p..r]被分成A[p..q-1]和A[q+1..r]，使得A[p..r-1]中的元素都小于等于A[q],A[q+1..r]中的元素都大于A[q]，</li>
-<li>解决：递归调用，分别对A[p..q-1]和A[q+1..r]进行快速排序</li>
-<li>合并：原址排序，不需要合并</li>
-</ul>
-<p>快速排序伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QuickSort(A,p,r)</span><br><span class="line">if q &lt; r</span><br><span class="line">	p = Partition(A,p,r)</span><br><span class="line">	QuickSort(A,p,q-1)</span><br><span class="line">	QuickSort(A,p+1,r)</span><br></pre></td></tr></table></figure></p>
-<p>Partition对子数组A[p..r]实现原址排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Partition(A,p,r)</span><br><span class="line">pivot = A[r]	//选取A[r作为主元</span><br><span class="line">i = p - 1		//区域分界线</span><br><span class="line">for j = p to r-1</span><br><span class="line">	if A[j] &lt; pivot</span><br><span class="line">		i = i+1</span><br><span class="line">		exchange A[i] with A[j]</span><br><span class="line">exchange A[i+1] with A[r]</span><br><span class="line">return i+1</span><br></pre></td></tr></table></figure></p>
-<p>该过程将数组原地划分为四部分</p>
-<ul>
-<li>A[p..i]小于pivot的部分</li>
-<li>A[i+1..j]大于pivot的部分</li>
-<li>A[j+1..r-1]未排序部分</li>
-<li>A[r]作为pivot</li>
-</ul>
-<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>通过Partition过程的特性构造一个循环不变式</p>
-<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/04/17/CSAPP-第三章（3）/" rel="next" title="第三章：程序的机器级表示（3）">
-                <i class="fa fa-chevron-left"></i> 第三章：程序的机器级表示（3）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/16/lab-malloc/" rel="prev" title="malloclab">
-                malloclab <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -431,10 +309,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -455,17 +329,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,22 +403,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -694,10 +543,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
