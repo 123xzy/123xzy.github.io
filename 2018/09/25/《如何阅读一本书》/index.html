@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Algorithm," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="MergeSort">
-<meta name="keywords" content="Algorithm">
+<meta name="description" content="早点看到这本书，或许在阅读技巧上就可以少走一些弯路吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="归并排序">
-<meta property="og:url" content="http://yoursite.com/2018/03/31/CLRS-归并排序/index.html">
+<meta property="og:title" content="《如何阅读一本书》">
+<meta property="og:url" content="http://yoursite.com/2018/09/25/《如何阅读一本书》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="MergeSort">
+<meta property="og:description" content="早点看到这本书，或许在阅读技巧上就可以少走一些弯路吧">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-09T14:40:07.930Z">
+<meta property="og:updated_time" content="2018-09-25T14:21:03.686Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="归并排序">
-<meta name="twitter:description" content="MergeSort">
+<meta name="twitter:title" content="《如何阅读一本书》">
+<meta name="twitter:description" content="早点看到这本书，或许在阅读技巧上就可以少走一些弯路吧">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/31/CLRS-归并排序/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/25/《如何阅读一本书》/"/>
 
 
 
 
 
-  <title>归并排序 | 阿谢的BLOG</title>
+  <title>《如何阅读一本书》 | 阿谢的BLOG</title>
   
 
 
@@ -273,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/31/CLRS-归并排序/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/《如何阅读一本书》/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xzy">
@@ -290,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">归并排序</h1>
+          <h1 class="post-title" itemprop="name headline">《如何阅读一本书》</h1>
         
 
         <div class="post-meta">
@@ -302,8 +301,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-31T11:33:59+08:00">
-                2018-03-31
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-25T22:17:00+08:00">
+                2018-09-25
               </time>
             
 
@@ -340,43 +339,16 @@
       
 
       
-        <p>MergeSort<br><a id="more"></a></p>
+        <p>早点看到这本书，或许在阅读技巧上就可以少走一些弯路吧<br><a id="more"></a></p>
 <hr>
-<h1 id="算法形式"><a href="#算法形式" class="headerlink" title="算法形式"></a>算法形式</h1><p>分治法：<br>对于每次递归的调用自身去解决相关问题的子问题的算法，均遵循了分治法的思想：将原问题分解为规模较小的子问题（子问题的形式应该类似于原问题），递归求解子问题，然后合并子问题的解，形成原问题的解</p>
-<p>分治模式在每层递归是有三个步骤：</p>
+<p>看完一本书必须回答的四个问题：</p>
 <ul>
-<li>分解</li>
-<li>解决</li>
-<li>合并</li>
+<li>这本书整体框架是什么，到底讲了点什么？</li>
+<li>作者想阐述的观点或论点有哪些，都引用了哪些论据？</li>
+<li>是否符合自己的经验，有无道理？</li>
+<li>对自身的帮助有多大？</li>
 </ul>
-<p>对于归并排序算法,当序列被分解为长度1时，递归开始回升，算法的关键在于合并两个已经排列好的序列，调用MERGE(A,p,q,r)来完成这个操作，其中A[p..q]和A[q+1..r]都分别排序好，合并两个数组得到A[p,r],该合并操作最多执行$r-p+1$次操作，因此需要$\Theta(n)$的时间<br>伪代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">MERGE(A,p,q,r)</span><br><span class="line">n1 = q-p+1</span><br><span class="line">n2 = r-q</span><br><span class="line">let L[1..n1+1] and R[1..n2+1] be new arrays</span><br><span class="line">copy A[p..q],A[q+1..r] to L[1..n1],R[1..n2]</span><br><span class="line">L[n1+1] = Max</span><br><span class="line">R[n2+1] = Max</span><br><span class="line">i = 1</span><br><span class="line">j = 1</span><br><span class="line">for k = p to r</span><br><span class="line">	if L[i]&lt;=R[j]</span><br><span class="line">		A[k] = L[i]</span><br><span class="line">		i++</span><br><span class="line">	else A[k] = R[j]</span><br><span class="line">		j++</span><br></pre></td></tr></table></figure></p>
-<p>这里有个小技巧，就是将每堆底部放一张哨兵牌，并将其设置为$\infty$,因此当一堆出现$\infty$牌时，不可能出现比它大的牌，于是形式上相当于将另一堆直接放置到输出堆</p>
-<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>循环不变式:$A[p..k-1]$按从小到大的顺序包含$L[1..n1+1]$和$R[1..n2+1]$中的k-p个最小元素，$L[i]$和$R[j]$是各自数组中未被复制回A数组的最小元素</p>
-<ul>
-<li>初始化：A数组为空，$L[1]$和$R[1]$都是各自数组的最小元素</li>
-<li>保持：假设$L[i] \le R[j]$,这时$A[p..k-1]$包含$k-p个$最小元素，将$L[i]$复制到$A[k],A[p..k]$包含$k-p+1个$元素，更新$k$和$i$，可见循环不变式依旧成立</li>
-<li>终止：$k=r+1$,$A[p..r]$即按从小到大排列，数组$L$和$R$只剩下哨兵没有被赋值会数组A</li>
-</ul>
-<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><ul>
-<li>解决子问题需要$2T(n/2)$的运行时间</li>
-<li>合并一个n大小的数组需要$\Theta(n)$</li>
-<li>因此归并排序的最坏运行时间$T(n)=2T(n/2)+\Theta(n)(n&gt;1)$</li>
-</ul>
-<p>通过画递归树，每层的代价都是$cn$,总层数为$lgn+1$,总代价即为$cn(lgn+1)=cnlgn+cn$,忽略低阶项和常量$c$便得出$T(n)=\Theta(nlgn)$</p>
-<h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><ul>
-<li><a href="https://github.com/123xzy/CLRS/blob/master/C02/mergesort.cpp" target="_blank" rel="noopener">C++</a></li>
-</ul>
-<h1 id="习题解答"><a href="#习题解答" class="headerlink" title="习题解答"></a>习题解答</h1><h2 id="Ex2-3-3"><a href="#Ex2-3-3" class="headerlink" title="Ex2.3-3"></a>Ex2.3-3</h2><p>当n刚好是2的幂时，用数学归纳法证明下列递归式的解是$T(n)=nlgn$，$T(n)=2T(n/2)+n(n=2^k,k&gt;1)$<br>设$n=2^k$<br>当$n=2$时，$k=1$,$T(2)=2lg2=2$成立<br>当$n&gt;2$时，假设$T(2^k)=2^klg2^k$成立<br>则$T(2^{k+1})=2T(2^{k+1}/2)+2^{k+1}=2^{k+1}lg2^{k+1}$<br>得证</p>
-<h2 id="Ex2-3-4"><a href="#Ex2-3-4" class="headerlink" title="Ex2.3-4"></a>Ex2.3-4</h2><p>为插入排序的递归版本的最坏情况写一个递归式<br>$T(n)=T(n-1)+n-1(n&gt;1)$</p>
-<h2 id="Ex2-3-5"><a href="#Ex2-3-5" class="headerlink" title="Ex2.3-5"></a>Ex2.3-5</h2><p>为二分查找写递归的伪代码，并判断最坏情况的运行时间为$\Theta(lgn)$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">binary_search(A,low,high,key)</span><br><span class="line">mid=(low+high)/2</span><br><span class="line">if(A[mid]=key)return mid</span><br><span class="line">else if(A[mid]&lt;key)</span><br><span class="line">    binary_search(A,mid,high,key)</span><br><span class="line">else if(A[mid]&gt;key)</span><br><span class="line">    binary_search(A,low,mid,key)</span><br><span class="line">return null</span><br></pre></td></tr></table></figure></p>
-<p>利用与Ex2.3-3类似的数学归纳法可证明结论成立</p>
-<h1 id="算法改进"><a href="#算法改进" class="headerlink" title="算法改进"></a>算法改进</h1><p>在归并算法中对小数组采用插入排序，当子问题足够小时，采用插入排序来使递归的叶变粗</p>
-<ul>
-<li>使用插入排序来排序长度为k的n/k个子表，然后使用标准合并机制来合并这些子表，最坏的情况是在$n/k\Theta(k^2)=\Theta(nk)$的时间内完成排序</li>
-<li>最坏的情况下能在$\Theta(nlg(n/k))$的时间内合并子表</li>
-<li>修改后的归并排序算法最坏运行时间为$\Theta(nk+nlg(n/k))$,并且$k&lt;\Theta(lgn)$,否则增长率将超过原来的算法</li>
-<li>对于k的取值，因为我们选取插入算法是为了改善，所以原本应该使用归并算法的部分应有$c_1k^2&lt;c_2klgk$,得到k的取值范围</li>
-</ul>
+<p>每看完一本书，总是纠结该怎么写书评，我想这四个基本问题就是一个很好的出发点。</p>
 
       
     </div>
@@ -392,12 +364,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
-          
-        </div>
-      
 
       
       
@@ -407,8 +373,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/30/CLRS-插入排序/" rel="next" title="插入排序">
-                <i class="fa fa-chevron-left"></i> 插入排序
+              <a href="/2018/09/11/《插入排序vs选择排序》/" rel="next" title="《插入排序vs选择排序》">
+                <i class="fa fa-chevron-left"></i> 《插入排序vs选择排序》
               </a>
             
           </div>
@@ -416,10 +382,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/31/Linux-第六章/" rel="prev" title="Linux-第六章">
-                Linux-第六章 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -471,17 +433,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,22 +507,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#习题解答"><span class="nav-number">5.</span> <span class="nav-text">习题解答</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-3"><span class="nav-number">5.1.</span> <span class="nav-text">Ex2.3-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-4"><span class="nav-number">5.2.</span> <span class="nav-text">Ex2.3-4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-3-5"><span class="nav-number">5.3.</span> <span class="nav-text">Ex2.3-5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法改进"><span class="nav-number">6.</span> <span class="nav-text">算法改进</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -771,26 +708,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
