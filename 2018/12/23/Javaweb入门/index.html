@@ -79,22 +79,27 @@
 
 
 
-<meta name="description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一门语言的框架，踩过了无数的坑，但收获还是很大">
+<meta name="description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta name="keywords" content="Linux,Java,Web,Mysql,Tomcat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Javaweb入门">
 <meta property="og:url" content="http://yoursite.com/2018/12/23/Javaweb入门/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一门语言的框架，踩过了无数的坑，但收获还是很大">
+<meta property="og:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/2.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/3.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/4.JPG">
-<meta property="og:updated_time" content="2018-12-23T09:14:48.189Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/5.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/6.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
+<meta property="og:updated_time" content="2018-12-25T08:54:26.529Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
-<meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一门语言的框架，踩过了无数的坑，但收获还是很大">
+<meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/1.JPG">
 
 
@@ -345,7 +350,7 @@
       
 
       
-        <p>花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一门语言的框架，踩过了无数的坑，但收获还是很大<br><a id="more"></a></p>
+        <p>花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大<br><a id="more"></a></p>
 <hr>
 <p>看本文的读者最好有以下<strong>基础</strong></p>
 <ul>
@@ -378,6 +383,8 @@
 <p>这里提一句maven是什么，中文名是行家（有点意思），但其实是犹太语，意思是知识的积累，是一个软件项目管理工具，在我们这个项目中就是可以通过一个配置文件pom.xml来引入开发需要的包，而不用自己去下载去引入，只要写一个简单的配置文件maven就可以从本地或者中央存储库（<a href="https://mvnrepository.com/" target="_blank" rel="noopener">点这里哦！</a>）中将jar包导入这个项目中，除此之外可以自动部署到tomcat上、自动生成war包等等，覆盖了一个项目完整的生命周期，很有用也很好用！</p>
 <p>上图看步骤<br><img src="/2018/12/23/Javaweb入门/1.JPG" alt="第一步"><br>点击Next，GroupId填的一般是域名，以此区别其他人的开发项目，和Java包的命名方式类似，artifactId就是项目名称（不过artifact是人工制品的意思？？），填完之后就是一路点<br><img src="/2018/12/23/Javaweb入门/2.JPG" alt="第二步"><br>点击Finish，之后在等待创建项目的时候，右下角会出现这个标签，选择Enable Auto-Import，这样当pom.xml配置文件改变的时候，maven就会自动更改<br><img src="/2018/12/23/Javaweb入门/3.JPG" alt="第三步"></p>
 <p>创建好后的初始文件目录<br><img src="/2018/12/23/Javaweb入门/4.JPG" alt="第四步"></p>
+<p>之后先去配置tomcat，如下图<br><img src="/2018/12/23/Javaweb入门/5.JPG" alt="第五步"><br><img src="/2018/12/23/Javaweb入门/6.JPG" alt="第六步"><br><img src="/2018/12/23/Javaweb入门/7.JPG" alt="第七步"><br>选择”demo::war exploder”包，这样一个简单的网页就算完成了<br><img src="/2018/12/23/Javaweb入门/8.JPG" alt="第八步"><br>点击”run”运行第一个网页吧！<br><img src="/2018/12/23/Javaweb入门/9.JPG" alt="第九步"></p>
+<p>之后会有如何将网页部署到服务器（<a href="">点这里呀！</a>）的教程和Spring入门教程（<a href="">点这里呀！</a>）</p>
 
       
     </div>
@@ -505,7 +512,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
