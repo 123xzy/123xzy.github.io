@@ -82,15 +82,20 @@
 <meta name="description" content="这章涉及到操作系统中的文件系统概念，第一次看的时候还没怎么看懂，现在重新来写总结">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-第八章-磁盘和文件系统管理">
+<meta property="og:title" content="Linux-第八章">
 <meta property="og:url" content="http://yoursite.com/2018/04/15/Linux-第八章/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="这章涉及到操作系统中的文件系统概念，第一次看的时候还没怎么看懂，现在重新来写总结">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-29T14:57:13.172Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/15/Linux-第八章/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/15/Linux-第八章/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/15/Linux-第八章/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/15/Linux-第八章/4.jpg">
+<meta property="og:updated_time" content="2018-12-26T15:25:48.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux-第八章-磁盘和文件系统管理">
+<meta name="twitter:title" content="Linux-第八章">
 <meta name="twitter:description" content="这章涉及到操作系统中的文件系统概念，第一次看的时候还没怎么看懂，现在重新来写总结">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/15/Linux-第八章/1.jpg">
 
 
 
@@ -126,7 +131,7 @@
 
 
 
-  <title>Linux-第八章-磁盘和文件系统管理 | 阿谢的BLOG</title>
+  <title>Linux-第八章 | 阿谢的BLOG</title>
   
 
 
@@ -290,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux-第八章-磁盘和文件系统管理</h1>
+          <h1 class="post-title" itemprop="name headline">Linux-第八章</h1>
         
 
         <div class="post-meta">
@@ -340,10 +345,17 @@
       
 
       
-        <p>这章涉及到操作系统中的文件系统概念，第一次看的时候还没怎么看懂，现在重新来写总结<br><a id="more"></a></p>
+        <p>这章涉及到操作系统中的文件系统概念，第一次看的时候还没怎么看懂，现在重新来写总结</p>
+<a id="more"></a>
 <hr>
-<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><p>文件系统是建立在磁盘上的，经常听说的格式化，就是指对于磁盘要格式化，以适应操作系统对应的文件系统格式，linux正规的文件系统是Ext2，Windows是FAT，以前常说一个分区对应一个文件系统，但现在由于新技术的变化，一个分区可以格式化为多个文件系统，多个分区也可以格式化为单个文件系统</p>
-<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>文件不仅仅包含实际的数据块，还包含很多额外数据，来对应操作系统需求，例如文件权限、修改日期和所有者等，文件系统会将这些信息分别存储，实际数据放在data block中，权限和属行放在inode中，另外有一个super block记录整个文件系统的信息，如inode和data block的总量和剩余量</p>
+<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><p>先从磁盘这个硬件开始讲起，如果看过机械硬盘构造，应该知道磁盘一般是圆的，但为了方便，我们可以将其想象成能被切割的长条形，最开始的分区表很重要，它记录了接下来分区起始的柱面号码，每个分区都是相互独立的，可以以不同的文件系统定义存放文件数据<br><img src="/2018/04/15/Linux-第八章/1.jpg" alt="磁盘"></p>
+<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>UNIX文件系统将文件分成普通文件、目录文件、设备文件（特殊文件）和符号连接文件(Symbolic link)等几类，UNIX把所有I/O设备作为特殊文件，对<strong>I/O设备操作模仿为对普通文件的存取</strong>，这样将文件与设备的I/O尽可能统一起来，<strong>文件挂载</strong>就是把磁盘对应的文件挂载到特定的目录中，这个目录就成为<strong>挂载点</strong></p>
+<p>文件不仅仅包含实际的数据块，还包含很多额外数据，来对应操作系统需求，例如文件权限、修改日期和所有者等</p>
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><p>文件系统是操作系统的一部分，承担起管理系统和应用程序资源管理的责任</p>
+<p>从系统角度来看，文件系统是对文件存储器的存储空间进行组织、分配和回收，负责文件的存储、检索、共享和保护<img src="/2018/04/15/Linux-第八章/2.jpg" alt="文件系统结构">脑子中一直有个疑惑：文件怎么映射到磁盘上的？文件系统能和设备驱动程序通信，也就是文件系统判断要写入的文件的权限等信息后，通知设备驱动程序写入到某指定扇区的磁盘上，设备驱动程序又会真正通知硬件层的磁盘设备控制器，去控制磁头写入电信号，这样子就算打通了从文件系统到硬件层的通路</p>
+<p>经常听说的格式化，就是指对于磁盘要格式化，以适应操作系统对应的文件系统格式，linux正规的文件系统是Ext2，Windows是FAT，以前常说一个分区对应一个文件系统，但现在由于新技术的变化，一个分区可以格式化为多个文件系统，多个分区也可以格式化为单个文件系统</p>
+<p>前面我们讲到文件具有很多原数据，文件系统通常将权限与属性放置在inode中，将实际数据放在data block中，另外还有一个superblock记录整个文件系统的整体信息，包括inode和data block的总量、使用量、剩余量等，这些块对应到磁盘上就是不同的扇区</p>
+<p>索引式文件系统，如Ext2<img src="/2018/04/15/Linux-第八章/3.jpg" alt="索引式文件系统">链式文件系统，如U盘使用的FAT格式<img src="/2018/04/15/Linux-第八章/4.jpg" alt="链式文件系统"></p>
 <h1 id="Ext2文件系统"><a href="#Ext2文件系统" class="headerlink" title="Ext2文件系统"></a>Ext2文件系统</h1><p>几百G的磁盘意味着很多很多的inode和block，这样显然不含管理，就像几百万的军队只有一个司令管理，没有其他层次的管理机构，是很不合理的，因此Ext2在格式化的时候也会区分多个组块（block group）。每个group都有自己的super block、inode和data block，就像军队中的连和营的概念。</p>
 
       
@@ -464,7 +476,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -477,7 +489,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -532,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件系统"><span class="nav-number">1.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-number">2.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ext2文件系统"><span class="nav-number">3.</span> <span class="nav-text">Ext2文件系统</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#磁盘"><span class="nav-number">1.</span> <span class="nav-text">磁盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-number">2.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件系统"><span class="nav-number">3.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ext2文件系统"><span class="nav-number">4.</span> <span class="nav-text">Ext2文件系统</span></a></li></ol></div>
             
 
           </div>

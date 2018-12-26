@@ -87,6 +87,8 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/10.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/11.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/2.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/3.JPG">
@@ -96,11 +98,11 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
-<meta property="og:updated_time" content="2018-12-25T08:54:26.529Z">
+<meta property="og:updated_time" content="2018-12-26T07:26:18.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
 <meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/1.JPG">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/10.jpg">
 
 
 
@@ -361,7 +363,9 @@
 <li>数据库，如MySQL</li>
 </ul>
 <p>当然如果不了解也没事，和我一样头铁就是干！</p>
-<p>先申明这次开发所用的环境（包括版本信息），这真的很重要，因为我第一次在云服务器上部署tomcat时，所安装的jdk版本是1.7.0，而tomcat是8.5.5，产生的问题就是能顺利打开tomcat自带的界面，却不可以打开我自己部署的项目，这个问题还是我使用一个jsp文件去测试也打不开，才意识到可能是java没有安装成功，所以今后一定要注意版本的问题，不要随便安装。</p>
+<p>先讲讲一些大体上的架构吧！</p>
+<p>Javaweb的传统架构都是模块化的设计逻辑，如Views、Controller、Service和Dao，如果要进行水平扩展，则将应用部署到不同的服务器，并通过Nginx进行负载均衡<br><img src="/2018/12/23/Javaweb入门/10.jpg" alt="传统架构"><br>现流行的微服务框架则在传统应用架构上，将业务拆分为更细颗粒的服务，每个服务都是一个应用，并对为提供公共API，图中每个API都是一个传统应用架构<br><img src="/2018/12/23/Javaweb入门/11.jpg" alt="微服务架构"></p>
+<p>申明这次开发所用的环境（包括版本信息）真的很重要，因为我第一次在云服务器上部署tomcat时，所安装的jdk版本是1.7.0，而tomcat是8.5.5，产生的问题就是能顺利打开tomcat自带的界面，却不可以打开我自己部署的项目，这个问题还是我使用一个jsp文件去测试也打不开，才意识到可能是java没有安装成功，所以今后一定要注意版本的问题，不要随便安装。</p>
 <h1 id="所用开发工具"><a href="#所用开发工具" class="headerlink" title="所用开发工具"></a>所用开发工具</h1><ul>
 <li>jdk版本：云服务器上安装的是jdk1.8.0，本地则是安装的jdk9.0.1，当然最好即使安装相同的版本，不然最后部署出现问题，会很“开心”的</li>
 <li>tomcat 8.5.5</li>
@@ -379,7 +383,7 @@
 <li>锻炼自己的调BUG的能力，如何快速定位出错的原因和位置</li>
 <li>我觉得我在这个项目中认识到的<strong>最最重要</strong>的一点就是一定要记录每次出错，并进行排错的过程步骤，这样不仅知道哪一步骤出错，还能方便回头写总结文档</li>
 </ul>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>接下来不啰嗦，进行第一步，选择创建的是maven项目</p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><p>接下来不啰嗦，进行第一步，选择创建的是maven项目</p>
 <p>这里提一句maven是什么，中文名是行家（有点意思），但其实是犹太语，意思是知识的积累，是一个软件项目管理工具，在我们这个项目中就是可以通过一个配置文件pom.xml来引入开发需要的包，而不用自己去下载去引入，只要写一个简单的配置文件maven就可以从本地或者中央存储库（<a href="https://mvnrepository.com/" target="_blank" rel="noopener">点这里哦！</a>）中将jar包导入这个项目中，除此之外可以自动部署到tomcat上、自动生成war包等等，覆盖了一个项目完整的生命周期，很有用也很好用！</p>
 <p>上图看步骤<br><img src="/2018/12/23/Javaweb入门/1.JPG" alt="第一步"><br>点击Next，GroupId填的一般是域名，以此区别其他人的开发项目，和Java包的命名方式类似，artifactId就是项目名称（不过artifact是人工制品的意思？？），填完之后就是一路点<br><img src="/2018/12/23/Javaweb入门/2.JPG" alt="第二步"><br>点击Finish，之后在等待创建项目的时候，右下角会出现这个标签，选择Enable Auto-Import，这样当pom.xml配置文件改变的时候，maven就会自动更改<br><img src="/2018/12/23/Javaweb入门/3.JPG" alt="第三步"></p>
 <p>创建好后的初始文件目录<br><img src="/2018/12/23/Javaweb入门/4.JPG" alt="第四步"></p>
@@ -512,7 +516,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -525,7 +529,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -580,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#所用开发工具"><span class="nav-number">1.</span> <span class="nav-text">所用开发工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">3.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">3.1.</span> <span class="nav-text">创建项目</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#所用开发工具"><span class="nav-number">1.</span> <span class="nav-text">所用开发工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">3.</span> <span class="nav-text">步骤</span></a></li></ol></div>
             
 
           </div>
