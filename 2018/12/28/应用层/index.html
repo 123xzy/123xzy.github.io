@@ -89,7 +89,11 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/2.jpg">
-<meta property="og:updated_time" content="2018-12-28T14:52:53.277Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/6.jpg">
+<meta property="og:updated_time" content="2018-12-29T09:17:27.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="应用层">
 <meta name="twitter:description" content="Web、YouTube、QQ，网络应用无处不在，应用层协议也就无处不在">
@@ -369,6 +373,35 @@
 <p>位于公共域的应用层协议（如HTTP），只要相应的应用遵从协议规则，就能和同样遵从该协议的其他主机的应用‘</p>
 <h1 id="Web和HTTP"><a href="#Web和HTTP" class="headerlink" title="Web和HTTP"></a><span id="1">Web和HTTP</span></h1><p>Web的应用层协议为HyperText Transfer Protocol（HTTP，超文本传输协议），Web浏览器（Chrome、IE、Firefox）就对应了体系结构中的客户，Web服务器就对应了体系中的服务器（Apache Tomcat）。HTTP是一个无状态协议，即服务器并不会记住用户行为（连鱼七秒钟的记忆都没有）<br><img src="/2018/12/28/应用层/2.jpg" alt="HTTP流程"></p>
 <p>通过一个单独的TCP连接发送（用完就毁）的HTTP称为<strong>非持续连接</strong>的HTTP，而使用同一条TCP的则称为<strong>持续连接</strong>的HTTP</p>
+<p><strong>HTTP请求报文</strong><img src="/2018/12/28/应用层/3.jpg" alt="HTTP请求报文">有以下字段</p>
+<ul>
+<li>方法：GET、POST、HEAD、PUT、DELETE</li>
+<li>URL：请求对象的标识</li>
+<li>HTTP VERSION：浏览器实现的HTTP版本</li>
+<li>Host：请求对象所在的主机</li>
+<li>Connection：使用的是持续还是非持续HTTP连接</li>
+<li>User-agent：指明浏览器类型</li>
+<li>Accept-language：对象的语法版本</li>
+<li>Entity Body：使用GET方法时，实体为空，只在使用POST方法时才使用实体（如用户在表单字段中的输入值），当然在GET方法也可以加入表单字段，如“129.204.105.84:8080/user/?json”，即作为URL的参数</li>
+</ul>
+<p>HEAD方法和GET类似，但服务器不返回请求对象；PUT则把对象上传到服务器指定目录；DELETE允许用户删除Web服务器的对象</p>
+<p><strong>HTTP响应报文</strong><br><img src="/2018/12/28/应用层/4.jpg" alt="HTTP响应报文"></p>
+<ul>
+<li>200 OK：请求成功，信息在返回的响应报文中</li>
+<li>301 Moved Permanently：请求对象永久转移，新的URL在响应报文的Location</li>
+<li>400 Bad Request：请求不能被服务器理解</li>
+<li>404 Not Found：请求的文档不在服务器上</li>
+<li>505 HTTP Version Not Supported：不支持HTTP协议版本</li>
+</ul>
+<p><strong>Cookie</strong><br>Cookie的运行流程<br><img src="/2018/12/28/应用层/5.jpg" alt="Cookie流程"></p>
+<p>Cookie通过在请求报文的首部行加入Cookie，即在无状态的HTTP之上建立起了一个用户会话层，服务器就能根据Cookie来返回特定的内容</p>
+<p><strong>Web缓存</strong><br>当浏览器被配置，使得对于某个对象的请求定向到Web Cache（Proxy Server），当缓存器没有该对象时，才会和初识服务器建立TCP，并发送HTTP请求<img src="/2018/12/28/应用层/6.jpg" alt="代理服务器">Web Cache好处</p>
+<ul>
+<li>可以大大的减少对客户请求的响应时间</li>
+<li>减少一个机构的接入链路到因特网的通信量</li>
+</ul>
+<p>引入Web Cache的同时也会引入一个问题：怎么保证Proxy Sever存储的对象都是最新的？<br>答案就是HTTP中的<strong>条件GET方法</strong>，条件GET首要意味着HTTP请求使用的是GET方法，其次要在报文中的首部行中包含一个<strong>“If-Modified-Since”</strong>字段</p>
+<p>当用户第一次请求某一个对象时，初始服务器的响应报文中会包含“Last-Modified”字段，代理服务器会将对象和该字段的值保存在本地，当用再一次请求该对象时，代理服务器就会发送一个条件请求报文，并把“Last-Modified”的值作为“If-Modified-Since”的值，初始服务器只在对象在该值之后被修改才会发送对象作为相应，否则只会一个状态码304 Not Modified，即申明该对象为最新的，可以直接转发给用户</p>
 
       
     </div>
@@ -408,6 +441,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/29/《Spring揭秘》/" rel="prev" title="《Spring揭秘》">
+                《Spring揭秘》 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -484,7 +521,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">107</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -497,7 +534,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
