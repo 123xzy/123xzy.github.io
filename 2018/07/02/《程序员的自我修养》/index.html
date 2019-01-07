@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书">
+<meta name="description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《程序员的自我修养》">
 <meta property="og:url" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书">
+<meta property="og:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-07-04T10:53:43.725Z">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/1.jpg">
+<meta property="og:updated_time" content="2019-01-07T15:21:20.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《程序员的自我修养》">
-<meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书">
+<meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/1.jpg">
 
 
 
@@ -339,10 +341,32 @@
       
 
       
-        <p>一本让我意外的书，从一个简单的helloworld开始，讲出了整本书</p>
+        <p>一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动</p>
 <a id="more"></a>
 <hr>
-<p>相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动</p>
+<p>本书所讲的技术，大多成型在十年前，乃至二十年前，他们是整个计算机行业技术的根本，也几乎是现在所有计算机应用的基础。在当今计算机技术发生根本性变革之前，这些技术还将继续存在并保持活力</p>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>操作系统的一个功能就是提供抽象的接口，另一个功能就是管理硬件资源</p>
+<p>开发工具和应用程序使用一个接口，即操作系统<strong>应用程序编程接口</strong>（Application Programming Interface），该接口的提供者是运行库（如Linux下的CLibc库提供POSIX的API）</p>
+<p>运行库使用操作系统提供的<strong>系统调用接口</strong>（System Call Interface），该接口的实现往往以软件中断的方式提供</p>
+<p>操作系统的内核层对于硬件层来说是硬件接口的使用者，而硬件是接口的定义者</p>
+<h2 id="CPU分配"><a href="#CPU分配" class="headerlink" title="CPU分配"></a>CPU分配</h2><p>对于<strong>CPU的使用</strong>机制经历了以下几个历史阶段</p>
+<ul>
+<li>多道程序：编写一个监控程序，当程序暂时无需使用CPU时，就把另外正在等待CPU资源的程序启动。这种机制的问题就在于调度机制过于粗糙，各种程序之间没有轻重缓急</li>
+<li>分时系统：每个程序运行一段时间后都会主动让出CPU给其他程序，但这种系统遇到某个死循环程序，也只能等待，就导致系统整个看上去都死机了</li>
+<li><strong>多任务系统</strong>：操作系统接管了所有的硬件资源，本身运行在一个手硬件保护的级别。所有应用程序以<strong>进程</strong>的方式运行在比<strong>操作系统权限更低的级别上</strong>，每个进程都有自己的独立地址空间，使得进程之间地址空间相互隔离。CPU由操作系统统一分配，每个进程根据进程优先级获得CPU。当摸个程序运行时间超过了一定时间，操作系统就会暂停该进程，把资源分配给其他程序，这种分配方式叫做<strong>抢占式</strong></li>
+</ul>
+<h2 id="设备驱动"><a href="#设备驱动" class="headerlink" title="设备驱动"></a>设备驱动</h2><p>对于操作系统上面的运行库和应用程序来说，它们希望看到的是一个统一的硬件访问模式。在操作系统成熟之前，应用程序的程序员就要直接和硬件打交道，之后硬件就被抽象成了一系列的概念。如在Unix中，所有硬件设备都被抽象为文件；在Windows中图形硬件被抽象为GDI，磁盘被抽象成为了普通文件系统。这些繁琐的硬件细节都交给了操作系统中的<strong>硬件驱动程序</strong>完成。驱动程序和内核一起运行在特权级上</p>
+<h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p>早期计算机的程序是直接运行在<strong>物理内存</strong>上的，可以理解为编译好的程序直接写入了内存条，但是思考一个问题，运行在计算机中的程序肯定不止一个吧，每个程序占用一部分内存，自然就会产生内存不足的现象</p>
+<p>这样直接使用物理内存的第一个问题就是<strong>内存使用效率不高</strong>，例如假设总共有50MB的内存，程序A使用10MB,这里需要明确一点的是程序内存的使用都是连续的，程序B使用30MB，程序C需要20M，显然要把程序A和B的数据都存入磁盘才可以去运行程序C，但是其实将程序A移除后，内存中就已经有20M空闲的内存，但却得不到利用，而且大量的数据在内存和磁盘中移动显然是低效率的</p>
+<p>第二个问题就是<strong>安全问题</strong>，程序内存地址是不隔离的，程序之间可以很容易的访问相互之间的数据，这对于恶意程序显然是个好机会，通过轻易访问其他程序的内存，修改内存内容，执行破坏计算机的程序，想想都有点激动</p>
+<p>第三个问题是<strong>地址空间的不确定性</strong>，每次运行程序对应的物理地址都是不确定的，这次可能是0x0000-0x1111,下次就可能是0x2222-0x3333，这种不确定性会给程序编写造成麻烦，例如如果了解汇编的话，程序跳转都是跳转到特定的地址，也就是说编译之后就会给出特定的内存地址</p>
+<p>解决上述问题的方法就是增加中间层，也就是<strong>虚拟地址</strong>，并通过某些映射的方法（<strong>分段</strong>和<strong>分页</strong>），将这个虚拟地址转换成物理地址，这就是虚拟地址带来的好处，但是如果是物理地址就不能带来这种便利</p>
+<h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>即把一个程序所需要内存空间大小的虚拟空间映射到某个地址空间<img src="/2018/07/02/《程序员的自我修养》/1.jpg" alt="分段"><br>这种方法只解决上述问题中的地址隔离和地址不确定问题，但没有解决效率问题。</p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><hr>
+<h1 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h1><ul>
+<li><a href="/2019/01/07/《目标文件》/" title="《目标文件》">《目标文件》</a></li>
+<li><a href="/2019/01/07/《静态链接》/" title="《静态链接》">《静态链接》</a></li>
+</ul>
 
       
     </div>
@@ -431,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -447,7 +480,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">117</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -505,6 +538,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU分配"><span class="nav-number">1.1.</span> <span class="nav-text">CPU分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段"><span class="nav-number">2.1.</span> <span class="nav-text">分段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">2.2.</span> <span class="nav-text">分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#章节目录"><span class="nav-number">3.</span> <span class="nav-text">章节目录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/2.JPG">
-<meta property="og:updated_time" content="2018-06-05T11:29:31.003Z">
+<meta property="og:updated_time" content="2019-01-07T14:51:13.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第八章：异常控制流">
 <meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
@@ -345,23 +345,39 @@
       
         <p>《CSAPP》第八章：异常控制流<br><a id="more"></a></p>
 <hr>
+<ul>
+<li><a href="#1">理解ECF的作用</a></li>
+<li><a href="#2">异常</a></li>
+<li><a href="#3">Linux的异常</a></li>
+<li><a href="#4">进程</a></li>
+<li><a href="#5">系统调用错误处理</a></li>
+<li><a href="#6">进程控制</a> </li>
+<li><a href="#7">Linux信号</a></li>
+</ul>
+<hr>
 <p>控制流的定义：程序计数器中保存有一个关于指令地址的序列，从序列中的第k项转移到第k+1项称为控制转移，这样的序列就叫做控制流</p>
-<p>程序内部的语句会对指令造成变化，与此同时，系统在必要的时候也要对系统状态做出反应，也会对指令做出变化，这些变化的改变和所写程序并不一定相关，造成突变的控制流我们成为异常控制流（ECF），这个概念发生在计算机系统的各个层次当中，如硬件层，当硬件检测的事件发生变化时，会触发异常处理程序，如操作系统层，内核通过上下文切换，将控制从一个用户转移到另一个用户上</p>
-<h1 id="理解ECF的作用"><a href="#理解ECF的作用" class="headerlink" title="理解ECF的作用"></a>理解ECF的作用</h1><ul>
+<p>程序内部的语句会对指令造成变化，与此同时，系统在必要的时候也要对系统状态做出反应，也会对指令做出变化，这些变化的改变和所写程序并不一定相关，造成突变的控制流我们成为<strong>异常控制流（ECF，Exceptional Control Flow）</strong>，这个概念发生在计算机系统的各个层次当中</p>
+<ul>
+<li>硬件层：当硬件检测的事件发生变化时，会触发异常处理程序</li>
+<li>操作系统层：内核通过上下文切换，将控制从一个用户转移到另一个用户上</li>
+<li>应用层：一个进程可以发送信号到另一个进程，而接受者会将控制突然转移到它的一个信号处理程序</li>
+<li>软件异常：一个程序可以回避通常的栈规则，并执行到其他函数中任意位置的非本地跳转来应对错误</li>
+</ul>
+<h1 id="理解ECF的作用"><a href="#理解ECF的作用" class="headerlink" title="理解ECF的作用"></a><span id="1">理解ECF的作用</span></h1><ul>
 <li>对理解虚拟内存、I/O、进程等有帮助</li>
 <li>理解应用程序和操作系统的交互</li>
 <li>编写Unix Shell和Web服务器等应用</li>
 <li>理解并发</li>
 <li>理解C++和Java中异常机制的实现</li>
 </ul>
-<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>异常是ECF的一种形式，指控制流的突变，用来响应处理器状态中的某些变化</p>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a><span id="2">异常</span></h1><p>异常是ECF的一种形式，指控制流的突变，用来响应处理器状态中的某些变化</p>
 <p>首先处理器中会保存有状态的编码，当状态变化（即事件）时，如发生虚拟内存缺页，算术溢出时，都会导致编码的变化（即状态），处理器会通过一张叫异常表的跳转表，进行间接过程调用（异常），到一个专门设计用来处理状态变化的程序中，程序执行完后，根据事件的类型决定接下来做什么</p>
 <ul>
 <li>异常处理程序将控制返回给事件发生时执行的指令</li>
 <li>将控制返回给事件发生时执行的指令的下一条指令</li>
 <li>直接中断程序</li>
 </ul>
-<h2 id="异常表"><a href="#异常表" class="headerlink" title="异常表"></a>异常表</h2><p>系统对每种可能出现的异常都分配了一个唯一的非负整数异常号，前一部分由处理器设计师分配，如零除，缺页，内存访问违例，其他号码由操作系统内核设计师分配，如系统调用和外部I/O信号<br>异常表中的表目k就对应着异常k的处理程序代码的地址，异常表的起始地址放在一个叫做异常表基址寄存器的特殊寄存器中<br>当处理器检测到事件的发生，并确定事件发生对应的异常号后，处理器通过执行间接过程调用，触发异常，并通过异常表上的对应程序进行处理</p>
+<h2 id="异常表"><a href="#异常表" class="headerlink" title="异常表"></a>异常表</h2><p>系统对每种可能出现的异常都分配了一个唯一的非负整数异常号，前一部分由处理器设计师分配，如零除，缺页，内存访问违例，其他号码由操作系统内核设计师分配，如系统调用和外部I/O信号<br>异常表中的表目k就对应着异常k的处理程序代码的地址，异常表的起始地址放在一个叫做<strong>异常表基址寄存器</strong>的特殊寄存器中<br>当处理器检测到事件的发生，并确定事件发生对应的异常号后，处理器通过执行间接过程调用，触发异常，并通过异常表上的对应程序进行处理</p>
 <h2 id="异常和过程调用的区别"><a href="#异常和过程调用的区别" class="headerlink" title="异常和过程调用的区别"></a>异常和过程调用的区别</h2><ul>
 <li>异常处理程序运行在内核模式下，因此对系统资源有完全的访问权限</li>
 <li>处理程序如果从用户程序转移到内核，则处理程序将被压入内核栈中，而不是用户栈中</li>
@@ -379,14 +395,14 @@
 <li><p>终止<br>通常是一些致命的错误导致的，如DRAM损坏等，处理程序直接将控制返回个一个<code>abort</code>例程，并终止该程序</p>
 </li>
 </ul>
-<h1 id="Linux的异常"><a href="#Linux的异常" class="headerlink" title="Linux的异常"></a>Linux的异常</h1><h2 id="常见故障和终止"><a href="#常见故障和终止" class="headerlink" title="常见故障和终止"></a>常见故障和终止</h2><ul>
+<h1 id="Linux的异常"><a href="#Linux的异常" class="headerlink" title="Linux的异常"></a><span id="3">Linux的异常</span></h1><h2 id="常见故障和终止"><a href="#常见故障和终止" class="headerlink" title="常见故障和终止"></a>常见故障和终止</h2><ul>
 <li>除法错误（异常号0）：除以零，或者目标操作数太大时都会发生，显然该故障不能由机器自动修复，只能选择终止程序，Linux shell报告为”Floating exception”</li>
 <li>一般保护程序（异常号13）：如引用未定义的虚拟内存等都为导致该故障，Linux shell报告为”Segmentation fault”</li>
 <li>缺页（异常号14）：将在虚拟内存章节详细讲解</li>
 <li>机器检查（异常号18）：检测到硬件导致的致命错误</li>
 </ul>
 <h2 id="系统调用（陷阱）"><a href="#系统调用（陷阱）" class="headerlink" title="系统调用（陷阱）"></a>系统调用（陷阱）</h2><p>Linux提供上百种系统调用供应用程序请求内核服务时调用。标准C库提供一系列的包装函数，来调用系统调用。包装函数将参数和系统调用打包，并根据系统调用陷入内核程序，并将系统调用的返回状态转递给调用程序。常见系统调用实例如下图所示<img src="/2018/05/26/CSAPP-第八章/1.JPG" alt=""></p>
-<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><p>异常是允许操作系统内核提供进程概念的基本构造块</p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a><span id="4">进程</span></h1><p>异常是允许操作系统内核提供进程概念的基本构造块</p>
 <p>进程的定义就是一个执行中的程序实例，通过进程能给我们提供一个假象，好像当前程序是系统中唯一运行的程序一样，好像该程序能独占处理器和内存。但其实每个程序都运行在某个进程的上下文中（上下文包括程序代码和数据，栈、通用目的寄存器的内容，程序计数器，环境变量等）</p>
 <p>例如当在shell中输入<code>./hello</code>时，shell就会创建一个新的进程，并在该进程的上下文中执行它</p>
 <p>进程为应用程序提供了关键两点抽象</p>
@@ -417,8 +433,8 @@
 </ul>
 <p>实例一：用户程序进行系统调用，想要read磁盘文件，这时候系统调用可能会发生阻塞（因为读取磁盘文件需要时间），内核就会进行上下文切换，让当前进程休眠，运行其他程序，而不是等待磁盘数据，运行一段时间之后，磁盘发出一个中断信号，表示数据传输完成，内核就又切换回之前的进程，并继续运行</p>
 <p>实例二：程序显示进行sleep系统调用，让进程休眠，内核自然会切换进程</p>
-<h1 id="系统调用错误处理"><a href="#系统调用错误处理" class="headerlink" title="系统调用错误处理"></a>系统调用错误处理</h1><p>Unix系统级函数遇到错误时，都会返回-1，并设置全局整数变量errno来表示对应错误类型，并且通过错误包装函数可以简化代码</p>
-<h1 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h1><p>给出了一些重要函数来进行进程控制</p>
+<h1 id="系统调用错误处理"><a href="#系统调用错误处理" class="headerlink" title="系统调用错误处理"></a><span id="5">系统调用错误处理</span></h1><p>Unix系统级函数遇到错误时，都会返回-1，并设置全局整数变量errno来表示对应错误类型，并且通过错误包装函数可以简化代码</p>
+<h1 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a><span id="6">进程控制</span></h1><p>给出了一些重要函数来进行进程控制</p>
 <h2 id="获取进程ID"><a href="#获取进程ID" class="headerlink" title="获取进程ID"></a>获取进程ID</h2><p>每个进程都对应了唯一的正数进程ID（PID），通过<code>getpid</code>和<code>getppid</code>函数可以分别返回调用进程的ID和父进程的ID，返回值类型为<code>pid_t</code>，在Linux中该类型被定义为int</p>
 <h2 id="创建和终止进程"><a href="#创建和终止进程" class="headerlink" title="创建和终止进程"></a>创建和终止进程</h2><p>进程的三种状态</p>
 <ul>
@@ -453,6 +469,12 @@
 <li>WCONTINUED：挂起调用进程的执行，直到等待集合中的进程终止或者集合中的一个被停止的进程收到SIGCONT信号重新开始执行</li>
 <li>WNOHANG|WUNTRACED：立即返回，如果等待集合中的子进程没有终止或者停止，返回值为0；如果有一个终止或者停止，返回该进程的PID</li>
 </ul>
+<h1 id="Linux信号"><a href="#Linux信号" class="headerlink" title="Linux信号"></a><span id="7">Linux信号</span></h1><p>更高层次的软件形式的异常，它允许进程和内核中断其他进程</p>
+<p>底层的硬件异常由内核异常处理程序处理，一般对用户进程不可见，信号提供一种机制，能够通知用户进程发生了这些异常</p>
+<h2 id="发送进程"><a href="#发送进程" class="headerlink" title="发送进程"></a>发送进程</h2><p>内核通过更新目的进程上下文中的某个状态，来发送一个信号给目的进程</p>
+<h3 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h3><h2 id="接受进程"><a href="#接受进程" class="headerlink" title="接受进程"></a>接受进程</h2><p>当目的进程被内核强迫以某种方式对信号的发生做出反应时，就接受了信号。进程可以忽略、终止、执行一个信号处理程序的用户层函数来对信号做出反应</p>
+<h2 id="阻塞进程"><a href="#阻塞进程" class="headerlink" title="阻塞进程"></a>阻塞进程</h2><p>进程可以选择阻塞某种信号，则这种信号可以被发送但不会被接受。一个发送但没有被接受的信号叫<strong>Pending Signal</strong>（待处理信号）。一种类型至多只有一个Pending Signal。</p>
+<p>内核为每个进程在Pending位向量中维护Pending Signal的集合，而Blocked位向量维护被阻塞的信号集合，当某K类信号被阻塞，内核就将设置Blocked位向量的第K位，当取消K类信号的阻塞时，内核就取消这种信号</p>
 
       
     </div>
@@ -572,7 +594,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">117</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -640,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有地址空间"><span class="nav-number">4.3.</span> <span class="nav-text">私有地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户模式和内核模式"><span class="nav-number">4.4.</span> <span class="nav-text">用户模式和内核模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.5.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统调用错误处理"><span class="nav-number">5.</span> <span class="nav-text">系统调用错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程控制"><span class="nav-number">6.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取进程ID"><span class="nav-number">6.1.</span> <span class="nav-text">获取进程ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和终止进程"><span class="nav-number">6.2.</span> <span class="nav-text">创建和终止进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收子进程"><span class="nav-number">6.3.</span> <span class="nav-text">回收子进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#waitpid函数"><span class="nav-number">6.3.1.</span> <span class="nav-text">waitpid函数</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有地址空间"><span class="nav-number">4.3.</span> <span class="nav-text">私有地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户模式和内核模式"><span class="nav-number">4.4.</span> <span class="nav-text">用户模式和内核模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.5.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统调用错误处理"><span class="nav-number">5.</span> <span class="nav-text">系统调用错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程控制"><span class="nav-number">6.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取进程ID"><span class="nav-number">6.1.</span> <span class="nav-text">获取进程ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和终止进程"><span class="nav-number">6.2.</span> <span class="nav-text">创建和终止进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收子进程"><span class="nav-number">6.3.</span> <span class="nav-text">回收子进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#waitpid函数"><span class="nav-number">6.3.1.</span> <span class="nav-text">waitpid函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux信号"><span class="nav-number">7.</span> <span class="nav-text">Linux信号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发送进程"><span class="nav-number">7.1.</span> <span class="nav-text">发送进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程组"><span class="nav-number">7.1.1.</span> <span class="nav-text">进程组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接受进程"><span class="nav-number">7.2.</span> <span class="nav-text">接受进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞进程"><span class="nav-number">7.3.</span> <span class="nav-text">阻塞进程</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -93,7 +93,9 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/4.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/5.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/6.jpg">
-<meta property="og:updated_time" content="2018-12-29T09:17:27.574Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/7.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/8.jpg">
+<meta property="og:updated_time" content="2019-01-07T06:13:57.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="应用层">
 <meta name="twitter:description" content="Web、YouTube、QQ，网络应用无处不在，应用层协议也就无处不在">
@@ -353,10 +355,12 @@
 <li><a href="#1">应用程序的体系结构</a></li>
 <li><a href="#2">进程通信</a></li>
 <li><a href="#3">Web和HTTP</a></li>
-<li>DNS</li>
+<li><a href="#4">电子邮件</a></li>
+<li><a href="#5">DNS</a></li>
 <li>P2P</li>
 <li>多媒体应用</li>
 </ul>
+<hr>
 <h1 id="应用程序的体系结构"><a href="#应用程序的体系结构" class="headerlink" title="应用程序的体系结构"></a><span id="1">应用程序的体系结构</span></h1><p>网络核心设备（路由器、分组交换器）在较底层协议上运作，特别是网络层协议一下，而应用层协议则最接近于我们编写的软件，对于软件开发者来说，网络体系都是固定五层模型，而<strong>应用程序体系结构</strong>则由应用程序开发者来设计实现，主要有以下两种：</p>
 <ul>
 <li>客户-服务器体系结构：最常见的应用有web、Telnet和电子邮件，在该结构中，有一个总是开机、处于核心地位的服务器，来接受其他客户主机的请求，该服务器具有一个IP地址，并且该IP地址是公共的、众所周知的</li>
@@ -371,10 +375,9 @@
 <li>进程相应规则</li>
 </ul>
 <p>位于公共域的应用层协议（如HTTP），只要相应的应用遵从协议规则，就能和同样遵从该协议的其他主机的应用‘</p>
-<h1 id="Web和HTTP"><a href="#Web和HTTP" class="headerlink" title="Web和HTTP"></a><span id="1">Web和HTTP</span></h1><p>Web的应用层协议为HyperText Transfer Protocol（HTTP，超文本传输协议），Web浏览器（Chrome、IE、Firefox）就对应了体系结构中的客户，Web服务器就对应了体系中的服务器（Apache Tomcat）。HTTP是一个无状态协议，即服务器并不会记住用户行为（连鱼七秒钟的记忆都没有）<br><img src="/2018/12/28/应用层/2.jpg" alt="HTTP流程"></p>
+<h1 id="Web和HTTP"><a href="#Web和HTTP" class="headerlink" title="Web和HTTP"></a><span id="3">Web和HTTP</span></h1><p>Web的应用层协议为HyperText Transfer Protocol（HTTP，超文本传输协议），Web浏览器（Chrome、IE、Firefox）就对应了体系结构中的客户，Web服务器就对应了体系中的服务器（Apache Tomcat）。HTTP是一个无状态协议，即服务器并不会记住用户行为（连鱼七秒钟的记忆都没有）<br><img src="/2018/12/28/应用层/2.jpg" alt="HTTP流程"></p>
 <p>通过一个单独的TCP连接发送（用完就毁）的HTTP称为<strong>非持续连接</strong>的HTTP，而使用同一条TCP的则称为<strong>持续连接</strong>的HTTP</p>
-<p><strong>HTTP请求报文</strong><img src="/2018/12/28/应用层/3.jpg" alt="HTTP请求报文">有以下字段</p>
-<ul>
+<h2 id="HTTP请求报文有以下字段"><a href="#HTTP请求报文有以下字段" class="headerlink" title="HTTP请求报文有以下字段"></a>HTTP请求报文<img src="/2018/12/28/应用层/3.jpg" alt="HTTP请求报文">有以下字段</h2><ul>
 <li>方法：GET、POST、HEAD、PUT、DELETE</li>
 <li>URL：请求对象的标识</li>
 <li>HTTP VERSION：浏览器实现的HTTP版本</li>
@@ -385,7 +388,7 @@
 <li>Entity Body：使用GET方法时，实体为空，只在使用POST方法时才使用实体（如用户在表单字段中的输入值），当然在GET方法也可以加入表单字段，如“129.204.105.84:8080/user/?json”，即作为URL的参数</li>
 </ul>
 <p>HEAD方法和GET类似，但服务器不返回请求对象；PUT则把对象上传到服务器指定目录；DELETE允许用户删除Web服务器的对象</p>
-<p><strong>HTTP响应报文</strong><br><img src="/2018/12/28/应用层/4.jpg" alt="HTTP响应报文"></p>
+<h2 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h2><p><img src="/2018/12/28/应用层/4.jpg" alt="HTTP响应报文"></p>
 <ul>
 <li>200 OK：请求成功，信息在返回的响应报文中</li>
 <li>301 Moved Permanently：请求对象永久转移，新的URL在响应报文的Location</li>
@@ -393,15 +396,41 @@
 <li>404 Not Found：请求的文档不在服务器上</li>
 <li>505 HTTP Version Not Supported：不支持HTTP协议版本</li>
 </ul>
-<p><strong>Cookie</strong><br>Cookie的运行流程<br><img src="/2018/12/28/应用层/5.jpg" alt="Cookie流程"></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie的运行流程<br><img src="/2018/12/28/应用层/5.jpg" alt="Cookie流程"></p>
 <p>Cookie通过在请求报文的首部行加入Cookie，即在无状态的HTTP之上建立起了一个用户会话层，服务器就能根据Cookie来返回特定的内容</p>
-<p><strong>Web缓存</strong><br>当浏览器被配置，使得对于某个对象的请求定向到Web Cache（Proxy Server），当缓存器没有该对象时，才会和初识服务器建立TCP，并发送HTTP请求<img src="/2018/12/28/应用层/6.jpg" alt="代理服务器">Web Cache好处</p>
+<h2 id="Web缓存"><a href="#Web缓存" class="headerlink" title="Web缓存"></a>Web缓存</h2><p>当浏览器被配置，使得对于某个对象的请求定向到Web Cache（Proxy Server），当缓存器没有该对象时，才会和初始服务器建立TCP，并发送HTTP请求<img src="/2018/12/28/应用层/6.jpg" alt="代理服务器"><br>Web Cache<strong>好处</strong></p>
 <ul>
 <li>可以大大的减少对客户请求的响应时间</li>
 <li>减少一个机构的接入链路到因特网的通信量</li>
 </ul>
 <p>引入Web Cache的同时也会引入一个问题：怎么保证Proxy Sever存储的对象都是最新的？<br>答案就是HTTP中的<strong>条件GET方法</strong>，条件GET首要意味着HTTP请求使用的是GET方法，其次要在报文中的首部行中包含一个<strong>“If-Modified-Since”</strong>字段</p>
-<p>当用户第一次请求某一个对象时，初始服务器的响应报文中会包含“Last-Modified”字段，代理服务器会将对象和该字段的值保存在本地，当用再一次请求该对象时，代理服务器就会发送一个条件请求报文，并把“Last-Modified”的值作为“If-Modified-Since”的值，初始服务器只在对象在该值之后被修改才会发送对象作为相应，否则只会一个状态码304 Not Modified，即申明该对象为最新的，可以直接转发给用户</p>
+<p>当用户第一次请求某一个对象时，初始服务器的响应报文中会包含“Last-Modified”字段，代理服务器会将对象和该字段的值保存在本地，当用再一次请求该对象时，代理服务器就会发送一个条件请求报文，并把“Last-Modified”的值作为“If-Modified-Since”的值，初始服务器只在对象在该值之后被修改才会发送对象作为相应，否则只会有一个状态码<strong>304 Not Modified</strong>，即申明该对象为最新的，可以直接转发给用户</p>
+<h1 id="电子邮件"><a href="#电子邮件" class="headerlink" title="电子邮件"></a><span id="4">电子邮件</span></h1><p>email主要分成三部分：</p>
+<ul>
+<li>user agent（用户代理）：如outlook、QQ mail，允许用户阅读、转发、回复、保存、撰写报文</li>
+<li>Simple Mail Transfer Protocol（SMTP）：简单邮件传输协议，使用TCP作为可靠数据传输服务</li>
+<li>mail server（邮件服务器）：运行SMTP协议<br><img src="/2018/12/28/应用层/7.jpg" alt="电子邮件系统"></li>
+</ul>
+<p><strong>一封邮件的旅程</strong>：从用户代理Alice’s agent出发，通过SMTP协议，邮件可以从代理到达用户服务器，也可以从用户服务器到达接收方服务器，这里就遇到了一个问题：接收方代理不一定一直都开机，也就是说邮件不能一步就到接收方代理，这就需要一种<strong>邮件访问协议</strong>，使得代理可以去访问服务器上的邮件，并做出修改操作。也就是说在第六步需要不同的协议，而不是SMTP。常见的邮件访问协议有<strong>POP3</strong>（Post Office Protocol-Version3）、<strong>IMAP</strong>（Internet Mail Access Protocol）和<strong>HTTP</strong><br><img src="/2018/12/28/应用层/8.jpg" alt="电子邮件的流程"></p>
+<h2 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h2><p>SMTP和HTTP的<strong>区别</strong></p>
+<ul>
+<li>HTTP是<strong>Pull protocol</strong>，用户使用HTTP从装载信息的server拉取信息，TCP是由想接受文件的端发起的</li>
+<li>SMTP是<strong>Push protocol</strong>，TCP是由发送该文件的端发起的</li>
+<li>SMTP要求报文使用7比特ASCII码格式？？</li>
+<li>HTTP把每个对象分散封装到HTTP响应报文中，SMTP则把所有对象放在一个报文中</li>
+</ul>
+<h2 id="POP3"><a href="#POP3" class="headerlink" title="POP3"></a>POP3</h2><p>是一个极为简单的邮件访问协议，当用户代理打开和邮件服务器端口110的一个TCP连接时，POP3就开始工作，并有三个阶段：<strong>Authorization（特许）</strong>、<strong>事务处理</strong>和<strong>更新</strong>。</p>
+<ul>
+<li>特许：用户代理明文发送用户名和口令到服务器鉴别用户</li>
+<li>事务处理：用户代理取回报文，并对报文做标记（如删除标记、取消删除标记等等），用户代理可是使用<strong>list</strong>、<strong>retr</strong>、<strong>dele</strong>和<strong>quit</strong>四条命令。有“下载并删除”和“下载并保留”两种方式，第一种方式类似于永久删除，即一个PC客户端选择下载并删除，则将在邮件服务器删除该邮件，其他手机端等将无法下载该邮件</li>
+<li>更新：当用户结束POP3对话（quit），服务器就删除那些标记为删除的报文</li>
+</ul>
+<h2 id="IMAP"><a href="#IMAP" class="headerlink" title="IMAP"></a>IMAP</h2><p>为用户提供了创建文件夹以及将邮件从一个文件夹移动到另一个文件夹的命令，还提供了在远程文件夹查询邮件的命令，按指定条件去查询匹配的邮件<br>IMAP还具有允许用户代理获取报文组件的命令，例如只读取报文首部等</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>越来越多的用户使用浏览器收发电子邮件，这时候用户代理就是浏览器，于是用户代理和服务器之间的通信就通过HTTP进行</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a><span id="5">DNS</span></h1><p>一种能将主机名转换到IP地址的目录服务，即DNS（Domain Name System，域名系统）</p>
+<p>DNS是一个分层的DNS服务器实现的<strong>分布式数据库</strong>，也是一个主机能够查询分布式数据库的<strong>应用层协议</strong>,DNS协议运行在UDP之上，使用53端口</p>
+<p>DNS协议不同于其他应用层协议，它不和用户直接打交道，而是向其他应用层协议提供核心功能，可以说它是HTTP、SMTP等协议的<strong>基石</strong>，当HTTP要发送一个到“baidu.com”的报文，他首先要通过DNS去查询“baidu.com”对应的IP地址，当接收到DNS返回的报文，才想改IP地址主机发送连接请求，因此DNS为网络应用带来了时延</p>
+<p>DNS还提供<strong>负载分配</strong>的功能。同一个应用可能需要多台服务器去提供相应的服务，这意味着同一个主机别名对应着多个IP地址，当用户发出一个DNS请求时，DNS服务器就返回IP地址集合，并在每次回答时循环这个地址集合，用户通常用排在前面的IP地址，也就达到了负载分配的效果</p>
 
       
     </div>
@@ -521,7 +550,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">117</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -589,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#应用程序的体系结构"><span class="nav-number">1.</span> <span class="nav-text">应用程序的体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程通信"><span class="nav-number">2.</span> <span class="nav-text">进程通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web和HTTP"><span class="nav-number">3.</span> <span class="nav-text">Web和HTTP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#应用程序的体系结构"><span class="nav-number">1.</span> <span class="nav-text">应用程序的体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程通信"><span class="nav-number">2.</span> <span class="nav-text">进程通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web和HTTP"><span class="nav-number">3.</span> <span class="nav-text">Web和HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP请求报文有以下字段"><span class="nav-number">3.1.</span> <span class="nav-text">HTTP请求报文有以下字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP响应报文"><span class="nav-number">3.2.</span> <span class="nav-text">HTTP响应报文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">3.3.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web缓存"><span class="nav-number">3.4.</span> <span class="nav-text">Web缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#电子邮件"><span class="nav-number">4.</span> <span class="nav-text">电子邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SMTP"><span class="nav-number">4.1.</span> <span class="nav-text">SMTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POP3"><span class="nav-number">4.2.</span> <span class="nav-text">POP3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IMAP"><span class="nav-number">4.3.</span> <span class="nav-text">IMAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">4.4.</span> <span class="nav-text">HTTP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS"><span class="nav-number">5.</span> <span class="nav-text">DNS</span></a></li></ol></div>
             
 
           </div>
