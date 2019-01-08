@@ -87,7 +87,12 @@
 <meta property="og:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/1.jpg">
-<meta property="og:updated_time" content="2019-01-07T15:21:20.950Z">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/6.jpg">
+<meta property="og:updated_time" content="2019-01-08T15:10:14.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《程序员的自我修养》">
 <meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
@@ -353,7 +358,7 @@
 <ul>
 <li>多道程序：编写一个监控程序，当程序暂时无需使用CPU时，就把另外正在等待CPU资源的程序启动。这种机制的问题就在于调度机制过于粗糙，各种程序之间没有轻重缓急</li>
 <li>分时系统：每个程序运行一段时间后都会主动让出CPU给其他程序，但这种系统遇到某个死循环程序，也只能等待，就导致系统整个看上去都死机了</li>
-<li><strong>多任务系统</strong>：操作系统接管了所有的硬件资源，本身运行在一个手硬件保护的级别。所有应用程序以<strong>进程</strong>的方式运行在比<strong>操作系统权限更低的级别上</strong>，每个进程都有自己的独立地址空间，使得进程之间地址空间相互隔离。CPU由操作系统统一分配，每个进程根据进程优先级获得CPU。当摸个程序运行时间超过了一定时间，操作系统就会暂停该进程，把资源分配给其他程序，这种分配方式叫做<strong>抢占式</strong></li>
+<li><strong>多任务系统</strong>：操作系统接管了所有的硬件资源，本身运行在一个手硬件保护的级别。所有应用程序以<strong>进程</strong>的方式运行在比<strong>操作系统权限更低的级别上</strong>，每个进程都有自己的独立地址空间，使得进程之间地址空间相互隔离。CPU由操作系统统一分配，每个进程根据进程优先级获得CPU。当某个程序运行时间超过了一定时间，操作系统就会暂停该进程，把资源分配给其他程序，这种分配方式叫做<strong>抢占式</strong></li>
 </ul>
 <h2 id="设备驱动"><a href="#设备驱动" class="headerlink" title="设备驱动"></a>设备驱动</h2><p>对于操作系统上面的运行库和应用程序来说，它们希望看到的是一个统一的硬件访问模式。在操作系统成熟之前，应用程序的程序员就要直接和硬件打交道，之后硬件就被抽象成了一系列的概念。如在Unix中，所有硬件设备都被抽象为文件；在Windows中图形硬件被抽象为GDI，磁盘被抽象成为了普通文件系统。这些繁琐的硬件细节都交给了操作系统中的<strong>硬件驱动程序</strong>完成。驱动程序和内核一起运行在特权级上</p>
 <h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p>早期计算机的程序是直接运行在<strong>物理内存</strong>上的，可以理解为编译好的程序直接写入了内存条，但是思考一个问题，运行在计算机中的程序肯定不止一个吧，每个程序占用一部分内存，自然就会产生内存不足的现象</p>
@@ -361,8 +366,79 @@
 <p>第二个问题就是<strong>安全问题</strong>，程序内存地址是不隔离的，程序之间可以很容易的访问相互之间的数据，这对于恶意程序显然是个好机会，通过轻易访问其他程序的内存，修改内存内容，执行破坏计算机的程序，想想都有点激动</p>
 <p>第三个问题是<strong>地址空间的不确定性</strong>，每次运行程序对应的物理地址都是不确定的，这次可能是0x0000-0x1111,下次就可能是0x2222-0x3333，这种不确定性会给程序编写造成麻烦，例如如果了解汇编的话，程序跳转都是跳转到特定的地址，也就是说编译之后就会给出特定的内存地址</p>
 <p>解决上述问题的方法就是增加中间层，也就是<strong>虚拟地址</strong>，并通过某些映射的方法（<strong>分段</strong>和<strong>分页</strong>），将这个虚拟地址转换成物理地址，这就是虚拟地址带来的好处，但是如果是物理地址就不能带来这种便利</p>
-<h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>即把一个程序所需要内存空间大小的虚拟空间映射到某个地址空间<img src="/2018/07/02/《程序员的自我修养》/1.jpg" alt="分段"><br>这种方法只解决上述问题中的地址隔离和地址不确定问题，但没有解决效率问题。</p>
-<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><hr>
+<h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>即把一个程序所需要内存空间大小的虚拟空间映射到某个地址空间<img src="/2018/07/02/《程序员的自我修养》/1.jpg" alt="分段">这种方法只解决上述问题中的地址隔离和地址不确定问题，但没有解决效率问题。</p>
+<p>当程序访问虚拟地址超过了一定范围，硬件就会判断这是一个非法访问，拒绝这个请求，并将这个请求报告给操作系统，由它来决定如何处理</p>
+<p>但是分段对于内存映射依旧是按照程序为单位，被换入换出的是整个程序，这就导致了大量的磁盘访问操作，影响效率。事实上根据程序的<strong>局部性原理</strong>，程序运行时，只会频繁使用一小部分数据，大部分数据并不会被用到，因此就采取了更小粒度的内存分隔和映射方法，也就是<strong>分页</strong></p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>把地址空间人为地等分成固定大小的页，每一页的大小由硬件决定或者硬件支持多种大小的页，由操作系统决定页的大小<img src="/2018/07/02/《程序员的自我修养》/2.jpg" alt="分页">可以看到进程1某部分虚拟地址被映射到物理地址，一部分被映射到磁盘中。不同的进程可以映射到同一个物理页中，实现内存共享</p>
+<p>当进程需要的页不在内存中时，硬件就会捕捉到这个信息，也就是<strong>页错误</strong>，然后操作系统就会接管进程，将对应的页从磁盘中读出来并装载到内存中，并建立物理页和虚拟页的映射关系</p>
+<p>虚拟地址的实现需要硬件的支持，即<strong>MMU</strong>（Memory Management Unit）来进行页映射，页映射模式下，CPU发出的是Virtual Address，经过MMU转化后变成Physical Address，MMU一般都集成在CPU内部<img src="/2018/07/02/《程序员的自我修养》/3.jpg" alt="页映射"></p>
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>一直在思考一个问题，既然有了进程的概念，为什么还要有线程的概念？现给出自己的答案</p>
+<h2 id="进程的缺点"><a href="#进程的缺点" class="headerlink" title="进程的缺点"></a>进程的缺点</h2><p>进程是为了<strong>CPU和硬件资源</strong>等方面提供的抽象，能够有效提高CPU的利用率。</p>
+<ul>
+<li>进程只能在一个时间干一件事，如果想同时干两件事或多件事，进程就无能为力了。</li>
+<li>进程在执行的过程中如果阻塞，例如等待输入，整个进程就会挂起，即使进程中有些工作不依赖于输入的数据，也将无法执行。</li>
+</ul>
+<h2 id="线程是什么"><a href="#线程是什么" class="headerlink" title="线程是什么"></a>线程是什么</h2><p>线程是在进程这个层次上提供的一层并发的抽象，也被成为轻量级进程，是程序<strong>执行流的最小单位</strong></p>
+<p>一个标准的线程具有线程ID、当前指令指针、寄存器集合和堆栈组成<img src="/2018/07/02/《程序员的自我修养》/4.jpg" alt="线程"></p>
+<ul>
+<li>可以有效地利用多处理器和多核计算机，在没有线程之前，多核并不能让一个进程的执行速度提高</li>
+<li>能够使系统在同一时间能够做多件事情，当进程遇到阻塞时，例如等待输入，线程能够使不依赖输入数据的工作继续执行，例如多线程可以让一个线程负责交互，另一个线程负责计算</li>
+<li>多线程在数据共享方面效率更高</li>
+</ul>
+<h2 id="进程和线程区别"><a href="#进程和线程区别" class="headerlink" title="进程和线程区别"></a>进程和线程区别</h2><p>进程和线程的并发层次不同：进程属于在处理器这一层上提供的抽象；线程则属于在进程这个层次上再提供了一层并发的抽象。</p>
+<p>如果我们进入计算机体系结构里，就会发现，流水线提供的也是一种并发，不过是指令级的并发。这样，流水线、线程、进程就从低到高在三个层次上提供我们所迫切需要的并发！</p>
+<ul>
+<li>从内核的观点看，进程的目的就是担当分配系统资源（CPU时间、内存等）的基本单位。线程是进程的一个执行流，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位</li>
+<li>进程有独立的地址空间，线程没有单独的地址空间</li>
+<li>启动一个线程所花费的空间远远小于启动一个进程所花费的空间，而且，线程间彼此切换所需的时间也远远小于进程间切换所需要的时间。据统计，总的说来，一个进程的开销大约是一个线程开销的30倍左右</li>
+<li>线程间方便的通信机制</li>
+<li>从函数调用上来说，进程创建使用fork()操作；线程创建使用clone()操作</li>
+</ul>
+<h2 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h2><p>从上图可以产看出，线程具有一些私有存储空间，如<strong>栈</strong>、<strong>线程局部存储</strong>（某些操作系统为线程单独提供的私有空间）和<strong>寄存器</strong>，线程之间共享的则有<strong>全局变量</strong>、<strong>堆上的数据</strong>、<strong>静态变量</strong>、<strong>程序代码</strong>和<strong>打开文件</strong></p>
+<h2 id="线程调用与优先级"><a href="#线程调用与优先级" class="headerlink" title="线程调用与优先级"></a>线程调用与优先级</h2><p>当线程数量小于处理器数量时，线程的并发是真正的并发，不同的线程运行在不同的处理器上，彼此互不相干。但是当线程数量大于处理器数量的情况下，就会出现一个处理器运行多个线程的情况。</p>
+<p>对于在单处理器上运行多线程情况下，并发是模拟出来的概念，操作系统会让程序轮流执行，每次执行几十到几百毫秒，这样就看起来在同时执行（联想数电仿真的波形图就能理解），这样不断切换不同线程的行为就称为<strong>线程调度</strong></p>
+<p>线程通常有三种状态</p>
+<ul>
+<li>运行（Running）</li>
+<li>就绪（Ready）：如CPU被占用</li>
+<li>等待（Waiting）：线程正在等待某一事件（如IO）而无法执行<br><img src="/2018/07/02/《程序员的自我修养》/5.jpg" alt="调度"></li>
+</ul>
+<p>主流的线程调度都带有<strong>优先级调度</strong>和<strong>轮转法</strong>，Linux可以通过pthread库来进行相关设置，如设置<strong>线程优先级</strong>，这是第一种用户指定优先级改变</p>
+<p>操作系统也会根据线程的表现自动调整优先级，<strong>IO密集型线程</strong>（即因为IO输出输出而频繁等待）比<strong>CPU密集型</strong>（经常要使用完时间片）更容易得到优先级提升</p>
+<p>为了避免低优先级的线程始终无法得到执行，调度系统对逐步提升这种<strong>“饿死”</strong>线程的优先级，使其肯定会被执行</p>
+<h2 id="Linux多线程"><a href="#Linux多线程" class="headerlink" title="Linux多线程"></a>Linux多线程</h2><p>linux内核并不存在真正意义上的线程概念，所有执行实体（无论是线程还是进程）都称为<strong>Task</strong>。每个Task都类似于一个单线程的进程，具有内存空间、执行实体、文件资源等。linux中允许Task之间选择共享内存空间，因此共享了内存空间的Task构成了一个进程，而这些Tasks也就是线程</p>
+<p><strong>fork系统调用</strong>：复制当前进程，本任务的fork返回新任务的pid，而新任务的fork返回0，fork并不复制原任务的内存空间，而是和原任务一起共享一个<strong>写时复制</strong>（Copy on Write，COW）的内存空间，可以理解为<strong>延迟复制</strong>，只当任意一个任务试图修改内存时，才会复制内存空间给任务单独使用。fork是最简单的调用，不需要任何参数，仅仅是在创建一个子进程并为其创建一个独立于父进程的空间，即产生本任务的镜像，要exec配合才能够启动别的新任务，这两个配合通常用于产生新任务</p>
+<h1 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h1><p>自增在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此可能在执行到一半就被调度系统打断，去执行别的代码。</p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>单指令的操作成为<strong>原子操作</strong>，但原子操作只适用于简单场合，复杂场合就会显得力不从心，因此使用更加通用的<strong>锁</strong></p>
+<p>每个线程在访问数据之前先试图获取锁，并在访问结束之后释放锁，在锁被占用的时候试图获得锁时，线程就会等到，直到锁重新可用</p>
+<ul>
+<li><strong>二元信号量</strong>：最简单的一种锁，只有占用和非占用两种状态</li>
+<li><strong>信号量</strong>：即多元信号量，用在允许多个线程并发访问的资源上，初始值为N的信号量允许N个线程并发访问</li>
+<li><strong>互斥量</strong>：类似于二元信号量，但是信号量可以被系统任意线程获取并释放，互斥量要求哪个线程获取，哪个线程释放，更加严格</li>
+<li><strong>临界区</strong>：临界区比互斥量更加严格，临界区的作用范围仅限于本进程，其他进程无法获取该锁，而对于互斥量和信号量，系统任何进程都是可见的、可获取的</li>
+<li><strong>读写锁</strong>：虽然对于读写同步来说，信号量、互斥量和临界区都能实现目的，但是<strong>对于读取频繁，仅仅偶尔写入</strong>的情况，会显得很低效，读写锁则可以避免这个问题，读写锁分为读锁和写锁，且有两种获取方式：<strong>共享的</strong>和<strong>独占的</strong><img src="/2018/07/02/《程序员的自我修养》/6.jpg" alt="读写锁"></li>
+<li><strong>条件变量</strong>：类似于栅栏，使用条件变量可以是许多线程一起等待某个事件的发生，当事件发生时（条件变量被唤醒），所有线程一起恢复执行</li>
+</ul>
+<h2 id="可重入函数"><a href="#可重入函数" class="headerlink" title="可重入函数"></a>可重入函数</h2><p>重入：重复进入，即该函数被调度系统中断后，再一次进入该函数，不会产生不良后果，就称这个函数是可重入函数</p>
+<p>可重入函数的一些<strong>特点</strong>：</p>
+<ul>
+<li>不使用任何（局部）静态或全局的非const变量</li>
+<li>不返回任何（局部）静态或全局的非const变量指针</li>
+<li>仅依赖于调用方提供的参数</li>
+<li>不依赖任何单个资源的锁</li>
+<li>不调用任何不可重入函数</li>
+</ul>
+<p>一个可重入函数可以在多线程环境下放心使用</p>
+<h2 id="过度优化"><a href="#过度优化" class="headerlink" title="过度优化"></a>过度优化</h2><p>落后的编译器技术无法满足日益增长的并发需求，编译器可能会为了提高变量的访问速度，而把变量放到某个寄存器中，而不是放在内存中，但不同的线程的寄存器是各自独立的，因此就会出现以下问题<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">lock();</span><br><span class="line">x++;</span><br><span class="line">unlock();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">lock();</span><br><span class="line">x++;</span><br><span class="line">unlock();</span><br></pre></td></tr></table></figure></p>
+<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><p>这个程序看起来并没有问题，但是问题出在了<strong>自作聪明的编译器</strong>中，它可能会把x放在寄存器中，这样就可能出现<strong>x=1</strong>的情况，为此可以使用<strong>volatile</strong>关键字阻止这种类型的过度优化，这个关键字可以做到以下两件事</p>
+<ul>
+<li>阻止编译器为了提高速度将一个变量缓存到寄存器而不写回内存</li>
+<li>阻止编译器调整操作volatile变量的指令顺序</li>
+</ul>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p>另一种问题则是因为CPU的<strong>动态调度</strong>或者说是<strong>乱序执行</strong>，在执行程序的时候为了提高效率有可能交换指令的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = y = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line">r1 = y;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line">r2 = x;</span><br></pre></td></tr></table></figure></p>
+<p>CPU对于这种不相干的指令，就可能出现下面顺序，这样完全可能出现<strong>r1=r2=0</strong>的情况，而这种情况volatile是不能解决的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = y = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">r1 = y;</span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line">r2 = x;</span><br></pre></td></tr></table></figure></p>
+<p>为了阻止CPU换序，可以调用CPU提供的一条指令<strong>barrier</strong>，该指令会阻止CPU将barrier指令之前的指令交换到barrier之后，类似于一个拦水坝</p>
+<h1 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h1><hr>
 <h1 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h1><ul>
 <li><a href="/2019/01/07/《目标文件》/" title="《目标文件》">《目标文件》</a></li>
 <li><a href="/2019/01/07/《静态链接》/" title="《静态链接》">《静态链接》</a></li>
@@ -480,7 +556,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -548,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU分配"><span class="nav-number">1.1.</span> <span class="nav-text">CPU分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段"><span class="nav-number">2.1.</span> <span class="nav-text">分段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">2.2.</span> <span class="nav-text">分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#章节目录"><span class="nav-number">3.</span> <span class="nav-text">章节目录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU分配"><span class="nav-number">1.1.</span> <span class="nav-text">CPU分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段"><span class="nav-number">2.1.</span> <span class="nav-text">分段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">2.2.</span> <span class="nav-text">分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">3.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的缺点"><span class="nav-number">3.1.</span> <span class="nav-text">进程的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程是什么"><span class="nav-number">3.2.</span> <span class="nav-text">线程是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程区别"><span class="nav-number">3.3.</span> <span class="nav-text">进程和线程区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-number">3.4.</span> <span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程调用与优先级"><span class="nav-number">3.5.</span> <span class="nav-text">线程调用与优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux多线程"><span class="nav-number">3.6.</span> <span class="nav-text">Linux多线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全"><span class="nav-number">4.</span> <span class="nav-text">线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">4.1.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重入函数"><span class="nav-number">4.2.</span> <span class="nav-text">可重入函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过度优化"><span class="nav-number">4.3.</span> <span class="nav-text">过度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译器"><span class="nav-number">4.3.1.</span> <span class="nav-text">编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">4.3.2.</span> <span class="nav-text">CPU</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程模型"><span class="nav-number">5.</span> <span class="nav-text">线程模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#章节目录"><span class="nav-number">6.</span> <span class="nav-text">章节目录</span></a></li></ol></div>
             
 
           </div>
