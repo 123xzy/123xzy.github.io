@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/4.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/5.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/6.jpg">
-<meta property="og:updated_time" content="2019-01-08T15:10:14.701Z">
+<meta property="og:updated_time" content="2019-01-09T01:04:49.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《程序员的自我修养》">
 <meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
@@ -430,7 +430,7 @@
 </ul>
 <p>一个可重入函数可以在多线程环境下放心使用</p>
 <h2 id="过度优化"><a href="#过度优化" class="headerlink" title="过度优化"></a>过度优化</h2><p>落后的编译器技术无法满足日益增长的并发需求，编译器可能会为了提高变量的访问速度，而把变量放到某个寄存器中，而不是放在内存中，但不同的线程的寄存器是各自独立的，因此就会出现以下问题<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">lock();</span><br><span class="line">x++;</span><br><span class="line">unlock();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">lock();</span><br><span class="line">x++;</span><br><span class="line">unlock();</span><br></pre></td></tr></table></figure></p>
-<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><p>这个程序看起来并没有问题，但是问题出在了<strong>自作聪明的编译器</strong>中，它可能会把x放在寄存器中，这样就可能出现<strong>x=1</strong>的情况，为此可以使用<strong>volatile</strong>关键字阻止这种类型的过度优化，这个关键字可以做到以下两件事</p>
+<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><p>这个程序看起来并没有问题，但是问题出在了<strong>自作聪明的编译器</strong>中，它可能会把x放在寄存器中，这样就可能出现<strong>x=1</strong>的情况，为此可以使用<strong>volatile</strong>关键字阻止这种<strong>不同步</strong>类型的过度优化，这个关键字可以做到以下两件事</p>
 <ul>
 <li>阻止编译器为了提高速度将一个变量缓存到寄存器而不写回内存</li>
 <li>阻止编译器调整操作volatile变量的指令顺序</li>
@@ -438,7 +438,21 @@
 <h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p>另一种问题则是因为CPU的<strong>动态调度</strong>或者说是<strong>乱序执行</strong>，在执行程序的时候为了提高效率有可能交换指令的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = y = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line">r1 = y;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line">r2 = x;</span><br></pre></td></tr></table></figure></p>
 <p>CPU对于这种不相干的指令，就可能出现下面顺序，这样完全可能出现<strong>r1=r2=0</strong>的情况，而这种情况volatile是不能解决的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = y = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 1</span></span><br><span class="line">r1 = y;</span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thread 2</span></span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line">r2 = x;</span><br></pre></td></tr></table></figure></p>
 <p>为了阻止CPU换序，可以调用CPU提供的一条指令<strong>barrier</strong>，该指令会阻止CPU将barrier指令之前的指令交换到barrier之后，类似于一个拦水坝</p>
-<h1 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h1><hr>
+<h1 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h1><p>用户实际使用的线程并不是内核线程，而是存在于用户态的用户线程，用户态线程并不一定在操作系统内核上对应同等数量的内核线程</p>
+<h2 id="一对一模型"><a href="#一对一模型" class="headerlink" title="一对一模型"></a>一对一模型</h2><p>一个<strong>用户态线程</strong>就唯一对应于<strong>内核线程</strong>，但内核线程不一定对于一个用户态线程，一般使用API或系统调用产生的线程都是一对一线程，如linux的clone</p>
+<p>一对一模型的<strong>缺点</strong>：</p>
+<ul>
+<li>许多操作系统限制了内核线程的数量，因此一对一线程也会让用户线程的数量受影响</li>
+<li>内核线程调度时，上下文切换的开销大，导致用户线程的执行效率下降</li>
+</ul>
+<h2 id="多对一模型"><a href="#多对一模型" class="headerlink" title="多对一模型"></a>多对一模型</h2><p>多个用户线程映射到一个内核线程上，线程之间的切换由用户态的代码来进行，上下文切换成本低，无限制的线程数量</p>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>一个用户线程阻塞，就会导致所有线程阻塞，因为内核线程也随之阻塞</li>
+<li>多处理器对该模型没有明显帮助</li>
+</ul>
+<h2 id="多对多模型"><a href="#多对多模型" class="headerlink" title="多对多模型"></a>多对多模型</h2><p>该模型则是结合了上述两种模型的特点</p>
+<hr>
 <h1 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h1><ul>
 <li><a href="/2019/01/07/《目标文件》/" title="《目标文件》">《目标文件》</a></li>
 <li><a href="/2019/01/07/《静态链接》/" title="《静态链接》">《静态链接》</a></li>
@@ -556,7 +570,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -569,7 +583,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -624,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU分配"><span class="nav-number">1.1.</span> <span class="nav-text">CPU分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段"><span class="nav-number">2.1.</span> <span class="nav-text">分段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">2.2.</span> <span class="nav-text">分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">3.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的缺点"><span class="nav-number">3.1.</span> <span class="nav-text">进程的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程是什么"><span class="nav-number">3.2.</span> <span class="nav-text">线程是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程区别"><span class="nav-number">3.3.</span> <span class="nav-text">进程和线程区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-number">3.4.</span> <span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程调用与优先级"><span class="nav-number">3.5.</span> <span class="nav-text">线程调用与优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux多线程"><span class="nav-number">3.6.</span> <span class="nav-text">Linux多线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全"><span class="nav-number">4.</span> <span class="nav-text">线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">4.1.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重入函数"><span class="nav-number">4.2.</span> <span class="nav-text">可重入函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过度优化"><span class="nav-number">4.3.</span> <span class="nav-text">过度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译器"><span class="nav-number">4.3.1.</span> <span class="nav-text">编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">4.3.2.</span> <span class="nav-text">CPU</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程模型"><span class="nav-number">5.</span> <span class="nav-text">线程模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#章节目录"><span class="nav-number">6.</span> <span class="nav-text">章节目录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU分配"><span class="nav-number">1.1.</span> <span class="nav-text">CPU分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段"><span class="nav-number">2.1.</span> <span class="nav-text">分段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">2.2.</span> <span class="nav-text">分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">3.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的缺点"><span class="nav-number">3.1.</span> <span class="nav-text">进程的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程是什么"><span class="nav-number">3.2.</span> <span class="nav-text">线程是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程区别"><span class="nav-number">3.3.</span> <span class="nav-text">进程和线程区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-number">3.4.</span> <span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程调用与优先级"><span class="nav-number">3.5.</span> <span class="nav-text">线程调用与优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux多线程"><span class="nav-number">3.6.</span> <span class="nav-text">Linux多线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全"><span class="nav-number">4.</span> <span class="nav-text">线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">4.1.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重入函数"><span class="nav-number">4.2.</span> <span class="nav-text">可重入函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过度优化"><span class="nav-number">4.3.</span> <span class="nav-text">过度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译器"><span class="nav-number">4.3.1.</span> <span class="nav-text">编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">4.3.2.</span> <span class="nav-text">CPU</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程模型"><span class="nav-number">5.</span> <span class="nav-text">线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一模型"><span class="nav-number">5.1.</span> <span class="nav-text">一对一模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对一模型"><span class="nav-number">5.2.</span> <span class="nav-text">多对一模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对多模型"><span class="nav-number">5.3.</span> <span class="nav-text">多对多模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#章节目录"><span class="nav-number">6.</span> <span class="nav-text">章节目录</span></a></li></ol></div>
             
 
           </div>

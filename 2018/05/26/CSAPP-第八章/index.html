@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/05/26/CSAPP-第八章/2.JPG">
-<meta property="og:updated_time" content="2019-01-07T14:51:13.263Z">
+<meta property="og:updated_time" content="2019-01-09T15:03:41.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第八章：异常控制流">
 <meta name="twitter:description" content="《CSAPP》第八章：异常控制流">
@@ -353,6 +353,7 @@
 <li><a href="#5">系统调用错误处理</a></li>
 <li><a href="#6">进程控制</a> </li>
 <li><a href="#7">Linux信号</a></li>
+<li><a href="#8">非本地跳转</a></li>
 </ul>
 <hr>
 <p>控制流的定义：程序计数器中保存有一个关于指令地址的序列，从序列中的第k项转移到第k+1项称为控制转移，这样的序列就叫做控制流</p>
@@ -469,12 +470,45 @@
 <li>WCONTINUED：挂起调用进程的执行，直到等待集合中的进程终止或者集合中的一个被停止的进程收到SIGCONT信号重新开始执行</li>
 <li>WNOHANG|WUNTRACED：立即返回，如果等待集合中的子进程没有终止或者停止，返回值为0；如果有一个终止或者停止，返回该进程的PID</li>
 </ul>
-<h1 id="Linux信号"><a href="#Linux信号" class="headerlink" title="Linux信号"></a><span id="7">Linux信号</span></h1><p>更高层次的软件形式的异常，它允许进程和内核中断其他进程</p>
-<p>底层的硬件异常由内核异常处理程序处理，一般对用户进程不可见，信号提供一种机制，能够通知用户进程发生了这些异常</p>
-<h2 id="发送进程"><a href="#发送进程" class="headerlink" title="发送进程"></a>发送进程</h2><p>内核通过更新目的进程上下文中的某个状态，来发送一个信号给目的进程</p>
-<h3 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h3><h2 id="接受进程"><a href="#接受进程" class="headerlink" title="接受进程"></a>接受进程</h2><p>当目的进程被内核强迫以某种方式对信号的发生做出反应时，就接受了信号。进程可以忽略、终止、执行一个信号处理程序的用户层函数来对信号做出反应</p>
-<h2 id="阻塞进程"><a href="#阻塞进程" class="headerlink" title="阻塞进程"></a>阻塞进程</h2><p>进程可以选择阻塞某种信号，则这种信号可以被发送但不会被接受。一个发送但没有被接受的信号叫<strong>Pending Signal</strong>（待处理信号）。一种类型至多只有一个Pending Signal。</p>
+<h1 id="Linux信号"><a href="#Linux信号" class="headerlink" title="Linux信号"></a><span id="7">Linux信号</span></h1><p>更高层次的软件形式的异常，它允许进程和内核中断其他进程。底层的硬件异常由内核异常处理程序处理，一般对用户进程不可见，信号提供一种机制，能够通知用户进程发生了这些异常</p>
+<h2 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h2><p>内核通过更新目的进程上下文中的某个状态，来发送一个信号给目的进程</p>
+<p><strong>进程组</strong>：每个进程都只属于一个进程组，进程组由一个正整数ID标识<strong>PID</strong></p>
+<p><strong>kill</strong>：kill程序可以向另外的进程发送任意的信号，如果指定的<strong>PID为负</strong>则会导致信号被发送给进程组PID中的<strong>每个进程</strong>，PID<strong>等于零</strong>时，发送信号给调用进程所在进程组的每个进程，<strong>包括调用进程自己</strong><br><strong>键盘</strong>：在键盘中输入<strong>Ctrl+C</strong>会导致内核发送一个SIGINT信号到前台进程组中的每个进程，结果是终止前台作业；同理如果输入<strong>Ctrl+Z</strong>会发送一个SIGSTP信号到前台进程组的每个进程，结果是停止（挂起）前台作业<br><strong>alarm</strong>：该函数安排内核在参数secs秒后发送一个SIGALRM信号给调用进程</p>
+<h2 id="接受信号"><a href="#接受信号" class="headerlink" title="接受信号"></a>接受信号</h2><p>当目的进程被内核强迫以某种方式对信号的发生做出反应时，就接受了信号。进程可以忽略、终止、执行一个信号处理程序的用户层函数来对信号做出反应 </p>
+<p>当内核把进程p从内核模式切换成用户模式时，会检查进程p的未被阻塞的待处理信号的集合，集合非空时，内核会选择集合中的某个信号并强制进程p接受信号，每个信号类型都有一个<strong>默认行为</strong></p>
+<ul>
+<li>进程终止</li>
+<li>进程终止并转储内存</li>
+<li>进程挂起知道被SIGCONT信号重启</li>
+<li>忽略该信号</li>
+</ul>
+<p>进程也可以通过<strong>signal函数</strong>修改和信号相关联的默认行为（除了SIGSTOP和SIGKILL，这两个信号的默认行为不能修改）</p>
+<p>signal<strong>函数原型</strong>：<code>sighander_t signal(int signum,sighandler_t handler);</code></p>
+<p><strong>handler</strong>是用户自定义的函数，称为<strong>信号处理程序</strong>，当进程接收到一个类型为signum的信号，就会调用这个处理程序。通过把处理程序的地址传给signal函数从而改变默认行为，这叫做<strong>设置信号处理程序</strong>，调用信号处理程序叫做<strong>捕获信号</strong>，执行信号处理程序叫做<strong>处理信号</strong></p>
+<h2 id="阻塞信号"><a href="#阻塞信号" class="headerlink" title="阻塞信号"></a>阻塞信号</h2><p>进程可以选择阻塞某种信号，则这种信号可以被发送但不会被接受。一个发送但没有被接受的信号叫<strong>Pending Signal</strong>（待处理信号）。一种类型至多只有一个Pending Signal。也就是说如果存在一个未处理的信号就表明至少有一个信号达到了，其他到达的信号都会<strong>丢失</strong></p>
 <p>内核为每个进程在Pending位向量中维护Pending Signal的集合，而Blocked位向量维护被阻塞的信号集合，当某K类信号被阻塞，内核就将设置Blocked位向量的第K位，当取消K类信号的阻塞时，内核就取消这种信号</p>
+<p>Linux提供阻塞信号的<strong>隐式</strong>和<strong>显示</strong>机制</p>
+<ul>
+<li>隐式阻塞进制：内核默认阻塞任何当前处理程序正在处理信号类型的待处理的信号</li>
+<li>显式阻塞机制：使用<strong>sigprocmask</strong>函数和它的辅助函数，明确阻塞和解除阻塞信号</li>
+</ul>
+<p>sigprocmask<strong>函数原型</strong>：<code>int sigprocmask(int how,const sigset_t *set,sigset_t *oldset);</code>，how参数决定了该函数的行为</p>
+<h2 id="处理信号"><a href="#处理信号" class="headerlink" title="处理信号"></a>处理信号</h2><p>信号处理程序麻烦是因为它和主程序以及其他信号处理程序<strong>并发运行</strong>，下面的信号处理程序编写<strong>原则</strong>要遵守，否则由于并发出现的错误将会<strong>不可预测</strong>和<strong>不可重复</strong>，给调试带来困难</p>
+<ul>
+<li>尽可能简单</li>
+<li>只调用异步信号安全的函数：这种函数要么是可重入的，要么不能被信号处理程序中断，许多常见函数（如printf、malloc）都不在此列</li>
+<li>保存和恢复errno：</li>
+<li>阻塞所有信号，保护对共享全局数据结构的访问</li>
+<li>用volatile申明全局变量</li>
+<li>用sig_atomic_t申明标志</li>
+</ul>
+<h1 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a><span id="8">非本地跳转</span></h1><p>C语言提供一种用户级异常控制流形式，将控制直接从一个函数转移到另一个当前正在执行的函数，而不需要经过正常的调用-返回程序<br>非本地调转一个重要应用就是允许从一个深层嵌套的函数调用中立即返回，通常是检测到某个错误情况引起的，而不是费力地解开调用栈</p>
+<ul>
+<li><strong>strace</strong>：打印一个正在运行的程序和它的子进程调用的每个系统调用的轨迹</li>
+<li><strong>ps</strong>：列出当前系统中的进程（包括僵死进程）</li>
+<li><strong>top</strong>：打印关于当前进程资源使用的信息</li>
+<li><strong>pmap</strong>：显示进程的内存映射</li>
+</ul>
 
       
     </div>
@@ -594,7 +628,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -607,7 +641,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -662,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有地址空间"><span class="nav-number">4.3.</span> <span class="nav-text">私有地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户模式和内核模式"><span class="nav-number">4.4.</span> <span class="nav-text">用户模式和内核模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.5.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统调用错误处理"><span class="nav-number">5.</span> <span class="nav-text">系统调用错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程控制"><span class="nav-number">6.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取进程ID"><span class="nav-number">6.1.</span> <span class="nav-text">获取进程ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和终止进程"><span class="nav-number">6.2.</span> <span class="nav-text">创建和终止进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收子进程"><span class="nav-number">6.3.</span> <span class="nav-text">回收子进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#waitpid函数"><span class="nav-number">6.3.1.</span> <span class="nav-text">waitpid函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux信号"><span class="nav-number">7.</span> <span class="nav-text">Linux信号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发送进程"><span class="nav-number">7.1.</span> <span class="nav-text">发送进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程组"><span class="nav-number">7.1.1.</span> <span class="nav-text">进程组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接受进程"><span class="nav-number">7.2.</span> <span class="nav-text">接受进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞进程"><span class="nav-number">7.3.</span> <span class="nav-text">阻塞进程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解ECF的作用"><span class="nav-number">1.</span> <span class="nav-text">理解ECF的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常表"><span class="nav-number">2.1.</span> <span class="nav-text">异常表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常和过程调用的区别"><span class="nav-number">2.2.</span> <span class="nav-text">异常和过程调用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">2.3.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux的异常"><span class="nav-number">3.</span> <span class="nav-text">Linux的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见故障和终止"><span class="nav-number">3.1.</span> <span class="nav-text">常见故障和终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用（陷阱）"><span class="nav-number">3.2.</span> <span class="nav-text">系统调用（陷阱）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">4.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑控制流"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发流"><span class="nav-number">4.2.</span> <span class="nav-text">并发流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有地址空间"><span class="nav-number">4.3.</span> <span class="nav-text">私有地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户模式和内核模式"><span class="nav-number">4.4.</span> <span class="nav-text">用户模式和内核模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.5.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统调用错误处理"><span class="nav-number">5.</span> <span class="nav-text">系统调用错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程控制"><span class="nav-number">6.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取进程ID"><span class="nav-number">6.1.</span> <span class="nav-text">获取进程ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和终止进程"><span class="nav-number">6.2.</span> <span class="nav-text">创建和终止进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收子进程"><span class="nav-number">6.3.</span> <span class="nav-text">回收子进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#waitpid函数"><span class="nav-number">6.3.1.</span> <span class="nav-text">waitpid函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux信号"><span class="nav-number">7.</span> <span class="nav-text">Linux信号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发送信号"><span class="nav-number">7.1.</span> <span class="nav-text">发送信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接受信号"><span class="nav-number">7.2.</span> <span class="nav-text">接受信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞信号"><span class="nav-number">7.3.</span> <span class="nav-text">阻塞信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理信号"><span class="nav-number">7.4.</span> <span class="nav-text">处理信号</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非本地跳转"><span class="nav-number">8.</span> <span class="nav-text">非本地跳转</span></a></li></ol></div>
             
 
           </div>
