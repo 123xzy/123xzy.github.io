@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第十二章：并发编程">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-07T00:05:21.095Z">
+<meta property="og:updated_time" content="2019-01-10T08:22:58.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十二章：并发编程">
 <meta name="twitter:description" content="《CSAPP》第十二章：并发编程">
@@ -342,6 +342,20 @@
       
         <p>《CSAPP》第十二章：并发编程<br><a id="more"></a></p>
 <hr>
+<p>并发不仅仅是操作系统内核用来运行多个应用程序的机制，在应用程序中也扮演很重要的角色，<strong>应用级并发</strong>的作用</p>
+<ul>
+<li>访问慢速IO设备：内核遇到应用在等到IO数据时，会运行其他进程，使CPU保持繁忙，应用程序也可以模仿类似思路，交替执行IO请求和其他操作</li>
+<li>与人交互：现代视窗系统通过并发实现用户可以在打印文档的同时，调整窗口大小，实现更好的人机交互</li>
+<li>通过推迟工作以降低延迟：应用程序通过推迟其他操作和并发地执行它们，利用并发来降低某些操作的延迟</li>
+<li>服务多个网络客户端：这允许服务器同时服务多个客户端，避免慢速客户端独占服务器</li>
+<li>在多核计算机上进行并行计算</li>
+</ul>
+<p>使用应用级并发的程序成为<strong>并发程序</strong>，现代操作系统提供三种基本的构造并发程序的方法</p>
+<ul>
+<li>进程：每个逻辑控制流都是一个进程，由内核来调用和维护，因为进程由独立的虚拟地址空间，控制流需要显式的<strong>进程间通信机制</strong>来和其他逻辑控制流通信</li>
+<li>IO多路复用：应用程序在一个进程的上下文中显式地调度它自己的逻辑流？？？</li>
+<li>线程：线程是运行在单一进程上下文中的逻辑流，由内核调度，可以把线程看做上述两种方法的混合，像进程流一样由内核调度，又像IO多路复用一样享受同一个虚拟地址空间</li>
+</ul>
 
       
     </div>
@@ -452,7 +466,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">119</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -465,7 +479,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

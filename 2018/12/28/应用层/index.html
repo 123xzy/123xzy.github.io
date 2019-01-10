@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/6.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/7.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/28/应用层/8.jpg">
-<meta property="og:updated_time" content="2019-01-07T06:13:57.711Z">
+<meta property="og:updated_time" content="2019-01-10T07:42:36.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="应用层">
 <meta name="twitter:description" content="Web、YouTube、QQ，网络应用无处不在，应用层协议也就无处不在">
@@ -357,8 +357,6 @@
 <li><a href="#3">Web和HTTP</a></li>
 <li><a href="#4">电子邮件</a></li>
 <li><a href="#5">DNS</a></li>
-<li>P2P</li>
-<li>多媒体应用</li>
 </ul>
 <hr>
 <h1 id="应用程序的体系结构"><a href="#应用程序的体系结构" class="headerlink" title="应用程序的体系结构"></a><span id="1">应用程序的体系结构</span></h1><p>网络核心设备（路由器、分组交换器）在较底层协议上运作，特别是网络层协议一下，而应用层协议则最接近于我们编写的软件，对于软件开发者来说，网络体系都是固定五层模型，而<strong>应用程序体系结构</strong>则由应用程序开发者来设计实现，主要有以下两种：</p>
@@ -366,7 +364,7 @@
 <li>客户-服务器体系结构：最常见的应用有web、Telnet和电子邮件，在该结构中，有一个总是开机、处于核心地位的服务器，来接受其他客户主机的请求，该服务器具有一个IP地址，并且该IP地址是公共的、众所周知的</li>
 <li>P2P体系结构：常见应用有迅雷、BitTorrent，减少了对于中心服务器的依赖，主机和主机上的应用直接通信，P2P最显著的特点就是<strong>自扩展性</strong>，每个对等方的加入即能获取其他对等方的资源，也能为其提供服务能力<br><img src="/2018/12/28/应用层/1.jpg" alt="体系结构"></li>
 </ul>
-<h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a><span id="2">进程通信</span></h1><p>计网中的<strong>进程通信</strong>不同于操作系统中的进程通信，计网中的进程通信是在不同的主机进程上的通信，两个进程通过计网交换报文（message）来相互通信。在单一主机上，应用进程和下面的网络层通过Socket（套接字）的软件接口来和其他主机进程通信，Socket是应用层和运输层之间的接口</p>
+<h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a><span id="2">进程通信</span></h1><p>计网中的<strong>进程通信</strong>不同于操作系统中的进程通信，计网中的进程通信是在不同的主机进程上的通信，两个进程通过计网交换报文（message）来相互通信。在单一主机上，应用进程和下面的网络层通过<strong>Socket</strong>（套接字）的软件接口来和其他主机进程通信，Socket是应用层和运输层之间的接口</p>
 <p>开发者对于控制应用层的一切，但对于控制层的仅限于：选择运输层协议和设定少数几个参数（最大缓存等）。为了指定和特定主机的特定进程通信，就需要两个标志信息：主机地址（<strong>IP</strong>）和主机接受进程标识符（<strong>端口</strong>）</p>
 <p>应用层协议定义了应用程序进程如何通过Socket相互传递message：</p>
 <ul>
@@ -431,6 +429,7 @@
 <p>DNS是一个分层的DNS服务器实现的<strong>分布式数据库</strong>，也是一个主机能够查询分布式数据库的<strong>应用层协议</strong>,DNS协议运行在UDP之上，使用53端口</p>
 <p>DNS协议不同于其他应用层协议，它不和用户直接打交道，而是向其他应用层协议提供核心功能，可以说它是HTTP、SMTP等协议的<strong>基石</strong>，当HTTP要发送一个到“baidu.com”的报文，他首先要通过DNS去查询“baidu.com”对应的IP地址，当接收到DNS返回的报文，才想改IP地址主机发送连接请求，因此DNS为网络应用带来了时延</p>
 <p>DNS还提供<strong>负载分配</strong>的功能。同一个应用可能需要多台服务器去提供相应的服务，这意味着同一个主机别名对应着多个IP地址，当用户发出一个DNS请求时，DNS服务器就返回IP地址集合，并在每次回答时循环这个地址集合，用户通常用排在前面的IP地址，也就达到了负载分配的效果</p>
+<p>DNS服务器以层次方式组织，有三种类型服务器：<strong>根</strong>、<strong>顶级域</strong>和<strong>权威</strong>DNS服务器。DNS对服务器的查询有<strong>递归查询</strong>和<strong>迭代查询</strong>两种。DNS采取<strong>缓存</strong>的机制改善时延性能并减少在因特网上到处传输的DNS报文数量</p>
 
       
     </div>
@@ -550,7 +549,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">119</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -563,7 +562,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
