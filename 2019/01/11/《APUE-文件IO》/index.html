@@ -79,15 +79,18 @@
 
 
 
+<meta name="description" content="本章描述不带缓冲的I/O函数，原子操作，如何在多个进程间共享文件，以及内核相关的数据结构">
 <meta name="keywords" content="Unix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第三章-文件I&#x2F;O">
 <meta property="og:url" content="http://yoursite.com/2019/01/11/《APUE-文件IO》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="本章描述不带缓冲的I/O函数，原子操作，如何在多个进程间共享文件，以及内核相关的数据结构">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-11T12:13:19.230Z">
+<meta property="og:updated_time" content="2019-01-12T02:42:59.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章-文件I&#x2F;O">
+<meta name="twitter:description" content="本章描述不带缓冲的I/O函数，原子操作，如何在多个进程间共享文件，以及内核相关的数据结构">
 
 
 
@@ -337,7 +340,22 @@
       
 
       
-        
+        <p>本章描述<strong>不带缓冲</strong>的I/O函数，原子操作，如何在多个进程间共享文件，以及内核相关的数据结构<br><a id="more"></a></p>
+<hr>
+<p>不带缓冲指的是每个read和write都调用内核中的一个系统调用</p>
+<p>对于内核而言，所有打开的文件都通过<strong>文件描述符</strong>引用</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="open-amp-openat"><a href="#open-amp-openat" class="headerlink" title="open&amp;openat"></a>open&amp;openat</h2><p>用于打开和创建一个文件<br>open：<code>int open(const char *path,int oflag,.../* mode_t mode */;</code><br>openat：<code>int openat(int fd,const char *path,int oflag,.../* mode_t mode */);</code></p>
+<p>使用下面的参数进行<strong>或运算</strong>构成<strong>oflag</strong>参数</p>
+<ul>
+<li>O_RDONLY：只读打开</li>
+<li>O_WRONLY：只写打开</li>
+<li>O_RDWR：读写打开</li>
+<li>O_EXRC：只执行打开</li>
+<li>O_SEARCH：只搜索打开（用于目录）</li>
+</ul>
+<p>上述五个参数必须制定一个且只能制定一个，下面的参数则是可选的</p>
+<h2 id="creat"><a href="#creat" class="headerlink" title="creat"></a>creat</h2><h2 id="close"><a href="#close" class="headerlink" title="close"></a>close</h2><h2 id="lseak"><a href="#lseak" class="headerlink" title="lseak"></a>lseak</h2><h2 id="read"><a href="#read" class="headerlink" title="read"></a>read</h2><h2 id="write"><a href="#write" class="headerlink" title="write"></a>write</h2><h1 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h1><h1 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h1><h1 id="函数-1"><a href="#函数-1" class="headerlink" title="函数"></a>函数</h1><h2 id="dup-amp-dup2"><a href="#dup-amp-dup2" class="headerlink" title="dup&amp;dup2"></a>dup&amp;dup2</h2><h2 id="sync、fsync-amp-fdatasync"><a href="#sync、fsync-amp-fdatasync" class="headerlink" title="sync、fsync&amp;fdatasync"></a>sync、fsync&amp;fdatasync</h2><h2 id="fcntl"><a href="#fcntl" class="headerlink" title="fcntl"></a>fcntl</h2><p>file control</p>
+<h2 id="ioctl"><a href="#ioctl" class="headerlink" title="ioctl"></a>ioctl</h2>
       
     </div>
     
@@ -431,8 +449,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -447,7 +474,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-count">127</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -505,6 +532,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#open-amp-openat"><span class="nav-number">1.1.</span> <span class="nav-text">open&amp;openat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#creat"><span class="nav-number">1.2.</span> <span class="nav-text">creat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#close"><span class="nav-number">1.3.</span> <span class="nav-text">close</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lseak"><span class="nav-number">1.4.</span> <span class="nav-text">lseak</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read"><span class="nav-number">1.5.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#write"><span class="nav-number">1.6.</span> <span class="nav-text">write</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件共享"><span class="nav-number">2.</span> <span class="nav-text">文件共享</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原子操作"><span class="nav-number">3.</span> <span class="nav-text">原子操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数-1"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dup-amp-dup2"><span class="nav-number">4.1.</span> <span class="nav-text">dup&amp;dup2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync、fsync-amp-fdatasync"><span class="nav-number">4.2.</span> <span class="nav-text">sync、fsync&amp;fdatasync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fcntl"><span class="nav-number">4.3.</span> <span class="nav-text">fcntl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ioctl"><span class="nav-number">4.4.</span> <span class="nav-text">ioctl</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
