@@ -87,18 +87,10 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="Git入门使用">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118210309765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118210431901?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118210742388?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118211127047?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118211600704?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118211718741?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180118211916373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-04-01T23:34:11.103Z">
+<meta property="og:updated_time" content="2019-01-14T08:20:26.597Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git入门">
 <meta name="twitter:description" content="Git入门使用">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20180118210309765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -350,33 +342,16 @@
       
         <p>Git入门使用<br><a id="more"></a></p>
 <hr>
-<p>作为一个立志要成为优秀程序员的人，怎么可以不知道怎么使用git，之前使用的是github，但是感觉目前用处不大，用的还是github桌面应用，不够高大上（装逼）</p>
-<ul>
-<li><p>安装git，简直就是傻瓜式安装，略过</p>
-</li>
-<li><p>先创建git_practice文件夹作为示范，里面有一个hello_world.py</p>
-</li>
-<li><p>从示范文件进入Git Bash<br><img src="http://img.blog.csdn.net/20180118210309765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</li>
-<li><p>git init：初始化仓库<br><img src="http://img.blog.csdn.net/20180118210431901?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</li>
-<li><p>git status：此时仓库里什么都没有：<br><img src="http://img.blog.csdn.net/20180118210742388?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>翻译一下就是：处在branch分支；没有提交更改；没有追踪的文件</p>
-</li>
-<li><p>git add . ：注意add后面还有一个”.”指的是添加该位置的所有文件，如果要添加指定文件，在add后面加文件名称<br><img src="http://img.blog.csdn.net/20180118211127047?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述">现在就可以跟踪hello_world.py了</p>
-</li>
-<li><p>git commit -m “Stated project：提交更改，并说明此次提交做了什么如：Stated project，在之后查找记录的时候就可以显示这句话<br><img src="http://img.blog.csdn.net/20180118211600704?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</li>
-<li><p>git log：查看记录<br><img src="http://img.blog.csdn.net/20180118211718741?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</li>
-<li><p>git checkout .：注意最后面也有“.”<br><img src="http://img.blog.csdn.net/20180118211916373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5MjIxNDgx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述">这样就可以回到上次提交时候版本的文件</p>
-</li>
-<li><p>git remote add origin <a href="https://github.com/123xzy/" target="_blank" rel="noopener">https://github.com/123xzy/</a><br>把本地历史添加进github服务器中，是和远程服务器建立建立的第一步</p>
-</li>
-<li><p>git pull origin master<br>把github上的文件拉下来，每次提交的时候先进行pull</p>
-</li>
-<li><p>git push -u origin master<br>真正向github提交</p>
-</li>
-</ul>
+<p><code>git init</code>：初始化仓库</p>
+<p><code>git status</code>：此时仓库里什么都没有：</p>
+<p><code>git add .</code>：注意add后面还有一个”.”指的是添加该位置的所有文件，如果要添加指定文件，在add后面加文件名称，现在就可以跟踪hello_world.py了</p>
+<p><code>git commit -m &quot;Stated project</code>：提交更改，并说明此次提交做了什么如：Stated project，在之后查找记录的时候就可以显示这句话</p>
+<p><code>git log</code>：查看记录</p>
+<p><code>git checkout .</code>：注意最后面也有“.”，这样就可以回到上次提交时候版本的文件</p>
+<p><code>git remote add origin https://github.com/123xzy/</code> ：把本地历史添加进github服务器中，是和远程服务器建立建立的第一步</p>
+<p><code>git pull origin master</code>：把github上的文件拉下来，每次提交的时候先进行pull</p>
+<p><code>git push -u origin master</code>：真正向github提交</p>
+<p><code>git reset --hard fae6966548e3ae76cfa7f38a461c438cf75ba965</code>：reset只能重置本地或者说本分支的更改</p>
 <p><strong>总结</strong>：世界上目前最先进的分布式版本控制系统，虽然现在的我不知道这说的是啥，更不知道其中的原理是什么，但感觉很牛逼，也很有用。现在仅仅知道git在大项目的时候很有用，我在做c语言程序设计大作业的时候也感觉到了，分工下去，大家各写各的，最后整合就会很浪费时间，要是结合github使用，就会很方便。当然这只是最基本的操作，还有很多其他的操作比如说分支，删除，合并，等以后用到再去学</p>
 
       
@@ -488,7 +463,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">128</span>
+                  <span class="site-state-item-count">129</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
