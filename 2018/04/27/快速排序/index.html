@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="QuickSort">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-01T23:15:17.305Z">
+<meta property="og:updated_time" content="2018-05-29T14:57:59.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速排序">
 <meta name="twitter:description" content="QuickSort">
@@ -276,7 +276,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/快速排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="123xie">
+      <meta itemprop="name" content="123xzy">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -351,8 +351,16 @@
 <li>解决：递归调用，分别对A[p..q-1]和A[q+1..r]进行快速排序</li>
 <li>合并：原址排序，不需要合并</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">快速排序伪代码</span><br><span class="line">QuickSort(A,p,r)</span><br><span class="line">if q &lt; r</span><br><span class="line">	p = Partition(A,p,r)</span><br><span class="line">	QuickSort(A,p,q-1)</span><br><span class="line">	QuickSort(A,p+1,r)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Partition(A,p,r)</span><br><span class="line">pivot = A[r]</span><br><span class="line">i = p - 1</span><br><span class="line">for j = p to r-1</span><br><span class="line">	if A[j] &lt; pivot</span><br><span class="line">		i = i+1</span><br><span class="line">		exchange A[i] with A[j]</span><br><span class="line">exchange A[i+1] with A[r]</span><br><span class="line">return i+1</span><br></pre></td></tr></table></figure>
+<p>快速排序伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QuickSort(A,p,r)</span><br><span class="line">if q &lt; r</span><br><span class="line">	p = Partition(A,p,r)</span><br><span class="line">	QuickSort(A,p,q-1)</span><br><span class="line">	QuickSort(A,p+1,r)</span><br></pre></td></tr></table></figure></p>
+<p>Partition对子数组A[p..r]实现原址排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Partition(A,p,r)</span><br><span class="line">pivot = A[r]	//选取A[r作为主元</span><br><span class="line">i = p - 1		//区域分界线</span><br><span class="line">for j = p to r-1</span><br><span class="line">	if A[j] &lt; pivot</span><br><span class="line">		i = i+1</span><br><span class="line">		exchange A[i] with A[j]</span><br><span class="line">exchange A[i+1] with A[r]</span><br><span class="line">return i+1</span><br></pre></td></tr></table></figure></p>
+<p>该过程将数组原地划分为四部分</p>
+<ul>
+<li>A[p..i]小于pivot的部分</li>
+<li>A[i+1..j]大于pivot的部分</li>
+<li>A[j+1..r-1]未排序部分</li>
+<li>A[r]作为pivot</li>
+</ul>
+<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>通过Partition过程的特性构造一个循环不变式</p>
 <h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1>
       
     </div>
@@ -383,8 +391,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/17/CSAPP-3-8-3-11/" rel="next" title="CSAPP-3.8-3.11">
-                <i class="fa fa-chevron-left"></i> CSAPP-3.8-3.11
+              <a href="/2018/04/17/CSAPP-第三章（3）/" rel="next" title="第三章：程序的机器级表示（3）">
+                <i class="fa fa-chevron-left"></i> 第三章：程序的机器级表示（3）
               </a>
             
           </div>
@@ -393,7 +401,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/16/malloclab/" rel="prev" title="malloclab">
+              <a href="/2018/05/16/lab-malloc/" rel="prev" title="malloclab">
                 malloclab <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -461,7 +469,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">123xie</p>
+              <p class="site-author-name" itemprop="name">123xzy</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -472,7 +480,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">133</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -485,7 +493,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -495,6 +503,28 @@
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/123xzy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xzy-71-59/activities" target="_blank" title="ZhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:xzy0320@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
           
 
           
@@ -518,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">3.</span> <span class="nav-text">源代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法形式"><span class="nav-number">1.</span> <span class="nav-text">算法形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法证明"><span class="nav-number">2.</span> <span class="nav-text">算法证明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法分析"><span class="nav-number">3.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
             
 
           </div>
@@ -539,11 +569,11 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">123xie</span>
+  <span class="author" itemprop="copyrightHolder">123xzy</span>
 
   
 </div>
