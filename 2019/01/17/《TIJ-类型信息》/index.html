@@ -79,15 +79,18 @@
 
 
 
+<meta name="description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第14章 类型信息">
 <meta property="og:url" content="http://yoursite.com/2019/01/17/《TIJ-类型信息》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-17T03:37:43.461Z">
+<meta property="og:updated_time" content="2019-01-18T14:44:24.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第14章 类型信息">
+<meta name="twitter:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
 
 
 
@@ -337,7 +340,19 @@
       
 
       
-        
+        <p>本章讨论Java如何让我们在<strong>运行时识别对象和类的信息</strong>，一种是传统的<strong>RTTI</strong>（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是<strong>反射机制</strong>，它允许我们在运行时发现和使用类的信息<br><a id="more"></a></p>
+<hr>
+<p>面对对象编程中基本的目的就是：让代码只操纵对基类的引用，减少了解对象的具体类型，只和通用表示（基类）打交道，这样代码更容易维护、改变，实现上述功能的机制就是<strong>多态</strong>，他能帮助找到具体类型和具体方法，实现<strong>动态绑定</strong></p>
+<p>为了理解RTTI的工作原理，就要知道类型信息在运行时是通过称为<strong>Class对象</strong>的特殊对象完成的，它被用来创建类的所有常规对象，记录了类有关信息，也就是说每创建一个类，就会产生一个Class对象（也就是同名的<strong>.class文件</strong>，关于JVM中加载该文件的机制可参见<a href="/2018/12/26/《深入理解Java虚拟机》/" title="《深入理解Java虚拟机》">《深入理解Java虚拟机》</a>，最简单的机制就是程序对于类的静态成员应用时，类加载器就会加载该类对应的.class文件，由此可以看出<strong>构造器</strong>默认就是<strong>静态成员方法</strong>）</p>
+<p>Class对象和其他对象一样，可以获取并操作它的引用，也可以使用它的很多方法</p>
+<ul>
+<li><code>forName(String)</code>：返回一个Class对象的引用，如果在运行时使用类型信息，就必须获得恰当的Class对象的引用，这个方法就是实现上述功能的简便途径</li>
+<li><code>getInterfaces()</code>：返回的是Class对象，表示对象包含的接口</li>
+<li><code>getSuperclass()</code>：返回直接基类，进而可以查询发现一个对象的完整类继承结构</li>
+<li><code>newInstance()</code>：实现“虚拟构造器”，其允许你申明不知道确切类型，但是无论如何都可以创建自己，这个类必须带有默认的构造器</li>
+</ul>
+<p>除了<code>forName()</code>之外，还可以使用<strong>类字面常量</strong>来生成对Class对象的引用，即<code>demo.class</code>，类字面还可以应用于接口、数组以及基本数据类型</p>
+
       
     </div>
     
@@ -447,7 +462,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">133</span>
+                  <span class="site-state-item-count">137</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
