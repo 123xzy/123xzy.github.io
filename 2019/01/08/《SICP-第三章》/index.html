@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="有效的程序综合需要组织原则，他们知道我们系统化完成系统的整体设计，是系统能自然划分为一些具有内聚力的模块，便于开发和维护。这章要研究两种特点鲜明的组织策略，他们分别把注意力放在对象和流上">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-18T14:52:59.719Z">
+<meta property="og:updated_time" content="2019-01-19T13:08:16.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章 模块化、对象和状态">
 <meta name="twitter:description" content="有效的程序综合需要组织原则，他们知道我们系统化完成系统的整体设计，是系统能自然划分为一些具有内聚力的模块，便于开发和维护。这章要研究两种特点鲜明的组织策略，他们分别把注意力放在对象和流上">
@@ -342,8 +342,7 @@
       
         <p>有效的程序综合需要组织原则，他们知道我们系统化完成系统的整体设计，是系统能自然划分为一些具有内聚力的模块，便于开发和维护。这章要研究两种特点鲜明的<strong>组织策略</strong>，他们分别把注意力放在<strong>对象</strong>和<strong>流</strong>上<br><a id="more"></a></p>
 <hr>
-<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p><strong>时间</strong>是一个本质问题</p>
-<p>对于对象策略，我们关注计算对象可以怎样变化而又同时保持其标志，这迫使我们采取<strong>环境模型</strong>，这一模型有因为引入时间，使得对并发的处理变得很困难，而流策略可以通过延时求值的技术解决上述问题，解耦模型中对时间的模拟和事件发生的顺序</p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p><strong>时间</strong>是一个本质问题<br>】2就<br>对于对象策略，我们关注计算对象可以怎样变化而又同时保持其标志，这迫使我们采取<strong>环境模型</strong>，这一模型有因为引入时间，使得对并发的处理变得很困难，而流策略可以通过延时求值的技术解决上述问题，解耦模型中对时间的模拟和事件发生的顺序</p>
 <h1 id="流"><a href="#流" class="headerlink" title="流"></a>流</h1><p>流可以缓和状态模拟中的复杂性，流就是一个序列，可以模拟一些包含状态的系统，但却不需要利用赋值或者变动数据，从而避免由于引进赋值而带来的内在缺陷</p>
 <p>流使我们可以使用序列操作，又不会带来序列的时间和空间代价。基本想法就是做出一种安排，只是部分地构造出流的结构，并将这部分结构给使用流的程序，如果使用程序还需要未构造的部分，流就会继续构造下去，但只构造当时需要的部分，这就造成一种假象，好像整个流都存在一样。也就是说我们要设计的流，使得<strong>流的构造和流的使用是交错进行</strong>的，但是这种交错又是完全透明的</p>
 <p>为了实现流，采取一种叫做<strong>延时对象</strong>的对象，它可以看做是对未来的某个时间求值的许诺。和delay一起的还有一个叫做force的过程，它以一个延时对象作为参数，执行相应的求值工作，也就是迫使delay完成它许诺的求值</p>
@@ -468,7 +467,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">137</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
