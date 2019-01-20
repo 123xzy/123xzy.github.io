@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-18T14:44:24.928Z">
+<meta property="og:updated_time" content="2019-01-20T05:37:16.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第14章 类型信息">
 <meta name="twitter:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
@@ -352,6 +352,17 @@
 <li><code>newInstance()</code>：实现“虚拟构造器”，其允许你申明不知道确切类型，但是无论如何都可以创建自己，这个类必须带有默认的构造器</li>
 </ul>
 <p>除了<code>forName()</code>之外，还可以使用<strong>类字面常量</strong>来生成对Class对象的引用，即<code>demo.class</code>，类字面还可以应用于接口、数组以及基本数据类型</p>
+<p>Class引用表示的就是它所指向的对象的确切类型，而该对象便是Class类的一个对象，通过添加泛型语法可以对Class引用所指向的Class对象的类型进行限定</p>
+<p>RTTI形式</p>
+<ul>
+<li>传统的类型转换，由RTTI确保类型转换的正确性</li>
+<li>代表对象的类型的Class对象，通过查询Class对象可以获取运行时信息</li>
+<li>instanceof</li>
+</ul>
+<p>注册工厂参见 <a href="/2019/01/20/HF-工厂模式/" title="工厂模式">工厂模式</a></p>
+<p>上述的方法中RTTI能告诉对象的确切类型的前提是这个类型在编译时必须已知，但有时候在编译时程序无法获知对象的类信息（如RMI)，这时候就需要使用<strong>反射</strong>概念，由<strong>Class类</strong>和<strong>java.lang.reflect类库</strong>一起实现反射概念，类库中包含<strong>Field</strong>、<strong>Method</strong>、<strong>Constructor</strong>类，这些类型的对象由JVM在运行时创建，用于表示未知类的成员，并通过相应方法就能在运行时确定匿名对象的类信息</p>
+<p>反射没有什么神秘之处，和RTTI<strong>真正的区别</strong>就在于.class文件在编译期是不可以获取的，要由JVM在运行时打开和检查.class文件。反射通过是为了支持Java其他特性的，如<strong>对象序列化</strong>和<strong>JavaBean</strong></p>
+<p>动态代理参见 <a href="/2019/01/20/HF-代理模式/" title="代理模式">代理模式</a></p>
 
       
     </div>
@@ -462,7 +473,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
