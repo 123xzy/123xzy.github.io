@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第十二章：并发编程">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-11T13:24:18.851Z">
+<meta property="og:updated_time" content="2019-01-21T13:25:53.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十二章：并发编程">
 <meta name="twitter:description" content="《CSAPP》第十二章：并发编程">
@@ -356,7 +356,14 @@
 <li>IO多路复用：应用程序在一个进程的上下文中显式地调度它自己的逻辑流？？？</li>
 <li>线程：线程是运行在单一进程上下文中的逻辑流，由内核调度，可以把线程看做上述两种方法的混合，像进程流一样由内核调度，又像IO多路复用一样享受同一个虚拟地址空间</li>
 </ul>
-<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1>
+<h1 id="基于进程"><a href="#基于进程" class="headerlink" title="基于进程"></a>基于进程</h1><p>构造并发服务器最自然的方法就是在父进程接受客户端连接请求，然后创建一个新的子进程来为每个新客户端提供服务</p>
+<p>进程有独立的地址空间既是优点又是缺点，优点是进程不可能覆盖另一个进程的虚拟内存，缺点则是使得进程共享状态信息变得困难。为了共享信息，必须使用显式的IPC机制，除此之外进程控制和IPC（进程间通信）开销也大</p>
+<h1 id="基于I-O多路复用"><a href="#基于I-O多路复用" class="headerlink" title="基于I/O多路复用"></a>基于I/O多路复用</h1><p>基本思路就是使用select函数，要求内核挂起进程，只有在一个或多个I/O事件发生后，才将控制返回给应用程序</p>
+<p>I/O多路复用可以作为<strong>并发事件驱动程序</strong>的基础，在事件驱动程序中，某些事件会导致流向前推进。使用事件驱动设计的一个好处在于比基于进程设计给了程序员更多的对程序行为的控制，另一个好处在于只运行单一进程的上下文中，每个逻辑流都能访问该进程的全部地址空间。缺点则是编码复杂和不能充分使用多核处理器</p>
+<p>现代高性能服务器（如Node.js、Nginx）使用的都是基于I/O多路复用的事件驱动的编程方式</p>
+<h1 id="基于线程"><a href="#基于线程" class="headerlink" title="基于线程"></a>基于线程</h1><p>是上述两种方法的混合，线程就是运行在进程上下文中的<strong>逻辑流</strong></p>
+<p>高级I/O参见<a href="/2019/01/11/《APUE-高级IO》/" title="第十四章 高级I/O">第十四章 高级I/O</a></p>
+
       
     </div>
     
@@ -475,7 +482,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -488,7 +495,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -543,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于进程"><span class="nav-number">1.</span> <span class="nav-text">基于进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于I-O多路复用"><span class="nav-number">2.</span> <span class="nav-text">基于I/O多路复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于线程"><span class="nav-number">3.</span> <span class="nav-text">基于线程</span></a></li></ol></div>
             
 
           </div>

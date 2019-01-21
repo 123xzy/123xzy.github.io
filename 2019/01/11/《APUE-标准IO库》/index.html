@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Unix," />
+  <meta name="keywords" content="Unix,I/O," />
 
 
 
@@ -80,16 +80,16 @@
 
 
 <meta name="description" content="文件I/O函数都是围绕文件描述符来描述的，而对于标准I/O库来说，它的操作都是围绕流进行的，当用标准I/O库打开或者创建一个文件时，已使一个流与文件相关联">
-<meta name="keywords" content="Unix">
+<meta name="keywords" content="Unix,I&#x2F;O">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第五章-标准I&#x2F;O库">
+<meta property="og:title" content="第五章 标准I&#x2F;O库">
 <meta property="og:url" content="http://yoursite.com/2019/01/11/《APUE-标准IO库》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="文件I/O函数都是围绕文件描述符来描述的，而对于标准I/O库来说，它的操作都是围绕流进行的，当用标准I/O库打开或者创建一个文件时，已使一个流与文件相关联">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-11T13:46:17.520Z">
+<meta property="og:updated_time" content="2019-01-21T12:42:02.666Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第五章-标准I&#x2F;O库">
+<meta name="twitter:title" content="第五章 标准I&#x2F;O库">
 <meta name="twitter:description" content="文件I/O函数都是围绕文件描述符来描述的，而对于标准I/O库来说，它的操作都是围绕流进行的，当用标准I/O库打开或者创建一个文件时，已使一个流与文件相关联">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>第五章-标准I/O库 | 阿谢的BLOG</title>
+  <title>第五章 标准I/O库 | 阿谢的BLOG</title>
   
 
 
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第五章-标准I/O库</h1>
+          <h1 class="post-title" itemprop="name headline">第五章 标准I/O库</h1>
         
 
         <div class="post-meta">
@@ -343,7 +343,7 @@
         <p>文件I/O函数都是围绕<strong>文件描述符</strong>来描述的，而对于标准I/O库来说，它的操作都是围绕<strong>流</strong>进行的，当用标准I/O库打开或者创建一个文件时，已使一个流与文件相关联<br><a id="more"></a></p>
 <hr>
 <h1 id="流和文件描述符区别"><a href="#流和文件描述符区别" class="headerlink" title="流和文件描述符区别"></a>流和文件描述符区别</h1><p>流是文件描述符的抽象，文件描述符是系统层次的调用。</p>
-<p>当向一个文件读入或者输出时，既可以选择流，也可以选择使用文件描述符。文件描述符是int类型的，而流是用FILE *来表示的。</p>
+<p>当向一个文件读入或者输出时，既可以选择流，也可以选择使用文件描述符。文件描述符是int类型的，而流是用FILE来表示的。</p>
 <p>文件描述符提供了一个原始、低层次的输入输出接口。文件描述符和流都可以表示一个连接，可以是和设备的（例如终端），或者管道，或者一个和另一个进程的套接字，或者就是一个正常的文件（normal file)。但是，如果你想要对特殊设备进行特定的操作，你必须使用文件描述符。另外，如果你的程序需要以特殊模式进行输入输出（例如nonblocking, polled input)，也必须使用文件描述符。</p>
 <p>而流提供了一个基于原始的文件描述符的高层次接口。流接口对于所有类型的文件的操作大多都是类似的，唯一的区别就是缓冲的策略</p>
 <p>使用流的主要优势是操作流的函数比文件描述符多得多，而且更加强大方便。文件描述符仅仅提供了一个单一的函数用来传输字符块，但是流接口提供了很多格式化的输入输出（例如printf和scanf）和一些字符函数以及列读入输出函数。<br>因为流是基于文件描述符的，所以实际上你可以“拆解”一个流得到对应的文件描述符然后进行低层次的操作。相反地，你也可以先用文件描述符和一个文件建立连接，然后建立一个链接这个文件描述符的流对象。<br>通常情况下，你都应该使用流来进行输入输出，这样不仅方便强大，而且可以保证程序的移植性：你可以在任何一个遵守ISO C标准的机器上使用流，但是在一个非GNU机器上你可能无法使用文件描述符。</p>
@@ -369,6 +369,8 @@
           
             <a href="/tags/Unix/" rel="tag"><i class="fa fa-tag"></i> Unix</a>
           
+            <a href="/tags/I-O/" rel="tag"><i class="fa fa-tag"></i> I/O</a>
+          
         </div>
       
 
@@ -390,8 +392,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/11/《APUE-高级IO》/" rel="prev" title="第十四章-高级I/O">
-                第十四章-高级I/O <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/11/《APUE-高级IO》/" rel="prev" title="第十四章 高级I/O">
+                第十四章 高级I/O <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -469,7 +471,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -482,7 +484,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

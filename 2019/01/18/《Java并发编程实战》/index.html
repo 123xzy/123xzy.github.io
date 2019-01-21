@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="介绍了一些并发编程的设计规则和思维模式">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-18T14:35:22.103Z">
+<meta property="og:updated_time" content="2019-01-21T12:20:57.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Java并发编程实战》">
 <meta name="twitter:description" content="介绍了一些并发编程的设计规则和思维模式">
@@ -347,7 +347,7 @@
 <ul>
 <li>发挥多处理器的能力</li>
 <li>建模简单：当手头只有一项工作时，只需要埋头苦干，可当有多项任务时，就需要花精力去考虑任务的安排，对于软件也是，如果为每种类型的任务都分配一个专门的线程，就可以形成串行执行的假象，就好像所有人都在专注于自己手头的事情，并只在特定的同步位置进行交互，上述目的可以通过Servlet和RMT等框架实现，框架会处理请求管理、线程创建、负载平衡等细节问题，而对于开发人员都不需要了解这些，看起来就像一个单线程程序</li>
-<li>异步时间的简化处理：单线程应用在遇到读写阻塞的时候，对于其他处理也将停顿，为了处理这个问题，单线程应用使用<strong>非阻塞I/O</strong>，这种I/O的复杂性远高于同步I/O。但是如果每个请求都对于一个处理线程，也能解决上述问题。早期的操作系统只能创建少量的线程，大约在几百个，因此像Unix就提供一些方法来实现<strong>多路I/O</strong>，例如select和poll系统调用，为了调用这些方法，Java类库提供了一组实现非阻塞I/O的包（<strong>NIO</strong>），如今线程数量大幅提升（可达数十万个），有能力给每个客户端提供一个线程</li>
+<li>异步时间的简化处理：单线程应用在遇到读写阻塞的时候，对于其他处理也将停顿，为了处理这个问题，单线程应用使用<strong>非阻塞I/O</strong>，这种I/O的复杂性远高于同步I/O。但是如果每个请求都对于一个处理线程，也能解决上述问题。早期的操作系统只能创建少量的线程，大约在几百个，因此像Unix就提供一些方法来实现<strong>多路I/O</strong>，例如select和poll系统调用，为了调用这些方法，Java类库提供了一组实现非阻塞I/O的包（<strong>NIO</strong>）。如今线程数量大幅提升（可达数十万个），有能力给每个客户端提供一个线程</li>
 </ul>
 <p><strong>线程无处不在</strong></p>
 <ul>
@@ -470,7 +470,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -483,7 +483,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

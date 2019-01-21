@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Unix," />
+  <meta name="keywords" content="Unix,I/O," />
 
 
 
@@ -80,16 +80,16 @@
 
 
 <meta name="description" content="非阻塞I/O、记录锁、I/O多路转接、异步I/O、存储映射等">
-<meta name="keywords" content="Unix">
+<meta name="keywords" content="Unix,I&#x2F;O">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第十四章-高级I&#x2F;O">
+<meta property="og:title" content="第十四章 高级I&#x2F;O">
 <meta property="og:url" content="http://yoursite.com/2019/01/11/《APUE-高级IO》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="非阻塞I/O、记录锁、I/O多路转接、异步I/O、存储映射等">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-13T09:25:33.783Z">
+<meta property="og:updated_time" content="2019-01-21T12:41:32.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第十四章-高级I&#x2F;O">
+<meta name="twitter:title" content="第十四章 高级I&#x2F;O">
 <meta name="twitter:description" content="非阻塞I/O、记录锁、I/O多路转接、异步I/O、存储映射等">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>第十四章-高级I/O | 阿谢的BLOG</title>
+  <title>第十四章 高级I/O | 阿谢的BLOG</title>
   
 
 
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第十四章-高级I/O</h1>
+          <h1 class="post-title" itemprop="name headline">第十四章 高级I/O</h1>
         
 
         <div class="post-meta">
@@ -343,6 +343,13 @@
         <p>非阻塞I/O、记录锁、I/O多路转接、异步I/O、存储映射等<br><a id="more"></a></p>
 <hr>
 <h1 id="非阻塞I-O"><a href="#非阻塞I-O" class="headerlink" title="非阻塞I/O"></a>非阻塞I/O</h1><p>使我们可以发出open、read和write这样的I/O操作，使这些操作不会永远阻塞，如果这种操作不能完成，则调用立即出错返回，表示该操作如果继续执行将阻塞</p>
+<h1 id="I-O多路转接"><a href="#I-O多路转接" class="headerlink" title="I/O多路转接"></a>I/O多路转接</h1><p>对于一个进程由多个输入输出时，显然不能使用阻塞I/O</p>
+<ul>
+<li>一种方法是<strong>多进程</strong>，每个进程处理一条数据通路，但是这种方法会由于进程间通信而是程序变得复杂</li>
+<li>另一种方法仍然使用一个进程，但使用非阻塞I/O，通过<strong>轮询</strong>机制去查看不同描述符是否有数据可读，这种方法的缺陷在于浪费CPU时间，大部分轮询都是无意义的</li>
+<li><strong>异步I/O</strong>：进程告诉内核，当描述符准备好可以进行I/O时，用一个信号告诉它。这种技术一个问题是标准不一样，移植不方便，二是这种信号对于进程来说只有一个，进程无法判断该信号是对指示了哪个描述符准备好了，况且信号数量远小于潜在的打开文件描述符的数量，因此仍然需要将描述符设置为非阻塞的，当信号来的时候，轮询不同的描述符</li>
+<li><strong>I/O多路转接</strong>：先构造一张感兴趣的描述符的列表，然后调用一个函数，直到这些描述符中的一个已准备好进行I/O时，该函数才返回</li>
+</ul>
 
       
     </div>
@@ -362,6 +369,8 @@
           
             <a href="/tags/Unix/" rel="tag"><i class="fa fa-tag"></i> Unix</a>
           
+            <a href="/tags/I-O/" rel="tag"><i class="fa fa-tag"></i> I/O</a>
+          
         </div>
       
 
@@ -373,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/11/《APUE-标准IO库》/" rel="next" title="第五章-标准I/O库">
-                <i class="fa fa-chevron-left"></i> 第五章-标准I/O库
+              <a href="/2019/01/11/《APUE-标准IO库》/" rel="next" title="第五章 标准I/O库">
+                <i class="fa fa-chevron-left"></i> 第五章 标准I/O库
               </a>
             
           </div>
@@ -383,8 +392,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/11/《APUE-文件IO》/" rel="prev" title="第三章-文件I/O">
-                第三章-文件I/O <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/11/《APUE-文件IO》/" rel="prev" title="第三章 文件I/O">
+                第三章 文件I/O <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -462,7 +471,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -475,7 +484,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -530,7 +539,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#非阻塞I-O"><span class="nav-number">1.</span> <span class="nav-text">非阻塞I/O</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#非阻塞I-O"><span class="nav-number">1.</span> <span class="nav-text">非阻塞I/O</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O多路转接"><span class="nav-number">2.</span> <span class="nav-text">I/O多路转接</span></a></li></ol></div>
             
 
           </div>

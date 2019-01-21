@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-20T05:37:16.917Z">
+<meta property="og:updated_time" content="2019-01-21T01:35:47.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第14章 类型信息">
 <meta name="twitter:description" content="本章讨论Java如何让我们在运行时识别对象和类的信息，一种是传统的RTTI（Run-Time Type Information），它假定我们在编译时已经知道了所有的类型；另一种是反射机制，它允许我们在运行时发现和使用类的信息">
@@ -361,8 +361,11 @@
 </ul>
 <p>注册工厂参见 <a href="/2019/01/20/HF-工厂模式/" title="工厂模式">工厂模式</a></p>
 <p>上述的方法中RTTI能告诉对象的确切类型的前提是这个类型在编译时必须已知，但有时候在编译时程序无法获知对象的类信息（如RMI)，这时候就需要使用<strong>反射</strong>概念，由<strong>Class类</strong>和<strong>java.lang.reflect类库</strong>一起实现反射概念，类库中包含<strong>Field</strong>、<strong>Method</strong>、<strong>Constructor</strong>类，这些类型的对象由JVM在运行时创建，用于表示未知类的成员，并通过相应方法就能在运行时确定匿名对象的类信息</p>
-<p>反射没有什么神秘之处，和RTTI<strong>真正的区别</strong>就在于.class文件在编译期是不可以获取的，要由JVM在运行时打开和检查.class文件。反射通过是为了支持Java其他特性的，如<strong>对象序列化</strong>和<strong>JavaBean</strong></p>
-<p>动态代理参见 <a href="/2019/01/20/HF-代理模式/" title="代理模式">代理模式</a></p>
+<p>反射没有什么神秘之处，和RTTI<strong>真正的区别</strong>就在于.class文件在编译期是不可以获取的，要由JVM在运行时打开和检查.class文件。反射是为了支持Java其他特性的，如<strong>对象序列化</strong>和<strong>JavaBean</strong></p>
+<p><strong>动态代理</strong>：可以动态创建代理并且处理对所代理方法的调用，在动态代理上所做的调用都会被重定向到单一的<strong>调用处理器</strong>上，它的工作是揭示调用类型并确定相应的对策，Spring AOP默认使用动态代理</p>
+<p>通过调用静态方法<code>Proxy.newProxyInstance()</code>创建动态代理，这个方法需要一个<strong>类加载器</strong>，一个需要该代理实现的<strong>接口列表</strong>以及<strong>InvocationHandle接口</strong>的一个实现，这样这个动态代理就可以把所有调用重定向到调用处理器上，因此在调用处理器的构造器传递一个实际对象，由它来实际执行代理，即将请求转发。在调用处理器只需要实现一个<code>invoke()</code>方法，在内部，接口的调用将被重定向对代理的调用</p>
+<p>代理模式参见 <a href="/2019/01/20/HF-代理模式/" title="代理模式">代理模式</a></p>
+<p>引入反射也会带来坏处，这样不管是private、protected方法都可以通过反射机制访问到，但反射带来的好处是不言而喻的</p>
 
       
     </div>
@@ -473,7 +476,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -486,7 +489,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
