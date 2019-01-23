@@ -79,17 +79,14 @@
 
 
 
-<meta name="description" content="《深入理解计算机系统》LAB系列 Lab2:bomblab Lab3:buflab Lab7:Web proxy Lab8:malloclab   计算机网络Lab OJ系列 HDOJ UVa    杂 Git入门 GDB GCC 谷歌云SSR免费搭建 符号数的表示 Javaweb入门 《vim学习》    机器学习实战 K-近邻算法">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Practice">
-<meta property="og:url" content="http://yoursite.com/Practice/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十一章 线程">
+<meta property="og:url" content="http://yoursite.com/2019/01/23/《APUE-线程》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="《深入理解计算机系统》LAB系列 Lab2:bomblab Lab3:buflab Lab7:Web proxy Lab8:malloclab   计算机网络Lab OJ系列 HDOJ UVa    杂 Git入门 GDB GCC 谷歌云SSR免费搭建 符号数的表示 Javaweb入门 《vim学习》    机器学习实战 K-近邻算法">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-14T14:57:04.706Z">
+<meta property="og:updated_time" content="2019-01-23T00:54:58.596Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Practice">
-<meta name="twitter:description" content="《深入理解计算机系统》LAB系列 Lab2:bomblab Lab3:buflab Lab7:Web proxy Lab8:malloclab   计算机网络Lab OJ系列 HDOJ UVa    杂 Git入门 GDB GCC 谷歌云SSR免费搭建 符号数的表示 Javaweb入门 《vim学习》    机器学习实战 K-近邻算法">
+<meta name="twitter:title" content="第十一章 线程">
 
 
 
@@ -119,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Practice/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/01/23/《APUE-线程》/"/>
 
 
 
 
 
-  <title>Practice | 阿谢的BLOG</title>
+  <title>第十一章 线程 | 阿谢的BLOG</title>
   
 
 
@@ -260,63 +257,137 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/《APUE-线程》/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xzy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Practice</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <hr>
-<h1 id="《深入理解计算机系统》LAB系列"><a href="#《深入理解计算机系统》LAB系列" class="headerlink" title="《深入理解计算机系统》LAB系列"></a>《深入理解计算机系统》LAB系列</h1><ul>
-<li>Lab2:<a href="/2018/03/11/lab-bomb/" title="bomblab">bomblab</a></li>
-<li>Lab3:<a href="/2018/05/16/lab-buffer/" title="buflab">buflab</a></li>
-<li>Lab7:<a href="/2018/05/23/lab-webproxy/" title="Web proxy">Web proxy</a></li>
-<li>Lab8:<a href="/2018/05/16/lab-malloc/" title="malloclab">malloclab</a></li>
-</ul>
-<hr>
-<h1 id="计算机网络Lab"><a href="#计算机网络Lab" class="headerlink" title="计算机网络Lab"></a>计算机网络Lab</h1><hr>
-<h1 id="OJ系列"><a href="#OJ系列" class="headerlink" title="OJ系列"></a>OJ系列</h1><ul>
-<li><a href="/2018/04/01/HDOJ/" title="HDOJ">HDOJ</a></li>
-<li><a href="/2018/04/01/UVa/" title="UVa">UVa</a>
-</li>
-</ul>
-<hr>
-<h1 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h1><ul>
-<li><a href="/2018/03/24/Git入门/" title="Git入门">Git入门</a></li>
-<li><a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a></li>
-<li><a href="/2018/07/12/谷歌云SSR免费搭建/" title="谷歌云SSR免费搭建">谷歌云SSR免费搭建</a></li>
-<li><a href="/2018/09/10/符号数的表示/" title="符号数的表示">符号数的表示</a></li>
-<li><a href="/2018/12/23/Javaweb入门/" title="Javaweb入门">Javaweb入门</a></li>
-<li><a href="/2019/01/09/《vim学习》/" title="《vim学习》">《vim学习》</a>
-</li>
-</ul>
-<hr>
-<h1 id="机器学习实战"><a href="#机器学习实战" class="headerlink" title="机器学习实战"></a>机器学习实战</h1><ul>
-<li><a href="/2018/03/25/K-近邻算法/" title="K-近邻算法">K-近邻算法</a>
-</li>
-</ul>
-<hr>
-
+          <h1 class="post-title" itemprop="name headline">第十一章 线程</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-23T08:53:35+08:00">
+                2019-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/21/《Spring-IoC》/" rel="next" title="《Spring-IoC》">
+                <i class="fa fa-chevron-left"></i> 《Spring-IoC》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -325,6 +396,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -345,17 +420,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -428,22 +494,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《深入理解计算机系统》LAB系列"><span class="nav-number">1.</span> <span class="nav-text">《深入理解计算机系统》LAB系列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络Lab"><span class="nav-number">2.</span> <span class="nav-text">计算机网络Lab</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OJ系列"><span class="nav-number">3.</span> <span class="nav-text">OJ系列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#杂"><span class="nav-number">4.</span> <span class="nav-text">杂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习实战"><span class="nav-number">5.</span> <span class="nav-text">机器学习实战</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

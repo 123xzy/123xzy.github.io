@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/4.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/5.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/07/02/《程序员的自我修养》/6.jpg">
-<meta property="og:updated_time" content="2019-01-09T01:04:49.949Z">
+<meta property="og:updated_time" content="2019-01-23T01:50:07.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《程序员的自我修养》">
 <meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
@@ -379,7 +379,7 @@
 <li>进程在执行的过程中如果阻塞，例如等待输入，整个进程就会挂起，即使进程中有些工作不依赖于输入的数据，也将无法执行。</li>
 </ul>
 <h2 id="线程是什么"><a href="#线程是什么" class="headerlink" title="线程是什么"></a>线程是什么</h2><p>线程是在进程这个层次上提供的一层并发的抽象，也被成为轻量级进程，是程序<strong>执行流的最小单位</strong></p>
-<p>一个标准的线程具有线程ID、当前指令指针、寄存器集合和堆栈组成<img src="/2018/07/02/《程序员的自我修养》/4.jpg" alt="线程"></p>
+<p>一个标准的线程具有线程ID、当前指令指针、寄存器集合和堆栈等组成。C语言中的<strong>全局变量</strong>被映射到读写区域，任何线程都可以引用；<strong>本地自动变量</strong>（定义咋函数内部但是没有static属性的变量）被映射到每个线程的栈中；<strong>本地静态变量</strong>（定义在函数内部并有static属性的变量）映射到读写区域，每个对等线程都能读写该变量<br><img src="/2018/07/02/《程序员的自我修养》/4.jpg" alt="线程"></p>
 <ul>
 <li>可以有效地利用多处理器和多核计算机，在没有线程之前，多核并不能让一个进程的执行速度提高</li>
 <li>能够使系统在同一时间能够做多件事情，当进程遇到阻塞时，例如等待输入，线程能够使不依赖输入数据的工作继续执行，例如多线程可以让一个线程负责交互，另一个线程负责计算</li>
@@ -570,7 +570,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

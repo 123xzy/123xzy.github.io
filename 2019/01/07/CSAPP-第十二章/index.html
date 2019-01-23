@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第十二章：并发编程">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-21T13:25:53.842Z">
+<meta property="og:updated_time" content="2019-01-23T01:44:18.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十二章：并发编程">
 <meta name="twitter:description" content="《CSAPP》第十二章：并发编程">
@@ -361,8 +361,21 @@
 <h1 id="基于I-O多路复用"><a href="#基于I-O多路复用" class="headerlink" title="基于I/O多路复用"></a>基于I/O多路复用</h1><p>基本思路就是使用select函数，要求内核挂起进程，只有在一个或多个I/O事件发生后，才将控制返回给应用程序</p>
 <p>I/O多路复用可以作为<strong>并发事件驱动程序</strong>的基础，在事件驱动程序中，某些事件会导致流向前推进。使用事件驱动设计的一个好处在于比基于进程设计给了程序员更多的对程序行为的控制，另一个好处在于只运行单一进程的上下文中，每个逻辑流都能访问该进程的全部地址空间。缺点则是编码复杂和不能充分使用多核处理器</p>
 <p>现代高性能服务器（如Node.js、Nginx）使用的都是基于I/O多路复用的事件驱动的编程方式</p>
-<h1 id="基于线程"><a href="#基于线程" class="headerlink" title="基于线程"></a>基于线程</h1><p>是上述两种方法的混合，线程就是运行在进程上下文中的<strong>逻辑流</strong></p>
 <p>高级I/O参见<a href="/2019/01/11/《APUE-高级IO》/" title="第十四章 高级I/O">第十四章 高级I/O</a></p>
+<h1 id="基于线程"><a href="#基于线程" class="headerlink" title="基于线程"></a>基于线程</h1><p>是上述两种方法的混合，线程就是运行在进程上下文中的<strong>逻辑流</strong>。线程上下文的切换比进程切换快很多，其次线程不按照进程一样有严格的父子层次，和一个进程有关的线程组成一个<strong>线程池</strong>，线程池中的线程可以杀死他的任何对等线程，或者等待他的任意线程终止   </p>
+<p><strong>创建线程</strong>：<code>pthread_create(pthread_t *tid,pthread_attr_t *attr,func *f,void *arg)</code>，arg是输入变量，f是线程例程，attr可以修改新创建的线程的默认属性</p>
+<p><strong>终止线程</strong>有多种方式</p>
+<ul>
+<li>顶层线程例程返回，线程隐式终止</li>
+<li><code>pthread_exit(void *thread_return)</code>：显式终止，主线程调用该函数，他会等待所有其他对等线程终止，然后在终止主线程和整个进程</li>
+<li>对等线程调用<code>exit</code>函数，该函数终止进程以及所有与进程相关的线程</li>
+<li><code>pthread_cancel(pthread_t tid)</code>：对等线程调用该函数，终止线程ID为tid的线程</li>
+</ul>
+<p><strong>回收资源</strong>：<code>pthread_join(pthread_t tid,void **thread_return)</code>，该函数会阻塞，直到线程tid终止，将线程例程返回的通用指针赋值给thread_return指向的位置，然后回收已终止线程占用的所有内存资源</p>
+<p><strong>分离线程</strong>：<code>pthread_detach(pthread_t tid)</code>，一个<strong>可结合的</strong>线程能够被其他线程回收和杀死，再被其他线程回收之前，它的内存资源师不释放的，一个<strong>分离的</strong>线程不能被其他线程回收或杀死，内存资源由系统自动释放，该函数分离可结合线程tid</p>
+<p><strong>初始线程</strong>：<code>pthread_once(pthread_once_t *once_control,void (*init_routine)(void))</code>，初始化与线程例程相关的状态</p>
+<h1 id="多线程的共享变量"><a href="#多线程的共享变量" class="headerlink" title="多线程的共享变量"></a>多线程的共享变量</h1><p>线程内存模型参见<a href="/2018/07/02/《程序员的自我修养》/" title="《程序员的自我修养》">《程序员的自我修养》</a></p>
+<p>线程参见<a href="/2019/01/23/《APUE-线程》/" title="第十一章 线程">第十一章 线程</a></p>
 
       
     </div>
@@ -482,7 +495,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -550,7 +563,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于进程"><span class="nav-number">1.</span> <span class="nav-text">基于进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于I-O多路复用"><span class="nav-number">2.</span> <span class="nav-text">基于I/O多路复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于线程"><span class="nav-number">3.</span> <span class="nav-text">基于线程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于进程"><span class="nav-number">1.</span> <span class="nav-text">基于进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于I-O多路复用"><span class="nav-number">2.</span> <span class="nav-text">基于I/O多路复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于线程"><span class="nav-number">3.</span> <span class="nav-text">基于线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多线程的共享变量"><span class="nav-number">4.</span> <span class="nav-text">多线程的共享变量</span></a></li></ol></div>
             
 
           </div>
