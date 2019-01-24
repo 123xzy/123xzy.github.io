@@ -87,6 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/12.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/10.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/11.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/1.JPG">
@@ -98,11 +99,11 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
-<meta property="og:updated_time" content="2019-01-22T02:48:06.928Z">
+<meta property="og:updated_time" content="2019-01-24T06:09:03.774Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
 <meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/10.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/12.jpg">
 
 
 
@@ -363,7 +364,14 @@
 <li>数据库，如MySQL</li>
 </ul>
 <p>当然如果不了解也没事，和我一样头铁就是干！</p>
-<p>先讲讲一些大体上的架构吧！</p>
+<p>先讲讲一些<strong>大体上的架构</strong>吧！<br><img src="/2018/12/23/Javaweb入门/12.jpg" alt="Java EE体系结构"></p>
+<p>服务器端三层被称为<strong>经典三层结构</strong>，即web层（表现层）、业务逻辑层、数据持久层，出现了很多结合三层JavaEE的设计模式，<strong>DAO模式</strong>就是数据持久层的设计模式</p>
+<p>实际上MVC和JavaEE经典三层结构是由两拨人分别提出的，两者间可以有着如下的对应：</p>
+<ul>
+<li>业务层、数据持久层 —- Model</li>
+<li>web层 JSP —- View</li>
+<li>web层 Servlet —- Controller</li>
+</ul>
 <p>Javaweb的传统架构都是模块化的设计逻辑，如Views、Controller、Service和Dao，如果要进行水平扩展，则将应用部署到不同的服务器，并通过Nginx进行<strong>负载均衡</strong>（即反向代理）<br><img src="/2018/12/23/Javaweb入门/10.jpg" alt="传统架构"><br>现流行的微服务框架则在传统应用架构上，将业务拆分为更细颗粒的服务，每个服务都是一个应用，并对为提供公共API，图中每个API都是一个传统应用架构<br><img src="/2018/12/23/Javaweb入门/11.jpg" alt="微服务架构"></p>
 <p>申明这次开发所用的环境（包括版本信息）真的很重要，因为我第一次在云服务器上部署tomcat时，所安装的jdk版本是1.7.0，而tomcat是8.5.5，产生的问题就是能顺利打开tomcat自带的界面，却不可以打开我自己部署的项目，这个问题还是我使用一个jsp文件去测试也打不开，才意识到可能是java没有安装成功，所以今后一定要注意版本的问题，不要随便安装。</p>
 <h1 id="所用开发工具"><a href="#所用开发工具" class="headerlink" title="所用开发工具"></a>所用开发工具</h1><ul>
@@ -517,7 +525,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-count">144</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
