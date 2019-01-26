@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="Spring提供数据访问层">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-24T06:18:22.094Z">
+<meta property="og:updated_time" content="2019-01-26T14:14:00.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Spring-数据访问》">
 <meta name="twitter:description" content="Spring提供数据访问层">
@@ -349,8 +349,19 @@
 <li>以统一的方式对各种ORM方案的集成：除了使用JDBC，还使用ORM（Object Relational Mapping，对象-关系映射）</li>
 </ul>
 <p>总的来说，Spring的数据访问层就是以<strong>统一的数据访问异常层次体系</strong>为核心，以<strong>JDBC API</strong>和<strong>集成ORM方案</strong>为两翼</p>
-<p><strong>DAO</strong>（Data Access Object 数据访问对象）设计模式<br>功能：封装对于数据源的操作，数据源可能是文件、数据库等任意存储方式（可以与数据库或者文件进行交互，业务层在去操作数据层时，不需要知道数据层底层的存储实现）、负责管理与数据源的连接、负责数据的存取（CRUD)</p>
-<p>DAO模式更通俗的来说，数据层用DAO完全封装了数据源底层实现（相互间传递的是对象，不需要知道其具体实现），提供了增删改查功能；业务层如果操作数据源采用对象的方式，即业务层和数据层进行通信传递的都是对象就是DAO模式，好处是业务层开发人员不需要会写SQL，只要将对象封装好传给数据层即可，通过对象操作完成对数据源增删改查</p>
+<p><strong>DAO</strong>（Data Access Object 数据访问对象）设计模式<br>封装对于数据源的操作，数据源可能是<strong>文件、数据</strong>库等任意存储方式（可以与数据库或者文件进行交互，业务层在去操作数据层时，不需要知道数据层底层的存储实现）。DAO模式对于屏蔽不同数据访问机制的差异性起到举足轻重的作用</p>
+<h1 id="统一异常处理"><a href="#统一异常处理" class="headerlink" title="统一异常处理"></a>统一异常处理</h1><p>不同的数据访问机制会抛出不同形式的异常，如果把这些异常交给客户处理，那定义统一的数据访问接口就会显得没有用，而且如果存着数据访问机制的添加，访问接口要不断修改，这就破坏了使用DAO设计模式的初衷</p>
+<p>为解决上述问题，只要在DAO实现类内部，将<strong>不同的异常以统一的格式封装</strong>即可。不过依旧存在一个问题，不同数据库厂商表达具体的错误信息时，采用不同的方式，这意味着客户要根据不同的数据库厂商采取不同的信息提取方式来获取具体的错误信息，这是很糟糕的，为此我们通过<strong>异常的分类转译</strong>来屏蔽这种差异。因此我们需要完成两个任务，一是完成对错误信息的提取工作，二是对错误信息进行分类，抛出统一的异常（如获取资源失败、数据一致性冲突）等，可以通过定义RuntimeException的子类来实现</p>
+<p>通过上面的机制，不管数据访问方式如何变化，只要将相应的数据访问方式的异常转译到这套自定义的完整异常体系中，对于客户端来说，异常处理逻辑就巍然不动了</p>
+<p>Spring就根据上述思路实现了数据访问异常层次体系，这个异常体系以<strong>DataAccessException</strong>为统领，并根据职能划分为不同的异常子类型，具体信息可以查看Spring的Javadoc</p>
+<p>上面介绍了统一的数据访问异常层次体系出现的<strong>背景</strong>和<strong>演化过程</strong></p>
+<h1 id="ORM集成"><a href="#ORM集成" class="headerlink" title="ORM集成"></a>ORM集成</h1><p>Spring对流行的ORM集成体现在</p>
+<ul>
+<li>统一的资源管理方式：Spring以统一的方式封装ORM，使得对JDBC和ORM都使用统一的方式</li>
+<li>特定于ORM的数据访问异常到Spring统一异常体系的转译</li>
+<li>统一的数据访问事物管理及控制方式</li>
+</ul>
+<p>Spring对<strong>Hibernate</strong>和<strong>IBatis</strong>等ORM等方案都有集成包，虽然集成方案千篇一律，但我们应该根据具体场景选择具体的ORM方案</p>
 
       
     </div>
@@ -390,6 +401,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/25/《Spring-事务管理》/" rel="prev" title="《Spring-事务管理》">
+                《Spring-事务管理》 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -441,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,7 +481,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">144</span>
+                  <span class="site-state-item-count">145</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -515,6 +539,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#统一异常处理"><span class="nav-number">1.</span> <span class="nav-text">统一异常处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ORM集成"><span class="nav-number">2.</span> <span class="nav-text">ORM集成</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

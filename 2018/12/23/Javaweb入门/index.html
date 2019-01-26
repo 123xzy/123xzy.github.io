@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
-<meta property="og:updated_time" content="2019-01-24T06:09:03.774Z">
+<meta property="og:updated_time" content="2019-01-25T01:34:54.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
 <meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
@@ -397,6 +397,7 @@
 <p>创建好后的初始文件目录<br><img src="/2018/12/23/Javaweb入门/4.JPG" alt="第四步"></p>
 <p>之后先去配置tomcat，如下图<br><img src="/2018/12/23/Javaweb入门/5.JPG" alt="第五步"><br><img src="/2018/12/23/Javaweb入门/6.JPG" alt="第六步"><br><img src="/2018/12/23/Javaweb入门/7.JPG" alt="第七步"><br>选择”demo::war exploder”包，这样一个简单的网页就算完成了<br><img src="/2018/12/23/Javaweb入门/8.JPG" alt="第八步"><br>点击”run”运行第一个网页吧！<br><img src="/2018/12/23/Javaweb入门/9.JPG" alt="第九步"></p>
 <p>将项目部署到云端服务器上<br>先安装jdk<code>yum install jdk-1.8.0-*</code><br>在安装tomcat 先下载tomcat安装包，再把安装包传输到服务器上，并运行，在将整个项目文件传到tomcat文件下</p>
+<p>第二步：修改 $TOMCAT_HOME\conf 下的server.xml文件<br>在server.xml文件中新增节点，一个节点代表一个web应用<br><code>path</code>:指定访问该Web应用的URL入口。 如“/HelloApp1/”<br><code>docBase</code>:指定Web应用的文件路径，可以给定绝对路径，可以给定相对路径。。如应用HelloApp1的文件路径为/webapps/HelloApp1<br><code>reloadable</code>:如果这个属性设为true，tomcat服务器在运行状态下会监视在WEB-INF/classes和WEB-INF，lib目录下class文件的改动，如果监测到有class文件被更新的，服务器会自动重新加载Web应用。 </p>
 <p>相关文章：<a href="/2018/12/29/《Spring揭秘》/" title="《Spring揭秘》">《Spring揭秘》</a></p>
 
       
@@ -525,7 +526,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">144</span>
+                  <span class="site-state-item-count">145</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
