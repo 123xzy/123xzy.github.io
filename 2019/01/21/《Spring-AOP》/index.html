@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="OOP无法解决类似于日记、安全检查等系统功能散落在系统中的问题，AOP则可以对这些需求进行模块化的组织，AOP引入Aspect以模块化的形式对系统中的横切关注点进行封装，Aspect对于AOP，就像Class对于OOP，AOP只是对于OOP的一种补足">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-21T08:34:14.648Z">
+<meta property="og:updated_time" content="2019-01-27T11:12:06.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Spring-AOP》">
 <meta name="twitter:description" content="OOP无法解决类似于日记、安全检查等系统功能散落在系统中的问题，AOP则可以对这些需求进行模块化的组织，AOP引入Aspect以模块化的形式对系统中的横切关注点进行封装，Aspect对于AOP，就像Class对于OOP，AOP只是对于OOP的一种补足">
@@ -354,7 +354,7 @@
 <li><strong>动态代理</strong>：将横切关注点逻辑封装到动态代理的<code>InvocationHandler</code>中，然后再系统运行期间，根据横切关注点需要织入的模块位置，将横切逻辑织入到相应的代理类中</li>
 <li><strong>动态字节码增强</strong>：可以为需要织入横切逻辑的模块类在运行期间，通过动态字节码增强技术，为这些系统模块类生成相应的子类，并将横切逻辑加到这些子类中，让应用程序在执行期间使用的是这些动态生成的子类，从而达到将横切逻辑织入系统的目的 </li>
 <li><strong>自定义类加载器</strong>：通过读取外部文件规定的织入规则和必要信息，在加载Class文件期间就可以将横切逻辑添加到系统模块类的现有逻辑中，再将改动后的Class交给JVM执行。这种方法最大的问题是某些应用服务器会控制整个类加载体系</li>
-<li>AOL扩展：AOP各种概念在AOL中都有意义对应的实体，可以使用扩展过的AOL，实现任何AOP甚至OOP概念实体</li>
+<li><strong>AOL扩展</strong>：AOP各种概念在AOL中都有意义对应的实体，可以使用扩展过的AOL，实现任何AOP甚至OOP概念实体</li>
 </ul>
 <p>AOP<strong>成员</strong></p>
 <ul>
@@ -481,7 +481,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-count">147</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -494,7 +494,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

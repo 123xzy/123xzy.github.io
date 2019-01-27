@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="让别人为你服务">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-21T13:59:42.860Z">
+<meta property="og:updated_time" content="2019-01-27T13:55:00.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Spring-IoC》">
 <meta name="twitter:description" content="让别人为你服务">
@@ -343,7 +343,7 @@
         <p>让别人为你服务<br><a id="more"></a></p>
 <hr>
 <p>Inversion of Control（控制反转），别名Dependency Injection（依赖注入）</p>
-<p>在IoC场景中，被注入对象和被依赖对象之间通过IoC Service Provider沟通，两者由IoC Service Provider统一管理</p>
+<p>在IoC场景中，被注入对象和被依赖对象之间通过<strong>IoC Service Provider</strong>沟通，两者由IoC Service Provider统一管理</p>
 <p>被注入对象有三种方式告诉IoC Service Provider需要哪些被依赖对象，即依赖注入的方式</p>
 <ul>
 <li>构造方法注入：通过在构造方法中申明被依赖对象的参数列表，IoC Service Provider会检查被注入对象的构造方法，取得依赖对象列表，对象构造完成后，即进入就绪状态，缺点在于依赖对象多的时候，构造列表很长；构造方法无法被继承，且不能设置默认值；依赖对象不同需要不同的构造方法</li>
@@ -351,6 +351,11 @@
 <li>接口注入：不提倡，因为要强制被注入对象实现不必要的接口，处于退役边缘</li>
 </ul>
 <p>IoC的<strong>附加值</strong>：不会对业务对象产生很强的侵入性，对象具有更好的测试性、可重用性、可扩展性，解耦各种业务对象依赖关系额度对象绑定方式</p>
+<h1 id="IoC-Service-Provider"><a href="#IoC-Service-Provider" class="headerlink" title="IoC Service Provider"></a>IoC Service Provider</h1><p>是一个抽象的概念，指代任何将IoC场景中的业务对象绑定到一起的实现，主要有两个职责：业务对象的<strong>构建管理</strong>、<strong>依赖绑定</strong></p>
+<p>IoC Service Provider有多种方式记录对象之间的对应关系</p>
+<ul>
+<li>直接编码：通过程序编码将被注入对象和依赖对象注册到容器中，并确定相互之间的依赖注入关系</li>
+</ul>
 
       
     </div>
@@ -445,8 +450,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -461,7 +475,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-count">147</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -474,7 +488,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -519,6 +533,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IoC-Service-Provider"><span class="nav-number">1.</span> <span class="nav-text">IoC Service Provider</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

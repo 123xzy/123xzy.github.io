@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="事务就是以可控的方式对数据资源进行访问的一组操作">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-26T15:11:04.783Z">
+<meta property="og:updated_time" content="2019-01-27T11:09:57.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Spring-事务管理》">
 <meta name="twitter:description" content="事务就是以可控的方式对数据资源进行访问的一组操作">
@@ -351,11 +351,26 @@
 </ul>
 <h1 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h1><p>根据不同隔离级别，各个事务对于数据资源访问会有不同的行为</p>
 <ul>
-<li>Read Uncommitted：最低的隔离级别，一个事务可以读取另一个事务没有提交的更新结果，追求高性能，但会出现<strong>脏读</strong>（一个事务读取了另一个事务回滚前的数据，这份数据就是脏数据）、<strong>不可重复读取</strong>（同一个事务在整个事务过程中对同一笔数据的读取结构不同）、<strong>幻读</strong>（同一个查询在整个事务过程中多次执行后，查询所得的结果集不同，幻读针对的是多笔记录）</li>
+<li>Read Uncommitted：最低的隔离级别，一个事务可以读取另一个事务没有提交的更新结果，追求高性能，但会出现<strong>脏读</strong>（一个事务读取了另一个事务回滚前的数据，这份数据就是脏数据）、<strong>不可重复读取</strong>（同一个事务在整个事务过程中对同一笔数据的读取结果不同）、<strong>幻读</strong>（同一个查询在整个事务过程中多次执行后，查询所得的结果集不同，幻读针对的是多笔记录）</li>
 <li>Read Committed：大部分数据库采取的默认隔离级别，一个事务的更新操作结果只有在该事务提交之后，另一个事务才可以访问到该结果，这种级别可以避免脏读，但是不能避免幻读和不可重复读</li>
-<li>Repeatable Read：保证在整个事务的过程中，对同一笔数据的读写结果是相同的，可以</li>
-<li>Serializable</li>
+<li>Repeatable Read：保证在整个事务的过程中，对同一笔数据的读写结果是相同的，无法避免幻读</li>
+<li>Serializable：所有事务操作都必须依次顺序执行，可以避免所有问题，但是并发性下降，性能最差</li>
 </ul>
+<p>大多数数据库都支持这四种隔离级别，Spring、JDBC等数据访问方式也允许为事务指定这四种隔离级别，但最终还是由底层的数据资源决定隔离级别</p>
+<h1 id="事务成员"><a href="#事务成员" class="headerlink" title="事务成员"></a>事务成员</h1><ul>
+<li>Resource Manager：负责存储并管理系统数据资源的状态，比如数据库服务器</li>
+<li>Transaction Processing Monitor：在分布式事务场景中协调多个RM的事务处理，如JTA（Java Transaction API）</li>
+<li>Transaction Manager：是TP Monitor的核心模块，负责多RM之间事务处理的协调工作，并提供事务界定、事务上下文传播等接口</li>
+<li>Application：事务边界的出发点 </li>
+</ul>
+<p>根据涉及RM的多寡，可以将事务分为<strong>全局事务</strong>和<strong>局部事务</strong></p>
+<ul>
+<li>局部事务：只有一个RM参与，比如只对一个数据库更新，或者向一个消息队列发送消息，这时候不需要TP Monitor参与，可以直接使用RM的事务支持</li>
+<li>全局事务：TP Monitor协调多个RM之间的事务管理，TP Monitor采取<strong>两阶段提交协议</strong>保证事务属性</li>
+</ul>
+<h1 id="Java平台的事务支持"><a href="#Java平台的事务支持" class="headerlink" title="Java平台的事务支持"></a>Java平台的事务支持</h1><p>在Java局部事务场景中，通过当前使用的数据访问技术所提供的基于connection的API（如JDBC的Connection和Hibernate的Session）来管理事务</p>
+<p>在Java分布式事务管理上，主要通过JTA（Java Transaction API）或者JCA（Java Connector Architecture）提供支持。使用JTA进行分布事务管理有<strong>直接使用JTA接口的编程事务管理</strong>以及<strong>基于应用服务器的声明性事务管理</strong></p>
+<p>Java平台提供的事务管理依旧存在许多平台，如局部事务管理绑定到了具体的数据访问方式，这会导致事务管理代码和业务逻辑代码混杂在一起，事务异常不统一</p>
 
       
     </div>
@@ -395,6 +410,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/27/《NoSQL精粹》/" rel="prev" title="《NoSQL精粹》">
+                《NoSQL精粹》 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -471,7 +490,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-count">147</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -484,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -539,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#隔离性"><span class="nav-number">1.</span> <span class="nav-text">隔离性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#隔离性"><span class="nav-number">1.</span> <span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务成员"><span class="nav-number">2.</span> <span class="nav-text">事务成员</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java平台的事务支持"><span class="nav-number">3.</span> <span class="nav-text">Java平台的事务支持</span></a></li></ol></div>
             
 
           </div>
