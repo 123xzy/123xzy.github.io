@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-30T10:26:10.050Z">
+<meta property="og:updated_time" content="2019-01-30T15:43:46.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第21章 并发">
 <meta name="twitter:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
@@ -348,10 +348,12 @@
 <p>java.util.concurrent包中的执行器可以替我们管理Thread对象，从而简化并发编程，<strong>Executor</strong>在客户端和任务执行之间提供了一个间接层，由这层来执行任务。<strong>ExecutorService</strong>（具有服务生命周期的Executor，即<strong>线程池</strong>，实现该接口的类有ThreadPoolExecutor和ScheduledThreadPoolExecutor）知道如何构建恰当的上下文来执行Runnable对象。Java还提供了一个<strong>Executors工厂类</strong>，它可以帮助我们很方便的创建各种类型ExecutorService线程池，以下方法都是静态创建对象</p>
 <ul>
 <li>newCachedThreadPool：创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程</li>
-<li>newFixedThreadPool：创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>newFixedThreadPool：创建一个定长线程池，可控制线程最大并发数，并一次性预先执行代价高昂的线程分配，需要线程的事件直接从池中获取，超出的线程会在队列中等待，</li>
 <li>newScheduledThreadPool：创建一个定长线程池，支持定时及周期性任务执行</li>
 <li>newSingleThreadExecutor：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行</li>
 </ul>
+<p>上面提到具有服务生命周期的ExecutorService指的是其具有shutdown()方法，可以防止新任务被提交到这个Executor。在所有类型的线程池中，现有线程都可能会被自动复用</p>
+<p>Java 1.5中引入的<strong>Callable</strong>接口是具有类型参数的泛型，它和Runnable接口的区别就在于完成任务时有返回值，而且必须使用<strong>ExecutorService.submit()</strong>方法来调用实现好的<strong>call()</strong>，submit()会返回一个<strong>Future</strong>对象，其代表了<strong>异步计算结果</strong>，并具有方法来获取（get())、检查（isDone()）结果</p>
 <h1 id="终结任务"><a href="#终结任务" class="headerlink" title="终结任务"></a>终结任务</h1><h1 id="线程协作"><a href="#线程协作" class="headerlink" title="线程协作"></a>线程协作</h1><h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1>
       
     </div>
