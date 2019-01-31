@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-30T15:43:46.309Z">
+<meta property="og:updated_time" content="2019-01-31T06:01:54.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第21章 并发">
 <meta name="twitter:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
@@ -353,7 +353,18 @@
 <li>newSingleThreadExecutor：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行</li>
 </ul>
 <p>上面提到具有服务生命周期的ExecutorService指的是其具有shutdown()方法，可以防止新任务被提交到这个Executor。在所有类型的线程池中，现有线程都可能会被自动复用</p>
-<p>Java 1.5中引入的<strong>Callable</strong>接口是具有类型参数的泛型，它和Runnable接口的区别就在于完成任务时有返回值，而且必须使用<strong>ExecutorService.submit()</strong>方法来调用实现好的<strong>call()</strong>，submit()会返回一个<strong>Future</strong>对象，其代表了<strong>异步计算结果</strong>，并具有方法来获取（get())、检查（isDone()）结果</p>
+<p>Java 1.5中引入的<strong>Callable</strong>接口是具有类型参数的泛型，它和Runnable接口的区别就在于完成任务时有返回值，而且必须使用<strong>ExecutorService.submit()</strong>方法来调用实现好的<strong>call()</strong>，submit()会返回一个<strong>Future</strong>对象，其代表了<strong>异步计算结果</strong>，并具有方法来获取<code>get()</code>、检查<code>isDone()</code>结果</p>
+<ul>
+<li><code>sleep()</code>可以使任务暂停指定时间单元</li>
+<li><code>getPriority() &amp; setPriority()</code>可以读取和修改现有线程的优先级，通常来说修改优先级都是种错误</li>
+<li><code>yield()</code>让步，当工作做得差不多时，可以通过该方法暗示让别的线程使用CPU</li>
+</ul>
+<p><strong>后台线程</strong><code>daemon</code>指在程序运行的时候在后台提供一种通用服务的线程，这种线程不是程序不可或缺的部分，这意味着当所有<strong>非后台线程</strong>结束时，程序就终止，并杀死所有后台进程。通过<code>setDaemon() &amp; isDaemon()</code>可以设置或判断后台线程</p>
+<p>后台线程中run()中的<strong>finally块</strong>语句不会得到执行，这意味着后台线程的finally语句得不到保证，因此一旦线程都退出，JVM就会立即关闭所有后台进程</p>
+<p>在Java中，Thread类本身并不执行任何操作，它只是驱动赋予它的任务。从物理层面看，把任务从线程中分离出来就变得有意义，因为创建线程的代价很高昂。Java的线程机制是基于C的<strong>pthread</strong>机制，这种低级特性部分渗透到了Java的实现中，下面就是一个例子</p>
+<p>一个线程可以在其他线程上调用<strong>join()</strong>，其效果是等待一段时间直到第二个线程结束才继续执行，源码给出的注释是<code>Waits for this thread to die</code>,命名来源于posix标准，子线程join到主线程（启动程序的线程，比如c语言执行main函数的线程），阻塞线程仅仅是一个表现，而非目的。其目的是等待当前线程执行完毕后，”计算单元”与主线程汇合，即主线程与子线程汇合之意。对join()方法的调用可以被中断，做法是在调用线程上调用<code>interrupt()</code></p>
+<p>在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往先于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再执行并结束自己，这个时候就要用到<code>join()</code>方法</p>
+<p>由于线程本质特性，不能捕获从线程中逃逸的异常，一旦逃出任务的run()方法，就会向外传播到控制台，Java 1.5之后就可以用Executor解决这个问题。<code>Thread.UncaughtExceptionHandler</code>接口允许在Thread对象上都附着一个异常处理器，<code>Thread.UncaughtExceptionHandler.uncaughtException()</code>会在线程因未捕获的异常而临近死亡时被调用</p>
 <h1 id="终结任务"><a href="#终结任务" class="headerlink" title="终结任务"></a>终结任务</h1><h1 id="线程协作"><a href="#线程协作" class="headerlink" title="线程协作"></a>线程协作</h1><h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1>
       
     </div>
