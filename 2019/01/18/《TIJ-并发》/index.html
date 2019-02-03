@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-02T02:18:59.056Z">
+<meta property="og:updated_time" content="2019-02-03T09:40:53.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第21章 并发">
 <meta name="twitter:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
@@ -353,7 +353,7 @@
 <li>newSingleThreadExecutor：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行</li>
 </ul>
 <p>上面提到具有服务生命周期的ExecutorService指的是其具有shutdown()方法，可以防止新任务被提交到这个Executor。在所有类型的线程池中，现有线程都可能会被自动复用</p>
-<p>Java 1.5中引入的<strong>Callable</strong>接口是具有类型参数的泛型，它和Runnable接口的区别就在于完成任务时有返回值，而且必须使用<strong>ExecutorService.submit()</strong>方法来调用实现好的<strong>call()</strong>，submit()会返回一个<strong>Future</strong>对象，其代表了<strong>异步计算结果</strong>，并具有方法来获取<code>get()</code>、检查<code>isDone()</code>结果</p>
+<p>Java 1.5中引入的<strong>Callable</strong>接口是具有类型参数的泛型，它和Runnable接口的区别就在于完成任务时有<strong>返回值</strong>，而且必须使用<strong>ExecutorService.submit()</strong>方法来调用实现好的<strong>call()</strong>，submit()会返回一个<strong>Future</strong>对象，其代表了<strong>异步计算结果</strong>，并具有方法来获取<code>get()</code>、检查<code>isDone()</code>结果</p>
 <ul>
 <li><code>sleep()</code>可以使任务暂停指定时间单元</li>
 <li><code>getPriority() &amp; setPriority()</code>可以读取和修改现有线程的优先级，通常来说修改优先级都是种错误</li>
@@ -365,11 +365,13 @@
 <p>一个线程可以在其他线程上调用<strong>join()</strong>，其效果是等待一段时间直到第二个线程结束才继续执行，源码给出的注释是<code>Waits for this thread to die</code>,命名来源于posix标准，子线程join到主线程（启动程序的线程，比如c语言执行main函数的线程），阻塞线程仅仅是一个表现，而非目的。其目的是等待当前线程执行完毕后，”计算单元”与主线程汇合，即主线程与子线程汇合之意。对join()方法的调用可以被中断，做法是在调用线程上调用<code>interrupt()</code></p>
 <p>在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往先于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再执行并结束自己，这个时候就要用到<code>join()</code>方法</p>
 <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>由于线程本质特性，不能捕获从线程中逃逸的异常，一旦逃出任务的run()方法，就会向外传播到控制台，Java 1.5之后就可以用Executor解决这个问题。<code>Thread.UncaughtExceptionHandler</code>接口允许在Thread对象上都附着一个异常处理器，<code>Thread.UncaughtExceptionHandler.uncaughtException()</code>会在线程因未捕获的异常而临近死亡时被调用</p>
-<h2 id="共享资源"><a href="#共享资源" class="headerlink" title="共享资源"></a>共享资源</h2><p>一般解决并发模式中共享资源竞争问题，都是采取<strong>序列化访问共享资源</strong>的方案，这意味着在给定时刻只允许一个任务访问共享资源。Java提供<code>synchronized</code>，为防止资源冲突提供了<strong>内置支持</strong>，当任务执行被synchronized关键字保护的代码片段时，它将检查锁是否可用，然后获取锁，执行代码，释放锁。共享资源都会被包装到一个对象中，然后把所有要访问这个资源的方法都标记为<code>synchronized</code>，所有对象都会含有单一的<strong>锁</strong>（监视器），当在对象上调用任意标有synchronized的方法时，该对象就会上锁，其他调用该对象的方法都阻塞直到上一个方法释放锁</p>
+<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p>一般解决并发模式中共享资源竞争问题，都是采取<strong>序列化访问共享资源</strong>的方案，这意味着在给定时刻只允许一个任务访问共享资源。Java提供<code>synchronized</code>，为防止资源冲突提供了<strong>内置支持</strong>，当任务执行被synchronized关键字保护的代码片段时，它将检查锁是否可用，然后获取锁，执行代码，释放锁。共享资源都会被包装到一个对象中，然后把所有要访问这个资源的方法都标记为<code>synchronized</code>，所有对象都会含有单一的<strong>锁</strong>（监视器），当在对象上调用任意标有synchronized的方法时，该对象就会上锁，其他调用该对象的方法都阻塞直到上一个方法释放锁</p>
 <p>一个任务可以多次获得对象的锁，即如果一个方法在同一个对象上调用了第二个方法，后者又调用同一个对象的另一个方法。JVM会负责追逐对象被加锁的次数</p>
-<p>Brain<strong>同步规则</strong>：如果正在写一个常量，他可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，就要使用同步，并且要使用相同的锁</p>
 <p><code>java.util.concurrent.locks</code>提供了显式的互斥机制，Lock对象必须被显式的创建、锁定和释放。在使用这种方法时，要用到try-finally语句，这意味着有机会做任何清理工作，以维护系统使其处于良好状态</p>
-<p><strong>原子操作</strong>是不能被线程调度机制中断的操作，一旦操作开始，它一定可以在可能发生的<strong>上下文切换</strong>之前执行完毕</p>
+<p><strong>Brain同步规则</strong>：如果正在写一个常量，他可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，就要使用<strong>同步</strong>，并且要使用相同的锁</p>
+<h2 id="原子性与易变性"><a href="#原子性与易变性" class="headerlink" title="原子性与易变性"></a>原子性与易变性</h2><p><strong>原子操作</strong>是不能被线程调度机制中断的操作，一旦操作开始，它一定可以在可能发生的<strong>上下文切换</strong>之前执行完毕。不要为了避免同步而使用原子性</p>
+<p>JVM对于<code>long</code> <code>double</code>变量的读写和写入当做两个分离的32位操作来执行，这产生了在读取和写入操作中间发生上下文切换时，会导致不同的任务可以看到不正确结果，如果使用<code>volatile</code>关键字，就能获得原子性</p>
+<p>对于多核处理器系统来说，任务做出的修改对其他任务可能是<strong>不可视</strong>的（例如修改只是暂时保存在本地处理器的缓存中），<code>volatile</code>保证了修改的应用可视性，对volatile域的修改，其他读操作都能看到，<code>volatile</code>域会立即被写入主存中。一个会被多个任务访问的域，就应该是<code>volatile</code>，或者由同步来访问，因为同步也会导致向内存中刷新</p>
 <h1 id="终结任务"><a href="#终结任务" class="headerlink" title="终结任务"></a>终结任务</h1><h1 id="线程协作"><a href="#线程协作" class="headerlink" title="线程协作"></a>线程协作</h1><h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1>
       
     </div>
@@ -557,7 +559,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本线程机制"><span class="nav-number">1.</span> <span class="nav-text">基本线程机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#后台线程"><span class="nav-number">1.1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入线程"><span class="nav-number">1.2.</span> <span class="nav-text">加入线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number">1.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享资源"><span class="nav-number">1.4.</span> <span class="nav-text">共享资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终结任务"><span class="nav-number">2.</span> <span class="nav-text">终结任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程协作"><span class="nav-number">3.</span> <span class="nav-text">线程协作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁"><span class="nav-number">4.</span> <span class="nav-text">死锁</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本线程机制"><span class="nav-number">1.</span> <span class="nav-text">基本线程机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#后台线程"><span class="nav-number">1.1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入线程"><span class="nav-number">1.2.</span> <span class="nav-text">加入线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number">1.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">1.4.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性与易变性"><span class="nav-number">1.5.</span> <span class="nav-text">原子性与易变性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终结任务"><span class="nav-number">2.</span> <span class="nav-text">终结任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程协作"><span class="nav-number">3.</span> <span class="nav-text">线程协作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁"><span class="nav-number">4.</span> <span class="nav-text">死锁</span></a></li></ol></div>
             
 
           </div>
