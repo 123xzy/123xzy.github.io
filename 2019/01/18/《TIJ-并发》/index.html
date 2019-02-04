@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-03T09:40:53.932Z">
+<meta property="og:updated_time" content="2019-02-04T07:21:22.936Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第21章 并发">
 <meta name="twitter:description" content="本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习并发编程就像进入一个全新的领域">
@@ -372,6 +372,9 @@
 <h2 id="原子性与易变性"><a href="#原子性与易变性" class="headerlink" title="原子性与易变性"></a>原子性与易变性</h2><p><strong>原子操作</strong>是不能被线程调度机制中断的操作，一旦操作开始，它一定可以在可能发生的<strong>上下文切换</strong>之前执行完毕。不要为了避免同步而使用原子性</p>
 <p>JVM对于<code>long</code> <code>double</code>变量的读写和写入当做两个分离的32位操作来执行，这产生了在读取和写入操作中间发生上下文切换时，会导致不同的任务可以看到不正确结果，如果使用<code>volatile</code>关键字，就能获得原子性</p>
 <p>对于多核处理器系统来说，任务做出的修改对其他任务可能是<strong>不可视</strong>的（例如修改只是暂时保存在本地处理器的缓存中），<code>volatile</code>保证了修改的应用可视性，对volatile域的修改，其他读操作都能看到，<code>volatile</code>域会立即被写入主存中。一个会被多个任务访问的域，就应该是<code>volatile</code>，或者由同步来访问，因为同步也会导致向内存中刷新</p>
+<p>原子性和易变性是不同的概念，在Java中自增和自加都不是原子性的？？</p>
+<p>临界区（同步控制块）：防止多个线程同时访问方法内部的部分代码而不是防止访问整个方法，这种方法可以使多个任务访问对象的时候性能得到显著提高</p>
+<p>防止共享资源冲突的第二种方法是<strong>根除对变量的共享</strong>，<strong>线程本地存储</strong>是一种自动化机制，可以为使用相同变量的每个不同的线程都创建不同的存储，这使得状态和线程关联起来</p>
 <h1 id="终结任务"><a href="#终结任务" class="headerlink" title="终结任务"></a>终结任务</h1><h1 id="线程协作"><a href="#线程协作" class="headerlink" title="线程协作"></a>线程协作</h1><h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1>
       
     </div>
