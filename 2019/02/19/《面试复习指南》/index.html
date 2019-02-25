@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="面试题集合">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-20T13:38:32.188Z">
+<meta property="og:updated_time" content="2019-02-25T04:07:39.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《面试复习指南》">
 <meta name="twitter:description" content="面试题集合">
@@ -724,6 +724,94 @@
 <p>7</p>
 <p>推荐书籍</p>
 <p>《深入理解 Java 虚拟机》<br>《Effective Java》<br>《深入分析 Java Web 技术内幕》<br>《大型网站技术架构》<br>《代码整洁之道》<br>《架构整洁之道》<br>《Head First 设计模式》<br>《maven 实战》<br>《区块链原理、设计与应用》<br>《Java 并发编程实战》<br>《鸟哥的 Linux 私房菜》<br>《从Paxos 到 Zookeeper》<br>《架构即未来》</p>
+<p>基于BIO实现的Server端，当建立了100个连接时，会有多少个线程？如果基于NIO，又会是多少个线程？ 为什么？</p>
+<p>通常来说基于NIO实现的Server端，会用多少个线程去处理IO事件，为什么？</p>
+<p>一个典型的客户端集群-&gt;LB-&gt;服务端集群这样的结构中，如客户端采用连接池，长连接的方式，这种设计你觉得可能会出现什么问题？如果客户端采用的是单个长连接的方式呢？如果有问题，你觉得应该怎么解决？</p>
+<p>cglib和Java的动态代理相比，具体有什么不同？</p>
+<p>在基于Netty实现FrameDecoder时，下面两种代码的表现会有什么不同？</p>
+<p>第一种</p>
+<p>private void callDecode(…) {</p>
+<pre><code>  List&lt;Object&gt; results = new ArrayList&lt;Object&gt;();
+
+  while (cumulation.readable()) {
+
+        int oldReaderIndex = cumulation.readerIndex();
+
+        Object frame = decode(context, channel, cumulation);
+
+        if (frame == null) {
+
+             if (oldReaderIndex == cumulation.readerIndex())
+
+                   break;
+
+             else
+
+                  continue;
+
+       }
+
+      else if (oldReaderIndex == cumulation.readerIndex()) {
+
+             throw new IllegalStateException( &quot;.....&quot;);
+
+       }
+
+       results.add(frame);
+
+}
+
+if(results.size() &gt; 0)
+
+    fireMessageReceived(context, remoteAddress, results);
+</code></pre><p>}</p>
+<p>第二种</p>
+<p>private void callDecode(…) {</p>
+<pre><code>int oldReaderIndex = cumulation.readerIndex();
+
+Object frame = decode(context, channel, cumulation);
+
+if (frame != null)
+
+       fireMessageReceived(context, remoteAddress, frame);
+</code></pre><p>}</p>
+<p>用Executors.newCachedThreadPool创建的线程池，在运行的过程中有可能产生的风险是？</p>
+<p>new ThreadPoolExecutor(10,100,10,TimeUnit.MILLISECONDS,new LinkedBlockingQueue(10));一个这样创建的线程池，当已经有10个任务在运行时，第11个任务提交到此线程池执行的时候会发生什么，为什么？</p>
+<p>实现一个自定义的ThreadFactory的作用通常是？</p>
+<p>除了用Object.wait和Object.notifyAll来实现线程间的交互外，你还会常用哪些来实现？</p>
+<p>为什么ConcurrentHashMap可以在高并发的情况下比HashMap更为高效？</p>
+<p>AtomicInteger、AtomicBoolean这些类之所以在高并发时高效，共同的原因是？</p>
+<p>请合理的使用Queue来实现一个高并发的生产/消费的场景，给些核心的代码片段。</p>
+<p>请实现让10个任务同时并发启动，给些代码片段。</p>
+<p>在Java程序运行阶段，可以用什么命令行工具来查看当前Java程序的一些启动参数值，例如Heap Size等。</p>
+<p>用什么命令行工具可以查看运行的Java程序的GC状况，请具体写出命令行格式。</p>
+<p>用什么工具，可以在Java程序运行的情况下跟踪某个方法的执行时间，请求参数信息等，并请解释下工具实现的原理。</p>
+<p>当一个Java程序接收请求，很长时间都没响应的话，通常你会怎么去排查这种问题？</p>
+<p>Java进程突然消失了，你会怎么去排查这种问题？</p>
+<p>以下这段代码思路，你觉得在运行时可能会产生的风险是，应该如何改进？</p>
+<p>public List<user> getUsers(String[] userIds){</user></p>
+<pre><code> // 从数据库查找符合userIds的user记录
+
+//  将返回的记录组装为User对象，放入List并返回
+</code></pre><p>}</p>
+<p>以下两种代码，在运行时有什么不同？为什么？</p>
+<p>第一种</p>
+<p>private static final boolean isLoggerDebugEnabled = log.isDebugEnabled();</p>
+<p>public void xx(User user){</p>
+<pre><code>if(isLoggerDebugEnabled){
+
+     log.debug(&quot;enter xx method, user id is: &quot; + user.getId());
+
+}
+</code></pre><p>}</p>
+<p>第二种</p>
+<p>public void xx(User user){</p>
+<pre><code>log.debug(&quot;enter xx method, user id is: &quot; + user.getId());
+</code></pre><p>}</p>
+<p>Java程序为什么通常在刚启动的时候会执行的比较慢，而处理了一些请求后会变快，AOT能带来什么帮助？</p>
+<p>Parallel GC、CMS GC、ZGC、Azul Pauseless GC最主要的不同是？背后的原理也请简单描述下？</p>
+<p>请写一段程序，让其运行时的表现为触发5次ygc，然后3次fgc，然后3次ygc，然后1次fgc，请给出代码以及启动参数。</p>
+<p>Go的Coroutine和Java的线程机制最主要的不同是？如果Java语言要透明的实现Coroutine，你觉得主要的难点是？</p>
 
       
     </div>
@@ -834,7 +922,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
