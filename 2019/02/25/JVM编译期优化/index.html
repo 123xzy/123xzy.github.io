@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="对效率的追求是程序员天生的坚定信仰">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-25T14:15:26.152Z">
+<meta property="og:updated_time" content="2019-02-26T13:52:30.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编译期优化">
 <meta name="twitter:description" content="对效率的追求是程序员天生的坚定信仰">
@@ -342,14 +342,21 @@
       
         <p>对效率的追求是程序员天生的坚定信仰<br><a id="more"></a></p>
 <hr>
-<p>编译期的前端（如Sun的<strong>Javac</strong>）把<code>*.java</code>文件转化成<code>*.class</code>文件，后端运行期编译期（JIT编译器，如HotSpot VM的C1、C2编译器）把字节码转化成机器码，静态提前编译器（GCJ）直接把<code>*.java</code>文件编译为本地机器代码</p>
+<p>编译期的<strong>前端</strong>（如Sun的<strong>Javac</strong>）把<code>*.java</code>文件转化成<code>*.class</code>文件，<strong>后端</strong>运行期编译器（JIT编译器，如HotSpot VM的C1、C2编译器）把字节码转化成机器码，静态提前编译器（GCJ）直接把<code>*.java</code>文件编译为本地机器代码，本文所讲的都是<strong>前端编译部分</strong></p>
 <p>Javac并没有优化措施，对性能的优化多集中在后端的即时编译器中，但Javac做了优化措施来改善程序员的编码风格和提高编码效率，许多新生<strong>Java“语法糖”</strong>，如泛型、内部类，是靠<strong>前端编译器</strong>实现的，而不是依赖虚拟机的底层改进，且本身就是由Java编写的，为分析源码提供便利。语言编译器竟然是由语言本身完成，称为<strong>自举</strong>，这似乎让自己有点明白了<a href="/2018/05/30/《计算机程序的构造和解释》/" title="《计算机程序的构造和解释》">《计算机程序的构造和解释》</a>中最后两章自制编译器，即最开始使用X语言（如Fortran）实现Y语言（如Pascal）的编译器，即解决鸡与蛋的问题，即使用其它语言构建出我们的第一版编译器，之后成熟以后，就可以完全使用已经生成好的编译器来编译出我们的新编译器</p>
 <p>编译过程大概分成三步</p>
 <ul>
 <li>解析与填充符号表：解析分为<strong>词法分析</strong>和<strong>语法分析</strong>，词法分析是将源代码的字符流转变为<strong>Token</strong>集合，Token指的是关键词、变量名、字面量、运算符等，词法分析由javac.parser.Scanner类完成；语法分析则根据Token序列构造抽象语法树，具体可参见<a href="/2019/02/25/《编译原理》/" title="《编译原理》">《编译原理》</a>，语法分析由javac.parser.Parser类完成，生成的抽象语法树由javac.tree.JCTree类表示</li>
 <li>插入式注解处理器的注解处理：编写<strong>注解处理器</strong>参见<a href="/2019/01/18/《TIJ-注解》/" title="第20章 注解">第20章 注解</a>，如果这些注解处理器在处理注解期间对语法树进行了修改，编译器将回到上一步骤重新处理，直到不再对语法树进行修改为止，每次循环成为一个Round</li>
-<li>分析和字节码生成</li>
+<li>分析和字节码生成：语法分析形成的抽象树能表示正确的源程序抽象，但不代表符合语言规定的语义，因此要进行<strong>语义分析</strong>，而语义分析必须限定在具体的语言和具体的上下文环境中</li>
 </ul>
+<p>Javac的语义分析过程分为<strong>标注检查</strong>和<strong>控制流分析</strong>两个步骤</p>
+<ul>
+<li>标注检查：变量是否已被申明过，变量与赋值之间的数据类型是否匹配等，除此之外，还有一个<strong>常量折叠</strong>步骤，比如<code>int a = 1 + 3</code>，在这个步骤之后，语法树上就会呈现出<code>int a = 3</code>，因此在运行期间并不会增加CPU指令，由javac.comp.Attr和javac.comp.Check类实现</li>
+<li>数据及控制流分析：程序局部变量再使用前是否有赋值、方法的每条路径是否都是有返回值、是否所有的受查异常都正确处理等，局部变量的final不变性是由编译器在编译期间保障，而不是在运行期，因为有无final得到的Class文件都是一样，由javac.comp.Flow实现？？？</li>
+</ul>
+<p><strong>语法糖</strong>对语言的功能并没有影响，但更方便程序员使用，增加程序的可读性，减少出错的可能性。Java是低糖语言，主要语法糖有泛型、变长参数、自动装箱/拆箱等，这些语法糖在编译期间会被还原为简单的基础语法结构，因为JVM并不支持这些语法，由javac.comp.TransTypes类和javac.comp.Lower类完成</p>
+<p>最后一个阶段是<strong>字节码生成</strong>，这个阶段把前面步骤产生的信息转化为字节码写入到磁盘中，除此之外，编译器还进行了少量的代码添加和转换工作，由javac.jvm.Gen类实现，实例构造器<code>&lt;init&gt;()</code>方法和类构造器<code>&lt;clinit&gt;()</code>方法就是在这个阶段添加到语法树之中的（这里的实例构造器并不是指默认的构造函数，而是指我们自己重载的构造函数，如果用户代码中没有提供任何构造函数，那编译器会自动添加一个没有参数、访问权限与当前类一致的默认构造函数，这个工作在填充符号表阶段就已经完成了）？？？把字符串的加操作替换为StringBuffer或StringBuilder的append()就是在这个步骤完成</p>
 
       
     </div>
@@ -391,6 +398,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/26/CSAPP-第四章/" rel="prev" title="第四章：处理器体系结构">
+                第四章：处理器体系结构 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -458,7 +469,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">164</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -471,7 +482,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
