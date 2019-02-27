@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CSAPP,LAB," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="实现一个多线程带缓存的代理服务器！">
+<meta name="keywords" content="CSAPP,LAB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web proxy">
 <meta property="og:url" content="http://yoursite.com/2018/05/23/lab-webproxy/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="实现一个多线程带缓存的代理服务器！">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-23T12:10:48.833Z">
+<meta property="og:updated_time" content="2019-02-27T08:35:27.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web proxy">
+<meta name="twitter:description" content="实现一个多线程带缓存的代理服务器！">
 
 
 
@@ -336,7 +340,15 @@
       
 
       
-        
+        <p>实现一个多线程带缓存的代理服务器！<br><a id="more"></a></p>
+<hr>
+<p>这次的作业主要分三个部分</p>
+<ul>
+<li>Sequential Proxy: 接收客户端发送的 HTTP 请求，解析之后向目标服务器转发，获得响应之后再转发回客户端</li>
+<li>Concurrent Proxy: 在第一步的基础上，支持多线程</li>
+<li>Cache Web Objects: 使用 LRU 缓存单独的对象，而不是整个页面</li>
+</ul>
+
       
     </div>
     
@@ -350,6 +362,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+          
+            <a href="/tags/LAB/" rel="tag"><i class="fa fa-tag"></i> LAB</a>
+          
+        </div>
       
 
       
@@ -440,7 +460,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">164</span>
+                  <span class="site-state-item-count">166</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -453,7 +473,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
