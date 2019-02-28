@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="成功的程序员总是关心其程序的性能">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-26T23:44:52.757Z">
+<meta property="og:updated_time" content="2019-02-28T05:15:30.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《计算机组成与设计硬件&#x2F;软件接口》">
 <meta name="twitter:description" content="成功的程序员总是关心其程序的性能">
@@ -342,6 +342,14 @@
       
         <p>成功的程序员总是关心其程序的性能<br><a id="more"></a></p>
 <hr>
+<p>之前一直不理解为什么副标题是硬件软件接口，这指的是啥？现在想想不就指令集体系嘛！什么是处理器？不就是通过指令集映射到硬件的那几张图嘛！那这本书对我们编写软件有什么帮助呢？</p>
+<p>现代计算机的特征是<strong>处理器的并行性和内存的层次性</strong>，程序员为了程序的能效，就需要了解<strong>代码之下的很多细节</strong>，这就需要增加对计算机组成的认知</p>
+<ul>
+<li>算法：决定了源码级语句的数量和IO操作数量</li>
+<li>编程语言、编译器、体系结构：决定了源码对应的计算机指令数量 对应第三章数据级并行，使用C的子字并行</li>
+<li>处理器、存储系统：决定指令的执行速度，对应第4、5章指令级并行，循环展开开发多指令发射和乱序执行硬件 存储器层次优化，使用阻塞cache</li>
+<li>硬件和操作系统：决定了IO操作可能的执行速度，线程级并行</li>
+</ul>
 <p>在过去与60年中，计算机设计者提出了8个伟大思想</p>
 <ul>
 <li><strong>面向摩尔定律设计</strong>：摩尔定律指出单芯片上的集成度每18-24个月翻一番，由于设计计算机需要几年时间，因此设计者必须预测其设计完成时的工艺水平</li>
@@ -463,7 +471,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">168</span>
+                  <span class="site-state-item-count">169</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

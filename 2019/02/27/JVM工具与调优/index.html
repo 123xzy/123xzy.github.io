@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="从实战角度了解JVM内存管理的世界">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-27T15:10:00.578Z">
+<meta property="og:updated_time" content="2019-02-28T01:42:23.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="命令行工具与参数调优">
 <meta name="twitter:description" content="从实战角度了解JVM内存管理的世界">
@@ -343,9 +343,24 @@
         <p>从实战角度了解JVM内存管理的世界<br><a id="more"></a></p>
 <hr>
 <p>运行日志、异常堆栈、GC日志、线程快照、堆转储快照都是我们定位系统信息的信息</p>
-<p>jdk/bin中“赠送”的应用程序具有很大的作用，这些命令行工具大多数是jdk/lib/tools.jar类库的包装，即这些工具都是tools类库用Java实现的，Windows下<code>Shift+右键</code>快速进入指定文件夹，下面讲解重要的命令行工具</p>
-<h1 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h1><p>JVM process status Tool，显示指定系统内所有的Hotpot虚拟机进程</p>
-<h1 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h1><p>JVM Statistics Monitoring Tool，收集虚拟机各方面的运行数据</p>
+<p>jdk/bin中“赠送”的应用程序具有很大的作用，这些命令行工具大多数是jdk/lib/tools.jar类库的包装，即这些工具都是tools类库用Java实现的，Windows下<code>Shift+右键</code>快速进入指定文件夹，下面概述重要的命令行工具，详情参见<a href="https://docs.oracle.com/en/java/javase/11/" target="_blank" rel="noopener">ORACLE文档</a></p>
+<h1 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h1><p>JVM process status Tool，显示指定系统内所有的Hotpot虚拟机进程，和Linux中<code>ps</code>类似，列出名称和进程唯一ID</p>
+<ul>
+<li><code>-q</code>：只输处ID，忽略名字</li>
+<li><code>-m</code>：输出进程启动时传递给main()的参数</li>
+<li><code>-l</code>：输出主类全名</li>
+<li><code>-v</code>：出书进行启动时的JVM参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Program Files\Java\jdk1.8.0_201\bin&gt; jps -l</span><br><span class="line">15680</span><br><span class="line">17508 org.jetbrains.jps.cmdline.Launcher</span><br><span class="line">18644 org.jetbrains.jps.cmdline.Launcher</span><br><span class="line">2980 jdk.jcmd/sun.tools.jps.Jps</span><br><span class="line">4408</span><br><span class="line">PS C:\Program Files\Java\jdk1.8.0_201\bin&gt; jps -q</span><br><span class="line">15680</span><br><span class="line">17508</span><br><span class="line">18644</span><br><span class="line">4408</span><br><span class="line">8812</span><br></pre></td></tr></table></figure>
+<h1 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h1><p>JVM Statistics Monitoring Tool，收集虚拟机的类装载、内存、垃圾收集、JIT编译等运行数据，<strong>命令格式</strong><code>jstat -option -id -interval -count</code>，<code>option</code>表示查询信息类型，<code>id</code>表示查询进程，<code>interval</code>表示查询间隔，<code>count</code>表示查询次数</p>
+<ul>
+<li><code>-class</code>：监视类装载、卸载数量和字节数以及所花费的时间</li>
+<li><code>-gc</code>：监视<strong>堆状况</strong>，包括Eden区、两个survivor区，老年代、永久代等容量、已用空间、GC时间合计等</li>
+<li><code>-gcnew</code>：新生代GC状况</li>
+<li><code>-gcold</code>：老年代GC状态</li>
+<li><code>-compiler</code>：输出JIT编译过的方法、耗时等信息</li>
+<li><code>-printcompilation</code>:输出编译过的方法名称</li>
+</ul>
 <h1 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h1><p>Configuration Info For Java，显示JVM配置信息</p>
 <h1 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h1><p>Memory Map for Java，生成JVM内存转储快照</p>
 <h1 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h1><p>JVM Heap Dump Browser，用于分析上面生成的快照，可在浏览器查看</p>
@@ -391,6 +406,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/28/JVM运行期优化/" rel="prev" title="JVM运行期优化">
+                JVM运行期优化 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -467,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">168</span>
+                  <span class="site-state-item-count">169</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

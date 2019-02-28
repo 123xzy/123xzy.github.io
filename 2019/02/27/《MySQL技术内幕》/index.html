@@ -79,15 +79,20 @@
 
 
 
+<meta name="description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
 <meta name="keywords" content="MySQL,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《MySQL技术内幕》">
 <meta property="og:url" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-27T05:00:14.000Z">
+<meta property="og:image" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/1.JPG">
+<meta property="og:updated_time" content="2019-02-28T12:35:36.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL技术内幕》">
+<meta name="twitter:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/1.JPG">
 
 
 
@@ -337,8 +342,25 @@
       
 
       
-        <a id="more"></a>
+        <p>本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制<br><a id="more"></a></p>
 <hr>
+<p>任何时候Why比What重要，只有真正理解内部实现原理、体系结构，才能更好地使用，这才是人类正确思考问题的原则</p>
+<p>MySQL由后台进程以及一个共享内存区组成，是<strong>单进程多线程架构</strong></p>
+<ul>
+<li>数据库：物理操作系统文件或其他形式文件类型的<strong>集合</strong>，依照某种数据模型组织起来并存放于二级存储器中的数据集合</li>
+<li>实例：数据库实例才是真正用于操作数据库文件，应用程序通过其和数据库打交道</li>
+</ul>
+<p>MySQL<strong>体系结构</strong><br><img src="/2019/02/27/《MySQL技术内幕》/1.JPG" alt="MySQL体系结构">从上往下，从左往右依次是</p>
+<ul>
+<li>管理服务和工具组件</li>
+<li>连接池组件</li>
+<li>SQL接口组件</li>
+<li>查询分析器组件</li>
+<li>优化器组件</li>
+<li>缓冲组件</li>
+<li><strong>插件式存储引擎</strong>：该特性是MySQL区别于其他数据库的重要特性；存储引擎是基于表的，而不是数据库</li>
+<li>物理文件</li>
+</ul>
 
       
     </div>
@@ -451,7 +473,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">168</span>
+                  <span class="site-state-item-count">169</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
