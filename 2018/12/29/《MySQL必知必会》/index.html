@@ -79,15 +79,18 @@
 
 
 
+<meta name="description" content="MySQL入门">
 <meta name="keywords" content="MySQL,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《MySQL必知必会》">
 <meta property="og:url" content="http://yoursite.com/2018/12/29/《MySQL必知必会》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="MySQL入门">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-27T04:58:03.343Z">
+<meta property="og:updated_time" content="2019-03-01T08:47:48.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL必知必会》">
+<meta name="twitter:description" content="MySQL入门">
 
 
 
@@ -337,7 +340,26 @@
       
 
       
-        
+        <p>MySQL入门<br><a id="more"></a></p>
+<hr>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>在单一操作中更新跨越<strong>多张表的数个行</strong>，该操作要么成功，要么失败，是数据库运行中的逻辑工作单位，其本质就是一系列操作，但操作的总和要满足ACID属性</p>
+<ul>
+<li>事务：一组SQL语句</li>
+<li>回退：撤销指定SQL语句的过程</li>
+<li>提交：将为存储的SQL语句结果写入数据库表</li>
+<li><p>保留点：事务处理设置的临时占位符，对其发布回退</p>
+</li>
+<li><p><code>START TRANSACTION</code>：标识事务的开始，事务处理只管理<code>INSERT</code>、<code>UPDATE</code>和<code>DELETE</code>命令，对于<code>DREATE</code>、<code>DROP</code>操作，即使执行回退，也不会撤销</p>
+</li>
+<li><code>ROLLBACK</code>：用于回退，只能在一个事务处理内使用，即在<code>START TRANSACTION</code>命令之后，执行<code>ROLLBACK</code>之后，事务自动关闭，更改隐含提交</li>
+<li><code>COMMIT</code>：一般的MySQL语句是<strong>隐含提交</strong>的，当在事务处理模块时，提交必须<strong>显式提交</strong>，使用<code>COMMIT</code>，且只在不出错的时候写出更改</li>
+<li><p><code>SAVEPOINT</code>：为了回退部分事务处理，可以在事务处理合适的位置放置占位符，回退时只需回退到某个占位符，这些占位符就称为<strong>保留点</strong>，保留点在事务处理完成后会自动释放，也可以显式释放<code>RELEASE SAVEPOINT</code>，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">START TRANSACTION</span><br><span class="line">...</span><br><span class="line">SAVEPOINT delete1;</span><br><span class="line">...</span><br><span class="line">ROLLBACK TO delete1;</span><br><span class="line">...</span><br><span class="line">COMMIT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>SET autocommit=0;</code>：默认是自动提交所有更改，设置该标志可以取消自动提交更改</p>
+</li>
+</ul>
+<h1 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a>安全管理</h1><h1 id="维护"><a href="#维护" class="headerlink" title="维护"></a>维护</h1>
       
     </div>
     
@@ -433,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -449,7 +480,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-count">173</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -462,7 +493,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -507,6 +538,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">2.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">3.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">4.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">5.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">7.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">8.</span> <span class="nav-text">维护</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

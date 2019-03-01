@@ -88,7 +88,7 @@
 <meta property="og:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/1.JPG">
-<meta property="og:updated_time" content="2019-02-28T12:35:36.534Z">
+<meta property="og:updated_time" content="2019-03-01T11:09:28.804Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL技术内幕》">
 <meta name="twitter:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
@@ -358,8 +358,19 @@
 <li>查询分析器组件</li>
 <li>优化器组件</li>
 <li>缓冲组件</li>
-<li><strong>插件式存储引擎</strong>：该特性是MySQL区别于其他数据库的重要特性；存储引擎是基于表的，而不是数据库</li>
+<li><strong>插件式存储引擎</strong>：该特性是MySQL区别于其他数据库的重要特性；存储引擎是基于表的，而不是数据库；用户可以自由选择存储引擎，甚至修改引擎，使其符合自己的需求</li>
 <li>物理文件</li>
+</ul>
+<p>存储引擎之间还是有很大区别，要根据需要选择合适的引擎，有些引擎支持事务，有些则不支持</p>
+<ul>
+<li>InnoDB：支持事务、行锁设计、支持外检、非锁定读，多版本并发控制，实现了SQL标准的四种隔离级别，插入缓冲，二次写，自适应哈希索引，预读</li>
+<li>MyISAM：不支持事务（并不是所有应用都需要事务）、表锁设计，支持全文索引，缓冲池只缓冲索引文件，而不缓冲数据文件</li>
+</ul>
+<p>连接数据库操作就是一个连接进程和MySQL数据库实例进行通信，本质上就是进程通信，常见的有管道、命名管道、命名子、TCP/IP、Unix域套接字等</p>
+<hr>
+<ul>
+<li><a href="/2019/03/01/InnoDB存储引擎/" title="InnoDB存储引擎">InnoDB存储引擎</a>
+</li>
 </ul>
 
       
@@ -473,7 +484,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-count">173</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -486,7 +497,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

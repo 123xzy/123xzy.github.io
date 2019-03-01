@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-27T14:25:40.576Z">
+<meta property="og:updated_time" content="2019-03-01T07:27:35.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -343,6 +343,7 @@
         <p>NoSQL = Not Only SQL<br><a id="more"></a></p>
 <hr>
 <p>关系型数据库和NoSQL并不矛盾，未来是<strong>混合持久化</strong>的趋势</p>
+<p>什么是<strong>关系型数据库</strong>？什么是<strong>非关系型数据库呢</strong>？<br>关系型数据库中存储的数据都是有一定的关系的，如一个库，一张表，存储了名字：张三；年龄：20；性别：男。这三个数据是有关系的，因为他们都是在描述同一个人。但是如果是Redis这种键值式数据库呢，只知道年龄20。至于这个年龄20是在说谁的年龄，Redis并不关心。如果是MongoDB这类的文档式数据库，名字、年龄、性别。这三个属性是一个整体。但是，每个人都必须要记录名字、年龄、性别。而第二个人，李四，假如他多了一个属性，爱好，那么整个表都需要加这个属性吗？MongoDB不需要，文档与文档之间没有必然的联系。也就是说，第一个人有3个属性，第二个人可以有4个属性</p>
 <p>关系型数据库的最大缺点就是<strong>impedance mismatch</strong>，关系模型把数据组织成table和row，或者说是relation和tuple，SQL操作的数据都是relation，但是relational tuple包含的值必须很简单，不能包含nested record或list，但是内存中的数据结构则没有这个限制，因此将内存中复杂一点的数据结构保存到磁盘时，就需要进行关系转换，也就发生了开头说的impedance mismatch，Spring框架集成的<strong>对象-关系映射框架</strong>（Hibernate、Mybatis）就是为了解决这个问题，而NoSQL或者说是从底层解决这个问题</p>
 <p>在Web服务交互中，可以使用嵌套记录以及列表等数据结构，这些数据通常放在XML或者JSON中</p>
 <p>互联网不断增加的规模，需要更多的计算资源来应对。一种方式是scale up，另一种是scale out，纵向扩展就需要更大的计算机，这样成本太高，因此选择横向扩展，通过多个计算机组成<strong>集群</strong>。但是关系数据库不是设计给集群用的，而且商用数据库都是按照单台服务器收费，成本高，因此需要寻找其他解决途径</p>
@@ -353,7 +354,15 @@
 <li>想采用一种更方便的数据交互方式来提高程序开发效率</li>
 </ul>
 <p>关系模型把存储模型分为元组（行），这是一种受限的数据结构，在NoSQL中，则使用更复杂的结构存放信息，称为<strong>聚合</strong>（aggregate）</p>
-<p>P39</p>
+<p><strong>聚合数据模型</strong>的特点就是把经常访问的数据放在一起（聚合在一块）； 这样带来的好处很明显，对于某个查询请求，能够在与数据库一次交互中将所有数据都取出来； 当然，以这种方式存储不可避免的会有重复，重复是为了更少的交互；聚合结构对某些交互有利，却阻碍另一些交互；不支持跨越多个聚合的ACID事务 </p>
+<p>下面的数据模型有点难理解，可以参考文章开头的实例：</p>
+<ul>
+<li>键值数据模型：聚合不透明，只包含一些没有多大意义的大块信息，这意味着聚合可以存储任意数据，只能通过键查找</li>
+<li>文档数据模型：可以看到结构，定义了允许的结构和数据类型，可以使用聚合中的字段查询，只获取一部分聚合</li>
+<li>列族模型：是两级聚合结构</li>
+</ul>
+<p>聚合是作为交互单元的数据集合，使数据库在集群上管理数据存储更加方便。当数据交互大多在同一聚合内执行时，选择面向聚合的数据库，否则选择聚合无知数据库</p>
+<p>P47</p>
 
       
     </div>
@@ -466,7 +475,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-count">173</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -479,7 +488,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
