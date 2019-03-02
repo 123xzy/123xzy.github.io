@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/27/JVM内存/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/27/JVM内存/3.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/27/JVM内存/2.jpg">
-<meta property="og:updated_time" content="2019-01-18T04:25:38.978Z">
+<meta property="og:updated_time" content="2019-03-02T11:06:39.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存分布">
 <meta name="twitter:description" content="把内存管理交给虚拟机，但不可依赖于虚拟机的内存管理机制，这就是学习虚拟机的原因之一">
@@ -353,7 +353,7 @@
 <li>对象内存布局</li>
 <li>对象访问定位</li>
 </ul>
-<p>虚拟机将<strong>内存划分</strong>为以下几个部分<br><img src="/2018/12/27/JVM内存/1.jpg" alt="内存划分"></p>
+<p>Java代码是要运行在虚拟机上的，而虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域，如下图，这些区域都有各自的用途。其中有些区域随着虚拟机进程的启动而存在，而有些区域则依赖用户线程的启动和结束而建立和销毁<img src="/2018/12/27/JVM内存/1.jpg" alt="内存划分"></p>
 <ul>
 <li>程序计数器（PC）：和计组中的概念一样，都是存放程序，或者说是进程要执行的下一条字节指令，每个线程都有自己私有的程序计数器</li>
 <li>栈：描述方法执行的内存模型，每个方法在执行的时候都会创建一个栈帧，用于存放局部变量表、操作数帧、动态链接、方法出口等信息，方法的开始结束对应于栈帧的入栈出栈</li>
@@ -486,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">177</span>
+                  <span class="site-state-item-count">180</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -499,7 +499,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

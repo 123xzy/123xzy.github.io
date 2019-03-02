@@ -82,15 +82,15 @@
 <meta name="description" content="追求性能的路上！">
 <meta name="keywords" content="Java,JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM运行期优化">
+<meta property="og:title" content="运行期优化">
 <meta property="og:url" content="http://yoursite.com/2019/02/28/JVM运行期优化/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="追求性能的路上！">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/02/28/JVM运行期优化/1.jpg">
-<meta property="og:updated_time" content="2019-03-01T04:08:00.324Z">
+<meta property="og:updated_time" content="2019-03-02T10:32:18.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM运行期优化">
+<meta name="twitter:title" content="运行期优化">
 <meta name="twitter:description" content="追求性能的路上！">
 <meta name="twitter:image" content="http://yoursite.com/2019/02/28/JVM运行期优化/1.jpg">
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>JVM运行期优化 | 阿谢的BLOG</title>
+  <title>运行期优化 | 阿谢的BLOG</title>
   
 
 
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JVM运行期优化</h1>
+          <h1 class="post-title" itemprop="name headline">运行期优化</h1>
         
 
         <div class="post-meta">
@@ -361,6 +361,7 @@
 <p>从图中看到，在方法执行期间，存在替换方法的可能性，我们称这个过称为栈上替换（OSR，On-Stack Replacement），OSR是一种在运行时替换正在运行的函数/方法的栈帧的技术。但它是手段，不是目的——是出于某种目的需要在运行时替换栈帧。使用OSR最常见的目的就是在一个函数/方法的执行过程中，在执行引擎的不同优化层级之间切换，可以是从低优化层级向高优化层级切换，也可以反过来。这也就隐含了一个假设——这个执行引擎有多个层级的优化</p>
 <p>方法计数器统计的并不是绝对次数，而是相对频率，因为计数器有一个<strong>热度衰减</strong>的机制，如果超过一段时间，次数就会减少一半，这个周期成为<strong>半衰周期</strong>，可以使用<code>-XX:UseCounterDecay</code>关闭热度衰减，<code>-XX:ConuterHalfLifeTime</code>设置半衰周期</p>
 <p>回边计数器则是统计一个方法中循环体代码执行的次数，在字节码中遇到控制流向后跳转的指令称为<strong>回边</strong>（类似于汇编中的loop)，回边计数器的目的就是为了触发OSR编译，回边计数器没有热度衰减，统计的就是绝对次数，而且当回边计数器溢出时，还会设置方法计数器的值也为溢出</p>
+<p>默认情况下，编译动作都是早后台进程中进行，但设置<code>-XX:-BackgroundCompilation</code>可以禁止后台编译，执行线程想虚拟机提交编译后将会一直等待，知道编译完成再开始执行</p>
 
       
     </div>
@@ -473,7 +474,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">177</span>
+                  <span class="site-state-item-count">180</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -486,7 +487,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
