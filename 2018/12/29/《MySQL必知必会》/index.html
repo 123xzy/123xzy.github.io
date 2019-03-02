@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MySQL入门">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-01T08:47:48.081Z">
+<meta property="og:updated_time" content="2019-03-02T15:13:23.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL必知必会》">
 <meta name="twitter:description" content="MySQL入门">
@@ -342,7 +342,27 @@
       
         <p>MySQL入门<br><a id="more"></a></p>
 <hr>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>在单一操作中更新跨越<strong>多张表的数个行</strong>，该操作要么成功，要么失败，是数据库运行中的逻辑工作单位，其本质就是一系列操作，但操作的总和要满足ACID属性</p>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><ul>
+<li>在学生表中拥有字段学生姓名，字段学生总数，每当添加一条学生信息时，学生的总数就必须同时更改</li>
+<li>在学生表中还会有学生姓名的缩写，学生住址等字段，添加学生信息时，往往需要检查电话、邮箱等格式是否正确</li>
+</ul>
+<p>上面的例子使用触发器完成时具有这样的特点，需要在表发生改变时，自动进行一些处理。MySQL在触发<code>DELETE</code> <code>INSERT</code> <code>UPDATE</code>语句时就会自动执行所设置的操作，其他SQL语句则不会激活触发器，是一种特殊的存储过程</p>
+<p><strong>创建触发器</strong>需要4条信息</p>
+<ul>
+<li>惟一的触发器名</li>
+<li>触发器关联的表</li>
+<li>触发器应该相应的活动（<code>DELETE</code> <code>INSERT</code> <code>UPDATE</code>）</li>
+<li>触发器何时执行（处理之前还是之后）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE</span><br><span class="line">    [DEFINER = &#123; user | CURRENT_USER &#125;]</span><br><span class="line">    TRIGGER trigger_name</span><br><span class="line">    trigger_time trigger_event</span><br><span class="line">    ON tbl_name FOR EACH ROW</span><br><span class="line">    trigger_body</span><br><span class="line"></span><br><span class="line">trigger_name：触发器的名称，不能与已经存在的触发器重复；</span><br><span class="line">trigger_time：&#123; BEFORE | AFTER &#125;，表示在事件之前或之后触发；</span><br><span class="line">trigger_event:：&#123; INSERT |UPDATE | DELETE &#125;，触发该触发器的具体事件；</span><br><span class="line">tbl_name：该触发器作用在tbl_name上；</span><br><span class="line">trigger_body：Boby中使用BEGIN、END可以执行多条SQL语句</span><br></pre></td></tr></table></figure>
+<p>例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE </span><br><span class="line">    TRIGGER newproduct </span><br><span class="line">    AFTER INSERT </span><br><span class="line">    ON products FOR EACH ROW </span><br><span class="line">    SELECT &apos;Product added&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>每个表每个事件只允许一个触发器，每个表最多支持6个触发器</p>
+<p><strong>删除触发器</strong>：<code>DROP TRIGGER newproduct</code></p>
+<p><strong>INSERT触发器</strong>：可以引用一个<code>NEW</code>虚拟表，访问被插入的行；而且在BEFORE INSERT触发器中，NEW表中的值也可以更新；对于AUTO_INCREMENT列，NEW在INSERT执行之前包含0，在执行之后包含新的自动生成值，例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE </span><br><span class="line">    TRIGGER neworder</span><br><span class="line">    AFTER INSERT </span><br><span class="line">    ON orders FOR EACH ROW </span><br><span class="line">    SELECT NEW.order_num;</span><br><span class="line"></span><br><span class="line">order_num由MySQL自动生成，当插入一个新订单时，触发器从NEW.order_num取得这个值并返回它</span><br></pre></td></tr></table></figure></p>
+<p><strong>DELETE</strong>触发器：可以引用<code>OLD</code>虚拟表，访问被删除的行；OLD的值全部都是只读的，不能更新；例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE </span><br><span class="line">    TRIGGER deleteorder</span><br><span class="line">    BEFORE DELETE</span><br><span class="line">    ON orders FOR EACH ROW </span><br><span class="line">    BEGIN</span><br><span class="line">        INSERT INTO archive_orders(order_num,order_data,order_id)</span><br><span class="line">        VALUES(OLD.order_num,OLD.order_data,OLD.order_id);</span><br><span class="line">    END;</span><br></pre></td></tr></table></figure></p>
+<p><strong>UPDATE</strong>触发器：既可以引用<code>OLD</code>，也可以引用<code>NEW</code>虚拟表；在BEFORE UPDATE触发器中，NEW的值可以被更新；OLD的值不能更新</p>
+<p>触发器能保证<strong>数据的一致性</strong>（大小写、格式等）；可以创建<strong>审计追踪</strong>，通过触发器把更改记录到另一个表</p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>在单一操作中更新跨越<strong>多张表的数个行</strong>，该操作要么成功，要么失败，是数据库运行中的逻辑工作单位，其本质就是一系列操作，但操作的总和要满足ACID属性</p>
 <ul>
 <li>事务：一组SQL语句</li>
 <li>回退：撤销指定SQL语句的过程</li>
