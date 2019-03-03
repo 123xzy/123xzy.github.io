@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="MySQL入门">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-02T15:13:23.491Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/29/《MySQL必知必会》/1.png">
+<meta property="og:updated_time" content="2019-03-03T09:29:12.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL必知必会》">
 <meta name="twitter:description" content="MySQL入门">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/29/《MySQL必知必会》/1.png">
 
 
 
@@ -342,7 +344,41 @@
       
         <p>MySQL入门<br><a id="more"></a></p>
 <hr>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><ul>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><p>视图是虚拟的表，只包含使用时动态检索数据的查询，不包含实际数据。就像正视图是物体从正面看的样子，视图就是原始表从某个角度看到的样子，而定义这个角度就是查询</p>
+<p>有了视图，客户就不用再操心访问的数据是基本数据还是派生数据，这就体现了这种封装方式的方便</p>
+<p>使用视图可以</p>
+<ul>
+<li>重用SQL语句</li>
+<li>在编写查询后，可以方便重用而不必知道他的基础查询细节</li>
+<li>使用表的组成部分而不是整个表</li>
+<li>保护数据，可以授予用户表的特定部分的访问权限而不是整个表的访问权限</li>
+<li>更改数据格式或表示，视图可以返回与底层表不同的的格式</li>
+</ul>
+<p>在创建和使用视图时也有一些常见规则和限制</p>
+<ul>
+<li>视图唯一命名</li>
+<li>视图数目没有限制</li>
+<li>创建视图需要访问权限</li>
+<li>视图可以嵌套</li>
+<li>视图不能索引，没有关联的触发器或默认值</li>
+</ul>
+<p><code>CREATE VIEW</code>：创建视图<br><code>SHOW CREATE VIEW viewname</code>：查看创建视图的语句<br><code>DROP VIEW viewname</code>：删除视图<br><code>CREATE OR REPLACE VIEW</code>：更新视图</p>
+<p>下面的例子就创建了vendorlocations视图，通过该视图可以重新格式化检索出的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW vendorlocations AS</span><br><span class="line">SELECT Concat(PTrim(vend_name),&apos;(&apos;,PTrim(vend_country),&apos;)&apos;)</span><br><span class="line">        AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br><span class="line"></span><br><span class="line">SELECT * </span><br><span class="line">FROM vendorlocations;</span><br></pre></td></tr></table></figure></p>
+<h1 id="联结表"><a href="#联结表" class="headerlink" title="联结表"></a>联结表</h1><p>联结是SQL中<strong>最强大</strong>的特性</p>
+<p>关系表的设计就是要保证把信息分解成多个表，一类数据一个表，各表通过某些常用的值（即<strong>关系</strong>）相关联</p>
+<p><strong>外键</strong>为某个表的一列，它包含另一个表的主键值，定义了两个表之间的关系</p>
+<p>通过联结，单条SELECT语句可以检索出存储在多个表中的数据。联结不是物理实体，而是MySQL根据需要建立，它<strong>存在于查询的执行</strong>当中</p>
+<p><strong>创建联结</strong>：vendors,products两个表通过WHERE子句正确联结，应该保证所有联结都有WHERE子句，下面距离的联结也成为<strong>等值联结</strong>或者<strong>内部联结</strong>，可以联结的表的数量没有限制，但是联结的表越多，查询性能下降越厉害<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name,prod_name,prod_price</span><br><span class="line">FROM vendors,products</span><br><span class="line">WHERE vendors.vend_id = products.vend_id</span><br><span class="line">ORDER BY vend_name,prod_name;</span><br></pre></td></tr></table></figure></p>
+<p>上面的例子也可以这么写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name,prod_name,prod_price</span><br><span class="line">FROM vendors INNER JOIN products</span><br><span class="line">ON vendors.vend_id = products.vend_id</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/12/29/《MySQL必知必会》/1.png" alt="SQL JOIN"></p>
+<h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><p>游标是一个存储在MySQL服务器上的数据库查询，是该语句检索出来的<strong>结果集</strong>，只能用于存储过程</p>
+<p>使用游标需要经过几个步骤：创建游标，打开游标，检索、关闭游标</p>
+<p><strong>创建游标</strong>：<code>DECLARE</code>，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">	DELCARE ordernumbers CURSOR</span><br><span class="line">	FOR</span><br><span class="line">	SELECT order_num FROM orders;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></p>
+<p><strong>打开游标</strong>：<code>OPEN CURSOR</code>，在处理OPEN语句时执行查询，检索出来的结果集用于浏览与滚动</p>
+<p><strong>关闭游标</strong>：<code>CLOSE CURSOR</code>，释放游标使用的所有内存与资源</p>
+<p><strong>使用游标数据</strong>：<code>FETCH</code>，访问结果集的每一行，指定检索什么数据，检索出来的数据存储在什么地方，还将自动移动到下一行</p>
+<p>在下面的例子中，使用FETCH不断检索order_num并写入到新表中，反复执行直到done为真，<code>DECLARE CONTINUE HANDLER FOR SQLSTATE &#39;02000&#39; SET done=1;</code>这条语句即是设置done为真，它指出状态码02000出现时（即没有找到）设置done为真<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE done BOOLEAN DEFAULT 0;</span><br><span class="line">    DECLARE o INT;</span><br><span class="line">    DECLARE t DECIMAL(8,2);</span><br><span class="line">	</span><br><span class="line">    DECLARE ordernumbers CURSOR</span><br><span class="line">    FOR</span><br><span class="line">    SELECT order_num FROM orders;</span><br><span class="line"></span><br><span class="line">    DECLARE CONTINUE HANDLER FOR SQLSTATE &apos;02000&apos; SET done=1;</span><br><span class="line"></span><br><span class="line">    CREATE TABLE IF NOT EXISTS ordertotals</span><br><span class="line">        (order_num INT,total DECIMAL(8,2));</span><br><span class="line"></span><br><span class="line">    OPEN ordernumbers;</span><br><span class="line"></span><br><span class="line">    REPEAT</span><br><span class="line">        FETCH ordernumbers INTO o;</span><br><span class="line"></span><br><span class="line">        CALL ordertotal(o,1,t);</span><br><span class="line"></span><br><span class="line">        INSERT INTO ordertotals(order_num,total)</span><br><span class="line">        VALUES(o,t);</span><br><span class="line"></span><br><span class="line">        UNTIL done END REPEAT;</span><br><span class="line"></span><br><span class="line">        CLOSE ordernumbers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></p>
+<h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><ul>
 <li>在学生表中拥有字段学生姓名，字段学生总数，每当添加一条学生信息时，学生的总数就必须同时更改</li>
 <li>在学生表中还会有学生姓名的缩写，学生住址等字段，添加学生信息时，往往需要检查电话、邮箱等格式是否正确</li>
 </ul>
@@ -568,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">2.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">3.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">4.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">5.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">7.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">8.</span> <span class="nav-text">维护</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联结表"><span class="nav-number">4.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">5.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">6.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">8.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">9.</span> <span class="nav-text">维护</span></a></li></ol></div>
             
 
           </div>

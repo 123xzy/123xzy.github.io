@@ -88,7 +88,7 @@
 <meta property="og:description" content="InnoDB：”in-no-db”">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/1.jpg">
-<meta property="og:updated_time" content="2019-03-01T08:48:29.404Z">
+<meta property="og:updated_time" content="2019-03-03T05:05:35.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎">
 <meta name="twitter:description" content="InnoDB：”in-no-db”">
@@ -354,7 +354,13 @@
 <li>InnoDB 1.2x：继承了上述版本的所有功能，增加了全文索引支持，在线索引添加</li>
 </ul>
 <p><strong>InnoDB体系结构</strong>：<img src="/2019/03/01/InnoDB存储引擎/1.jpg" alt="InnoDB体系结构"><br><strong>内存池</strong>就是很多块内存组成的大内存，负责维护缓存磁盘上的数据，重做日志缓冲，维护内部数据等<br><strong>后台线程</strong>负责刷新内存池的数据，保证缓存的是最新的数据；将内存数据刷新到磁盘中等</p>
-<p>前面说过InnoDB是一个单进程多线程的模型，后台不同的线程负责不同的任务</p>
+<h1 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h1><p>前面说过InnoDB是一个单进程多线程的模型，后台不同的线程负责不同的任务</p>
+<p><strong>Master Thread</strong>：非常核心的后台线程，负责将缓冲池中的数据异步刷新到硬盘中，保证数据一致性，包括脏页的刷新、合并插入、UNDO页的回收等</p>
+<p><strong>IO Thread</strong>：InnoDB引擎中大量使用AIO（异步IO）来处理IO请求。从InnoDB 1.0.X版本之后，read thread和write thread分别增到4个，除此之外还有insert buffer和log IO thread<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;innodb_%io_threads&apos;;</span><br><span class="line">+-------------------------+-------+</span><br><span class="line">| Variable_name           | Value |</span><br><span class="line">+-------------------------+-------+</span><br><span class="line">| innodb_read_io_threads  | 4     |</span><br><span class="line">| innodb_write_io_threads | 4     |</span><br><span class="line">+-------------------------+-------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p><code>SHOW ENGINE INNODB STATUS;</code>：可以查看IO thread状态</p>
+<p><strong>Purge Thread</strong>：清除、净化的意思，事务被提交后，<code>undolog</code>不再需要，因此需要Purge Thread回收<strong>undo页</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;innodb_purge_threads&apos;;</span><br><span class="line">+----------------------+-------+</span><br><span class="line">| Variable_name        | Value |</span><br><span class="line">+----------------------+-------+</span><br><span class="line">| innodb_purge_threads | 4     |</span><br><span class="line">+----------------------+-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure></p>
+<p><strong>Page Cleaner Thread</strong>：将脏页刷新操作放入单独的线程中完成</p>
+<h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><p>InnoDB存储引擎是基于磁盘的，由于CPU和磁盘速度之间的鸿沟，基于磁盘的DBMS通常需要<strong>缓冲池技术</strong>来提高性能</p>
 
       
     </div>
@@ -451,8 +457,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -525,6 +540,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台线程"><span class="nav-number">1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">2.</span> <span class="nav-text">内存</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
