@@ -88,7 +88,7 @@
 <meta property="og:description" content="MySQL入门">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/12/29/《MySQL必知必会》/1.png">
-<meta property="og:updated_time" content="2019-03-03T09:29:12.795Z">
+<meta property="og:updated_time" content="2019-03-03T14:25:27.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL必知必会》">
 <meta name="twitter:description" content="MySQL入门">
@@ -344,7 +344,20 @@
       
         <p>MySQL入门<br><a id="more"></a></p>
 <hr>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><p>视图是虚拟的表，只包含使用时动态检索数据的查询，不包含实际数据。就像正视图是物体从正面看的样子，视图就是原始表从某个角度看到的样子，而定义这个角度就是查询</p>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><p><code>LIKE</code>操作符指示MySQL后跟的搜索模式利用通配符而不是直接相等匹配</p>
+<p>最常见的通配符是<code>%</code>，表示任何字符出现任意次数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;h%eda&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>通配符可以位于搜索模式的任意位置，且搜索可以是区分大小写</p>
+<p>另一个通配符是<code>_</code>，与<code>%</code>用处一样，但是只匹配单个字符，不能多也不能少</p>
+<p>通配符虽然好用，但是不能过度使用，因为相比其他搜索花费时间更长</p>
+<h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><p>存储过程就是为以后的使用而保存的一条或多条MySQL语句的集合</p>
+<p>使用存储过程的好处就是<strong>简单、安全、高性能</strong>；但是编写存储过程比写SQL复杂，不一定含有创建存储过程的权限</p>
+<p><code>CALL processname(@parm1,@parm2);</code>：执行存储过程<br><code>CREATE PROCEDURE pro_name();</code>：创建存储过程<br><code>DROP PROCEDURE pro_name;</code>：删除存储过程<br>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE ordertotal(</span><br><span class="line">    IN onumber INT,</span><br><span class="line">    OUT ototal DECIMAL(8,2)</span><br><span class="line">)</span><br><span class="line">BEGIN</span><br><span class="line">    SELECT Sum(item_price*quantity)</span><br><span class="line">    FROM orderitems</span><br><span class="line">    WHERE order_num=onumber</span><br><span class="line">    INTO ototal;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>MySQL支持<code>IN</code>（传递给存储过程）、<code>OUT</code>（从存储过程中传出）和<code>INOUT</code>（对存储过程传入传出）类型的参数</p>
+<p>调用该存储过程需要输入变量，MySQL中变量都是以<code>@</code>开始，<code>CALL ordertotal(20005,@total);</code>，改调用语句不产生任何数据，要显示输出变量可以<code>SELECT @total;</code></p>
+<p>只有<strong>包含业务规则和智能处理</strong>时，才能发挥存储过程的真正威力</p>
+<p><code>SHOW CREATE  PROCEDURE pro_name;</code>：显示创建存储过程的语句<br><code>SHOW  PROCEDURE STATUS pro_name</code>：显示何时、由谁创建等详细信息</p>
+<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><p>视图是虚拟的表，只包含使用时动态检索数据的查询，不包含实际数据。就像正视图是物体从正面看的样子，视图就是原始表从某个角度看到的样子，而定义这个角度就是查询</p>
 <p>有了视图，客户就不用再操心访问的数据是基本数据还是派生数据，这就体现了这种封装方式的方便</p>
 <p>使用视图可以</p>
 <ul>
@@ -415,7 +428,26 @@
 <li><p><code>SET autocommit=0;</code>：默认是自动提交所有更改，设置该标志可以取消自动提交更改</p>
 </li>
 </ul>
-<h1 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a>安全管理</h1><h1 id="维护"><a href="#维护" class="headerlink" title="维护"></a>维护</h1>
+<h1 id="维护"><a href="#维护" class="headerlink" title="维护"></a>维护</h1><p>有多种方式可以实现数据备份</p>
+<ul>
+<li>使用命令行工具<code>mysqldump</code>转储所有内容到某个外部文件</li>
+<li>使用命令行工具<code>mysqlhotcopy</code>从一个数据库复制所有数据</li>
+<li><code>BACKUP TABLE file_name</code>或者<code>SELECT INTO OUTFILE file_name</code>SQL语句来转储所有数据到某个外部文件</li>
+</ul>
+<p>MySQL提供一些语句来保证数据库正确运行</p>
+<ul>
+<li><code>ANALYZE TABLE</code>：检查表键是否正确</li>
+<li><code>CHECK TABLE</code>：针对许多问题对表进行检查</li>
+</ul>
+<p>多数MySQL服务器是作为系统进程或服务自动启动的，在派出系统启动问题时，要学会使用命令行工具，<code>mysqld</code>用于启动执行</p>
+<p>查看日志也很重要</p>
+<ul>
+<li>错误日志：包含启动和关闭问题以及关键错误的细节，位于data目录下，名称为<code>hostname.err</code>，日志名可以通过<code>--log-error</code>命令行选项修改</li>
+<li>查询日志：记录所有MySQL活动，名称为<code>hostname.log</code>，可通过<code>--log</code>修改</li>
+<li>二进制日志：记录更新过数据或者可能更新过数据的所有语句</li>
+<li>缓慢查询日志：记录执行缓慢的任何查询，在确定优化时很有用</li>
+</ul>
+<h1 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a>安全管理</h1>
       
     </div>
     
@@ -604,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联结表"><span class="nav-number">4.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">5.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">6.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">8.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">9.</span> <span class="nav-text">维护</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">1.1.</span> <span class="nav-text">通配符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联结表"><span class="nav-number">4.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">5.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">6.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">8.</span> <span class="nav-text">维护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">9.</span> <span class="nav-text">安全管理</span></a></li></ol></div>
             
 
           </div>
