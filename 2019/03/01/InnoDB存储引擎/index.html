@@ -88,7 +88,7 @@
 <meta property="og:description" content="InnoDB：”in-no-db”">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/1.jpg">
-<meta property="og:updated_time" content="2019-03-03T05:05:35.840Z">
+<meta property="og:updated_time" content="2019-03-04T04:14:26.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎">
 <meta name="twitter:description" content="InnoDB：”in-no-db”">
@@ -361,6 +361,11 @@
 <p><strong>Purge Thread</strong>：清除、净化的意思，事务被提交后，<code>undolog</code>不再需要，因此需要Purge Thread回收<strong>undo页</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;innodb_purge_threads&apos;;</span><br><span class="line">+----------------------+-------+</span><br><span class="line">| Variable_name        | Value |</span><br><span class="line">+----------------------+-------+</span><br><span class="line">| innodb_purge_threads | 4     |</span><br><span class="line">+----------------------+-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure></p>
 <p><strong>Page Cleaner Thread</strong>：将脏页刷新操作放入单独的线程中完成</p>
 <h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><p>InnoDB存储引擎是基于磁盘的，由于CPU和磁盘速度之间的鸿沟，基于磁盘的DBMS通常需要<strong>缓冲池技术</strong>来提高性能</p>
+<p>页从缓冲池刷新回磁盘的操作并不是每次页更新时触发，而是通过<code>Checkpoint</code>机制刷新磁盘。<code>SHOW VARIABLES LIKE &#39;innodb_buffer_pool_size&#39;;</code>来查看缓冲池大小</p>
+<p>缓冲池不只是缓存<strong>索引页和数据页</strong>，还包括<strong>undo页、插入缓冲、自适应哈希索引、InnoDB存储的锁信息、数据字典信息</strong>等</p>
+<p>缓冲池的数量也可以自由设定，每个页根据hash值平均分配到不同缓冲池实例中。这样的目的就是增加数据库的并发处理能力。<code>SHOW VARIABLES LIKE &#39;innodb_buffer_pool_instances&#39;;</code>查看缓冲池数量，也可以修改配置文件中的<code>innodb_buffer_pool_instances</code>大于1，以获取多个缓冲池实例</p>
+<p>InnoDB通过LRU（Latest Recent Used，最近你最少使用）算法来管理缓冲池。当缓冲池放不下新读取的页时，就会释放LRU列表尾端的页。但是新读取的页不是直接放入LRU列表的首部，而是<code>midpoint</code>，大约在列表5/8处，<code>SHOW VARIABLES LIKE &#39;innodb_old_blocks_pct&#39;;</code>查看midpoint值</p>
+<p>使用<code>midpoint</code>的原因：有些SQL操作，如索引或数据的扫描，这些操作会访问表中的很多页，这些页只在这次查询中有用，并不是活跃的热点数据，但是大量这种页如果放入首部，会使得所有页都被刷新出缓冲池</p>
 
       
     </div>

@@ -88,7 +88,7 @@
 <meta property="og:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/1.JPG">
-<meta property="og:updated_time" content="2019-03-01T11:09:28.804Z">
+<meta property="og:updated_time" content="2019-03-04T02:18:11.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL技术内幕》">
 <meta name="twitter:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
@@ -350,7 +350,7 @@
 <li>数据库：物理操作系统文件或其他形式文件类型的<strong>集合</strong>，依照某种数据模型组织起来并存放于二级存储器中的数据集合</li>
 <li>实例：数据库实例才是真正用于操作数据库文件，应用程序通过其和数据库打交道</li>
 </ul>
-<p>MySQL<strong>体系结构</strong><br><img src="/2019/02/27/《MySQL技术内幕》/1.JPG" alt="MySQL体系结构">从上往下，从左往右依次是</p>
+<h1 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h1><p><img src="/2019/02/27/《MySQL技术内幕》/1.JPG" alt="MySQL体系结构">从上往下，从左往右依次是</p>
 <ul>
 <li>管理服务和工具组件</li>
 <li>连接池组件</li>
@@ -367,8 +367,32 @@
 <li>MyISAM：不支持事务（并不是所有应用都需要事务）、表锁设计，支持全文索引，缓冲池只缓冲索引文件，而不缓冲数据文件</li>
 </ul>
 <p>连接数据库操作就是一个连接进程和MySQL数据库实例进行通信，本质上就是进程通信，常见的有管道、命名管道、命名子、TCP/IP、Unix域套接字等</p>
-<hr>
+<h1 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h1><p>存储引擎的源码都在<code>storage</code>文件夹下，InnoDB的<strong>源码文件夹结构</strong>如下</p>
 <ul>
+<li>btr：B+树的实现</li>
+<li>buf：缓冲池的实现，包括LRU算法， FLUSH刷新算法</li>
+<li>dict：InnoDB中内存数据字典的实现</li>
+<li>dyn：InnoDB中动态数组的实现</li>
+<li>fil：InnoDB文件数据结构以及对文件的一些操作</li>
+<li>fsp：file space，对物理文件的管理，如页、区、段等</li>
+<li>ha：哈希算法的实现</li>
+<li>handler：插件式存储引起的实现</li>
+<li>ibuf：插入缓冲的实现</li>
+<li>include：头文件</li>
+<li>lock：如S锁、X锁的实现以及定义锁额度一系列算法</li>
+<li>log：日志缓冲和重组日志文件的实现</li>
+<li>mem：辅助缓冲池的实现，用来申请一些数据结构的内存</li>
+<li>mtr：事务的底层实现</li>
+<li>os：封装对OS的操作</li>
+<li>page：页的实现</li>
+<li>row：各种类型行数据的操作</li>
+<li>srv：参数的设计</li>
+<li>sync：互斥量的实现</li>
+<li>thr：封装的可移植的线程库</li>
+<li>trx：事务的实现</li>
+<li>ut：工具类</li>
+</ul>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
 <li><a href="/2019/03/01/InnoDB存储引擎/" title="InnoDB存储引擎">InnoDB存储引擎</a>
 </li>
 </ul>
@@ -468,8 +492,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -542,6 +575,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#体系结构"><span class="nav-number">1.</span> <span class="nav-text">体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码结构"><span class="nav-number">2.</span> <span class="nav-text">源码结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">3.</span> <span class="nav-text">目录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
