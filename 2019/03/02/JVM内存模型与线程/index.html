@@ -88,7 +88,10 @@
 <meta property="og:description" content="并发处理的广泛应用是使得Amdahl定律代替摩尔定律的根本原因，成为了压榨计算机的新武器。本章介绍JVM如何实现并发">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/02/JVM内存模型与线程/1.jpg">
-<meta property="og:updated_time" content="2019-03-04T04:27:31.618Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/02/JVM内存模型与线程/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/02/JVM内存模型与线程/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/02/JVM内存模型与线程/4.jpg">
+<meta property="og:updated_time" content="2019-03-05T08:59:06.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存模型与线程">
 <meta name="twitter:description" content="并发处理的广泛应用是使得Amdahl定律代替摩尔定律的根本原因，成为了压榨计算机的新武器。本章介绍JVM如何实现并发">
@@ -346,7 +349,7 @@
 <hr>
 <p>由于计算机的存储设备与处理器的运算速度有几个数量级的差距，因此现代计算机不得不加入高速缓存（<strong>Cache</strong>，二级缓存）来作为内存和处理器之间的缓冲</p>
 <p>在多处理器系统中，每个处理器都有自己的高速缓存，这就引入新的问题：<strong>缓存一致性</strong>，因此处理器访问缓存时需要遵循一些协议。JVM内部的虚拟机缓存操作和硬件的模型具有很高的可比性<img src="/2019/03/02/JVM内存模型与线程/1.jpg" alt="内存模型"></p>
-<p>Java虚拟机规范中定义的<strong>Java内存模型</strong>（Java Memory Model，<strong>JMM</strong>）来屏蔽各种硬件和操作系统的内存访问差异，而像C/C++直接使用物理硬件和操作系统的内存模型，这会因为不同平台上内存模型的差异而导致代码不能跨平台</p>
+<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>Java虚拟机规范中定义的<strong>Java内存模型</strong>（Java Memory Model，<strong>JMM</strong>）来屏蔽各种硬件和操作系统的内存访问差异，而像C/C++直接使用物理硬件和操作系统的内存模型，这会因为不同平台上内存模型的差异而导致代码不能跨平台</p>
 <p>在前面的关于JVM的内存结构的图中，我们可以看到，其中Java堆和方法区的区域是多个线程共享的数据区域。也就是说，多个线程可以操作保存在堆或者方法区中的同一个数据。这也就是我们常说的“Java的线程间通过共享内存进行通信”</p>
 <p>其实JMM并不像JVM内存结构一样是真实存在的。他只是一个抽象的概念。JMM是和多线程相关的，他描述了一组规则或规范，可以理解为在特定的操作协议下，对特定的内存或者高速缓存进行读写访问的过程抽象。那么，简单总结下，Java的多线程之间是通过共享内存进行通信的，而由于采用共享内存进行通信，在通信过程中会存在一系列如可见性、原子性、顺序性等问题，而JMM就是围绕着多线程通信以及与其相关的一系列特性而建立的模型。JMM定义了一些语法集，这些语法集映射到Java语言中就是volatile、synchronized等关键字</p>
 <p>JMM的目的是定义程序中各个变量（实例字段、静态字段等）的访问规则。JMM规定了所有变量都存储在<strong>主内存</strong>中，每条线程都有自己的<strong>工作内存</strong>（类似于上图中的Cache）</p>
@@ -393,6 +396,46 @@
 <li>线程T对变量V执行<code>store</code>之前必须执行<code>assign</code>，相反执行<code>assign</code>之前必须先执行<code>store</code>。这保证修改V之后都能立即同步到主内存</li>
 </ul>
 <p>JMM允许将没有<code>volatile</code>修饰的64位数据的读写操作分为两次32位的操作进行，这就可能读到半个变量的值。不过JVM几乎都会选择把64位读写作为原子操作，因此不需特意把64位数据申明为<code>volatile</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Java内存模型是围绕在并发过程中如何处理<strong>原子性</strong>、<strong>可见性</strong>、<strong>有序性</strong>而建立的</p>
+<ul>
+<li>原子性：read、load、assign、use、store、write操作保证了原子性变量操作，因此大致可认为基本数据类型都是具备原子性的，当遇到比基本数据类型更大的原子性保证时，还有lock、unlock保证，这反映到更高层次就是字节码指令<code>monitorenter</code>和<code>monitorexit</code>，进而反映到Java代码就是<code>synchronize</code>，因此在该关键字块之间的操作也具备原子性</li>
+<li>可见性：上面讲过<code>volatile</code>实现了可见性，普通变量和volatile变量的区别在于，volatile的特殊规则保证了新值立即同步到主内存中，以及每次使用前立即从主内存刷新，普通变量则不能保证这一点；除此之外，<code>synchronize</code>也能保证可见性，因为规则：对一个变量执行unlock之前，必须把变量同步回主内存中；<code>final</code>变量保证可见性的规则：final 常量无需同步,就能被其它线程正确访问</li>
+<li>有序性：Java有序性：如果在本线程内观察，所有操作都是有序的；但是如果从一个线程观察另一个线程，所有操作都是无序的。造成后半句的原因就是<code>指令重排序</code>和<code>工作内存与主内存同步延迟</code>。<code>volatile</code>本身包含禁止指令重排序的含义，<code>synchronize</code>则是：一个变量再同一时刻只允许一条线程对齐进行lock操作</li>
+</ul>
+<h2 id="先行发生原则"><a href="#先行发生原则" class="headerlink" title="先行发生原则"></a>先行发生原则</h2><p>该规则是判断数据是否存在竞争、线程是否安全的主要依据，依靠该原则和几条规则，就能解决并发环境下两个操作之间是否可能存在冲突的所有问题</p>
+<p>先行发生是JMM定义的两项操作之间的<strong>偏序关系</strong>，如果说操作A先行发生于操作B，就是说操作B发生之前，操作A产生的影响（修改内存中共享变量的值、发送了信息、调用了方法等）能被操作B观察到</p>
+<p>下面的规则是JMM天然存在的先行发生关系，如果两个操作之前的关系不在下面规则中，就没有顺序保障，虚拟机可以随意重排序</p>
+<ul>
+<li>程序次序规则：在一个线程内，按照程序控制流顺序，书写在前面的操作先行发生在书写后的操作</li>
+<li>管程锁定规则：一个unlock操作先行发生于后面对同一个锁的lock操作</li>
+<li><code>volatile</code>变量规则：对一个volatile变量的写操作先行发生于后面对这个变量的读操作</li>
+<li>线程启动规则：Thread对象的start()方法先行发生于线程的每个动作</li>
+<li>线程终止规则：线程所有操作都先行发生于此线程的终止检测</li>
+<li>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断事件的发生</li>
+<li>对象终结规则：一个对象初始化完成先行发生于它的finalize()方法的开始</li>
+<li>传递性：操作之间的先行关系存在传递关系</li>
+</ul>
+<p>时间先后顺序和先行发生原则之间没有关系，衡量并发安全问题的时候一切以先行发生原则为准</p>
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>线程是比进程更<strong>轻量级</strong>的<strong>调度执行单位</strong>，是CPU调度的基本单位。每个已经执行start()且未结束的java.lang.Thread类都是一个线程实例，该类的关键方法都是<code>Native</code>，这意味着这个方法没有使用或无法使用平台无关的手段实现</p>
+<p>实现线程有三种方法：使用<strong>内核线程</strong>实现、使用<strong>用户线程</strong>和使用<strong>用户线程加轻量级进程</strong>混合实现</p>
+<h2 id="内核线程"><a href="#内核线程" class="headerlink" title="内核线程"></a>内核线程</h2><p>Kernel-Level Thread（KLT）就是直接由Kernel支持的线程，由其完成线程切换，Kernel通过Scheduler对线程进行调度，并负责将线程的任务映射到各个处理器上</p>
+<p>一般应用程序不会直接使用内核线程，而是使用内核线程的一个高级接口：轻量级进程（Light Weight Process，LWP，即线程），这种轻量级进行和内核线程是<strong>一对一</strong>的线程模型<img src="/2019/03/02/JVM内存模型与线程/2.jpg" alt="内核线程一对一"></p>
+<p>这种实现方式由于是基于内核线程实现，各种线程操作都需要进行系统调用，而系统调用代价较高，需要在用户态和内核态切换，其次每个轻量级进程都要一个内核线程支持，因此就需要消耗内核资源，导致支持的进程数量有限</p>
+<h2 id="用户线程"><a href="#用户线程" class="headerlink" title="用户线程"></a>用户线程</h2><p>狭义上的用户线程完全建立在用户空间的线程库上，系统内核不能感知其存在。用户线程的建立、同步、销毁和调度完全在用户态上完成，不需要切换到内核态，因此消耗低，还支持规模更大的线程数量，这种模型成为<strong>一对多</strong>线程模型<img src="/2019/03/02/JVM内存模型与线程/3.jpg" alt="内核线程一对一"><br>这种模型的弊端就是所有线程操作都要用户程序自己处理，而且不能发挥多处理器的用处</p>
+<h2 id="用户-进程"><a href="#用户-进程" class="headerlink" title="用户+进程"></a>用户+进程</h2><p>在这种混合模式下，既存在用户线程，也存在轻量级进程，在这种模式下，用户线程和轻量级进程的数量比不一定，成为多对多线程模型。Unix系列的OS都提供N：M线程模型的实现</p>
+<h2 id="Java线程"><a href="#Java线程" class="headerlink" title="Java线程"></a>Java线程</h2><p>在JDK 1.2中，线程模型替换为基于OS原生线程模型来实现，因此OS支持怎样的线程模型，就决定了JVM的线程是怎么映射的</p>
+<p>对于Sun JDK来说，Windows版和Linux版都是使用一对一线程模型实现的</p>
+<p>线程调度是指系统为线程分配处理器使用权的过程，分为<strong>协同式线程调度</strong>和<strong>抢占式线程调度</strong>。协同式调度就是由线程本身控制，抢占式调度每个线程由系统来分配执行时间。具体可以参考OS文章</p>
+<p>我们可以通过设置线程优先级来建议系统给某些线程多分配一些时间。Java中就设置了10个优先级。但是Java的线程是通过映射到系统的原生线程上来实现的，最终调度依旧取决于OS，因此不见得从OS的优先级和Java优先级存在一一对应的关系</p>
+<p>Java定义了5种线程状态</p>
+<ul>
+<li>新建：创建后尚未启动的线程</li>
+<li>运行：此状态的线程有可能正在执行，有可能正在等待CPU分配时间</li>
+<li>无限期等待：不会被分配CPU执行时间，要等待被其他线程显示唤醒，没有设置Timeout的Object.wait()方法和Thread.join()方法、LockSupport.park()方法都会使线程入此状态</li>
+<li>限期等待：不会被分配CPU执行时间，但在一定时间后会被系统自动唤醒，如Thread.sleep()、设置Timeout的Object.wait()方法和Thread.join()方法、LockSupport.parkNanos()等</li>
+<li>阻塞：阻塞和等待状态的区别在于，阻塞状态在等待获取一个<strong>排他锁</strong>，这个事件将在另一个线程放弃这个锁的时候发生</li>
+</ul>
+<p><img src="/2019/03/02/JVM内存模型与线程/4.jpg" alt="线程状态转换"></p>
 
       
     </div>
@@ -489,8 +532,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -505,7 +557,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">190</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -518,7 +570,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -563,6 +615,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存模型"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#先行发生原则"><span class="nav-number">1.2.</span> <span class="nav-text">先行发生原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内核线程"><span class="nav-number">2.1.</span> <span class="nav-text">内核线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户线程"><span class="nav-number">2.2.</span> <span class="nav-text">用户线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户-进程"><span class="nav-number">2.3.</span> <span class="nav-text">用户+进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java线程"><span class="nav-number">2.4.</span> <span class="nav-text">Java线程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-03T09:40:05.753Z">
+<meta property="og:updated_time" content="2019-03-05T15:04:03.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -354,7 +354,7 @@
 <li>待处理的数据量很大，或对数据访问的效率要求很大，从而必须将数据放在集群上</li>
 <li>想采用一种更方便的数据交互方式来提高程序开发效率</li>
 </ul>
-<p>关系模型把存储模型分为元组（行），这是一种受限的数据结构，在NoSQL中，则使用更复杂的结构存放信息，称为<strong>聚合</strong>（aggregate）</p>
+<h1 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h1><p>关系模型把存储模型分为元组（行），这是一种受限的数据结构，在NoSQL中，则使用更复杂的结构存放信息，称为<strong>聚合</strong>（aggregate）</p>
 <p><strong>聚合数据模型</strong>的特点就是把经常访问的数据放在一起（聚合在一块）； 这样带来的好处很明显，对于某个查询请求，能够在与数据库一次交互中将所有数据都取出来； 当然，以这种方式存储不可避免的会有重复，重复是为了更少的交互；聚合结构对某些交互有利，却阻碍另一些交互；不支持跨越多个聚合的ACID事务 </p>
 <p>下面的数据模型有点难理解，可以参考文章开头的实例：</p>
 <ul>
@@ -371,7 +371,18 @@
 <p>虽然无模式代表了黑客向往的自由，但是总归是逃脱不了模式的魔爪。在编写数据操作代码时，总会存在<strong>隐含模式</strong>，对数据结构做出一系列的假设；此外无模式数据库感知不到模式，就无法通过模式来提升存储效率，也无法验证数据</p>
 <p>虽然NoSQL数据库没有视图，但是他可以预先计算查询操作的结果，并将其缓存起来，这就叫<strong>物化视图</strong>。和关系型数据库相比，NoSQL更需要这种视图，因为大多数应用程序都要处理某种与聚合结构不甚相关的查询操作</p>
 <p>构造物化视图有两种方式，一种是一旦基础数据有变动，就立即更新物化视图；另一种是可以定期通过批处理操作物化视图</p>
-<p>P59</p>
+<h1 id="分布式模型"><a href="#分布式模型" class="headerlink" title="分布式模型"></a>分布式模型</h1><p>面向聚合数据库非常适合横向扩展集群，而聚合此时成为了<strong>数据分布单元</strong></p>
+<h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><p>把数据的各个部分存放在不同的服务器中。在理想情况下，不同服务器会服务不同的用户，每个用户只要与一台服务器通信。为了达到这个理想情况，就需要要访问的数据都在一个节点上</p>
+<p>在节点的数据排布上，有几个性能相关的因素，一个就是地理位置，另一个是负载均衡</p>
+<p>NoSQL都提供了<strong>自动分片</strong>，让数据库自己负责把数据分布到各分片上，并且将数据访问请求引导至适当的分片上，而不是由应用程序来负责分片处理</p>
+<p>但是分片技术不能改善数据库的故障恢复能力，只要节点出错，该分片的数据就不能访问</p>
+<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>在该模型下，把数据复制到多个节点，其中一个叫<strong>主节点</strong>，负责存放权威数据和处理数据更新操作。其余节点就是从节点。复制操作就是让从节点和主节点同步</p>
+<p>主从复制最有助于提升数据访问性能。只要增加从节点，就能提高处理数据读取请求的能力。但是在写入操作时，由于受限于主节点处理更新能力，并不理想</p>
+<p>第二个好处就是<strong>读取操作的故障恢复能力</strong>。主节点出错，从节点依旧可以处理读取操作，但是只有恢复主节点或者指派另一个主节点，才能处理写入操作。主节点既可以手工指派，也可以自动选择</p>
+<p>当主节点处理所有读写操作的同时，从节点可以充当<code>Hot backup</code>（即时备份）。但是该机制依旧需要考虑<strong>数据不一致</strong>的情况</p>
+<p>实现读取故障恢复，还要确保应用程序分别沿着不同的路径发出读取请求和写入请求，这就需要那种分别使用不同的数据库连接来处理读取与写入请求的机制</p>
+<h2 id="对等复制"><a href="#对等复制" class="headerlink" title="对等复制"></a>对等复制</h2><p>主从复制模型提供的故障恢复能力只有从节点出错时才能体现，实际上，主节点依旧是系统的瓶颈和弱点，对等复制模型就能解决这个问题。在该模型下，所有节点地位相同，都可以接受写入和读取请求。但是该模型的最大问题依旧是<strong>数据不一致</strong></p>
+<p>P68</p>
 
       
     </div>
@@ -468,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -484,7 +504,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">190</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -497,7 +517,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -542,6 +562,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
