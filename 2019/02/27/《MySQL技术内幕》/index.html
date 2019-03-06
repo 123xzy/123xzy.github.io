@@ -88,7 +88,7 @@
 <meta property="og:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/02/27/《MySQL技术内幕》/1.JPG">
-<meta property="og:updated_time" content="2019-03-04T02:18:11.232Z">
+<meta property="og:updated_time" content="2019-03-06T07:24:18.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL技术内幕》">
 <meta name="twitter:description" content="本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制">
@@ -345,13 +345,10 @@
         <p>本书完整讲解InnoDB存储引擎的体系结构和工作原理，并结合InnoDB得到源代码讲解了它的内部实现机制<br><a id="more"></a></p>
 <hr>
 <p>任何时候Why比What重要，只有真正理解内部实现原理、体系结构，才能更好地使用，这才是人类正确思考问题的原则</p>
-<p>MySQL由后台进程以及一个共享内存区组成，是<strong>单进程多线程架构</strong></p>
+<h1 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h1><p>MySQL由后台进程以及一个共享内存区组成，是<strong>单进程多线程架构</strong></p>
 <ul>
 <li>数据库：物理操作系统文件或其他形式文件类型的<strong>集合</strong>，依照某种数据模型组织起来并存放于二级存储器中的数据集合</li>
-<li>实例：数据库实例才是真正用于操作数据库文件，应用程序通过其和数据库打交道</li>
-</ul>
-<h1 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h1><p><img src="/2019/02/27/《MySQL技术内幕》/1.JPG" alt="MySQL体系结构">从上往下，从左往右依次是</p>
-<ul>
+<li>实例：数据库实例才是真正用于操作数据库文件，应用程序通过其和数据库打交道<br><img src="/2019/02/27/《MySQL技术内幕》/1.JPG" alt="MySQL体系结构">从上往下，从左往右依次是</li>
 <li>管理服务和工具组件</li>
 <li>连接池组件</li>
 <li>SQL接口组件</li>
@@ -393,8 +390,8 @@
 <li>ut：工具类</li>
 </ul>
 <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
-<li><a href="/2019/03/01/InnoDB存储引擎/" title="InnoDB存储引擎">InnoDB存储引擎</a>
-</li>
+<li><a href="/2019/03/01/InnoDB存储引擎/" title="InnoDB存储引擎">InnoDB存储引擎</a></li>
+<li><a href="/2019/03/06/《索引与算法》/" title="索引与算法">索引与算法</a></li>
 </ul>
 
       
@@ -517,7 +514,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">190</span>
+                  <span class="site-state-item-count">192</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

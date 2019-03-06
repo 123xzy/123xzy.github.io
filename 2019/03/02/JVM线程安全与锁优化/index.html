@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="本章介绍JVM如何实现高效，和上一章对应">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-02T14:31:29.136Z">
+<meta property="og:updated_time" content="2019-03-06T14:00:47.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程安全与锁优化">
 <meta name="twitter:description" content="本章介绍JVM如何实现高效，和上一章对应">
@@ -343,10 +343,60 @@
         <p>本章介绍JVM如何实现高效，和上一章对应<br><a id="more"></a></p>
 <hr>
 <p><strong>线程安全</strong>：当多个线程访问一个对象时，如果不考虑这些线程在运行时环境下的调度和交替执行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获得正确的结果</p>
-<p>根据线程安全程序分为5类：</p>
+<h1 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h1><p>根据线程安全，数据分为5类：</p>
 <ul>
 <li>不可变：immutable 、final的基本类型变量或者对象的变量全部是final，如String、Integer、枚举类型和Number的部分子类（Long、Double）</li>
+<li>绝对线程安全：一个类要达到不管运行时环境如何，调用者都不需要任何额外的同步措施，才能称为绝对线程安全。但是Java API中标记自己是线程安全的类，其实都不是绝对的线程安全</li>
+<li>相对线程安全：这是我们通常意义上的线程安全，他需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做额外的保障措施，但在一些特定顺序的连续调用时，就需要额外的同步手段来保证安全，如Vector、HashTable、Collections的synchronizedCollection()方法包装的集合等</li>
+<li>线程兼容：对象本身不是线程安全的，但是可以通过正确使用同步手段来保证对象在并发环境中可以安全使用，Java API大部分类都是线程不安全的，如ArrayList和HashMap</li>
+<li>线程对立：无论是否采取同步措施，都无法在多线程环境下并发使用的代码</li>
 </ul>
+<p>线程安全既需要代码编写帮助，也需要JVM线程安全手段的帮助</p>
+<h2 id="互斥同步"><a href="#互斥同步" class="headerlink" title="互斥同步"></a>互斥同步</h2><p>同步就是多个线程并发访问共享数据时，保证共享数据在同一个时刻只被一个线程使用，而互斥是实现同步的一种手段。<strong>临界区、互斥量和信号量</strong>都是主要的互斥实现方式</p>
+<p>最基本的互斥同步手段就是<code>synchronize</code>，该关键词经过编译会在同步块的前后形成<code>monitorenter</code>和<code>monitorexit</code>两个字节码，这两个字节码需要一个reference类型的参数指明要锁定和解锁的对象。执行<code>monitorenter</code>时，会获取该对象的锁，并计数+1，执行<code>monitorexit</code>时，计数-1，并释放锁。如果获取锁失败，则当前线程要阻塞等待，直到锁被其他线程释放</p>
+<p><code>synchronize</code>同步块对于同一个线程是<strong>可重入的</strong>；而且同步块在已进入的线程执行完之前，会阻塞后面其他线程的进入。由于Java线程和OS原生线程一一对应，阻塞或者唤醒进程就需要OS从用户态切换到内核态，这需要很大的代价，因此对于简单得多同步块，使用<code>synchronize</code>就没有必要</p>
+<p>java.util.concurrent中的<strong>重入锁</strong>（ReentrantLock）也能实现同步，相比<code>synchronize</code>，它是表现为API层面的互斥锁，而synchronize表现为原生语法层面的互斥锁，除此之外，还有三项高级功能</p>
+<ul>
+<li>等待可中断：对持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，这对于执行时间非常长的同步块有帮助</li>
+<li>可实现公平锁：多个线程在等待同一个锁的时候，必须按照申请锁的时间顺序来一次获取锁</li>
+<li>锁绑定多个条件：一个ReentrantLock对象可以同时绑定多个Condition对象6</li>
+</ul>
+<h2 id="非阻塞同步"><a href="#非阻塞同步" class="headerlink" title="非阻塞同步"></a>非阻塞同步</h2><p>互斥同步因为进行线程阻塞和唤醒的所带来的性能问题，而称为<strong>阻塞同步</strong>。这次是一种悲观的并发策略，总是认为只要不去做正确的同步措施，就肯定会出现问题，无论共享数据是否出现竞争，都要进行加锁。随着硬件指令集的发展，有了另一种选择：<strong>基于冲突检测的乐观并发策略</strong>，就是先进行操作，如果没有竞争共享数据，那操作就成功了；如果出现竞争，就要采取其他补偿措施。这种策略不需要把线程挂起，因此称为<strong>非阻塞同步</strong></p>
+<p>这种策略需要操作和冲突检测都具备原子性，这就要硬件支持，一些看起来要多次操作的行为只要一条处理器指令就能完成</p>
+<ul>
+<li>测试并设置</li>
+<li>获取并增加</li>
+<li>交换</li>
+<li>比较并交换（CAS）</li>
+<li>加载链接/条件存储</li>
+</ul>
+<h2 id="无同步方案"><a href="#无同步方案" class="headerlink" title="无同步方案"></a>无同步方案</h2><p>如果一个方法本来就不涉及共享数据，这些代码天生就是线程安全的，如下面两类</p>
+<ul>
+<li>可重入代码：可以在代码执行的任何时刻中断它，转而去执行另一端代码，而在控制权返回后，原来的程序不会出现任何错误。这种代码不依赖存储在堆上的数据和公用的系统资源、用到的状态量都是由参数传入、不调用非可重入的方法。判断原则：该方法的返回结果可以预测，只要输入相同的数据，都能返回相同的结果</li>
+<li>线程本地存储：尝试把共享数据放在同一个线程中执行，让共享数据的可见范围限制在同一个线程之内，这样就不需要同步。如果希望每个线程单独拥有一个全局或静态变量，所有线程都可以使用它，但是在每个线程中是单独存储的，那么就需要使用线程本地存储？？</li>
+</ul>
+<h1 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h1><p>这些技术都是为了在线程之间更搞笑的共享数据，以及解决竞争问题</p>
+<h2 id="自旋锁和自适应自旋"><a href="#自旋锁和自适应自旋" class="headerlink" title="自旋锁和自适应自旋"></a>自旋锁和自适应自旋</h2><p>共享数据的锁定位置只会持续很短的时间，为了这段时间去挂起和恢复线程并不值得，因此可以让后面请求锁的那个线程等待一下，而不是挂起，看看持有锁的线程是否很快释放锁，为了让线程等待，只需要让线程执行一个<strong>忙循环</strong>（自旋）</p>
+<p>自旋等待不能代替阻塞，因为虽然自旋本身避免了线程切换的开销，但它是要占用CPU时间的，因此如果锁被占用的时间很长，自旋反而浪费处理器资源，所以自旋超过一定次数就会挂起线程，默认次数是10次</p>
+<p>自适应则意味着自旋的时间不再固定，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态决定</p>
+<h2 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h2><p>JIT在运行时，对一些代码要求同步，但是被检测到不可能存在共享数据竞争的锁，会进行消除。主要判定依据来源于逃逸分析的数据支持，如果判断一段代码中，堆上的所有数据都不会逃逸出去从而不会被其他线程访问到，就能当做栈上数据对待，认为是线程私有的</p>
+<h2 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h2><p>原则上，要将同步块的作用范围限制的尽量小，这样等待锁的线程就能尽快拿到锁。但是如果加锁操作出现在循环体中，那即使没有线程竞争，频繁进行互斥同步操作也会导致不必要的性能损耗，因此JVM会探测到这样的操作，将加锁同步的范围粗化到整个操作序列的外部</p>
+<h2 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h2><p>传统的锁机制称为重量级锁。轻量级锁的本意是在没有多线程竞争的前提下，减少传统的重量级锁的性能消耗</p>
+<p>在JVM中需要大量存储对象，存储时为了实现一些额外的功能，需要在对象中添加一些标记字段用于增强对象功能，这些标记字段组成了<strong>对象头</strong></p>
+<p><code>Mark Word</code>：这部分主要用来存储对象自身的运行时数据，如hashcode、gc分代年龄等。mark word的位长度为JVM的一个Word大小，也就是说32位JVM的Mark word为32位，64位JVM为64位，这是实现轻量级锁的偏向锁的关键</p>
+<p><code>class pointer</code>：这一部分用于存储对象的类型指针，该指针指向它的类元数据，JVM通过这个指针确定对象是哪个类的实例。该指针的位长度为JVM的一个字大小，即32位的JVM为32位，64位的JVM为64位</p>
+<p>如果对象是一个数组，那么对象头还需要有额外的空间用于存储数组的长度</p>
+<p><code>Mark Word</code>存储内容的含义</p>
+<ul>
+<li>对象哈希码、对象分布年龄：标志位<code>01</code>，未锁定</li>
+<li>指向锁记录的指针：标志位<code>00</code>，轻量级锁定</li>
+<li>指向重量级锁的指针：标志位<code>10</code>，重量级锁定</li>
+<li>偏向线程ID、偏向时间戳、对象分代年龄：标志位<code>01</code>，可偏向</li>
+<li>无：标志位<code>11</code>，GC标记</li>
+</ul>
+<p>？？？？</p>
+<p>轻量级锁能提升性能的依据：对于绝大部分的锁，在整个同步周期内都是不存在竞争的。如果没有竞争，轻量级锁使用CAS操作避免使用互斥量的开销</p>
+<h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><p>消除数据在无竞争情况下的同步原语，偏的意思就是这个锁会偏向于第一个获得它的线程，如果接下来的执行过程中，该锁没有被其他的线程获取，则持有偏向锁的线程将永远不需要进行同步</p>
 
       
     </div>
@@ -443,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -459,7 +518,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">190</span>
+                  <span class="site-state-item-count">192</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -517,6 +576,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全"><span class="nav-number">1.</span> <span class="nav-text">线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥同步"><span class="nav-number">1.1.</span> <span class="nav-text">互斥同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞同步"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无同步方案"><span class="nav-number">1.3.</span> <span class="nav-text">无同步方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#锁优化"><span class="nav-number">2.</span> <span class="nav-text">锁优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁和自适应自旋"><span class="nav-number">2.1.</span> <span class="nav-text">自旋锁和自适应自旋</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁消除"><span class="nav-number">2.2.</span> <span class="nav-text">锁消除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁粗化"><span class="nav-number">2.3.</span> <span class="nav-text">锁粗化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻量级锁"><span class="nav-number">2.4.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏向锁"><span class="nav-number">2.5.</span> <span class="nav-text">偏向锁</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

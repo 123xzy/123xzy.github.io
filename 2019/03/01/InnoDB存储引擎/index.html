@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/2.jpg">
-<meta property="og:updated_time" content="2019-03-05T12:56:51.579Z">
+<meta property="og:updated_time" content="2019-03-06T07:51:49.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎">
 <meta name="twitter:description" content="InnoDB：”in-no-db”">
@@ -391,7 +391,25 @@
 <li>重做日志缓冲区剩余空间小于1/2时</li>
 </ul>
 <h2 id="额外的内存池"><a href="#额外的内存池" class="headerlink" title="额外的内存池"></a>额外的内存池</h2><p>在InnoDB存储引擎中，对内存的管理是通过一种称为内存堆（heap）的方式进行的。在对一些数据结构本身分配内存时，需要从额外的内存池中申请，当该区域的内存不够时，会从缓冲池中申请。每个缓冲池中的帧缓冲（frame buffer）还有对应的缓冲控制对象（buffer control block），这些对象记录了诸如LRU、锁、等待等方面的信息，而这个对象的内存需要从额外内存池中申请</p>
-<h1 id="Checkpoint"><a href="#Checkpoint" class="headerlink" title="Checkpoint"></a>Checkpoint</h1>
+<h1 id="Checkpoint"><a href="#Checkpoint" class="headerlink" title="Checkpoint"></a>Checkpoint</h1><p>当前数据库都采取write ahead log策略，即当事务提交时，先写重做日志，在修改页</p>
+<p>Checkpoint技术为了解决以下问题</p>
+<ul>
+<li>缩短数据库的恢复时间，因为这样数据库只要对Checkpoint后的重做日志进行恢复</li>
+<li>缓冲池不够用时， 将脏页刷新到磁盘</li>
+<li>重做日志不可用时，刷新脏页。重做日志是循环使用，新的日志会覆盖旧的日志，因此当重做日志不够时，就要强制产生Checkpoint，将缓冲池的页至少刷新到当前重做日志的位置</li>
+</ul>
+<p><strong>LSN</strong>(Log sequence number)标记版本，每个页、重做日志、Checkpoint都有版本</p>
+<p>Checkpoint的困难之处在于如何决策每次刷新几页到磁盘，每次从哪里取脏页和什么时候出发Checkpoint</p>
+<p>Checkpoint分为<code>Sharp</code>、<code>Fuzzy</code> Checkpoint。Sharp将所有脏页刷新到磁盘，发生在数据库关闭的时候<br>Fuzzy发生在以下四个场景</p>
+<ul>
+<li>master thread checkpoint</li>
+<li>flush lru list </li>
+<li>async flush 保证重做日志的循环使用的可用性？？？</li>
+<li>dirty page too much </li>
+</ul>
+<h1 id="Master-thread"><a href="#Master-thread" class="headerlink" title="Master thread"></a>Master thread</h1><p>内部有多个loop组成：loop、backgroup loop、flush loop、suspend loop，Master Thread根据数据库运行状态在各个loop中切换</p>
+<h1 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h1><h2 id="插入缓冲"><a href="#插入缓冲" class="headerlink" title="插入缓冲"></a>插入缓冲</h2><p>Insert Buffer和数据页一样，也是物理页的一个组成部分</p>
+<h2 id="两次写"><a href="#两次写" class="headerlink" title="两次写"></a>两次写</h2><h2 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h2><h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><h2 id="刷新邻接页"><a href="#刷新邻接页" class="headerlink" title="刷新邻接页"></a>刷新邻接页</h2>
       
     </div>
     
@@ -512,7 +530,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">190</span>
+                  <span class="site-state-item-count">192</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -580,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台线程"><span class="nav-number">1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">2.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓冲池"><span class="nav-number">2.1.</span> <span class="nav-text">缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-number">2.2.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重做日志缓冲"><span class="nav-number">2.3.</span> <span class="nav-text">重做日志缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外的内存池"><span class="nav-number">2.4.</span> <span class="nav-text">额外的内存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Checkpoint"><span class="nav-number">3.</span> <span class="nav-text">Checkpoint</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台线程"><span class="nav-number">1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">2.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓冲池"><span class="nav-number">2.1.</span> <span class="nav-text">缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-number">2.2.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重做日志缓冲"><span class="nav-number">2.3.</span> <span class="nav-text">重做日志缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外的内存池"><span class="nav-number">2.4.</span> <span class="nav-text">额外的内存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Checkpoint"><span class="nav-number">3.</span> <span class="nav-text">Checkpoint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Master-thread"><span class="nav-number">4.</span> <span class="nav-text">Master thread</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB关键特性"><span class="nav-number">5.</span> <span class="nav-text">InnoDB关键特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入缓冲"><span class="nav-number">5.1.</span> <span class="nav-text">插入缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两次写"><span class="nav-number">5.2.</span> <span class="nav-text">两次写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自适应哈希索引"><span class="nav-number">5.3.</span> <span class="nav-text">自适应哈希索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步IO"><span class="nav-number">5.4.</span> <span class="nav-text">异步IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷新邻接页"><span class="nav-number">5.5.</span> <span class="nav-text">刷新邻接页</span></a></li></ol></li></ol></div>
             
 
           </div>
