@@ -89,7 +89,9 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/2.jpg">
-<meta property="og:updated_time" content="2019-03-06T07:51:49.966Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/InnoDB存储引擎/4.jpg">
+<meta property="og:updated_time" content="2019-03-07T14:21:46.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎">
 <meta name="twitter:description" content="InnoDB：”in-no-db”">
@@ -407,9 +409,56 @@
 <li>async flush 保证重做日志的循环使用的可用性？？？</li>
 <li>dirty page too much </li>
 </ul>
-<h1 id="Master-thread"><a href="#Master-thread" class="headerlink" title="Master thread"></a>Master thread</h1><p>内部有多个loop组成：loop、backgroup loop、flush loop、suspend loop，Master Thread根据数据库运行状态在各个loop中切换</p>
-<h1 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h1><h2 id="插入缓冲"><a href="#插入缓冲" class="headerlink" title="插入缓冲"></a>插入缓冲</h2><p>Insert Buffer和数据页一样，也是物理页的一个组成部分</p>
-<h2 id="两次写"><a href="#两次写" class="headerlink" title="两次写"></a>两次写</h2><h2 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h2><h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><h2 id="刷新邻接页"><a href="#刷新邻接页" class="headerlink" title="刷新邻接页"></a>刷新邻接页</h2>
+<h1 id="Master-thread？？？"><a href="#Master-thread？？？" class="headerlink" title="Master thread？？？"></a>Master thread？？？</h1><p>内部有多个loop组成：loop、backgroup loop、flush loop、suspend loop，Master Thread根据数据库运行状态在各个loop中切换</p>
+<h1 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h1><h2 id="插入缓冲"><a href="#插入缓冲" class="headerlink" title="插入缓冲"></a>插入缓冲</h2><p><strong>Insert Buffer</strong>和数据页一样，也是物理页的一个组成部分</p>
+<p>在插入操作时，数据页的存放主要还是按照<code>Primary Key</code>，但是对于非聚集索引叶子节点的插入则不是顺序的，这时需要<strong>离散</strong>访问非聚集索引页，由于<strong>随机读取</strong>（当存储器的消息被读取时，写入所需时间与数据位置无关）的存在导致插入操作性能下降，这主要是因为<strong>B+树的特性</strong>决定了非聚集索引插入的离散性</p>
+<p>B+树的叶节点是有序的。当它用于聚集索引的时候，叶节点本身既是索引又是真实值。当它用于非聚集索引的时候，叶节点仅仅是索引，索引的指针指向的才是真实值。由于此时索引是有序的，因此其指向通常是无序的，所以两个连续的索引值可能对应的真实值所在的行可能会离得很远。</p>
+<p>举个例子，一个表用整数id作为主键，且将主键当做聚集索引。此时再用表中的另一列age当做非聚集索引。由于表的行本身就是按主键排序的，因此age是无序的，所以age=10的行可能在第八行，而age=11的行却可能位于第三十行，差别很大。所以在插入的时候就无法做到连续的索引插入到连续的行中，而只能一条一条地定位和插入</p>
+<p>Insert Buffer对于非聚集索引的插入或者更新操作，不是每一次直接插入到索引页中。而是先判断插入的非聚集索引是否在缓冲池中，若存在，直接插入，若不在，先放入Insert Buffer对象中，再以一定的频率和情况进行Inser Buffer和辅助索引页子节点的<strong>merge</strong>操作，这时通常能将多个插入合并到一个操作中</p>
+<p>只有满足<strong>索引是辅助索引</strong>、<strong>索引不是唯一的</strong>，InnoDB才会使用Insert Buffer。辅助索引不能是惟一的，因为数据库不会去查找索引页来判断插入的记录的唯一性，如果去查找就会有离散读取的情况发生，Insert Buffer就失去了意义</p>
+<p>通过<code>SHOW ENGINE INNODB STATUS;</code>命令可以查看Insert Buffer信息，<code>merges</code>表示合并的次数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-------------------------------------</span><br><span class="line">INSERT BUFFER AND ADAPTIVE HASH INDEX</span><br><span class="line">-------------------------------------</span><br><span class="line">Ibuf: size 1, free list len 0, seg size 2, 0 merges</span><br><span class="line">merged operations:</span><br><span class="line"> insert 0, delete mark 0, delete 0</span><br><span class="line">discarded operations:</span><br><span class="line"> insert 0, delete mark 0, delete 0</span><br></pre></td></tr></table></figure></p>
+<p>在写密集情况下，插入缓存会占用过多的缓冲池内存，可以通过修改<code>IBUF_POOL_SIZE_PER_MAX_SIZE</code>对插入缓冲的大小进行控制，如果设置为3，则最大只能使用1/34</p>
+<p>现在引入了<code>Change Buffer</code>，InnoDB对INSERT、DELETE、UPDATE都能进行缓冲，分别是Insert Buffer、Delete Buffer、Purger Buffer。如上述代码中表示，<code>insert</code>表示Insert Buffer，<code>delete mark</code>表示Delete Buffer，<code>delete</code>表示Purge Buffer,<code>discarder operations</code>表示当Change Buffer发生merge时，表已经被删除，此时就无需在将记录合并</p>
+<p>Insert Buffer的数据结构就是一颗B+树，而且全局只有一棵，负责对所有表的辅助索引进行Insert Buffer</p>
+<p>此B+树的非叶节点存放search key，构造如下图<img src="/2019/03/01/InnoDB存储引擎/3.jpg" alt="Insert Buffer"></p>
+<p><strong>search key</strong>共九个字节，其中<code>space</code>表示待插入记录所在表的表空间<strong>id</strong>，每个表都有一个唯一的space id，<code>offset</code>表示页所在的偏移量，占用4字节</p>
+<p>当一个辅助索引要插入页（space，offset）时，如果这个页不在缓冲池中，那InnoDB先构造一个search key，接下来将这条记录插入Insert Buffer B+树的叶子节点中，上图第二行是叶子节点的结构，<code>metadata</code>占用4个字节，其中两个字节保存<code>IBUF_REC_OFFSET_COUNT</code>，该值用来记录每个记录进入Insert Buffer的顺序</p>
+<p>为了保证每次 Merge Insert Buffer页必须成功，还需要有一个特殊的页用来标记每个辅助索引页的可用空间，这个页的类型为<strong>Insert Buffer Bitmap</strong>。每个辅助索引页在Insert Buffer Bitmap占用4位，其中两位<code>IBUF_BITMAP_FREE</code>表示该辅助索引页的可用空间数量，例如<code>00</code>表示无可用空间，<code>01</code>表示剩余空间大于1/32页等等</p>
+<p>最后思考Merge Insert Buffer何时发生</p>
+<ul>
+<li>辅助索引页被读取到缓冲池：例如在执行正常的<code>SELECT</code>查询操作，这时需要检查Insert Buffer Bitmap，然后确认该辅助索引页是否有记录存放在Insert Buffer B+树中，若有则要进行合并</li>
+<li>Insert Buffer Bitmap页追踪到该辅助索引页已经没有可用空间</li>
+<li>Master Thread：在Master Thread中，执行merge操作的页数由<code>srv_innodb_io_capacity</code>的百分比决定要真正合并多少辅助索引页</li>
+</ul>
+<h2 id="两次写"><a href="#两次写" class="headerlink" title="两次写"></a>两次写</h2><p><code>doublewrite</code>带给InnoDB的是数据页的<strong>可靠性</strong></p>
+<p>当InnoDB正在写入某个页到表中，如果只写了一部分就发生宕机，这种情况就叫<strong>部分写失效</strong></p>
+<p>doublewrite就是在应用重做日志之前，用户需要一个页的副本，在写入失效发生时，先通过页的副本还原该页，在重新重做<br><img src="/2019/03/01/InnoDB存储引擎/4.jpg" alt="doublewrite"></p>
+<p>在对缓冲池的脏页进行刷新时，并不直接写磁盘，而是通过<code>memcpy</code>函数将脏页复制到内存中的<code>doublewrite buffer</code>，之后在通过doublewrite buffer分两次顺序写入共享表空间的物理磁盘上，然后马上调用<code>fsync</code>函数（系统调用fsync将所有已写入文件描述符fd的数据真正的写道磁盘或者其他下层设备上，Linux文件系统可以使数据在写入磁盘前先在内存中保留几秒，以此更高效率的处理磁盘I/O），同步磁盘。完成之后，再将doublewrite buffer中的页写入各个表空间文件中</p>
+<p>如果OS在将页写入磁盘的过程中发生崩溃，在恢复过程中，InnoDB存储引擎可以从共享表空间中的doublewrite中找到该页的一个 副本，将其复制到表空间文件，在应用重做日志</p>
+<h2 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h2><p>InnoDB会监控表上各索引页的查询，如果观察到建立哈希索引可以带来速度的提升，就会建立哈希索引，这就叫自适应哈希索引（Adaptive Hash Index，AHI），AHI根据缓冲池的B+树构造起来，InnoDB会自动根据访问的频率和模式自动为某些热点页建立哈希索引</p>
+<h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><p>用户可以发出一个IO请求之后立即再发出另一个IO请求，当全部IO请求发送完毕后，等待所有IO操作的完成，这就是<strong>AIO</strong>。和AIO对应的是Sync IO，即进行一次IO操作，需要等待此次操作结束才能继续接下来的操作</p>
+<p>AIO另一个优势是进行IO merge，也就是将多个IO合并为一个IO，例如用户需要访问连续的三个页，AIO会判断这三个页是连续的，因此AIO底层会发送一个IO请求，直接读取三个页</p>
+<p>InnoDB提供了内核级别的AIO支持，成为<strong>Native AIO</strong>，这需要<code>libaio</code>库支持</p>
+<p>在InnoDB中，read ahead方式的读取都是AIO，脏页的刷新，即磁盘的写入操作也是AIO</p>
+<h2 id="刷新邻接页"><a href="#刷新邻接页" class="headerlink" title="刷新邻接页"></a>刷新邻接页</h2><p>当刷新一个脏页时，InnoDB会检测该页所在区的所有页，如果是脏页，则一起刷新</p>
+<h1 id="启动、关闭和恢复"><a href="#启动、关闭和恢复" class="headerlink" title="启动、关闭和恢复"></a>启动、关闭和恢复</h1><p>在关闭时，参数<code>innodb_fast_shutdown</code>影响InnoDB的行为</p>
+<ul>
+<li>0：在关闭时，InnoDB需要完成所有full purge和merge insert buffer，并且将所有脏页刷新到磁盘中</li>
+<li>1：不需要完成上述的full purge和merge insert buffer，但是在缓冲池的一些数据脏页会是会刷新回磁盘</li>
+<li>2：不需要完成上述的full purge和merge insert buffer。也不将缓冲池的数据脏页写回，但是将日志都写入日志文件</li>
+</ul>
+<p>参数<code>innodb_force_recovery</code>影响了整个InnoDB存储引擎<strong>恢复</strong>的状态</p>
+<ul>
+<li>0：为默认值，代表当发生需要恢复时，进行所有的恢复操作，当不能有效恢复时，如数据页发生了corruption，MySQL就可能发生宕机，并把错误写入错误日志</li>
+<li>1：忽略检查到的corrupt页</li>
+<li>2：阻止Master Thread线程的运行</li>
+<li>3：不进行事务的回滚操作</li>
+<li>4：不进行插入缓冲的合并操作</li>
+<li>5：不查看撤销入职，InnoDB存储引擎会将未提交的事务视为已提交</li>
+<li>6：不进行回滚的操作</li>
+</ul>
+<p>当该参数设置大于0后，但是insert、update、delete这类DML操作是不允许的，只能进行select、create和drop</p>
+
       
     </div>
     
@@ -598,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台线程"><span class="nav-number">1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">2.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓冲池"><span class="nav-number">2.1.</span> <span class="nav-text">缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-number">2.2.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重做日志缓冲"><span class="nav-number">2.3.</span> <span class="nav-text">重做日志缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外的内存池"><span class="nav-number">2.4.</span> <span class="nav-text">额外的内存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Checkpoint"><span class="nav-number">3.</span> <span class="nav-text">Checkpoint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Master-thread"><span class="nav-number">4.</span> <span class="nav-text">Master thread</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB关键特性"><span class="nav-number">5.</span> <span class="nav-text">InnoDB关键特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入缓冲"><span class="nav-number">5.1.</span> <span class="nav-text">插入缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两次写"><span class="nav-number">5.2.</span> <span class="nav-text">两次写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自适应哈希索引"><span class="nav-number">5.3.</span> <span class="nav-text">自适应哈希索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步IO"><span class="nav-number">5.4.</span> <span class="nav-text">异步IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷新邻接页"><span class="nav-number">5.5.</span> <span class="nav-text">刷新邻接页</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后台线程"><span class="nav-number">1.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">2.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓冲池"><span class="nav-number">2.1.</span> <span class="nav-text">缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-number">2.2.</span> <span class="nav-text">LRU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重做日志缓冲"><span class="nav-number">2.3.</span> <span class="nav-text">重做日志缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外的内存池"><span class="nav-number">2.4.</span> <span class="nav-text">额外的内存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Checkpoint"><span class="nav-number">3.</span> <span class="nav-text">Checkpoint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Master-thread？？？"><span class="nav-number">4.</span> <span class="nav-text">Master thread？？？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB关键特性"><span class="nav-number">5.</span> <span class="nav-text">InnoDB关键特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入缓冲"><span class="nav-number">5.1.</span> <span class="nav-text">插入缓冲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两次写"><span class="nav-number">5.2.</span> <span class="nav-text">两次写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自适应哈希索引"><span class="nav-number">5.3.</span> <span class="nav-text">自适应哈希索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步IO"><span class="nav-number">5.4.</span> <span class="nav-text">异步IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷新邻接页"><span class="nav-number">5.5.</span> <span class="nav-text">刷新邻接页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动、关闭和恢复"><span class="nav-number">6.</span> <span class="nav-text">启动、关闭和恢复</span></a></li></ol></div>
             
 
           </div>
