@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述。一次大胆的尝试！">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT 6.828 book_xv6:Chapter 0">
+<meta property="og:url" content="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="概述。一次大胆的尝试！">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/2.JPG">
+<meta property="og:updated_time" content="2019-03-08T13:34:31.851Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 0">
+<meta name="twitter:description" content="概述。一次大胆的尝试！">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/"/>
+
+
+
+
+
+  <title>MIT 6.828 book_xv6:Chapter 0 | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/08/MIT-6-828-book-xv6-Chapter-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xzy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MIT 6.828 book_xv6:Chapter 0</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-08T16:04:46+08:00">
+                2019-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>概述。一次大胆的尝试！<br><a id="more"></a></p>
+<hr>
+<p>这本书要和<code>xv6</code>源码一起阅读</p>
+<h1 id="操作系统接口"><a href="#操作系统接口" class="headerlink" title="操作系统接口"></a>操作系统接口</h1><p>操作系统的任务是在多个程序之间共享计算机，并提供比硬件单独支持更有用的服务集合。操作系统管理和抽象低级硬件，因此像文字处理机就不需要考虑使用哪种类型的磁盘。它还支持多路复用硬件，允许程序间共享计算机（或近似于）并发运行。最后，操作系统提供了程序交互的受控方式，以便程序之间可以共享数据或者协同工作。</p>
+<p>OS通过接口向用户程序提供服务，而设计好的接口是很困难的。一方面，我们希望接口简单和紧凑（窄接口比较容易确保对某一特定点的关注。这点很像铺设自来水管道。管路最初阶段可能从需求和效率考虑需要大口径的，但要入户的时候就要转成小口径，译者注），因为这样更容易正确实现。 另一方面，我们倾向于向应用程序提供更多巧妙的功能。解决这种紧张关系的技巧是设计依赖提供更大的通用性的机制的接口。</p>
+<p>这本书使用一个简单OS作为具体示例来阐述OS相关概念。这个OS，即xv6，提供的简单接口，来自于Ken Thompson and Dennis Ritchie的Unix操作系统，并且模拟了Unix的内部设计。Unix的接口提供的窄接口，其机制很好的融合在了一起，提供了令人惊讶的通用性。这些接口很成功，以至于像BSD、Linux，Mac OS X、Solaris，甚至一部分Windows，都有类Unix接口。理解xv6是理解其他任何系统的良好开始。</p>
+<p>如图0-1所示，xv6采用了传统形式的内核，内核是为运行程序提供服务的特殊程序。每个运行程序（称为进程）的内存中都包含了指令、数据和栈。指令实现了程序的运算，数据则是运算所依赖的变量，栈则组织了程序的调用过程。<br><img src="/2019/03/08/MIT-6-828-book-xv6-Chapter-0/1.jpg" alt="图0-1"></p>
+<p>当进程需要调用内核服务时，将调用操作系统接口中的过程调用。这种过程称为系统调用。系统调用会陷入内核态，内核执行完服务并返回用户态。因此进程在用户空间和内核空间之间交替变换。</p>
+<p>内核使用CPU的硬件保护机制来确保在用户空间的每个进程只能访问自己的内存。内核在硬件特权上运行，因此需要实现这些保护；用户程序在执行时则没有这些特权。当用户程序调用系统调用时，硬件会提升权限级别，并开始执行在内核中预先写好的函数。</p>
+<p>内核提供的系统调用集合就是用户程序可见的接口。xv6内核提供了Unix内核传统提供的服务和系统调用的子集。图 0-2列出了xv6的所有系统调用。<br><img src="/2019/03/08/MIT-6-828-book-xv6-Chapter-0/2.JPG" alt="图0-2"></p>
+<p>本章其余部分概述了xv6的服务：进程、内存、文件描述、管道和文件系统，并通过代码段来说明shell如何使用它们。shell对系统调用的使用将说明系统调用设计的是多么精巧。</p>
+<p>shell是一个从用户读取命令并执行他们的普通程序，而且是传统类Unix的主要用户界面。shell只是一个用户程序，而不是内核的一部分，shell没有什么特别之处反倒说明了系统调用接口的力量。这也意味着shell很容易更换，因此现代Unix系统都有各种各样shell去选择，每种shell都有自己的界面和脚本功能。xv6的shell本质上就是Unix Bourne shell的简单实现。其实现源码从第8350行开始。</p>
+<h1 id="进程和内存"><a href="#进程和内存" class="headerlink" title="进程和内存"></a>进程和内存</h1><p>xv6进程由用户空间内存（指令、数据和栈）和内核的每个进程私有状态组成。xv6可以分时（<code>time-share</code>）处理进程，它透明地在等待执行的进程组之间切换，来分配可用的CPU。当进程未执行时，xv6会保存其CPU寄存器，并在下次运行时还原。内核将进程标识符（<code>pid</code>）和每个进程关联。</p>
+<p>进程可以使用<code>fork</code>系统调用来创建新的进程。<code>fork</code>创建的子进程（<code>chile process</code>）和调用进程（父进程，<code>parent process</code>）有着一样的内存信息。<code>fork</code>返回父进程和子进程中都返回，在父进程中返回子进程的pid，在子进程中则返回0。例如考虑下面这个程序片段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int pid = fork(); </span><br><span class="line">if(pid &gt; 0)&#123;</span><br><span class="line">	printf(&quot;parent: child=%d\n&quot;, pid); </span><br><span class="line">	pid = wait();</span><br><span class="line">	printf(&quot;child %d is done\n&quot;, pid);</span><br><span class="line">&#125; else if(pid == 0)</span><br><span class="line">&#123; </span><br><span class="line">	printf(&quot;child: exiting\n&quot;); </span><br><span class="line">	exit();</span><br><span class="line">&#125; else</span><br><span class="line">&#123; </span><br><span class="line">	printf(&quot;fork error\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>exit</code>系统调用会导致调用进程结束执行并释放如内存和文件这样的资源。<code>wait</code>系统调用返回当前进程的退出子进程的pid。如果调用者没有子进程退出，则等待。在实例中，命令行输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">child=1234</span><br><span class="line">chileL:exiting</span><br></pre></td></tr></table></figure></p>
+<p>上面两句话会按任意顺序出现，这取决于父进程还是子进程先接收到<code>printf</code>调用。当子进程退出后，父进程的<code>wait</code>返回，因此打印出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parent:child 1234 is done</span><br></pre></td></tr></table></figure></p>
+<p>注意父进程和子进程在不同的内存和寄存器中运行，改变变量值不会影响另外一个。</p>
+<p><code>exec</code>系统调用用从存储在文件系统的文件加载的新内存镜像来替换调用进程的内存。该文件必须具有特定格式，其指明文件的那部分是指令，那部分是数据，从哪里开始执行等。xv6使用ELF格式，第二章将详细讨论该格式。</p>
+<p>当<code>exex</code>成功调用后，不会返回调用程序，而是从ELF头部声明的入口开始执行。<code>exec</code>需要两个参数：可执行文件名和字符串参数数组，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char *argv[3];</span><br><span class="line">argv[0] = &quot;echo&quot;; </span><br><span class="line">argv[1] = &quot;hello&quot;; </span><br><span class="line">argv[2] = 0; </span><br><span class="line">exec(&quot;/bin/echo&quot;, argv); </span><br><span class="line">printf(&quot;exec error\n&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>这个片段将调用程序替换成参数为<code>echo hello</code>的<code>/bin/echo</code>程序实例。大多数程序会忽略第一个参数，这通常是程序名称。</p>
+<p>xv6使用上述调用来代替用户运行程序。shell的主体结构很简单，见main（8501行）。主循环使用<code>getcmd</code>读取命令行上的输入。然后调用<code>fork</code>，创建shell进程的副本。父进程调用<code>wait</code>，子进程运行命令。例如，如果用户在提示符下输入<code>echo hello</code>，<code>runcmd</code>将被调用，并以<code>echo hello</code>为参数。<code>runcmd</code>（8406行）执行实际命令。对于<code>echo hello</code>，将调用<code>echo</code>（8426行）。如果<code>exec</code>成功执行，子进程会执行<code>echo</code>的指令，而不是<code>runcmd</code>。在某些点，<code>echo</code>会调用<code>exit</code>，这会导致父进程从<code>wait</code>返回。也许你想知道<code>fork</code>和<code>exec</code>为什么没有合成一个调用，稍后我们将看到，单独调用创建进程和加载程序是一个巧妙的设计。</p>
+<p>xv6隐式分配大多数用户空间的内存，<code>fork</code>分配子进程需要的内存，<code>exec</code>分配足够的内存去保存可执行文件。在运行时进程可能需要更多的内存，例如<code>malloc</code>这时候可以调用<code>sbrk(n)</code>将内存扩展n字节。<code>sbrk</code>返回新内存的地址。</p>
+<p>xv6不提供用户的概念，也不提供保护一个用户免受一个用户影响的概念，在unix中，所有xv6都以root身份运行。</p>
+<h1 id="I-O和文件描述符"><a href="#I-O和文件描述符" class="headerlink" title="I/O和文件描述符"></a>I/O和文件描述符</h1><h1 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h1><h1 id="真实世界"><a href="#真实世界" class="headerlink" title="真实世界"></a>真实世界</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/08/MIT-6-828-Lab-Guide/" rel="next" title="MIT 6.828 Lab:Guide">
+                <i class="fa fa-chevron-left"></i> MIT 6.828 Lab:Guide
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xzy</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">197</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/123xzy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xzy-71-59/activities" target="_blank" title="ZhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:xzy0320@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统接口"><span class="nav-number">1.</span> <span class="nav-text">操作系统接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程和内存"><span class="nav-number">2.</span> <span class="nav-text">进程和内存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O和文件描述符"><span class="nav-number">3.</span> <span class="nav-text">I/O和文件描述符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管道"><span class="nav-number">4.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number">5.</span> <span class="nav-text">真实世界</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xzy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
