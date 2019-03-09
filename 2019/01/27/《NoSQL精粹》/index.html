@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-05T15:04:03.574Z">
+<meta property="og:updated_time" content="2019-03-09T08:52:46.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -382,7 +382,15 @@
 <p>当主节点处理所有读写操作的同时，从节点可以充当<code>Hot backup</code>（即时备份）。但是该机制依旧需要考虑<strong>数据不一致</strong>的情况</p>
 <p>实现读取故障恢复，还要确保应用程序分别沿着不同的路径发出读取请求和写入请求，这就需要那种分别使用不同的数据库连接来处理读取与写入请求的机制</p>
 <h2 id="对等复制"><a href="#对等复制" class="headerlink" title="对等复制"></a>对等复制</h2><p>主从复制模型提供的故障恢复能力只有从节点出错时才能体现，实际上，主节点依旧是系统的瓶颈和弱点，对等复制模型就能解决这个问题。在该模型下，所有节点地位相同，都可以接受写入和读取请求。但是该模型的最大问题依旧是<strong>数据不一致</strong></p>
-<p>P68</p>
+<h1 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h1><h2 id="更新一致性"><a href="#更新一致性" class="headerlink" title="更新一致性"></a>更新一致性</h2><p>当两个人同时更新同一条数据时，服务器收到请求之后，会将其<strong>序列化</strong>，也就是决定这两个请求的处理顺序。这时候后一个处理的更新就会覆盖前一个更新，这就发生了<strong>更新丢失</strong></p>
+<p>在并发环境下维护数据一致性的方式有两种：<strong>悲观方式</strong>和<strong>乐观方式</strong>。悲观就是避免发生冲突，乐观则是让冲突发生，然后检测冲突并对发生冲突的操作排序。最常见的悲观方式就是<strong>写入锁</strong>。乐观方式则是采取<strong>条件更新</strong>，也就是任意客户在执行更新操作之前，都要先测试数据的当前值和上次读入的值是否相同</p>
+<p>上面提到的方法都有个先决条件：更新操作的顺序必须一致。在多服务器中，两个节点就可能以不同的次序执行更新操作，这就会导致数据不一致。在谈到分布式系统的并发问题时，<strong>顺序一致性</strong>就是所有节点都要保证以相同的次序执行操作</p>
+<p>还有一种处理写冲突的乐观方式，就是将两份更新数据都保存起来，并标注它们存在冲突。像Git等分布式版本控制系统就是采取这种方法。该方式和版本控制系统采取相同策略，以某种方式将两个相互冲突的更新合并。系统可以将冲突的值呈现给用户，让其自行处理</p>
+<p>并发编程涉及一个根本问题，在安全性和相应能力之间的权衡。悲观方式通常会大幅降低系统相应能力，而且可能会出现死锁，这一情况既难以防范，也不易调试。而针对某份数据的写入操作都交由一个节点来完成，就更容易保持更新操作的一致性</p>
+<h2 id="读取一致性"><a href="#读取一致性" class="headerlink" title="读取一致性"></a>读取一致性</h2><p>为了避免读写冲突造成的逻辑不一致。关系型数据库支持事务的概念。NoSQL虽然没有事务的概念，但由其他途径来实现相同的行为。像图数据库就支持ACID事务，其次，面向聚合的数据库支持<strong>原子操作</strong>，但是仅限于单一聚合内部</p>
+<p>显然我们不能把所有数据放在一个聚合里面， 在执行影响多个聚合的更新中，就会留下时间空白，让客户能读到逻辑不一致的数据，存在不一致风险的时间长度就叫<strong>不一致窗口</strong></p>
+<p>一旦引入<strong>复制</strong>机制，又会遭遇全新的不一致问题，即更新操作在复制到全部节点之前，都有可能遭遇读取不一致的问题，这种叫做<strong>复制一致性</strong>。当然最终更新还是会传播到全部节点，这就叫<strong>最终一致性</strong></p>
+<p>P70</p>
 
       
     </div>
@@ -504,7 +512,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">197</span>
+                  <span class="site-state-item-count">198</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -517,7 +525,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -572,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性"><span class="nav-number">3.</span> <span class="nav-text">一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新一致性"><span class="nav-number">3.1.</span> <span class="nav-text">更新一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取一致性"><span class="nav-number">3.2.</span> <span class="nav-text">读取一致性</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="介绍MySQL数据库和InnoDB存储引擎表的各种类型文件">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-08T00:41:20.873Z">
+<meta property="og:updated_time" content="2019-03-09T07:27:41.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文件">
 <meta name="twitter:description" content="介绍MySQL数据库和InnoDB存储引擎表的各种类型文件">
@@ -342,9 +342,25 @@
       
         <p>介绍MySQL数据库和InnoDB存储引擎表的各种类型文件<br><a id="more"></a></p>
 <hr>
-<h1 id="参数文件"><a href="#参数文件" class="headerlink" title="参数文件"></a>参数文件</h1><p>告诉MySQL实例启动时，在哪里找到数据库文件，并且指定某些初始化参数</p>
+<h1 id="参数文件"><a href="#参数文件" class="headerlink" title="参数文件"></a>参数文件</h1><p>告诉MySQL实例启动时，在哪里找到数据库文件，并且指定某些初始化参数。可通过命令<code>mysql --help | grep my.cnf</code>来寻找参数文件</p>
+<p>MySQL可以不需要参数，这时的参数取决于编译MySQL时指定的默认值和源代码中指定参数的默认值</p>
+<p>参数其实就是键值对，可以通过<code>SHOW VARIABLES</code>查看数据库中的所有参数，也可以通过<code>LIKE</code>来过滤参数名</p>
+<p>MySQL参数可以分为<strong>动态</strong>和<strong>静态</strong>两种类型。动态参数意味着可以在MySQL实例运行中进行更改，静态参数则相反。可以通过<code>SET</code>对动态参数值进行修改，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET</span><br><span class="line">| [global | session] system_var_name= expr</span><br><span class="line">| [@@global. | @@session. | @@] |system_var_name= expr</span><br></pre></td></tr></table></figure></p>
+<p><code>global</code>和<code>session</code>两个关键词表明该参数的修改是基于当前回话还是整个实例的生命周期，例子如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET read_buffer_size=524288;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT @@session.read_buffer_size;</span><br><span class="line">+----------------------------+</span><br><span class="line">| @@session.read_buffer_size |</span><br><span class="line">+----------------------------+</span><br><span class="line">|                     524288 |</span><br><span class="line">+----------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT @@global.read_buffer_size;</span><br><span class="line">+---------------------------+</span><br><span class="line">| @@global.read_buffer_size |</span><br><span class="line">+---------------------------+</span><br><span class="line">|                    131072 |</span><br><span class="line">+---------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>对变量的全局值进行修改，只在这次实例的生命周期内有效，不会去修改参数文件中对应的值，因此用户如果想在MySQL下次启动时使用该参数，就要去修改参数文件</p>
 <h1 id="日志文件"><a href="#日志文件" class="headerlink" title="日志文件"></a>日志文件</h1><p>记录MySQL实例对某种条件作出相应时写入的文件，如错误日志、二进制文件、慢查询文件、查询日志文件</p>
-<h1 id="套接字文件"><a href="#套接字文件" class="headerlink" title="套接字文件"></a>套接字文件</h1><p>当用UNIX域套接字文件进行连接时需要的文件</p>
+<p>MySQL日志文件有四类，这些日志文件将帮助开发人员对数据库的运行状态进行诊断，并进行数据库层面的优化</p>
+<h2 id="错误日志"><a href="#错误日志" class="headerlink" title="错误日志"></a>错误日志</h2><p>对MySQL的启动、运行、关闭过程进行了记录，可通过<code>SHOW VAIABLES LIKE ‘log_error</code>来定位该文件</p>
+<h2 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h2><p><code>slow log</code>可以定位可能存在问题的SQL语句，从而进行SQL语句层面的优化</p>
+<p>MySQL在启动时，要设置一个阈值，将运行时间超过（大于，而非大于等于）该阈值的SQL语句都记录到慢查询日志文件中，该值可以通过<code>long_query_time</code>设置，单位是微秒<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;long_query_time&apos;;</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">| Variable_name   | Value     |</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">| long_query_time | 10.000000 |</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，MySQL是不启动慢查询日志，要手动设置为ON<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;log_slow_queries&apos;;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>MySQL另外一个参数是<code>log_throttle_queries_not_using_indexes</code>，用来表示每分钟允许记录到slow log的且未使用索引的SQL语句次数</p>
+<p>当慢查询日志越来越多时，就需要MySQL提供的<code>mysqldumpslow</code>命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow --help</span><br><span class="line">Usage: mysqldumpslow [ OPTS... ] [ LOGS... ]</span><br><span class="line"></span><br><span class="line">Parse and summarize the MySQL slow query log. Options are</span><br><span class="line"></span><br><span class="line">  --verbose    verbose</span><br><span class="line">  --debug      debug</span><br><span class="line">  --help       write this text to standard output</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>MySQL也将慢查询日志记录放在一张表中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">show create table mysql.slow_log;</span><br><span class="line">| Table    | Create Table                                                                             </span><br><span class="line">| slow_log | CREATE TABLE `slow_log` (</span><br><span class="line">  `start_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),</span><br><span class="line">  `user_host` mediumtext NOT NULL,</span><br><span class="line">  `query_time` time(6) NOT NULL,</span><br><span class="line">  `lock_time` time(6) NOT NULL,</span><br><span class="line">  `rows_sent` int(11) NOT NULL,</span><br><span class="line">  `rows_examined` int(11) NOT NULL,</span><br><span class="line">  `db` varchar(512) NOT NULL,</span><br><span class="line">  `last_insert_id` int(11) NOT NULL,</span><br><span class="line">  `insert_id` int(11) NOT NULL,</span><br><span class="line">  `server_id` int(10) unsigned NOT NULL,</span><br><span class="line">  `sql_text` mediumblob NOT NULL,</span><br><span class="line">  `thread_id` bigint(21) unsigned NOT NULL</span><br><span class="line">) ENGINE=CSV DEFAULT CHARSET=utf8 COMMENT=&apos;Slow log&apos;</span><br></pre></td></tr></table></figure></p>
+<p>参数<code>log_output</code>指定了慢查询输出的格式，默认为<code>FILE</code>，可将其设置为<code>TABLE</code></p>
+<p>MySQL还增加了来逻辑读取和物理读取的统计，物理读取就是指从磁盘进行I/O读取的次数，逻辑读取包含所有的读取，不管是磁盘还是缓冲池。可以设置<code>long_query_io</code>参数来将超过指定逻辑IO次数的查询记录到slow log中</p>
+<h2 id="查询日志"><a href="#查询日志" class="headerlink" title="查询日志"></a>查询日志</h2><p>记录了对MySQL数据库请求的所有信息，无论这些请求是否得到了正确执行</p>
+<h2 id="二进制日志"><a href="#二进制日志" class="headerlink" title="二进制日志"></a>二进制日志</h2><h1 id="套接字文件"><a href="#套接字文件" class="headerlink" title="套接字文件"></a>套接字文件</h1><p>当用UNIX域套接字文件进行连接时需要的文件，套接字文件可由参数<code>socket</code>控制</p>
 <h1 id="pid文件"><a href="#pid文件" class="headerlink" title="pid文件"></a>pid文件</h1><p>MySQL实例的进程ID文件</p>
 <h1 id="MySQL表结构文件"><a href="#MySQL表结构文件" class="headerlink" title="MySQL表结构文件"></a>MySQL表结构文件</h1><p>存放MySQL表结构定义文件</p>
 <h1 id="存储引擎文件"><a href="#存储引擎文件" class="headerlink" title="存储引擎文件"></a>存储引擎文件</h1><p>MySQL的存储引擎都有自己的文件来存储各种数据，这些存储引擎才真正存储记录和索引等数据</p>
@@ -469,7 +485,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">197</span>
+                  <span class="site-state-item-count">198</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -482,7 +498,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -537,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数文件"><span class="nav-number">1.</span> <span class="nav-text">参数文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志文件"><span class="nav-number">2.</span> <span class="nav-text">日志文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字文件"><span class="nav-number">3.</span> <span class="nav-text">套接字文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pid文件"><span class="nav-number">4.</span> <span class="nav-text">pid文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL表结构文件"><span class="nav-number">5.</span> <span class="nav-text">MySQL表结构文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储引擎文件"><span class="nav-number">6.</span> <span class="nav-text">存储引擎文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数文件"><span class="nav-number">1.</span> <span class="nav-text">参数文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志文件"><span class="nav-number">2.</span> <span class="nav-text">日志文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#错误日志"><span class="nav-number">2.1.</span> <span class="nav-text">错误日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#慢查询日志"><span class="nav-number">2.2.</span> <span class="nav-text">慢查询日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询日志"><span class="nav-number">2.3.</span> <span class="nav-text">查询日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制日志"><span class="nav-number">2.4.</span> <span class="nav-text">二进制日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字文件"><span class="nav-number">3.</span> <span class="nav-text">套接字文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pid文件"><span class="nav-number">4.</span> <span class="nav-text">pid文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL表结构文件"><span class="nav-number">5.</span> <span class="nav-text">MySQL表结构文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储引擎文件"><span class="nav-number">6.</span> <span class="nav-text">存储引擎文件</span></a></li></ol></div>
             
 
           </div>

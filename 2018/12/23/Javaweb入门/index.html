@@ -87,6 +87,8 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/13.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/14.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/12.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/10.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/11.jpg">
@@ -99,11 +101,11 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
-<meta property="og:updated_time" content="2019-01-25T01:34:54.355Z">
+<meta property="og:updated_time" content="2019-03-09T15:18:25.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
 <meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/12.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/23/Javaweb入门/13.jpg">
 
 
 
@@ -364,6 +366,30 @@
 <li>数据库，如MySQL</li>
 </ul>
 <p>当然如果不了解也没事，和我一样头铁就是干！</p>
+<h1 id="web历史概述"><a href="#web历史概述" class="headerlink" title="web历史概述"></a>web历史概述</h1><p>我们简单回顾一下Web应用的发展</p>
+<p>1991年Web页面在Internet上的首次登场，最早Web主要被一帮科学家们用来共享和传递信息，浏览器中主要展现的是静态的文本或图像信息。不过大家很快就不仅仅满足于访问放在Web服务器上的静态文件，1993年CGI（Common Gateway Interface）出现了，CGI定义了Web服务器与外部应用程序之间的通信接口标准，因此Web服务器可以通过CGI执行外部程序，让外部程序根据不同的Web请求生成动态内容。而在Java Web开发中的Servlet，其原理与CGI是类似的。那个时候编写CGI程序的主要是Perl和C等语言，在程序中输出大片的HTML字符串，可读性和维护性是个大问题。为了处理更复杂的应用，一种方法是把HTML页面中固定的部分存起来（称之为模版），把动态部分打上标记，处理Web请求时，后端程序生成动态的内容然后填充进到模板中去，形成最终返回的HTML。于是1994年PHP诞生了，PHP可以把程序（动态内容）嵌入到HTML（模版）中，不仅能更好的组织Web应用的内容，而且执行效率比CGI还更高。之后96年出现的ASP和98年出现的JSP本质上也都可以看成是一种支持某种脚本语言编程（分别是VB和Java）的模版引擎。</p>
+<p>Web开发脚本语言，搭配上后端数据库技术，Web开始大杀四方，类似电子商务系统这样的复杂应用也开始出现在互联网上。如第一部分所述，这时MVC的概念被引入到Web开发中来了。这时一个典型的Java Web应用从架构上看起来应该是这个样子：<br><img src="/2018/12/23/Javaweb入门/13.jpg" alt="web架构"></p>
+<ul>
+<li>Web浏览器发送HTTP请求到服务端，被Controller(Servlet)获取并进行处理（例如参数解析、请求转发）</li>
+<li>Controller(Servlet)调用核心业务逻辑——Model部分Model进行数据库存取操作，并将操作结果返回给Model</li>
+<li>Controller(Servlet)将业务逻辑处理结果交给View（JSP），动态输出HTML内容动态生成的HTML内容返回到浏览器显示</li>
+</ul>
+<p><img src="/2018/12/23/Javaweb入门/14.jpg" alt="web架构"><br>Spring MVC提供了一个DispacherServlet（可以Spring MVC是以Servlet技术为基础的），这个Servlet把Web应用中Servlet中经常要实现的功能封装起来并提供一层公共抽象，想象对应于一个Web请求后端要做的事情，比如：</p>
+<ul>
+<li>URL映射（对应HTTP URL和方法，应该调用什么代码）</li>
+<li>权限验证（当前的URL是否允许当前用户访问）</li>
+<li>参数解析（如何从Servlet中获得参数）</li>
+<li>数据绑定（如何将Servlet中的参数，绑定到业务逻辑对象中）</li>
+<li>数据验证（判断数据是否符合业务规则，比如邮件格式是否正确）</li>
+<li>视图解析（使用哪个视图模板进行渲染）</li>
+<li>模型传递与视图渲染（将数据传递给模板，并且在模板中引用）</li>
+<li>…</li>
+</ul>
+<p>有了Spring MVC，你只需写简单的POJO代码（如图所示，用POJO实现Controller），或者实现Spring MVC给你提供的接口（比如实现Interceptor做权限判断），就能完成这些繁琐的功能</p>
+<p>而ORM的作用就非常直观了，无须赘述，如图所示它提供了与数据库操作的一层中间抽象，这样Model的代码自然会更加简单。Spring MVC基本可以帮你屏蔽Servlet的API，ORM则可以帮你屏蔽JDBC的API了，也就是说你在更高的抽象层次上写程序了，更高的抽象层次一般意味着以更符合我们思维的方式来思考，自然效率更高。这事实上是软件技术发展的一个重要驱动力之一。你想想，从汇编语言发展出高级语言，从文件系统发展出数据库，其实本质规律是类似的</p>
+<p>那Spring的作用是什么呢？ 看到图中大量的箭头没有？ 图中的每一个小方块其实都是大量的Java类来实现，Controller与Model之间，Model与数据访问对象之间的这些箭头，意味这些Java类之间存在大量复杂的依赖关系。Spring的核心功能依赖注入，正是用于管理Java对象之间的依赖关系，所以第一部分我们说Spring是一个一站式的粘合框架，它像神奇的胶水一样，可以以松耦合的方式有机的粘合在一起。那具体怎么做到的呢？后文分解</p>
+<p>回到历史，Web开始大杀四方之时，大型应用在分布式、安全性、事务性等方面的要求进一步催生了J2EE(现在已更名为Java EE)平台在1999年的诞生。但是J2EE的组件技术EJB（Enterprice Java Beans）非常笨重，Spring的初衷是为了替代EJB，让Java EE开发更加简单灵活。它起源于Rod Jahnson 2002年出版的著作《Expert One-on-One J2EE Design and Development》，那本书中分析了Java EE的开发效率和实际性能等方面的问题，从实践和架构的角度探讨了简化开发的原则和方法。以此为基础，他实现了一个名为interface21的轻量级开发框架，成为Spring框架的前身。2004年，Spring正式发布1.0版本，同年Rod Jahnson推出了另一部影响深远的经典著作《Expert one-on-one J2EE Development without EJB》，Spring开始逐步在Java领域流行。现在Spring框架的版本已经演化到了4.x，它已经成为Java开发框架的一种事实标准，对Java EE规范本身也产生了重要影响。比如EJB规范就在发展中逐渐引入了众多Spring框架的优秀特征</p>
+<p>好了，你现在应该可以从更高和更广的技术视野来看待这几个框架了吧。看到一门技术的发规律和发展历程，这是一种技术修养的体现，跟人文修养是类似。但是同时我们也应该具有一定的深度，因为我们往往已经站在比较高的抽象层次，比如今天你写几行代码就能把数据库创建好，增删改查的功能也自动生成好了，但是成为高手需要你对底层的原理机制有更透彻的理解，真正遇到问题的时候才能抽丝剥茧迎刃而解</p>
 <p>先讲讲一些<strong>大体上的架构</strong>吧！<br><img src="/2018/12/23/Javaweb入门/12.jpg" alt="Java EE体系结构"></p>
 <p>服务器端三层被称为<strong>经典三层结构</strong>，即web层（表现层）、业务逻辑层、数据持久层，出现了很多结合三层JavaEE的设计模式，<strong>DAO模式</strong>就是数据持久层的设计模式</p>
 <p>实际上MVC和JavaEE经典三层结构是由两拨人分别提出的，两者间可以有着如下的对应：</p>
@@ -526,7 +552,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">197</span>
+                  <span class="site-state-item-count">198</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -539,7 +565,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -594,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#所用开发工具"><span class="nav-number">1.</span> <span class="nav-text">所用开发工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">3.</span> <span class="nav-text">步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#web历史概述"><span class="nav-number">1.</span> <span class="nav-text">web历史概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所用开发工具"><span class="nav-number">2.</span> <span class="nav-text">所用开发工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">3.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">4.</span> <span class="nav-text">步骤</span></a></li></ol></div>
             
 
           </div>
