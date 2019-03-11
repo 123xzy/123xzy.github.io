@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="数据库,NoSQL," />
+  <meta name="keywords" content="NoSQL,数据库," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="NoSQL = Not Only SQL">
-<meta name="keywords" content="数据库,NoSQL">
+<meta name="keywords" content="NoSQL,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《NoSQL精粹》">
 <meta property="og:url" content="http://yoursite.com/2019/01/27/《NoSQL精粹》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-09T08:52:46.313Z">
+<meta property="og:updated_time" content="2019-03-11T14:19:59.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -342,6 +342,7 @@
       
         <p>NoSQL = Not Only SQL<br><a id="more"></a></p>
 <hr>
+<p>题外话：这本书的作者是Thoughtwork公司的首席科学家，然后就去了解这家公司，真心喜欢这家公司的文化</p>
 <p>关系型数据库和NoSQL并不矛盾，未来是<strong>混合持久化</strong>的趋势</p>
 <p>关系数据库是尽量不出现相同数据，而非关系数据库则是通过牺牲一些重复数据来获得性能，即时间</p>
 <p>什么是<strong>关系型数据库</strong>？什么是<strong>非关系型数据库呢</strong>？<br>关系型数据库中存储的数据都是有一定的关系的，如一个库，一张表，存储了名字：张三；年龄：20；性别：男。这三个数据是有关系的，因为他们都是在描述同一个人。但是如果是Redis这种键值式数据库呢，只知道年龄20。至于这个年龄20是在说谁的年龄，Redis并不关心。如果是MongoDB这类的文档式数据库，名字、年龄、性别。这三个属性是一个整体。但是，每个人都必须要记录名字、年龄、性别。而第二个人，李四，假如他多了一个属性，爱好，那么整个表都需要加这个属性吗？MongoDB不需要，文档与文档之间没有必然的联系。也就是说，第一个人有3个属性，第二个人可以有4个属性</p>
@@ -390,7 +391,27 @@
 <h2 id="读取一致性"><a href="#读取一致性" class="headerlink" title="读取一致性"></a>读取一致性</h2><p>为了避免读写冲突造成的逻辑不一致。关系型数据库支持事务的概念。NoSQL虽然没有事务的概念，但由其他途径来实现相同的行为。像图数据库就支持ACID事务，其次，面向聚合的数据库支持<strong>原子操作</strong>，但是仅限于单一聚合内部</p>
 <p>显然我们不能把所有数据放在一个聚合里面， 在执行影响多个聚合的更新中，就会留下时间空白，让客户能读到逻辑不一致的数据，存在不一致风险的时间长度就叫<strong>不一致窗口</strong></p>
 <p>一旦引入<strong>复制</strong>机制，又会遭遇全新的不一致问题，即更新操作在复制到全部节点之前，都有可能遭遇读取不一致的问题，这种叫做<strong>复制一致性</strong>。当然最终更新还是会传播到全部节点，这就叫<strong>最终一致性</strong></p>
-<p>P70</p>
+<h2 id="放宽一致性"><a href="#放宽一致性" class="headerlink" title="放宽一致性"></a>放宽一致性</h2><p>架构师需要在一致性和其他特性之间做出权衡</p>
+<p>单服务器关系数据库的事务也具备放松隔离级别的功能，以允许查询操作读取尚未提交的数据。在实际应用中，大多数应用程序都会从一致性最高的级别（可序列化）往下调，以便提升性能，最常见的隔离级别是<strong>只能读取已提交的数据</strong></p>
+<h2 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h2><p>在NoSQL领域，CAP定理是需要放宽一致性约束的原因。</p>
+<p>CAP定理：给定“一致性”（Consistency）、“可用性”（Availability）、“分区耐受性”（Partition tolerance）这三个属性，我们只能同时满足其中两个属性</p>
+<ul>
+<li>可用性：如果客户可以同集群中的节点通信，那该节点就必然能够处理读取和写入操作</li>
+<li>分区耐受性：如果发生通信故障，导致整个集群被分割为成多个无法互相通信的分区时，集群仍然可用</li>
+</ul>
+<p>单服务器显然是一种CA系统，也就是具备一致性和可用性</p>
+<p>有时候我们要在一致性和可用性之间进行权衡，我们会略微舍弃一致性，以获取某种程度的可用性，这样产生的系统，既不具备完美的一致性，也不具备完美的可用性，但是两种不完美结合起来，却能满足特定需求</p>
+<p>举个例子，两位顾客A、B预定一间客房，预定系统使用两个节点的系统</p>
+<ul>
+<li>如果为了保持一致性，那么A预定时，访问节点1，就要先告知节点2，但是如果节点之间出现故障，那么就无法预定，系统失去了可用性</li>
+<li>如果要维持可用性，可以指派其中一个节点为主节点，所有预定都要通过主节点，这样当两个节点之间出现故障，也能处理预定。但是顾客B访问非主机点时，由于故障，将出现更新不一致现象</li>
+<li>当继续提高可用性时，可以让两个节点都接受预定，即使发生故障也如此。这样顾客A、B都可能预定最后一间客房。这样做可能会超额预定，但在现实中，就是这样做的。因为这样做的代价比系统无法接受预定要小的多</li>
+</ul>
+<p>在配置数据库时，常常要考虑用户对陈旧数据的容忍程度，以及不一致窗口的时长</p>
+<h2 id="放宽持久性"><a href="#放宽持久性" class="headerlink" title="放宽持久性"></a>放宽持久性</h2><p>有些场合牺牲持久性来获取更好的性能，也是一种选择。如果每个数据库大部分时间都在内存中运行，更新操作也直接写入内存，定期将数据写入磁盘，那就可以大大提升相应速度，代价就是更新数据的可能丢失</p>
+<h2 id="仲裁"><a href="#仲裁" class="headerlink" title="仲裁"></a>仲裁</h2><p>一致性和持久性之间的取舍，不是非此即彼的议题。处理请求的所用的节点越多，避免不一致问题的能力就越强。那如果要保证强一致性，需要使用多少个节点才行？</p>
+<p>假设将某份数据复制到三个节点中，不需要所有节点都确认写入操作，只要超过半数的节点确认就可以。在这种情况下，如果发生两个相互冲突的写入操作，那么只有一个操作能为超过半数的节点认可，这就是<strong>写入仲裁</strong></p>
+<p>P84</p>
 
       
     </div>
@@ -408,9 +429,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
-          
             <a href="/tags/NoSQL/" rel="tag"><i class="fa fa-tag"></i> NoSQL</a>
+          
+            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
           
         </div>
       
@@ -580,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性"><span class="nav-number">3.</span> <span class="nav-text">一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新一致性"><span class="nav-number">3.1.</span> <span class="nav-text">更新一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取一致性"><span class="nav-number">3.2.</span> <span class="nav-text">读取一致性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性"><span class="nav-number">3.</span> <span class="nav-text">一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新一致性"><span class="nav-number">3.1.</span> <span class="nav-text">更新一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取一致性"><span class="nav-number">3.2.</span> <span class="nav-text">读取一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽一致性"><span class="nav-number">3.3.</span> <span class="nav-text">放宽一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP定理"><span class="nav-number">3.4.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽持久性"><span class="nav-number">3.5.</span> <span class="nav-text">放宽持久性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仲裁"><span class="nav-number">3.6.</span> <span class="nav-text">仲裁</span></a></li></ol></li></ol></div>
             
 
           </div>

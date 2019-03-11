@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/7.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/8.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/Javaweb入门/9.JPG">
-<meta property="og:updated_time" content="2019-03-10T13:48:00.365Z">
+<meta property="og:updated_time" content="2019-03-11T06:47:43.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javaweb入门">
 <meta name="twitter:description" content="花了三个星期，从零开始学习Javaweb的搭建，并第一次上手一个框架，踩过了无数的坑，但收获还是很大">
@@ -387,7 +387,7 @@
 </ul>
 <p>有了Spring MVC，你只需写简单的POJO代码（如图所示，用POJO实现Controller），或者实现Spring MVC给你提供的接口（比如实现Interceptor做权限判断），就能完成这些繁琐的功能</p>
 <p>而ORM的作用就非常直观了，无须赘述，如图所示它提供了与数据库操作的一层中间抽象，这样Model的代码自然会更加简单。Spring MVC基本可以帮你屏蔽Servlet的API，ORM则可以帮你屏蔽JDBC的API了，也就是说你在更高的抽象层次上写程序了，更高的抽象层次一般意味着以更符合我们思维的方式来思考，自然效率更高。这事实上是软件技术发展的一个重要驱动力之一。你想想，从汇编语言发展出高级语言，从文件系统发展出数据库，其实本质规律是类似的</p>
-<p>那Spring的作用是什么呢？ 看到图中大量的箭头没有？ 图中的每一个小方块其实都是大量的Java类来实现，Controller与Model之间，Model与数据访问对象之间的这些箭头，意味这些Java类之间存在大量复杂的依赖关系。Spring的核心功能依赖注入，正是用于管理Java对象之间的依赖关系，所以第一部分我们说Spring是一个一站式的粘合框架，它像神奇的胶水一样，可以以松耦合的方式有机的粘合在一起。那具体怎么做到的呢？后文分解</p>
+<p>那Spring的作用是什么呢？ 看到图中大量的箭头没有？ 图中的每一个小方块其实都是大量的Java类来实现，Controller与Model之间，Model与数据访问对象之间的这些箭头，意味这些Java类之间存在大量复杂的依赖关系。Spring的核心功能依赖注入，正是用于管理Java对象之间的依赖关系，所以第一部分我们说Spring是一个一站式的粘合框架，它像神奇的胶水一样，可以以松耦合的方式有机的粘合在一起</p>
 <p>回到历史，Web开始大杀四方之时，大型应用在分布式、安全性、事务性等方面的要求进一步催生了J2EE(现在已更名为Java EE)平台在1999年的诞生。但是J2EE的组件技术EJB（Enterprice Java Beans）非常笨重，Spring的初衷是为了替代EJB，让Java EE开发更加简单灵活。它起源于Rod Jahnson 2002年出版的著作《Expert One-on-One J2EE Design and Development》，那本书中分析了Java EE的开发效率和实际性能等方面的问题，从实践和架构的角度探讨了简化开发的原则和方法。以此为基础，他实现了一个名为interface21的轻量级开发框架，成为Spring框架的前身。2004年，Spring正式发布1.0版本，同年Rod Jahnson推出了另一部影响深远的经典著作《Expert one-on-one J2EE Development without EJB》，Spring开始逐步在Java领域流行。现在Spring框架的版本已经演化到了4.x，它已经成为Java开发框架的一种事实标准，对Java EE规范本身也产生了重要影响。比如EJB规范就在发展中逐渐引入了众多Spring框架的优秀特征</p>
 <p>好了，你现在应该可以从更高和更广的技术视野来看待这几个框架了吧。看到一门技术的发规律和发展历程，这是一种技术修养的体现，跟人文修养是类似。但是同时我们也应该具有一定的深度，因为我们往往已经站在比较高的抽象层次，比如今天你写几行代码就能把数据库创建好，增删改查的功能也自动生成好了，但是成为高手需要你对底层的原理机制有更透彻的理解，真正遇到问题的时候才能抽丝剥茧迎刃而解</p>
 <h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p>先讲讲一些<strong>大体上的架构</strong>吧！<br><img src="/2018/12/23/Javaweb入门/12.jpg" alt="Java EE体系结构"></p>
