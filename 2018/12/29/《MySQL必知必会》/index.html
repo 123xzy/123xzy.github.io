@@ -88,7 +88,7 @@
 <meta property="og:description" content="MySQL入门">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/12/29/《MySQL必知必会》/1.png">
-<meta property="og:updated_time" content="2019-03-03T14:25:27.763Z">
+<meta property="og:updated_time" content="2019-03-12T14:00:53.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《MySQL必知必会》">
 <meta name="twitter:description" content="MySQL入门">
@@ -344,11 +344,26 @@
       
         <p>MySQL入门<br><a id="more"></a></p>
 <hr>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><p><code>LIKE</code>操作符指示MySQL后跟的搜索模式利用通配符而不是直接相等匹配</p>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><ul>
+<li><code>USE database_name</code>：选择数据库</li>
+<li><code>SHOW DATABASES</code>：显示所有数据库</li>
+<li><code>SHOW TABLES</code>：显示某一数据库中所有表，使用之前要先选择特定数据库</li>
+<li><code>CREATE DATABASE database_name</code>：创建数据库</li>
+<li><code>CREATE TABLE table_name(col_name_1 type,col_name_2 type,...)</code>：创建表<code>create table `stu_info` (`id` int, `name` varchar(40));</code></li>
+<li><code>CREATE UNIQUE INDEX index_name ON table_name(col_name)</code>：创建唯一索引（索引只是为了加速查询）</li>
+<li><code>CREATE INDEX index_name ON table_name(col_name)</code>：创建简单索引</li>
+<li><code>DROP TABLE</code>：删除表</li>
+<li><code>DROP INDEX</code>：删除索引</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><p>MySQL支持所有标准SQL数值数据类型。这些类型包括严格数值数据类型(INTEGER、SMALLINT、DECIMAL和NUMERIC)以及近似数值数据类型(FLOAT、REAL和DOUBLE PRECISION)</p>
+<h3 id="日期-时间"><a href="#日期-时间" class="headerlink" title="日期/时间"></a>日期/时间</h3><p>表示时间值的日期和时间类型为DATETIME、DATE、TIMESTAMP、TIME和YEAR。<br>每个时间类型有一个有效值范围和一个”零”值，当指定不合法的MySQL不能表示的值时使用”零”值</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串类型指CHAR、VARCHAR、BINARY、VARBINARY、BLOB、TEXT、ENUM和SET</p>
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><p><code>LIKE</code>操作符指示MySQL后跟的搜索模式利用通配符而不是直接相等匹配</p>
 <p>最常见的通配符是<code>%</code>，表示任何字符出现任意次数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;h%eda&apos;;</span><br></pre></td></tr></table></figure></p>
 <p>通配符可以位于搜索模式的任意位置，且搜索可以是区分大小写</p>
 <p>另一个通配符是<code>_</code>，与<code>%</code>用处一样，但是只匹配单个字符，不能多也不能少</p>
 <p>通配符虽然好用，但是不能过度使用，因为相比其他搜索花费时间更长</p>
+<h1 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into stu_info</span><br><span class="line">    -&gt; values(17052231,</span><br><span class="line">    -&gt; &apos;robert&apos;);</span><br><span class="line">Query OK, 1 row affected (0.16 sec)</span><br></pre></td></tr></table></figure>
 <h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><p>存储过程就是为以后的使用而保存的一条或多条MySQL语句的集合</p>
 <p>使用存储过程的好处就是<strong>简单、安全、高性能</strong>；但是编写存储过程比写SQL复杂，不一定含有创建存储过程的权限</p>
 <p><code>CALL processname(@parm1,@parm2);</code>：执行存储过程<br><code>CREATE PROCEDURE pro_name();</code>：创建存储过程<br><code>DROP PROCEDURE pro_name;</code>：删除存储过程<br>例子</p>
@@ -428,6 +443,7 @@
 <li><p><code>SET autocommit=0;</code>：默认是自动提交所有更改，设置该标志可以取消自动提交更改</p>
 </li>
 </ul>
+<p>如下例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; begin;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into stu_info values ( 17052230, &apos;sam&apos;);</span><br><span class="line">Query OK, 1 row affected (0.09 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from stu_info;</span><br><span class="line">+----------+--------+</span><br><span class="line">| id       | name   |</span><br><span class="line">+----------+--------+</span><br><span class="line">| 17052231 | robert |</span><br><span class="line">| 17052230 | sam    |</span><br><span class="line">+----------+--------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; rollback;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from stu_info;</span><br><span class="line">+----------+--------+</span><br><span class="line">| id       | name   |</span><br><span class="line">+----------+--------+</span><br><span class="line">| 17052231 | robert |</span><br><span class="line">+----------+--------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
 <h1 id="维护"><a href="#维护" class="headerlink" title="维护"></a>维护</h1><p>有多种方式可以实现数据备份</p>
 <ul>
 <li>使用命令行工具<code>mysqldump</code>转储所有内容到某个外部文件</li>
@@ -636,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">1.1.</span> <span class="nav-text">通配符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联结表"><span class="nav-number">4.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">5.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">6.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">8.</span> <span class="nav-text">维护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">9.</span> <span class="nav-text">安全管理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL"><span class="nav-number">1.1.</span> <span class="nav-text">DDL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">1.2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值"><span class="nav-number">1.2.1.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期-时间"><span class="nav-number">1.2.2.</span> <span class="nav-text">日期/时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">1.2.3.</span> <span class="nav-text">字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">1.3.</span> <span class="nav-text">通配符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入数据"><span class="nav-number">2.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">3.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">4.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联结表"><span class="nav-number">5.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">6.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">7.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">8.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#维护"><span class="nav-number">9.</span> <span class="nav-text">维护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全管理"><span class="nav-number">10.</span> <span class="nav-text">安全管理</span></a></li></ol></div>
             
 
           </div>

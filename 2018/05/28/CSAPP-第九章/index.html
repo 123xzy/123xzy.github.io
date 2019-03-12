@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-07-04T11:00:03.999Z">
+<meta property="og:updated_time" content="2019-03-12T09:24:44.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第九章：虚拟内存">
 <meta name="twitter:description" content="看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
@@ -346,6 +346,7 @@
 <p>为了解决上述三个问题，就是在物理内存和程序之间引入一个抽象层，也就是虚拟内存，这就引出了这章要讲解的内容</p>
 <p>这章先讲解虚拟内存的实现原理，之后结合Linux讲解，然后还会有一个有一个malloc实验，号称是CSAPP Lab中最难的一个，当然我还没有完成</p>
 <p>程序执行最终还是要回到物理内存中的，但是既然程序使用的是虚拟地址，要怎么实现从虚拟地址到物理地址的转化呢？<br>现代CPU芯片中集成了一个叫做MMU（Memory management Unit）的硬件，程序有CPU输入执行，产生需要查询的虚拟地址传入MMU后，有其翻译成物理地址</p>
+<h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>进程使用该函数创建新的虚拟内存区域，并将对象映射到这些区域中<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start,<span class="keyword">size_t</span> length,<span class="keyword">int</span> prot,<span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">int</span> fd,<span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -442,8 +443,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -516,6 +526,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存映射"><span class="nav-number">1.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">1.1.</span> <span class="nav-text">mmap</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

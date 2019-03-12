@@ -88,7 +88,12 @@
 <meta property="og:description" content="网络应用中，进程、信号、字节顺序、内存映射以及动态内存分配都扮演重要角色。我们要理解基本的客户端-服务器编程模型，编写使用因特网提供的服务的客户端-服务器程序，最后将所有概念结合，开发一个虽小但功能齐全的Web服务器，为真实的Web浏览器提供静态和动态的文本和图形内容">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/1.jpg">
-<meta property="og:updated_time" content="2019-03-11T12:54:53.715Z">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/2.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/4.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/5.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/6.JPG">
+<meta property="og:updated_time" content="2019-03-12T10:45:50.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十一章：网络编程">
 <meta name="twitter:description" content="网络应用中，进程、信号、字节顺序、内存映射以及动态内存分配都扮演重要角色。我们要理解基本的客户端-服务器编程模型，编写使用因特网提供的服务的客户端-服务器程序，最后将所有概念结合，开发一个虽小但功能齐全的Web服务器，为真实的Web浏览器提供静态和动态的文本和图形内容">
@@ -390,7 +395,59 @@
 <li>已连接描述符是客户端和服务器之间已经建立起来的连接的一个端点</li>
 <li>区别这两种描述符是为了建立<strong>并发服务器</strong>，能够同时处理多个客户端连接</li>
 </ul>
-<h2 id="getaddrinfo"><a href="#getaddrinfo" class="headerlink" title="getaddrinfo"></a>getaddrinfo</h2><h2 id="getnameinfo"><a href="#getnameinfo" class="headerlink" title="getnameinfo"></a>getnameinfo</h2><h2 id="open-clientfd"><a href="#open-clientfd" class="headerlink" title="open_clientfd"></a>open_clientfd</h2><h2 id="open-listenfd"><a href="#open-listenfd" class="headerlink" title="open_listenfd"></a>open_listenfd</h2><h1 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h1>
+<h2 id="getaddrinfo"><a href="#getaddrinfo" class="headerlink" title="getaddrinfo"></a>getaddrinfo</h2><p>该函数将主机名、主机地址、服务名和端口号的字符串转化为套接字地址结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int getaddrinfo(const char *host,const char *service,</span><br><span class="line">	const struct addrinfo *hints,</span><br><span class="line">	struct addrinfo **result);</span><br></pre></td></tr></table></figure>
+<p>规定host和service，该函数返回result，result是指向addrinfo结构的链表</p>
+<p>客户端调用该函数之后，会遍历这个列表，依次尝试每个套接字地址，直到调用socket和connect成功，建立起连接。类似的，服务器也会尝试遍历列表的每个套接字地址，知道socket和bind成功，描述符会被绑定到一个合法的套接字地址</p>
+<p>具体参数解释和链接结构参见书本P657-658</p>
+<h2 id="getnameinfo"><a href="#getnameinfo" class="headerlink" title="getnameinfo"></a>getnameinfo</h2><p>该函数作用和<code>getaddrinfo</code>相反，将一个套接字地址结构转换成相应的主机和服务名字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int getnameinfo(const struct sockaddr *sa,socklen_t salen,</span><br><span class="line">	char *host,size_t hostlen,</span><br><span class="line">	char *service,size_t servlen,int flags);</span><br></pre></td></tr></table></figure></p>
+<p>下面的函数都是对上面的函数的封装</p>
+<h2 id="open-clientfd"><a href="#open-clientfd" class="headerlink" title="open_clientfd"></a>open_clientfd</h2><p>客户端调用该函数建立与服务器的连接，服务器运行再主机hostname上，并在port端口号上监听连接请求，他返回一个打开的套接字描述符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int open_clientfd(char *hostname,char *port);</span><br></pre></td></tr></table></figure></p>
+<h2 id="open-listenfd"><a href="#open-listenfd" class="headerlink" title="open_listenfd"></a>open_listenfd</h2><p>服务器调用该函数，创建一个监听描述符，准备好接受连接请求</p>
+<h1 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h1><p>HTTP是基于在因特网连接上传送的文本行的，可以使用linux上的<code>TELNET</code>程序来和因特网上的任何web服务器执行事务</p>
+<p>具体细节参考其他文章</p>
+<h2 id="服务动态内容"><a href="#服务动态内容" class="headerlink" title="服务动态内容"></a>服务动态内容</h2><p>这一需求引申出了很多问题：</p>
+<ul>
+<li>客户端如何将程序参数传递给服务器？</li>
+<li>服务器如何将这些参数传递给它所创建的子进程？</li>
+<li>服务器如何将子进程生成内容所需要的其他信息传递给子进程？</li>
+<li>子进程将输出结果发送到哪里？</li>
+</ul>
+<p>上述问题都可以通过<strong>CGI</strong>（Common Gateway Interface，通用网关接口）的标准来解决</p>
+<p>服务器在接收到一个请求后，如<code>GET /cgi-bin/adder?15000&amp;213 HTTP/1.1</code>，它调用<code>fork</code>来创建子进程，并调用<code>execve</code>在子进程的上下文中执行<code>/cgi-bin/adder</code>程序，像这样的程序，常常被称为<strong>CGI</strong>程序，因为它遵守CGI标准的规则</p>
+<p>在调用execve之前，子进程将CGI环境变量<code>QUERY_STRING</code>设置为”15000&amp;213”，adder程序在运行时可以用linux <code>getenv</code>函数来引用它</p>
+<p>CGI定义了大量的环境变量，一个CGI程序可以在运行时设置或使用这些变量</p>
+<ul>
+<li>SERVER_PORT：父进程侦听的端口</li>
+<li>REQUEST_METHOD：GET或POST</li>
+<li>REMOTE_HOST：客户端的域名</li>
+<li>…</li>
+</ul>
+<p>一个CGI程序将它的动态内容发送到标准输出，在子进程加载并运行CGI程序之前，它使用<code>dup</code>函数将标准输出重定向到和客户端相关联的已连接描述符，因此CGI写入标准输出的东西就会直接到达客户端</p>
+<p>因为父进程不知道子进程生成的内容和类型或者大小，所有进程要负责生成<code>Content-type</code>和<code>Content-length</code>响应报头，以及终止报头的空行</p>
+<h2 id="综合"><a href="#综合" class="headerlink" title="综合"></a>综合</h2><p>接下来要开发称为TINY的服务器，在短短250行代码中，它结合了例如进程控制、Unix I/O、套接字接口和HTTP，虽然缺乏实际服务器具备的功能性、健壮性和安全性，但是当使用实际浏览器指向自己的服务器，依旧足够令人兴奋！！！</p>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>TINY是一个迭代服务器，监听在命令行传递来的端口上的连接请求</p>
+<p>在调用open_listenfd函数打开一个监听套接字之后，就执行无限服务器循环，不断接受连接请求</p>
+<h3 id="doit"><a href="#doit" class="headerlink" title="doit"></a>doit</h3><p>该函数处理HTTP事务</p>
+<p>TINY只支持GET方法，如果客户请求其他方法，将发送错误信息，并返回到主程序，主程序随后关闭连接并等待下一个连接请求</p>
+<p>然后我们将URI解析为一个文件名和一个可能为空的CGI参数字符串，并设置一个标志，表明请求时静态内容还是动态内容，如果文件在磁盘不存在，立即发送一个错误信息给客户端并返回</p>
+<p>最后，如果请求的是静态内容，就验证该文件是普通文件，而我们有读权限，如果是这样就向客户端提供静态内容，如果请求的是动态内容，就验证文件是可执行文件，如果是这样就提供动态内容</p>
+<h3 id="clienterror"><a href="#clienterror" class="headerlink" title="clienterror"></a>clienterror</h3><p>Tiny会检查一些明显的错误，并报告给客户端</p>
+<p>该函数会发送一个HTTP响应给客户端，在响应行中包含相应的状态码和状态信息，相应主题包含一个HTML文件，向浏览器的用户解释这个信息。HTML响应中还应该指明主体内容的大小和类型</p>
+<h3 id="read-requesthdrs"><a href="#read-requesthdrs" class="headerlink" title="read_requesthdrs"></a>read_requesthdrs</h3><p>TINY不使用请求报头的任何信息，仅仅调用该函数来读取并忽略这些报头</p>
+<h3 id="parse-uri"><a href="#parse-uri" class="headerlink" title="parse_uri"></a>parse_uri</h3><p>TINY假设静态内容的主目录就是当前目录，而可执行文件的目录是<code>./cgi-bin</code>，任何包含字符串<code>cgi-bin</code>的URI都被认为表示的是对动态内容的请求，默认的文件名是<code>./home.html</code></p>
+<h3 id="serve-static"><a href="#serve-static" class="headerlink" title="serve_static"></a>serve_static</h3><p>TINY提供五种常见类型的静态内容：HTML、无格式文本文件、GIF、PNG和JPG</p>
+<p>该函数发送一个HTTP相应，其主体包含一个本地文件的内容。首先通过检查文件的后缀来判断文件类型，并且发送响应行和响应报头给客户端</p>
+<p>接着，我们将被请求文件的内容复制到已连接描述符来发送响应主题。这里，需要仔细研究。首先<code>open</code>函数以只读方式打开文件，并获得描述符，再使用<code>mmap</code>函数将被请求文件映射到一个虚拟内存空间（该函数在第九章讲解）</p>
+<p>一旦文件映射到内存，就不再需要他的描述符，而是需要文件开始的地址。最后调用函数从该地址开始复制<code>filesize</code>个字节到客户端的已连接描述符，最后释放映射的虚拟内存区域，避免潜在的致命的内存泄漏</p>
+<h3 id="serve-dynamic"><a href="#serve-dynamic" class="headerlink" title="serve_dynamic"></a>serve_dynamic</h3><p>TINY通过派生一子进程上的上下文来运行CGI程序</p>
+<p>子进程重定向它的标准输出到已连接文件描述符，并加载运行CGI程序。因为CGI运行在子进程的上下文中，它能够访问所有在调用<code>execve</code>函数之前就存在的打开文件和环境变量，因此CGI写到标准输出的东西都将直接送到客户端进程，不会受到任何来自父进程的干涉。期间，父进程阻塞，等待子进程终止，回收子进程的资源</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>网上的教程连编译命令都是错的，害人！</p>
+<p>将<code>tiny.c</code> <code>csapp.h</code> <code>csapp.c</code>放在同一个文件夹下面，并创建<code>home.html</code></p>
+<p>编译<code>xzy@ubuntu:gcc tiny.c -lpthread</code>，然后运行<code>xzy@ubuntu:./a.out 1024</code></p>
+<p>如上所示，默认界面就是<code>home.html</code><br><img src="/2018/06/09/CSAPP-第十一章/2.JPG" alt=""></p>
+<p>命令行中输出HTTP请求报文头<br><img src="/2018/06/09/CSAPP-第十一章/3.JPG" alt=""><br>访问不存在的资源<br><img src="/2018/06/09/CSAPP-第十一章/4.JPG" alt=""><br>使用<code>telnet</code>获取数据<br><img src="/2018/06/09/CSAPP-第十一章/5.JPG" alt=""><br>使用不支持的HTTP请求获取数据<br><img src="/2018/06/09/CSAPP-第十一章/6.JPG" alt=""></p>
+<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a><a href="https://github.com/123xzy/CSAPP/blob/master/netp/tiny.c" target="_blank" rel="noopener">源代码</a></h3>
       
     </div>
     
@@ -577,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络模型"><span class="nav-number">1.</span> <span class="nav-text">网络模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络"><span class="nav-number">2.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#以太网"><span class="nav-number">2.1.</span> <span class="nav-text">以太网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互联网络"><span class="nav-number">2.2.</span> <span class="nav-text">互联网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP因特网"><span class="nav-number">2.3.</span> <span class="nav-text">IP因特网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP地址"><span class="nav-number">2.4.</span> <span class="nav-text">IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名"><span class="nav-number">2.5.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#因特网连接"><span class="nav-number">2.6.</span> <span class="nav-text">因特网连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字接口"><span class="nav-number">3.</span> <span class="nav-text">套接字接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#socket"><span class="nav-number">3.1.</span> <span class="nav-text">socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect"><span class="nav-number">3.2.</span> <span class="nav-text">connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind"><span class="nav-number">3.3.</span> <span class="nav-text">bind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listen"><span class="nav-number">3.4.</span> <span class="nav-text">listen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#accept"><span class="nav-number">3.5.</span> <span class="nav-text">accept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getaddrinfo"><span class="nav-number">3.6.</span> <span class="nav-text">getaddrinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getnameinfo"><span class="nav-number">3.7.</span> <span class="nav-text">getnameinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open-clientfd"><span class="nav-number">3.8.</span> <span class="nav-text">open_clientfd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open-listenfd"><span class="nav-number">3.9.</span> <span class="nav-text">open_listenfd</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web服务器"><span class="nav-number">4.</span> <span class="nav-text">Web服务器</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络模型"><span class="nav-number">1.</span> <span class="nav-text">网络模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络"><span class="nav-number">2.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#以太网"><span class="nav-number">2.1.</span> <span class="nav-text">以太网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互联网络"><span class="nav-number">2.2.</span> <span class="nav-text">互联网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP因特网"><span class="nav-number">2.3.</span> <span class="nav-text">IP因特网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP地址"><span class="nav-number">2.4.</span> <span class="nav-text">IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名"><span class="nav-number">2.5.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#因特网连接"><span class="nav-number">2.6.</span> <span class="nav-text">因特网连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字接口"><span class="nav-number">3.</span> <span class="nav-text">套接字接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#socket"><span class="nav-number">3.1.</span> <span class="nav-text">socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect"><span class="nav-number">3.2.</span> <span class="nav-text">connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind"><span class="nav-number">3.3.</span> <span class="nav-text">bind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listen"><span class="nav-number">3.4.</span> <span class="nav-text">listen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#accept"><span class="nav-number">3.5.</span> <span class="nav-text">accept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getaddrinfo"><span class="nav-number">3.6.</span> <span class="nav-text">getaddrinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getnameinfo"><span class="nav-number">3.7.</span> <span class="nav-text">getnameinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open-clientfd"><span class="nav-number">3.8.</span> <span class="nav-text">open_clientfd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open-listenfd"><span class="nav-number">3.9.</span> <span class="nav-text">open_listenfd</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web服务器"><span class="nav-number">4.</span> <span class="nav-text">Web服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务动态内容"><span class="nav-number">4.1.</span> <span class="nav-text">服务动态内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合"><span class="nav-number">4.2.</span> <span class="nav-text">综合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">4.2.1.</span> <span class="nav-text">main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doit"><span class="nav-number">4.2.2.</span> <span class="nav-text">doit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clienterror"><span class="nav-number">4.2.3.</span> <span class="nav-text">clienterror</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-requesthdrs"><span class="nav-number">4.2.4.</span> <span class="nav-text">read_requesthdrs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parse-uri"><span class="nav-number">4.2.5.</span> <span class="nav-text">parse_uri</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serve-static"><span class="nav-number">4.2.6.</span> <span class="nav-text">serve_static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serve-dynamic"><span class="nav-number">4.2.7.</span> <span class="nav-text">serve_dynamic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">4.2.8.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码"><span class="nav-number">4.2.9.</span> <span class="nav-text">源代码</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
