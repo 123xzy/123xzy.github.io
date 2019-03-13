@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/27/Linux-第五章/1.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/27/Linux-第五章/2.JPG">
-<meta property="og:updated_time" content="2018-04-01T14:45:51.641Z">
+<meta property="og:updated_time" content="2019-03-13T11:34:27.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-第五章">
 <meta name="twitter:description" content="《鸟哥的Linux私房菜》第五章小结">
@@ -362,6 +362,32 @@
 <li>命令是区分大小写的</li>
 </ul>
 <p>例如通过以下命令查看自己主文件下的所有隐藏文件和相关文件属性,效果如图<code>[xzy]$ls -al ~</code><img src="/2018/03/27/Linux-第五章/2.JPG" alt=""></p>
+<h1 id="man-amp-info"><a href="#man-amp-info" class="headerlink" title="man &amp; info"></a>man &amp; info</h1><p><code>man</code>是<strong>manual</strong>（操作说明）的简写</p>
+<p>一般在<strong>man page</strong>中都会有类似于<code>DATA(1)</code>的符号，前面是命令，后面代表什么含义呢？</p>
+<ul>
+<li>1：用户在shell环境下可以操作的命令</li>
+<li>2：系统内核可以调用的函数</li>
+<li>3：一些常用函数与函数库，大部分为C的函数库</li>
+<li>4：设备文件的说明</li>
+<li>5：配置文件或者某些文件格式</li>
+<li>6：游戏</li>
+<li>7：惯例与协议，例如网络协议、文件系统等</li>
+<li>8：系统管理员可用的管理命令</li>
+<li>9：跟<code>kerel</code>有关的文件</li>
+</ul>
+<p>可以通过<code>man 7 man</code>来查看具体的含义</p>
+<p><strong>man page</strong>大致分为几个部分</p>
+<ul>
+<li><code>NAME</code>：名称，简介</li>
+<li><code>SYNOPSIS</code>：执行语法简介</li>
+<li><code>DESCRIPTION</code>：详细描述</li>
+<li><code>OPTIONS</code>：对<code>SYNOPSIS</code>列举更详细的选项说明</li>
+<li><code>COMMANDS</code>：当该程序执行时，可以在程序中执行的命令</li>
+<li><code>FILES</code>：使用、参考、链接的文件</li>
+<li><code>SEE ALSO</code>：和该命令相关的说明</li>
+<li><code>EXAMPLE</code>：参考范例</li>
+<li><code>BUGS</code>：相关错误</li>
+</ul>
 
       
     </div>
@@ -456,8 +482,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -472,7 +507,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">198</span>
+                  <span class="site-state-item-count">199</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -530,6 +565,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#man-amp-info"><span class="nav-number">1.</span> <span class="nav-text">man &amp; info</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
