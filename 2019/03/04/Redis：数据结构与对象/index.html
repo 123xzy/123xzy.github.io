@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis,数据库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构">
+<meta name="keywords" content="Redis,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《数据结构与对象》">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/Redis：数据结构与对象/index.html">
+<meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-14T05:23:56.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《数据结构与对象》">
+<meta name="twitter:description" content="五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/04/Redis：数据结构与对象/"/>
+
+
+
+
+
+  <title>《数据结构与对象》 | 阿谢的BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿谢的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-theory">
+          <a href="/Theory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Theory
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-practice">
+          <a href="/Practice" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Practice
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/About" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/Redis：数据结构与对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xzy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《数据结构与对象》</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-04T19:04:22+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构<br><a id="more"></a></p>
+<hr>
+<p>由于Redis使用的是C语言，很多其他高级语言有的数据结构，都要Redis自己实现，因此在分析Redis原理时，自然就要碰到常见的数据结构</p>
+<h1 id="简单动态字符串"><a href="#简单动态字符串" class="headerlink" title="简单动态字符串"></a>简单动态字符串</h1><p>Redis没有直接使用C语言的传统的字符串表示（即以空字符结尾的字符数组），而是自己构建了名为简单动态字符串（simple dynamic string，<strong>SDS</strong>）的抽象类型，除了作为Redis的默认字符串表示，还被用作缓冲区：AOF模块的AOF缓冲区以及客户端状态中的输入缓冲区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis&gt;RPUSH fruits &quot;apple&quot; &quot;banana&quot; &quot;cherry&quot;</span><br></pre></td></tr></table></figure>
+<p>上述语句就会创建键值对，键是一个字符串对象，底层实现就是SDS，值是一个列表对象，包含三个字符串对象，也是SDS实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span>	</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="built_in">free</span>;</span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>len</code>：记录SDS保存字符串长度</li>
+<li><code>free</code>：数组未使用字节长度</li>
+</ul>
+<p>为什么要记录未使用空间呢？</p>
+<h2 id="与C字符串的区别"><a href="#与C字符串的区别" class="headerlink" title="与C字符串的区别"></a>与C字符串的区别</h2><p>C获取字符串长度需要<code>O(N)</code>复杂度，而SDS获取长度只要<code>O(1)</code>，因此获取字符串长度不会成为Redis的瓶颈，可以通过<code>STRLEN</code>获取字符串长度</p>
+<p>SDS能防止<strong>缓冲区溢出</strong>。例如对于C的<code>char *strcat(char *dest,char *src);</code>函数，默认用户已经为<code>dest</code>分配了足够的内存，如果假设不成立，就会产生缓冲区溢出</p>
+<p>而SDS的空间分配策略杜绝了发生缓冲区的可能性。当SDS API需要对SDS进行修改，会先检查SDS的空间是否满足需求。如果不满足，会自动扩展<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = sdsMakeRoomFor(s,len);</span><br></pre></td></tr></table></figure></p>
+<p>但是SDS的分配策略不是只分配缺少的空间，会多分配一些</p>
+<h2 id="内存分配策略"><a href="#内存分配策略" class="headerlink" title="内存分配策略"></a>内存分配策略</h2><p>对于C语言的字符串，只要涉及字符串长度，就要进行一次内存重分配操作</p>
+<ul>
+<li>对于<code>append</code>等增长字符串操作，就需要扩展底层数据的空间大小，否则就有可能发生<strong>缓冲区溢出</strong></li>
+<li>对于<code>trim</code>等缩短字符串长度操作，就需要释放内存空间，否则就会发生<strong>内存泄漏</strong></li>
+</ul>
+<p>对于内存重分配，可能需要调用<strong>系统调用</strong>，这是一种代价很高的执行。</p>
+<p>对于Redis这种数据频繁修改的场合，如果每修改一次字符串，都要执行内存重分配，那势必对性能造成影响。当这个地方我们就能回答最开始的问题 <code>为什么要记录未使用空间呢？</code>。</p>
+<p>SDS通过记录未使用空间接触字符串长度和底层数组长度之间的关系。字符串长度增加不一定意味着底层数组增加，也就意味着不需要频繁调用内存重分配</p>
+<h3 id="空间预分配"><a href="#空间预分配" class="headerlink" title="空间预分配"></a>空间预分配</h3><p>额外分配的空间数量根据下面的代码段决定<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_MAX_PREALLOC (1024*1024)</span></span><br><span class="line"></span><br><span class="line"><span class="function">sds <span class="title">sdsMakeRoomFor</span><span class="params">(sds s, <span class="keyword">size_t</span> addlen)</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">free</span> &gt;= addlen) <span class="keyword">return</span> s;</span><br><span class="line">    len = sdslen(s);</span><br><span class="line">    sh = (<span class="keyword">void</span>*) (s-(<span class="keyword">sizeof</span>(struct sdshdr)));</span><br><span class="line">   </span><br><span class="line">    newlen = (len+addlen);</span><br><span class="line">    <span class="keyword">if</span> (newlen &lt; SDS_MAX_PREALLOC)</span><br><span class="line">        newlen *= <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        newlen += SDS_MAX_PREALLOC;</span><br><span class="line">    newsh = zrealloc(sh, <span class="keyword">sizeof</span>(struct sdshdr)+newlen+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newsh == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    newsh-&gt;<span class="built_in">free</span> = newlen - len;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> newsh-&gt;buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从上面的代码可以看出，如果增加后的长度（<code>newlen</code>）小于1MB，则新长度翻倍；如果大于1MB，则只增加1MB</p>
+<h3 id="惰性空间释放"><a href="#惰性空间释放" class="headerlink" title="惰性空间释放"></a>惰性空间释放</h3><p>当需要缩短字符串时，程序不会立即使用内存重分配来回收多出来额度字节，而是使用<code>free</code>属性来记录多出来的空间。虽然这样做可以减少重分配操作，但另一方面也是浪费空间。因此SDS提供相应API能直接释放未使用的空间</p>
+<h2 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h2><p>C字符串除了字符串末尾，不能包含空字符，否则会误读，这就意味着C字符串只能保存文本数据，不能保存图片、音频、视频等二进制数据</p>
+<p>而SDS API都是以处理二进制的方式处理存放在buf数组里的数据程序不会对其中的数据做任何限制、过滤或假设。写入时什么样，读取时就是什么样。因为SDS使用<code>len</code>值而不是空字符来判断结尾。这使得Redis能保存任意格式的二进制</p>
+<p>虽然SDS不以空字符作为判断条件，但这些API依旧会将SDS保存的数据结尾设置为空字符，并在分配空间时多分配一个字节来容纳空字符，目的就是为了能<strong>重用</strong><code>&lt;string.h&gt;</code>中的函数，减少不必要的代码重复</p>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p>链表除了在列表键应用外，还在发布于订阅、慢查询、监视器等功能应用，服务器本身还使用链表来保存多个客户端的状态信息以及构造客户端输出缓冲区</p>
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><p>Redis数据库就是用字典实现的，哈希键也是通过字典实现</p>
+<h1 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h1><p>跳跃表作为有序集合键的底层实现之一，还作为集群节点中的内部数据结构</p>
+<h1 id="整数集合"><a href="#整数集合" class="headerlink" title="整数集合"></a>整数集合</h1><p>是集合键的底层实现之一</p>
+<h1 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h1><p>是列表键和哈希键的底层实现之一</p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>Redis使用上面这些数据结构，构造了一个对象系统，这个系统就包含了字符串对象、列表对象、哈希对象、集合对象、有序集合对象五类对象</p>
+<p>通过对象</p>
+<ul>
+<li>可以判断一个对象是否可以执行给定的命令</li>
+<li>可以针对不同的使用场景，对对象设置多种不同的实现，从而优化效率</li>
+<li>实现了基于引用计数的内存回收机制，并基于引用计数实现了对象共享机制</li>
+<li>对象带有访问时间记录信息</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          
+            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/《机器无关优化》/" rel="next" title="《机器无关优化》">
+                <i class="fa fa-chevron-left"></i> 《机器无关优化》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/05/《存储器层次结构》/" rel="prev" title="《存储器层次结构》">
+                《存储器层次结构》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">123xzy</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">202</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/123xzy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xzy-71-59/activities" target="_blank" title="ZhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:xzy0320@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单动态字符串"><span class="nav-number">1.</span> <span class="nav-text">简单动态字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与C字符串的区别"><span class="nav-number">1.1.</span> <span class="nav-text">与C字符串的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配策略"><span class="nav-number">1.2.</span> <span class="nav-text">内存分配策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空间预分配"><span class="nav-number">1.2.1.</span> <span class="nav-text">空间预分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#惰性空间释放"><span class="nav-number">1.2.2.</span> <span class="nav-text">惰性空间释放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制安全"><span class="nav-number">1.3.</span> <span class="nav-text">二进制安全</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链表"><span class="nav-number">2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳跃表"><span class="nav-number">4.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整数集合"><span class="nav-number">5.</span> <span class="nav-text">整数集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩列表"><span class="nav-number">6.</span> <span class="nav-text">压缩列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象"><span class="nav-number">7.</span> <span class="nav-text">对象</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">123xzy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  :<span id="busuanzi_value_site_uv"></span>
+</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
