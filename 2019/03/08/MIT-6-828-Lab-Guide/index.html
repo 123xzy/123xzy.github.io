@@ -88,7 +88,12 @@
 <meta property="og:description" content="实验工具指南">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/1.JPG">
-<meta property="og:updated_time" content="2019-03-14T14:41:13.804Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/4.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/2.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/5.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/6.JPG">
+<meta property="og:updated_time" content="2019-03-15T07:22:47.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Guide">
 <meta name="twitter:description" content="实验工具指南">
@@ -356,7 +361,7 @@
 <p>于是，用apt-cache查找了关于pixman的依赖包<code>apt-cache search pixman</code></p>
 <ul>
 <li>选择安装libpixman-1-dev的那个包，<code>sudo apt-get install libpixman-1-dev</code></li>
-<li><p>配置qemu代码 <code>./configure --disable-kvm [--prefix=PFX] [--target-list=&quot;i386-softmmu x86_64-softmmu&quot;]</code>，<code>prefix</code>参数指定QEMU安装目录; 若没有该参数，默认安装到 /usr/local。<code>target-list</code>参数指定QEMU模拟的CPU架构。执行成功后，会显示一系列参数</p>
+<li><p>配置qemu代码 <code>./configure --disable-kvm --python=python2.7 [--prefix=PFX] [--target-list=&quot;i386-softmmu x86_64-softmmu&quot;]</code>，<code>prefix</code>参数指定QEMU安装目录; 若没有该参数，默认安装到 /usr/local。<code>target-list</code>参数指定QEMU模拟的CPU架构。执行成功后，会显示一系列参数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Install prefix    /usr/local</span><br><span class="line">BIOS directory    /usr/local/share/qemu</span><br><span class="line">binary directory  /usr/local/bin</span><br><span class="line">library directory /usr/local/lib</span><br><span class="line">libexec directory /usr/local/libexec</span><br><span class="line">include directory /usr/local/include</span><br><span class="line">config directory  /usr/local/etc</span><br><span class="line">local state directory   /usr/local/var</span><br><span class="line">Manual directory  /usr/local/share/man</span><br><span class="line">ELF interp prefix /usr/gnemul/qemu-%M</span><br><span class="line">Source path       /home/xzy/qemu</span><br><span class="line">C compiler        cc</span><br><span class="line">Host C compiler   cc</span><br><span class="line">C++ compiler      c++</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>make &amp;&amp; make install</code></p>
@@ -370,8 +375,15 @@
 <p>简单粗暴就是注释掉</p>
 <p>安装的时候，还碰到了权限的问题，使用<code>sudo su</code>而不是<code>su</code>能进入root</p>
 <p>在执行<code>qemu-system-i386</code><img src="/2019/03/08/MIT-6-828-Lab-Guide/1.JPG" alt="运行截图">之后就能将xv6源码编译后，放入qemu执行</p>
-<h1 id="下载lab源码"><a href="#下载lab源码" class="headerlink" title="下载lab源码"></a>下载lab源码</h1><p><a href="https://github.com/jasonleaster/MIT_6_828_assignments_2012/blob/homework2/2014_JOS_lab_source_code.tar.gz" target="_blank" rel="noopener"></a></p>
-<h1 id="调试技巧"><a href="#调试技巧" class="headerlink" title="调试技巧"></a>调试技巧</h1><p>如果您遇到意外的中断，异常或三重故障，可以要求QEMU使用-d参数生成详细的中断日志。</p>
+<p>但这一步，意味着MIT官方的QEMU已经安装好</p>
+<h1 id="载入xv6"><a href="#载入xv6" class="headerlink" title="载入xv6"></a>载入xv6</h1><p>先要下载lab代码</p>
+<p>在进入lab文件夹进行编译之间，如果GCC版本是<code>7.0</code>以上一定要给虚拟机<strong>GCC版本降级</strong>，不然会出现奇奇怪怪的错误，我已经被这个给搞狂躁了！！！具体方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~# sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8  100</span><br><span class="line">update-alternatives: using /usr/bin/gcc-4.8 to provide /usr/bin/gcc (gcc) in auto mode</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019/03/08/MIT-6-828-Lab-Guide/4.JPG" alt="运行截图"></p>
+<p>降级好后，下载源码并进行编译（进入lab目录，执行<code>make</code>)，就如原文所说，需要安装<code>gcc-multilib</code>，使用命令<code>sudo apt-get install gcc-4.8-multilib</code><br><img src="/2019/03/08/MIT-6-828-Lab-Guide/2.JPG" alt="运行截图"></p>
+<p>完成上面的步骤后，会得到一个<code>obj/kern/kernel.img</code>作为模拟PC“虚拟硬盘”的内容提供。此硬盘映像包含我们的引导加载程序<code>obj/boot/boot</code>和我们的内核<code>obj/kernel</code><br><img src="/2019/03/08/MIT-6-828-Lab-Guide/3.JPG" alt="运行截图"></p>
+<p>编译完内核源码，我们就可以把它运行在QEMU上啦！首先在lab目录下面，输入<code>make qemu</code>，此时qemu就开始自动加载我们的操作系统内核映像文件<br><img src="/2019/03/08/MIT-6-828-Lab-Guide/5.JPG" alt="运行截图"><br><img src="/2019/03/08/MIT-6-828-Lab-Guide/6.JPG" alt="运行截图"></p>
+<p>成功！！</p>
+<h1 id="lab源码"><a href="#lab源码" class="headerlink" title="lab源码"></a>lab源码</h1><p>实验要用的材料都已经上传<a href="https://github.com/123xzy/MIT-6.828" target="_blank" rel="noopener">源码</a>，其中包括<code>lab</code>、<code>qemu</code>、<code>homework</code>等实验源码和答案</p>
 
       
     </div>
@@ -491,7 +503,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">202</span>
+                  <span class="site-state-item-count">206</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -559,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装QEMU"><span class="nav-number">1.</span> <span class="nav-text">安装QEMU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载lab源码"><span class="nav-number">2.</span> <span class="nav-text">下载lab源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试技巧"><span class="nav-number">3.</span> <span class="nav-text">调试技巧</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装QEMU"><span class="nav-number">1.</span> <span class="nav-text">安装QEMU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#载入xv6"><span class="nav-number">2.</span> <span class="nav-text">载入xv6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lab源码"><span class="nav-number">3.</span> <span class="nav-text">lab源码</span></a></li></ol></div>
             
 
           </div>

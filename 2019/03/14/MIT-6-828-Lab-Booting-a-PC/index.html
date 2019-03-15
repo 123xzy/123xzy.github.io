@@ -88,7 +88,10 @@
 <meta property="og:description" content="实验1：启动PC">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/14/MIT-6-828-Lab-Booting-a-PC/1.JPG">
-<meta property="og:updated_time" content="2019-03-14T14:58:16.412Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/14/MIT-6-828-Lab-Booting-a-PC/2.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/14/MIT-6-828-Lab-Booting-a-PC/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/14/MIT-6-828-Lab-Booting-a-PC/4.JPG">
+<meta property="og:updated_time" content="2019-03-15T11:51:24.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Booting a PC">
 <meta name="twitter:description" content="实验1：启动PC">
@@ -344,6 +347,7 @@
       
         <p>实验1：启动PC<br><a id="more"></a></p>
 <hr>
+<p>该实验<a href="https://pdos.csail.mit.edu/6.828/2014/labs/lab1/" target="_blank" rel="noopener">原始指南</a></p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>本实验分为三个部分</p>
 <ul>
 <li>getting familiarized with x86 assembly language, the QEMU x86 emulator, and the PC’s power-on bootstrap procedure</li>
@@ -355,11 +359,30 @@
 <p>本书中的示例是为NASM汇编程序编写的，而我们将使用GNU汇编程序。NASM使用所谓的Intel语法，而GNU使用AT＆T语法。虽然在语义上是等效的，但是程序集文件会有很大不同，至少表面上看，这取决于使用的语法。幸运的是，两者之间的转换非常简单，并且在<a href="http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html" target="_blank" rel="noopener">汇编指南</a>中有所介绍</p>
 <h2 id="Simulating-the-x86"><a href="#Simulating-the-x86" class="headerlink" title="Simulating the x86"></a>Simulating the x86</h2><p><code>Instead of developing the operating system on a real, physical personal computer (PC), we use a program that faithfully emulates a complete PC: the code you write for the emulator will boot on a real PC too. Using an emulator simplifies debugging; you can, for example, set break points inside of the emulated x86, which is difficult to do with the silicon version of an x86.</code></p>
 <p>进行该部分需要安装QEMU（<a href="/2019/03/08/MIT-6-828-Lab-Guide/" title="MIT 6.828 Lab:Guide">MIT 6.828 Lab:Guide</a>，该文章中有实验的所有前期准备指南）和熟悉GDB调试（<a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a>）</p>
-<p><code>To get started, extract the Lab 1 files into your own directory on Athena as described above in &quot;Software Setup&quot;, then type make (or gmake on BSD systems) in the lab directory to build the minimal 6.828 boot loader and kernel you will start with. (It&#39;s a little generous to call the code we&#39;re running here a &quot;kernel,&quot; but we&#39;ll flesh it out throughout the semester.)</code></p>
-<p>下载源码并进行编译，就如原文所说，需要安装<code>gcc-multilib</code>，使用命令<code>sudo apt-get install gcc-multilib</code><img src="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/1.JPG" alt=""></p>
-<p>完成上面的步骤后，会得到一个<code>obj/kern/kernel.img</code>作为模拟PC“虚拟硬盘”的内容提供。此硬盘映像包含我们的引导加载程序<code>obj/boot/boot</code>和我们的内核<code>obj/kernel</code></p>
-<p>编译完内核源码，我们就可以把它运行在QEMU上啦！首先在lab目录下面，输入<code>make qemu</code>，此时qemu就开始自动加载我们的操作系统内核映像文件</p>
-<h1 id="The-Boot-Loader"><a href="#The-Boot-Loader" class="headerlink" title="The Boot Loader"></a>The Boot Loader</h1><h1 id="The-Kernel"><a href="#The-Kernel" class="headerlink" title="The Kernel"></a>The Kernel</h1>
+<p><code>Everything after &#39;Booting from Hard Disk...&#39; was printed by our skeletal JOS kernel; the K&gt; is the prompt printed by the small monitor, or interactive control program, that we&#39;ve included in the kernel. These lines printed by the kernel will also appear in the regular shell window from which you ran QEMU. This is because for testing and lab grading purposes we have set up the JOS kernel to write its console output not only to the virtual VGA display (as seen in the QEMU window), but also to the simulated PC&#39;s virtual serial port, which QEMU in turn outputs to its own standard output.</code></p>
+<p>启动给内核之后，所有字符就是由<code>JOS kernel</code>产生</p>
+<p><code>There are only two commands you can give to the kernel monitor, help and kerninfo.</code></p>
+<p>现在只有两个命令可以使用：<code>help</code> <code>kerninfo</code><br><img src="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/1.JPG" alt="运行截图"></p>
+<p><code>Although simple, it&#39;s important to note that this kernel monitor is running &quot;directly&quot; on the &quot;raw (virtual) hardware&quot; of the simulated PC. This means that you should be able to copy the contents of obj/kern/kernel.img onto the first few sectors of a real hard disk, insert that hard disk into a real PC, turn it on, and see exactly the same thing on the PC&#39;s real screen as you did above in the QEMU window</code></p>
+<p>虽然该内核还比较简单，但只要愿意，可以将该内核镜像写入硬盘前几个扇区，就能想真正启动PC一样启动它，并能看到完全一样的东西</p>
+<h2 id="The-PC’s-Physical-Address-Space"><a href="#The-PC’s-Physical-Address-Space" class="headerlink" title="The PC’s Physical Address Space"></a>The PC’s Physical Address Space</h2><p><code>A PC&#39;s physical address space is hard-wired to have the following general layout:</code><br><img src="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/2.JPG" alt="运行截图"></p>
+<p>早期基于16位Intel 8088处理器只能操作1MB物理内存，因此物理地址空间起始于0x00000000到0x000FFFFF，其中640KB为<code>Low memory</code>，这只能被随机存储器(RAM)使用</p>
+<p>从<code>0x000A0000</code>到<code>0x000FFFFF</code>的384KB留着给特殊使用，例如作为视频显示缓存或者储存在非易失存储器的硬件。从<code>0x000F0000</code>到<code>0x000FFFFF</code>占据64KB区域的部分是最重要的<strong>BIOS</strong></p>
+<p>现在的x86处理器支持超过4GB的物理RAM，所以RAM扩展到了<code>0xFFFFFFFF</code>。<code>JOS</code>这里只用开始的256MB，所以假设PC只有32位地址空间</p>
+<h2 id="The-ROM-BIOS"><a href="#The-ROM-BIOS" class="headerlink" title="The ROM BIOS"></a>The ROM BIOS</h2><p>这部分研究计算机如何<strong>启动</strong></p>
+<p>在一个终端中输入<code>make qemu-gdb</code>，这将启动QEMU，但QEMU在处理器执行第一条指令之前停止，并等待来自GDB的调试连接，另一个终端输入<code>make gdb</code><img src="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/3.JPG" alt="运行截图"></p>
+<p><code>[f000:fff0]    0xffff0:    ljmp   $0xf000,$0xe05b</code>是GDB反汇编出的第一条执行指令，表明：</p>
+<ul>
+<li>IBM PC从物理地址<code>0x000ffff0</code>处执行，该地址位于为ROM BIOS保留的64KB区域的最顶端</li>
+<li>PC从地址<code>CS=0xf000,IP=0xfff0</code>开始执行</li>
+<li>执行的第一条指令是<code>jmp</code>指令，它跳转到分段地址<code>CS = 0xf000,IP=0xe05b</code></li>
+</ul>
+<p>由于PC中的BIOS与物理地址范围<code>0x000f0000-0x000fffff</code>“硬连线”，因此该设计可确保BIOS在上电或任何系统重启后始终首先控制机器。QEMU仿真器带有自己的BIOS，它放置在处理器的模拟物理地址空间中的位置。当通电后，处理器进入实模式也就是设置<code>CS:IP</code>两个寄存器为<code>CS=0xf000,IP=0xfff0</code>，为什么这个段地址指示的是<code>0x000ffff0</code>？</p>
+<p>因为在启动电源也就是实模式时，地址转译根据这个公式工作：<code>物理地址=16 * 段地址+偏移量</code></p>
+<p><code>0x000ffff0</code>是BIOS结束前的16个字节（<code>0x100000</code>）</p>
+<p>当BIOS启动，它设置了一个中断描述符表并初始化多个设备比如VGA显示器。在初始化PCI总线和所有重要的设备之后，它寻找可引导的设备，之后读取<code>Boot loader</code>并转移控制</p>
+<p><img src="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/4.JPG" alt="运行截图">可以通过GDB<code>si</code>命令一步步猜测BIOS正在做什么！</p>
+<h1 id="The-Boot-Loader"><a href="#The-Boot-Loader" class="headerlink" title="The Boot Loader"></a>The Boot Loader</h1><h2 id="Loading-the-Kernel"><a href="#Loading-the-Kernel" class="headerlink" title="Loading the Kernel"></a>Loading the Kernel</h2><h1 id="The-Kernel"><a href="#The-Kernel" class="headerlink" title="The Kernel"></a>The Kernel</h1><h2 id="Using-virtual-memory-to-work-around-position-dependence"><a href="#Using-virtual-memory-to-work-around-position-dependence" class="headerlink" title="Using virtual memory to work around position dependence"></a>Using virtual memory to work around position dependence</h2><h2 id="Formatted-Printing-to-the-Console"><a href="#Formatted-Printing-to-the-Console" class="headerlink" title="Formatted Printing to the Console"></a>Formatted Printing to the Console</h2><h2 id="The-Stack"><a href="#The-Stack" class="headerlink" title="The Stack"></a>The Stack</h2>
       
     </div>
     
@@ -398,6 +421,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/lab-data/" rel="prev" title="Data">
+                Data <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -474,7 +501,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">202</span>
+                  <span class="site-state-item-count">206</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -542,7 +569,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PC-Bootstrap"><span class="nav-number">2.</span> <span class="nav-text">PC Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-Started-with-x86-assembly"><span class="nav-number">2.1.</span> <span class="nav-text">Getting Started with x86 assembly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Simulating-the-x86"><span class="nav-number">2.2.</span> <span class="nav-text">Simulating the x86</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Boot-Loader"><span class="nav-number">3.</span> <span class="nav-text">The Boot Loader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Kernel"><span class="nav-number">4.</span> <span class="nav-text">The Kernel</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PC-Bootstrap"><span class="nav-number">2.</span> <span class="nav-text">PC Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-Started-with-x86-assembly"><span class="nav-number">2.1.</span> <span class="nav-text">Getting Started with x86 assembly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Simulating-the-x86"><span class="nav-number">2.2.</span> <span class="nav-text">Simulating the x86</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-PC’s-Physical-Address-Space"><span class="nav-number">2.3.</span> <span class="nav-text">The PC’s Physical Address Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-ROM-BIOS"><span class="nav-number">2.4.</span> <span class="nav-text">The ROM BIOS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Boot-Loader"><span class="nav-number">3.</span> <span class="nav-text">The Boot Loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Loading-the-Kernel"><span class="nav-number">3.1.</span> <span class="nav-text">Loading the Kernel</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Kernel"><span class="nav-number">4.</span> <span class="nav-text">The Kernel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-virtual-memory-to-work-around-position-dependence"><span class="nav-number">4.1.</span> <span class="nav-text">Using virtual memory to work around position dependence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Formatted-Printing-to-the-Console"><span class="nav-number">4.2.</span> <span class="nav-text">Formatted Printing to the Console</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Stack"><span class="nav-number">4.3.</span> <span class="nav-text">The Stack</span></a></li></ol></li></ol></div>
             
 
           </div>
