@@ -732,8 +732,25 @@
 <p>现在JSP专职负责视图的渲染工作，Servlet得以进一步解脱，只需通过<code>requestDispatcher.forward(request,response)</code>将当前request传递到jsp，或者把新的资源包括到当前响应中</p>
 <p>JSP与其他模板技术一个主要区别就是它最终都是编译为Servlet来运行的，这使得JSP拥有更大的能量，可以将所有逻辑都编写到JSP中，甚至是数据库连接代码（当然这样做是不对的）。其次，一般的Servlet处理请求，在<code>web.xml</code>中都要注册URL和相应Servlet的一一映射关系，因此会充斥很多的配置文件，而使用JSP则可以省去麻烦，直接通过链接就能访问</p>
 <p>JSP的出现是为了解决<strong>Magic Servlet</strong>，现在所有功能都放到了JSP中，又变成了<strong>Magic JSP</strong>。为此，Sun又引入了JavaBean，对相关业务逻辑进行封装</p>
-<p>至此，我们已经引出了SpringMVC的三个角色，由Java开发人员来开发Servlet，负责处理控制流程，前端人员开发JSP，负责视图的渲染，JavaBean则封装业务逻辑并负责与数据层进行交互。这一模型成为<strong>JSP Model2</strong><br><img src="/2019/01/17/《Spring-MVC》/1.jpg" alt="JSP Model2"></p>
+<p>至此，我们已经引出了SpringMVC的三个角色，由Java开发人员来开发Servlet，负责处理控制流程，前端人员开发JSP，负责视图的渲染，JavaBean则封装业务逻辑并负责与数据层进行交互。这一模型成为<strong>JSP Model2</strong>，该模型是web开发的一个里程碑<br><img src="/2019/01/17/《Spring-MVC》/1.jpg" alt="JSP Model2"></p>
 <p>该模型已经具备了MVC的雏形，还是有些许差别</p>
+<p>最初意义上的MVC模式中</p>
+<ul>
+<li><strong>控制器</strong>负责接收视图发送的请求并进行处理，它会根据请求条件通知模型进行应用程序状态更新，之后选择合适的视图显示给用户</li>
+<li><strong>模型</strong>封装应用的逻辑以及数据状态，当控制器通知模型进行更新时，模型封装的相应逻辑将被调用。执行完后，模型通过<strong>事件机制</strong>通知视图</li>
+<li><strong>视图</strong>是面向用户的接口，当用户同视图发出请求时，视图将这些请求转发给控制器进行处理</li>
+</ul>
+<p>上述模型中，有个问题就是模型<strong>无法实现Push数据到视图这样的功能</strong>，只能做出调整，使得控制器在原来通知模型更新状态的基础上，还要获取模型更新的数据，然后将数据模型一并转发给视图，这就变成了<strong>控制器从模型中Pull数据给视图</strong></p>
+<p>曾经Web应用中都是使用多个Servlet作为控制器，这就要求为每个请求处理流程定义一个Servlet，并利用Web容器（即Web服务器）的URL映射匹配能力来解决Web请求到Servlet的映射。但是随着规模不断变大，配置文件<code>web.xml</code>的体积越来越大，不利于维护，因此舍弃这种方式</p>
+<p>所有Web请求都经由单一的Servlet控制器来进行，虽然这样做不多是把<code>web.xml</code>的膨胀转移到了Servlet控制器，而且所有判断流程都成了硬编码，灵活性和可扩展性下降，但我们可以通过引入合适的<strong>设计模式</strong>，避免上述问题</p>
+<p>制约<strong>JSP Model2</strong>模型发展的就是将流程控制等通用相关逻辑进行硬编码的实践方式，这直接导致了架构的<strong>不可重用性</strong>，因此每次开展新的web应用，就要从头编写Servlet控制器的URL分析和流程控制等逻辑。这促使我们去寻找解决方法</p>
+<p>Web框架就是顺应这个需求诞生。当前Web开发框架有两种类型</p>
+<ul>
+<li>请求驱动Web框架：这种框架基于Servlet的请求和相应处理模型构建的，例如Struts、Spring MVC</li>
+<li>事件驱动Web框架：采用与Swing等GUI开发框架类似的思想，将视图组件化，以淘汰</li>
+</ul>
+<p>请求驱动的Web框架多是基于JSP Model2的基础发展而来，如今的框架依旧使用单一的Servlet作控制器，但是结合了<code>Front Controller</code>和<code>Page Controller</code>设计模式对单一Servlet的问题进行改进</p>
+<p>接下来就开始Spring MVC之旅吧！！！</p>
 
           
         

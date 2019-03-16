@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/3.JPG">
 <meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/5.JPG">
 <meta property="og:image" content="http://yoursite.com/2019/03/08/MIT-6-828-Lab-Guide/6.JPG">
-<meta property="og:updated_time" content="2019-03-15T07:22:47.451Z">
+<meta property="og:updated_time" content="2019-03-16T14:47:47.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Guide">
 <meta name="twitter:description" content="实验工具指南">
@@ -383,6 +383,22 @@
 <p>完成上面的步骤后，会得到一个<code>obj/kern/kernel.img</code>作为模拟PC“虚拟硬盘”的内容提供。此硬盘映像包含我们的引导加载程序<code>obj/boot/boot</code>和我们的内核<code>obj/kernel</code><br><img src="/2019/03/08/MIT-6-828-Lab-Guide/3.JPG" alt="运行截图"></p>
 <p>编译完内核源码，我们就可以把它运行在QEMU上啦！首先在lab目录下面，输入<code>make qemu</code>，此时qemu就开始自动加载我们的操作系统内核映像文件<br><img src="/2019/03/08/MIT-6-828-Lab-Guide/5.JPG" alt="运行截图"><br><img src="/2019/03/08/MIT-6-828-Lab-Guide/6.JPG" alt="运行截图"></p>
 <p>成功！！</p>
+<h1 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h1><ul>
+<li><code>Ctrl-c</code>：暂停机器并按当前指令进入GDB。如果QEMU有多个虚拟CPU，则会暂停所有虚拟CPU</li>
+<li><code>c（或continue）</code>：继续执行直到下一个断点或Ctrl-c<br><code>si（或stepi）</code>：执行一条机器指令</li>
+<li><code>b function</code>或<code>b file:line</code>（或 breakpoint）：在给定的函数或行上设置断点</li>
+<li><code>b *addr</code>（或breakpoint）：在EIP地址处设置断点</li>
+<li><code>set print pretty</code>：启用数组和结构的漂亮打印</li>
+<li><code>info registers</code>：打印通用寄存器，<code>eip</code> <code>eflags</code>和段选择器</li>
+<li><code>x/Nx addr</code>：显示从虚拟地址addr开始的N个字的十六进制转储。如果省略N，则默认为1</li>
+<li><code>x/Ni addr</code>：显示从addr开始的N个汇编指令。使用<code>$eip</code>作为addr将在当前指令指针处显示指令</li>
+<li><code>symbol-file file</code>：（Lab 3+）切换到符号文件文件。当GDB附加到QEMU时，它没有虚拟机中的进程边界的概念，因此我们必须告诉它使用哪些符号。默认情况下，我们将GDB配置为使用内核符号文件<code>obj/kern/kernel</code>。如果机器正在运行用户代码，例如<code>hello.c</code>，则可以使用符号文件<code>obj/user/hello</code>切换到hello符号文件</li>
+</ul>
+<p>QEMU将每个虚拟CPU表示为GDB中的线程，因此您可以使用GDB的所有线程相关命令来查看或操作QEMU的虚拟CPU</p>
+<ul>
+<li><code>thread n</code>：GDB一次关注一个线程（即CPU）。此命令将焦点切换到线程n，从零开始编号。</li>
+<li><code>info threads</code>：列出所有线程（即CPU），包括它们的状态（活动或暂停）以及它们所处的功能。</li>
+</ul>
 <h1 id="lab源码"><a href="#lab源码" class="headerlink" title="lab源码"></a>lab源码</h1><p>实验要用的材料都已经上传<a href="https://github.com/123xzy/MIT-6.828" target="_blank" rel="noopener">源码</a>，其中包括<code>lab</code>、<code>qemu</code>、<code>homework</code>等实验源码和答案</p>
 
       
@@ -571,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装QEMU"><span class="nav-number">1.</span> <span class="nav-text">安装QEMU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#载入xv6"><span class="nav-number">2.</span> <span class="nav-text">载入xv6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lab源码"><span class="nav-number">3.</span> <span class="nav-text">lab源码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装QEMU"><span class="nav-number">1.</span> <span class="nav-text">安装QEMU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#载入xv6"><span class="nav-number">2.</span> <span class="nav-text">载入xv6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GDB"><span class="nav-number">3.</span> <span class="nav-text">GDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lab源码"><span class="nav-number">4.</span> <span class="nav-text">lab源码</span></a></li></ol></div>
             
 
           </div>
