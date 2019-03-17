@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="编译原理," />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -79,22 +79,21 @@
 
 
 
-<meta name="description" content="网上看到一句话，机器生汇编，汇编生B，B生C，C生万物，这个生的逆向过程就是编译器要做的事情">
-<meta name="keywords" content="编译原理">
+<meta name="description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《编译原理》">
-<meta property="og:url" content="http://yoursite.com/2019/02/25/《编译原理》/index.html">
+<meta property="og:title" content="《目标文件》">
+<meta property="og:url" content="http://yoursite.com/2019/01/07/修养-《目标文件》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="网上看到一句话，机器生汇编，汇编生B，B生C，C生万物，这个生的逆向过程就是编译器要做的事情">
+<meta property="og:description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/2.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/3.jpg">
-<meta property="og:updated_time" content="2019-03-04T11:01:04.383Z">
+<meta property="og:image" content="http://yoursite.com/2019/01/07/修养-《目标文件》/1.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/01/07/修养-《目标文件》/2.JPG">
+<meta property="og:updated_time" content="2019-03-17T02:57:54.724Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《编译原理》">
-<meta name="twitter:description" content="网上看到一句话，机器生汇编，汇编生B，B生C，C生万物，这个生的逆向过程就是编译器要做的事情">
-<meta name="twitter:image" content="http://yoursite.com/2019/02/25/《编译原理》/1.jpg">
+<meta name="twitter:title" content="《目标文件》">
+<meta name="twitter:description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/07/修养-《目标文件》/1.JPG">
 
 
 
@@ -124,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/25/《编译原理》/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/01/07/修养-《目标文件》/"/>
 
 
 
 
 
-  <title>《编译原理》 | 阿谢的BLOG</title>
+  <title>《目标文件》 | 阿谢的BLOG</title>
   
 
 
@@ -277,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/25/《编译原理》/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/07/修养-《目标文件》/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xzy">
@@ -294,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">《编译原理》</h1>
+          <h1 class="post-title" itemprop="name headline">《目标文件》</h1>
         
 
         <div class="post-meta">
@@ -306,8 +305,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-25T09:31:12+08:00">
-                2019-02-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-07T08:33:14+08:00">
+                2019-01-07
               </time>
             
 
@@ -344,21 +343,39 @@
       
 
       
-        <p>网上看到一句话，<strong>机器生汇编，汇编生B，B生C，C生万物</strong>，这个生的逆向过程就是编译器要做的事情<br><a id="more"></a></p>
+        <p>编译器编译源码生成的文件就叫<strong>目标文件</strong>，那目标文件里面到底长什么样？<br><a id="more"></a></p>
 <hr>
-<p>编译器只是一个语言处理系统的一部分，创建可执行的目标程序完整的流程如下图，详情参见<br><img src="/2019/02/25/《编译原理》/1.jpg" alt=""><br>拆开编译器这个黑盒子，又会发现很多步骤，如下图<img src="/2019/02/25/《编译原理》/2.jpg" alt=""></p>
-<p>一种语言的<strong>语法</strong>描述了程序的正确形式，<strong>语义</strong>则定义了程序的含义</p>
-<p><strong>上下文无关文法</strong>：是广泛使用的一种描述语法的表示方法</p>
-<p>下图是编译器<strong>前端</strong>的模型<br><img src="/2019/02/25/《编译原理》/3.jpg" alt="编译器前端模型"></p>
-<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
-<li><a href="/2019/03/04/《词法分析》/" title="《词法分析》">《词法分析》</a></li>
-<li><a href="/2019/03/04/《语法分析》/" title="《语法分析》">《语法分析》</a></li>
-<li><a href="/2019/03/04/《语法制导的翻译》/" title="《语法制导的翻译》">《语法制导的翻译》</a></li>
-<li><a href="/2019/03/04/《中间代码生成》/" title="《中间代码生成》">《中间代码生成》</a></li>
-<li><a href="/2019/03/04/《运行时刻环境》/" title="《运行时刻环境》">《运行时刻环境》</a></li>
-<li><a href="/2019/03/04/《代码生成》/" title="《代码生成》">《代码生成》</a></li>
-<li><a href="/2019/03/04/《机器无关优化》/" title="《机器无关优化》">《机器无关优化》</a></li>
+<h1 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h1><p>目标文件从结构上将，就是编译后的<strong>可执行文件格式</strong>，只是没有经过链接的过程。这两种文件和<strong>操作系统、编译器</strong>密切相关</p>
+<p>可执行文件格式涵盖了程序的编译、链接、装载和执行的各个方面，了解它的结构并深入剖析对理解系统、机理大有好处</p>
+<p>可执行文件主要有Windows的<strong>PE</strong>和Linux的<strong>ELF</strong>，目标文件如前所说，是未进行链接的中间文件（如Windows的<code>.obj</code>和Linux的<code>.o</code>）。我们可以将其看做同一个类型的文件</p>
+<p>除此之外，动态链接库（DLL，如Windows的<code>.dll</code>和Linux的<code>.so</code>）和静态链接库（Windows的<code>.lib</code>和Linux的<code>.a</code>）都按照可执行文件格式存储</p>
+<p>但如果要细分这些类型文件，则</p>
+<ul>
+<li>可执行文件：如Windows的<code>.exe</code></li>
+<li>共享目标文件：如Windows的<code>.dll</code>和Linux的<code>.so</code>，一种链接器可以将其和其他可重定位文件和共享目标文件链接产生新的目标文件；第二种动态链接器将其与可执行文件结合，成为进程镜像的一部分</li>
+<li>可重定位文件：如Windows的<code>.obj</code>和Linux的<code>.o</code>，可以被链接成可执行文件或共享目标文件</li>
+<li>核心转储文件：当进程意外终止，系统将进程的地址空间的内容和一些终止信息转储到该文件<br><img src="/2019/01/07/修养-《目标文件》/1.JPG" alt=""></li>
 </ul>
+<h1 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h1><h2 id="目标文件-1"><a href="#目标文件-1" class="headerlink" title="目标文件"></a>目标文件</h2><p>一般按照信息的不同属性，以<strong>节</strong>（Section）或<strong>段</strong>（Segment）的形式存储。这里有个问题，在BIOS代码中，段和节是由区别的，而且是包含的关系，这怎么理解？？？<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">readseg(<span class="keyword">uint32_t</span> pa, <span class="keyword">uint32_t</span> count, <span class="keyword">uint32_t</span> offset)</span><br><span class="line">&#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (pa &lt; end_pa) &#123;</span><br><span class="line">                readsect((<span class="keyword">uint8_t</span>*) pa, offset);</span><br><span class="line">                ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般机器指令放在<strong>代码段</strong>（<code>.code</code>或<code>.text</code>），全局变量和局部静态变量放在<strong>数据段</strong>中（<code>.data</code>）</p>
+<p>数据和指令分开放置的好处：</p>
+<ul>
+<li>数据和指令在装载后，会被映射到两个虚拟内存区域，这两个区域可以设置不同的读写权限，防止指令被修改</li>
+<li>指令和数据分离有利于提高程序的<strong>局部性</strong>，进而提高缓存的命中率</li>
+<li><strong>指令共享</strong>，当系统运行多个该程序的副本时，内存中只需要保存一份该程序的指令，这将节省大量空间</li>
+</ul>
+<h2 id="ELF文件"><a href="#ELF文件" class="headerlink" title="ELF文件"></a>ELF文件</h2><p>ELF文件的开始是一个<strong>File Header</strong>，它描述了文件的属性，如文件是否可执行、是静态链接还是动态链接、入口地址、目标硬件、目标OS等信息，除此之外，还有一个<strong>Section Table</strong>，描述接下来各个段的信息，如各个段在文件的偏移量、段的属性</p>
+<h1 id="链接的接口：符号"><a href="#链接的接口：符号" class="headerlink" title="链接的接口：符号"></a>链接的接口：符号</h1><p>链接的本质就是不同目标文件得到结合，这些目标文件之间必须要固定的规则，才能像积木一样结合在一起</p>
+<p>在链接中，将函数和变量统称为<strong>符号</strong>，符号是链接中的粘合剂，整个链接都是基于符号完成的</p>
+<p>每个目标文件都有一个<strong>符号表</strong>，这个表记录了目标文件中的所有符号，每个符号对应的值，称为<strong>符号值</strong>，对于变量和函数，符号值就是地址。符号也有分类：</p>
+<ul>
+<li>定义在目标文件的全局符号，可以被其他目标文件引用</li>
+<li>定义在其他目标文件的全局符号</li>
+<li>段名，由编译器产生</li>
+<li>局部符号</li>
+<li>行号信息</li>
+</ul>
+<p>我们只关心全局符号，其他符号对于链接过程都是无关紧要的，<code>readelf</code> <code>objdump</code> <code>nm</code>都能查看符号表<br><img src="/2019/01/07/修养-《目标文件》/2.JPG" alt=""></p>
 
       
     </div>
@@ -376,7 +393,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编译原理/" rel="tag"><i class="fa fa-tag"></i> 编译原理</a>
+            <a href="/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
           
         </div>
       
@@ -389,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/24/《一沙一世界》/" rel="next" title="《一沙一世界》">
-                <i class="fa fa-chevron-left"></i> 《一沙一世界》
+              <a href="/2019/01/07/《静态链接》/" rel="next" title="《静态链接》">
+                <i class="fa fa-chevron-left"></i> 《静态链接》
               </a>
             
           </div>
@@ -399,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/25/《王二的经济学故事》/" rel="prev" title="《王二的经济学故事》">
-                《王二的经济学故事》 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/08/《SICP-第三章》/" rel="prev" title="第三章 模块化、对象和状态">
+                第三章 模块化、对象和状态 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -546,7 +563,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目标文件"><span class="nav-number">1.</span> <span class="nav-text">目标文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件结构"><span class="nav-number">2.</span> <span class="nav-text">文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标文件-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF文件"><span class="nav-number">2.2.</span> <span class="nav-text">ELF文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链接的接口：符号"><span class="nav-number">3.</span> <span class="nav-text">链接的接口：符号</span></a></li></ol></div>
             
 
           </div>

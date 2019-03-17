@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="实现一个多线程带缓存的代理服务器！">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-15T12:08:47.988Z">
+<meta property="og:updated_time" content="2019-03-17T12:31:46.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web proxy">
 <meta name="twitter:description" content="实现一个多线程带缓存的代理服务器！">
@@ -344,11 +344,11 @@
 <hr>
 <p>这次的作业主要分三个部分</p>
 <ul>
-<li>Sequential Proxy: 接收客户端发送的 HTTP 请求，解析之后向目标服务器转发，获得响应之后再转发回客户端</li>
+<li>Sequential Proxy: 接收客户端发送的HTTP请求，解析之后向目标服务器转发，获得响应之后再转发回客户端</li>
 <li>Concurrent Proxy: 在第一步的基础上，支持多线程</li>
-<li>Cache Web Objects: 使用 LRU 缓存单独的对象，而不是整个页面</li>
+<li>Cache Web Objects: 使用LRU缓存单独的对象，而不是整个页面</li>
 </ul>
-
+<h1 id="基于进程"><a href="#基于进程" class="headerlink" title="基于进程"></a>基于进程</h1><h1 id="基于I-O多路复用"><a href="#基于I-O多路复用" class="headerlink" title="基于I/O多路复用"></a>基于I/O多路复用</h1>
       
     </div>
     
@@ -444,8 +444,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -518,6 +527,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于进程"><span class="nav-number">1.</span> <span class="nav-text">基于进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于I-O多路复用"><span class="nav-number">2.</span> <span class="nav-text">基于I/O多路复用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
