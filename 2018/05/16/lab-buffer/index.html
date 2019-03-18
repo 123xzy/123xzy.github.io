@@ -79,15 +79,20 @@
 
 
 
+<meta name="description" content="I am a hacker!!">
 <meta name="keywords" content="CSAPP,LAB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Buflab">
 <meta property="og:url" content="http://yoursite.com/2018/05/16/lab-buffer/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="I am a hacker!!">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-15T12:08:54.509Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/16/lab-buffer/1.JPG">
+<meta property="og:updated_time" content="2019-03-17T14:55:02.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
+<meta name="twitter:description" content="I am a hacker!!">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/16/lab-buffer/1.JPG">
 
 
 
@@ -337,7 +342,19 @@
       
 
       
-        
+        <p>I am a hacker!!<br><a id="more"></a></p>
+<hr>
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><a href="http://csapp.cs.cmu.edu/2e/buflab.pdf" target="_blank" rel="noopener">原文指南</a></p>
+<p>该任务帮助详细了解IA-32调用方式和栈组织，其涉及对可执行文件<code>bufbomb</code>实行一系列的缓冲区溢出攻击（buffer overflow attacks）</p>
+<p>在本实验中, 将获得有关通用的寻找操作系统和网络服务器中的安全弱点的方法的第一手经验。我们的目的是帮助您了解程序的运行时操作, 并了解这种形式的安全弱点的性质, 以便您在编写系统代码时避免它。我们不容忍使用这种或任何其他形式的攻击来获得对任何系统资源的未经授权的访问</p>
+<p>在实验材料中有三个可执行文件</p>
+<ul>
+<li>bufbomb：将要攻击的程序</li>
+<li>makecookie：基于userid创建cookie，因此每个人的解决方案都会不一样</li>
+<li>hex2raw：在字符串格式间转换</li>
+</ul>
+<p>cookie是由八个十六进制数字组成的字符串，它（概率很高）是userid所独有的，如：<br><img src="/2018/05/16/lab-buffer/1.JPG" alt=""></p>
+<h1 id="Candle"><a href="#Candle" class="headerlink" title="Candle"></a>Candle</h1><h1 id="Sparkler"><a href="#Sparkler" class="headerlink" title="Sparkler"></a>Sparkler</h1><h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1>
       
     </div>
     
@@ -433,8 +450,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -507,6 +533,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Candle"><span class="nav-number">2.</span> <span class="nav-text">Candle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sparkler"><span class="nav-number">3.</span> <span class="nav-text">Sparkler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Firecracker"><span class="nav-number">4.</span> <span class="nav-text">Firecracker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dynamite"><span class="nav-number">5.</span> <span class="nav-text">Dynamite</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nitroglycerin"><span class="nav-number">6.</span> <span class="nav-text">Nitroglycerin</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

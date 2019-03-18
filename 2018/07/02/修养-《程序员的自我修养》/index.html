@@ -87,17 +87,17 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/2.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/3.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/4.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/5.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/6.jpg">
-<meta property="og:updated_time" content="2019-03-17T01:58:52.038Z">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/6.jpg">
+<meta property="og:updated_time" content="2019-03-18T10:27:27.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《程序员的自我修养》">
 <meta name="twitter:description" content="一本让我意外的书，从一个简单的helloworld开始，讲出了整本书。相对来说较薄的一本书，但仅仅看了第一章就让我理顺了线程和进程的由来。本以为这本书和CSAPP应该差不多，但很意外，研究生写的书也能这么棒，让我也有了写书的冲动">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/02/修养-《程序员的自我修养》/1.jpg">
 
 
 
@@ -367,12 +367,12 @@
 <p>第二个问题就是<strong>安全问题</strong>，程序内存地址是不隔离的，程序之间可以很容易的访问相互之间的数据，这对于恶意程序显然是个好机会，通过轻易访问其他程序的内存，修改内存内容，执行破坏计算机的程序，想想都有点激动</p>
 <p>第三个问题是<strong>地址空间的不确定性</strong>，每次运行程序对应的物理地址都是不确定的，这次可能是0x0000-0x1111,下次就可能是0x2222-0x3333，这种不确定性会给程序编写造成麻烦，例如如果了解汇编的话，程序跳转都是跳转到特定的地址，也就是说编译之后就会给出特定的内存地址</p>
 <p>解决上述问题的方法就是增加中间层，也就是<strong>虚拟地址</strong>，并通过某些映射的方法（<strong>分段</strong>和<strong>分页</strong>），将这个虚拟地址转换成物理地址，这就是虚拟地址带来的好处，但是如果是物理地址就不能带来这种便利</p>
-<h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>即把一个程序所需要内存空间大小的虚拟空间映射到某个地址空间<img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/1.jpg" alt="分段">这种方法只解决上述问题中的地址隔离和地址不确定问题，但没有解决效率问题。</p>
+<h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>即把一个程序所需要内存空间大小的虚拟空间映射到某个地址空间<img src="/2018/07/02/修养-《程序员的自我修养》/1.jpg" alt="分段">这种方法只解决上述问题中的地址隔离和地址不确定问题，但没有解决效率问题。</p>
 <p>当程序访问虚拟地址超过了一定范围，硬件就会判断这是一个非法访问，拒绝这个请求，并将这个请求报告给操作系统，由它来决定如何处理</p>
 <p>但是分段对于内存映射依旧是按照程序为单位，被换入换出的是整个程序，这就导致了大量的磁盘访问操作，影响效率。事实上根据程序的<strong>局部性原理</strong>，程序运行时，只会频繁使用一小部分数据，大部分数据并不会被用到，因此就采取了更小粒度的内存分隔和映射方法，也就是<strong>分页</strong></p>
-<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>把地址空间人为地等分成固定大小的页，每一页的大小由硬件决定或者硬件支持多种大小的页，由操作系统决定页的大小<img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/2.jpg" alt="分页">可以看到进程1某部分虚拟地址被映射到物理地址，一部分被映射到磁盘中。不同的进程可以映射到同一个物理页中，实现内存共享</p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>把地址空间人为地等分成固定大小的页，每一页的大小由硬件决定或者硬件支持多种大小的页，由操作系统决定页的大小<img src="/2018/07/02/修养-《程序员的自我修养》/2.jpg" alt="分页">可以看到进程1某部分虚拟地址被映射到物理地址，一部分被映射到磁盘中。不同的进程可以映射到同一个物理页中，实现内存共享</p>
 <p>当进程需要的页不在内存中时，硬件就会捕捉到这个信息，也就是<strong>页错误</strong>，然后操作系统就会接管进程，将对应的页从磁盘中读出来并装载到内存中，并建立物理页和虚拟页的映射关系</p>
-<p>虚拟地址的实现需要硬件的支持，即<strong>MMU</strong>（Memory Management Unit）来进行页映射，页映射模式下，CPU发出的是Virtual Address，经过MMU转化后变成Physical Address，MMU一般都集成在CPU内部<img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/3.jpg" alt="页映射"></p>
+<p>虚拟地址的实现需要硬件的支持，即<strong>MMU</strong>（Memory Management Unit）来进行页映射，页映射模式下，CPU发出的是Virtual Address，经过MMU转化后变成Physical Address，MMU一般都集成在CPU内部<img src="/2018/07/02/修养-《程序员的自我修养》/3.jpg" alt="页映射"></p>
 <h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>一直在思考一个问题，既然有了进程的概念，为什么还要有线程的概念？现给出自己的答案</p>
 <h2 id="进程的缺点"><a href="#进程的缺点" class="headerlink" title="进程的缺点"></a>进程的缺点</h2><p>进程是为了<strong>CPU和硬件资源</strong>等方面提供的抽象，能够有效提高CPU的利用率。</p>
 <ul>
@@ -380,7 +380,7 @@
 <li>进程在执行的过程中如果阻塞，例如等待输入，整个进程就会挂起，即使进程中有些工作不依赖于输入的数据，也将无法执行。</li>
 </ul>
 <h2 id="线程是什么"><a href="#线程是什么" class="headerlink" title="线程是什么"></a>线程是什么</h2><p>线程是在进程这个层次上提供的一层并发的抽象，也被成为轻量级进程，是程序<strong>执行流的最小单位</strong></p>
-<p>一个标准的线程具有线程ID、当前指令指针、寄存器集合和堆栈等组成。C语言中的<strong>全局变量</strong>被映射到读写区域，任何线程都可以引用；<strong>本地自动变量</strong>（定义咋函数内部但是没有static属性的变量）被映射到每个线程的栈中；<strong>本地静态变量</strong>（定义在函数内部并有static属性的变量）映射到读写区域，每个对等线程都能读写该变量<br><img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/4.jpg" alt="线程"></p>
+<p>一个标准的线程具有线程ID、当前指令指针、寄存器集合和堆栈等组成。C语言中的<strong>全局变量</strong>被映射到读写区域，任何线程都可以引用；<strong>本地自动变量</strong>（定义咋函数内部但是没有static属性的变量）被映射到每个线程的栈中；<strong>本地静态变量</strong>（定义在函数内部并有static属性的变量）映射到读写区域，每个对等线程都能读写该变量<br><img src="/2018/07/02/修养-《程序员的自我修养》/4.jpg" alt="线程"></p>
 <ul>
 <li>可以有效地利用多处理器和多核计算机，在没有线程之前，多核并不能让一个进程的执行速度提高</li>
 <li>能够使系统在同一时间能够做多件事情，当进程遇到阻塞时，例如等待输入，线程能够使不依赖输入数据的工作继续执行，例如多线程可以让一个线程负责交互，另一个线程负责计算</li>
@@ -402,7 +402,7 @@
 <ul>
 <li>运行（Running）</li>
 <li>就绪（Ready）：如CPU被占用</li>
-<li>等待（Waiting）：线程正在等待某一事件（如IO）而无法执行<br><img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/5.jpg" alt="调度"></li>
+<li>等待（Waiting）：线程正在等待某一事件（如IO）而无法执行<br><img src="/2018/07/02/修养-《程序员的自我修养》/5.jpg" alt="调度"></li>
 </ul>
 <p>主流的线程调度都带有<strong>优先级调度</strong>和<strong>轮转法</strong>，Linux可以通过pthread库来进行相关设置，如设置<strong>线程优先级</strong>，这是第一种用户指定优先级改变</p>
 <p>操作系统也会根据线程的表现自动调整优先级，<strong>IO密集型线程</strong>（即因为IO输出输出而频繁等待）比<strong>CPU密集型</strong>（经常要使用完时间片）更容易得到优先级提升</p>
@@ -417,7 +417,7 @@
 <li><strong>信号量</strong>：即多元信号量，用在允许多个线程并发访问的资源上，初始值为N的信号量允许N个线程并发访问</li>
 <li><strong>互斥量</strong>：类似于二元信号量，但是信号量可以被系统任意线程获取并释放，互斥量要求哪个线程获取，哪个线程释放，更加严格</li>
 <li><strong>临界区</strong>：临界区比互斥量更加严格，临界区的作用范围仅限于本进程，其他进程无法获取该锁，而对于互斥量和信号量，系统任何进程都是可见的、可获取的</li>
-<li><strong>读写锁</strong>：虽然对于读写同步来说，信号量、互斥量和临界区都能实现目的，但是<strong>对于读取频繁，仅仅偶尔写入</strong>的情况，会显得很低效，读写锁则可以避免这个问题，读写锁分为读锁和写锁，且有两种获取方式：<strong>共享的</strong>和<strong>独占的</strong><img src="/2018/07/02/修养-《程序员的自我修养》/《程序员的自我修养》/6.jpg" alt="读写锁"></li>
+<li><strong>读写锁</strong>：虽然对于读写同步来说，信号量、互斥量和临界区都能实现目的，但是<strong>对于读取频繁，仅仅偶尔写入</strong>的情况，会显得很低效，读写锁则可以避免这个问题，读写锁分为读锁和写锁，且有两种获取方式：<strong>共享的</strong>和<strong>独占的</strong><img src="/2018/07/02/修养-《程序员的自我修养》/6.jpg" alt="读写锁"></li>
 <li><strong>条件变量</strong>：类似于栅栏，使用条件变量可以是许多线程一起等待某个事件的发生，当事件发生时（条件变量被唤醒），所有线程一起恢复执行</li>
 </ul>
 <h2 id="可重入函数"><a href="#可重入函数" class="headerlink" title="可重入函数"></a>可重入函数</h2><p>重入：重复进入，即该函数被调度系统中断后，再一次进入该函数，不会产生不良后果，就称这个函数是可重入函数</p>

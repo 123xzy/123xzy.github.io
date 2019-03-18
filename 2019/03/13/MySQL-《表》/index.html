@@ -88,7 +88,11 @@
 <meta property="og:description" content="表是关于特定实体的数据集合，这也是关系型数据库模型的核心。本章介绍InnoDB的逻辑存储及其实现分析数据在表中如何组织和存放">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/03/13/MySQL-《表》/1.jpg">
-<meta property="og:updated_time" content="2019-03-13T08:30:34.636Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/13/MySQL-《表》/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/13/MySQL-《表》/4.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/13/MySQL-《表》/3.JPG">
+<meta property="og:image" content="http://yoursite.com/2019/03/13/MySQL-《表》/5.jpg">
+<meta property="og:updated_time" content="2019-03-18T08:08:15.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="表">
 <meta name="twitter:description" content="表是关于特定实体的数据集合，这也是关系型数据库模型的核心。本章介绍InnoDB的逻辑存储及其实现分析数据在表中如何组织和存放">
@@ -355,7 +359,28 @@
 <h2 id="区"><a href="#区" class="headerlink" title="区"></a>区</h2><p>区（<strong>Extent</strong>）是连续页组成的空间，区的大小都为1MB。为了保证连续性，InnoDB存储引擎一次想磁盘申请4-5个区默认情况下，InnoDB的页大小都为16KB，因此一个区一共有64个连续的页。当然可以通过参数设置页的大小，如<code>innodb_page_size</code>，但是区的大小固定不变</p>
 <h2 id="页"><a href="#页" class="headerlink" title="页"></a>页</h2><p>页是InnoDB磁盘管理的最小单位，每个页默认为16KB。常见页的类型如数据页、undo页、系统页、事务数据页等</p>
 <h2 id="行"><a href="#行" class="headerlink" title="行"></a>行</h2><p>数据是按照行进行存放的，每个页存放的行记录都是有硬性定义的，最多存放16KB/2-100行，即7992记录</p>
-<h1 id="行记录格式"><a href="#行记录格式" class="headerlink" title="行记录格式"></a>行记录格式</h1><h1 id="数据页结构"><a href="#数据页结构" class="headerlink" title="数据页结构"></a>数据页结构</h1><h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1>
+<h1 id="行记录格式"><a href="#行记录格式" class="headerlink" title="行记录格式"></a>行记录格式</h1><h2 id="Compact"><a href="#Compact" class="headerlink" title="Compact"></a>Compact</h2><p>MySQL默认的格式是<strong>Compact</strong>，只要知道页中行记录的组织规则，也能自己编写工具读取记录<img src="/2019/03/13/MySQL-《表》/2.jpg" alt=""></p>
+<p>Compact行记录格式的首部是一个非NULL变长字段长度列表（变长字段如varchar，定长数据类型利用空格来填充字段里的空白，但如果某个变长字段的长度定义为10，而输入的字符串长度为5，那么这个值的总长度也就是5），并且按照列的顺序<strong>逆序</strong>放置</p>
+<p>第二个部分是NULL标志位，指示该行数据是否有NULL值</p>
+<p>第三个部分共40位，记录如下一条记录的相对位置、记录类型、是否删除等等信息</p>
+<p>第四部分就是实际存储每个列的数据，NULL不占用该部分任何空间，只占有NULL标记位</p>
+<p>另外还有两个隐藏列，<strong>事务ID列</strong>和<strong>回滚指针列</strong>，如果没有指定主键，还有<strong>rowid</strong>列</p>
+<p>创建一个测试表<img src="/2019/03/13/MySQL-《表》/4.JPG" alt=""></p>
+<p>并使用命令<code>hexdump -C -v mytest.ibd &gt; mytest.txt</code>就能查看表的信息<img src="/2019/03/13/MySQL-《表》/3.JPG" alt=""></p>
+<p>从地址<code>0xc078</code>开始就是记录数据库信息，即下面的数字<br><code>03 02 01 00 00 00 10 00 2c 00 00 00 00 04 00 00 00 00 00 13 08 a8 00 00 01 1c 01 10 61 62 62 62  62 20 20 20 20 20 20 20 20 63 63 63</code></p>
+<ul>
+<li><code>03 02 01</code>：变长字段长度列表，逆序</li>
+<li><code>00</code>：NULL标志，第一行没有NULL，因此为0，而对于有NULL的第三行，此值就为<code>06</code>，转换成二进制就是<code>00000110</code>，即表示第2、3列有NULL值</li>
+<li><code>00 00 10 00 2c</code>：记录头信息，固定为5字节，最后两个字节<code>2c</code>表示下一条记录的偏移量，因此在页内部是通过链表来串联各个行记录的</li>
+<li><code>00 00 00 00 04 00</code>：RowID</li>
+<li><code>00 00 00 00 13 08</code>：TransactionID</li>
+<li><code>a8 00 00 01 1c 01 10</code>：Roll Pointer</li>
+<li><code>61 62 62</code>：对应前两列的数据<code>a bb</code></li>
+<li><code>62 62 20 20 20 20 20 20 20 20</code>：由于第三列数据定义为定长，因此需要填充</li>
+<li><code>63 63 63</code>：对应数据<code>ccc</code></li>
+</ul>
+<h2 id="Redundant"><a href="#Redundant" class="headerlink" title="Redundant"></a>Redundant</h2><p><img src="/2019/03/13/MySQL-《表》/5.jpg" alt="">结构大同小异，不做分析</p>
+<h1 id="数据页结构"><a href="#数据页结构" class="headerlink" title="数据页结构"></a>数据页结构</h1><h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1>
       
     </div>
     
@@ -544,7 +569,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引组织表"><span class="nav-number">1.</span> <span class="nav-text">索引组织表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑存储结构"><span class="nav-number">2.</span> <span class="nav-text">逻辑存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#表空间"><span class="nav-number">2.1.</span> <span class="nav-text">表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段"><span class="nav-number">2.2.</span> <span class="nav-text">段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区"><span class="nav-number">2.3.</span> <span class="nav-text">区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页"><span class="nav-number">2.4.</span> <span class="nav-text">页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行"><span class="nav-number">2.5.</span> <span class="nav-text">行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行记录格式"><span class="nav-number">3.</span> <span class="nav-text">行记录格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据页结构"><span class="nav-number">4.</span> <span class="nav-text">数据页结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#约束"><span class="nav-number">5.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">6.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分区表"><span class="nav-number">7.</span> <span class="nav-text">分区表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引组织表"><span class="nav-number">1.</span> <span class="nav-text">索引组织表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑存储结构"><span class="nav-number">2.</span> <span class="nav-text">逻辑存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#表空间"><span class="nav-number">2.1.</span> <span class="nav-text">表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段"><span class="nav-number">2.2.</span> <span class="nav-text">段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区"><span class="nav-number">2.3.</span> <span class="nav-text">区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页"><span class="nav-number">2.4.</span> <span class="nav-text">页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行"><span class="nav-number">2.5.</span> <span class="nav-text">行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行记录格式"><span class="nav-number">3.</span> <span class="nav-text">行记录格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compact"><span class="nav-number">3.1.</span> <span class="nav-text">Compact</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redundant"><span class="nav-number">3.2.</span> <span class="nav-text">Redundant</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据页结构"><span class="nav-number">4.</span> <span class="nav-text">数据页结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#约束"><span class="nav-number">5.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">6.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分区表"><span class="nav-number">7.</span> <span class="nav-text">分区表</span></a></li></ol></div>
             
 
           </div>

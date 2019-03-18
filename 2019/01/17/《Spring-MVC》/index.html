@@ -88,7 +88,7 @@
 <meta property="og:description" content="开始之前要对Servlet和JSP有所了解 ServletServlet学习笔记，不管之后web应用的开发怎么演化，都将是以Servlet为基础进行 JSPJSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以&amp;lt;%开头以%&amp;gt;结束。 JSP是一种Java servlet，主要用于实现Java web应用程序的">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/01/17/《Spring-MVC》/1.jpg">
-<meta property="og:updated_time" content="2019-03-15T14:11:00.739Z">
+<meta property="og:updated_time" content="2019-03-18T02:05:23.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Spring MVC》">
 <meta name="twitter:description" content="开始之前要对Servlet和JSP有所了解 ServletServlet学习笔记，不管之后web应用的开发怎么演化，都将是以Servlet为基础进行 JSPJSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以&amp;lt;%开头以%&amp;gt;结束。 JSP是一种Java servlet，主要用于实现Java web应用程序的">
@@ -360,7 +360,7 @@
 <li>Web服务器以静态HTML网页的形式将HTTP response返回到您的浏览器中。</li>
 <li>最终，Web浏览器处理HTTP response中动态产生的HTML网页，就好像在处理静态网页一样。</li>
 </ul>
-<h1 id="回顾历史"><a href="#回顾历史" class="headerlink" title="回顾历史"></a>回顾历史</h1><p>使用单一的Servlet开发，出现的最常见弊端就是<strong>Magic Servlet</strong>，将罗成控制逻辑、视图显示逻辑、业务逻辑、数据访问路逻辑结合在一起，为后期维护造成麻烦，简单说就是在一个Servlet实例中，一块是输出HTML视图语句，一块是查询数据库语句，杂合在一起</p>
+<h1 id="回顾历史"><a href="#回顾历史" class="headerlink" title="回顾历史"></a>回顾历史</h1><p>使用单一的Servlet开发，出现的最常见弊端就是<strong>Magic Servlet</strong>，将控制逻辑、视图显示逻辑、业务逻辑、数据访问路逻辑结合在一起，为后期维护造成麻烦，简单说就是在一个Servlet实例中，一块是输出HTML视图语句，一块是查询数据库语句，杂合在一起</p>
 <p>即使将数据访问逻辑封装起来，也还是避免不了视图逻辑的混乱，这时候就出现了JSP，来将Servlet视图渲染逻辑独立抽象出来并使用<strong>模板化</strong>的方法。JSP的提出，成为了Java平台上开发web应用程序的模板化视图标准</p>
 <p>现在JSP专职负责视图的渲染工作，Servlet得以进一步解脱，只需通过<code>requestDispatcher.forward(request,response)</code>将当前request传递到jsp，或者把新的资源包括到当前响应中</p>
 <p>JSP与其他模板技术一个主要区别就是它最终都是编译为Servlet来运行的，这使得JSP拥有更大的能量，可以将所有逻辑都编写到JSP中，甚至是数据库连接代码（当然这样做是不对的）。其次，一般的Servlet处理请求，在<code>web.xml</code>中都要注册URL和相应Servlet的一一映射关系，因此会充斥很多的配置文件，而使用JSP则可以省去麻烦，直接通过链接就能访问</p>
