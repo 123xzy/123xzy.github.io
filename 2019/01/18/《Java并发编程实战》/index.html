@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="介绍了一些并发编程的设计规则和思维模式">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-21T12:20:57.343Z">
+<meta property="og:updated_time" content="2019-03-19T09:02:49.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Java并发编程实战》">
 <meta name="twitter:description" content="介绍了一些并发编程的设计规则和思维模式">
@@ -356,10 +356,13 @@
 </ul>
 <p>下面的模块都将在应用程序之外的线程中调用应用程序的代码</p>
 <ul>
-<li>Servlet和JavaServer Page（JSP）：Servlet框架用于部署网页应用程序以及分发来自HTTP客户端的请求，到达服务器的请求可能会通过一个过滤器链被分发到正确的servlet或JSP，每个servlet都是一个程序逻辑组件，多个客户端可能同时请求同一个servlet服务，因此在servlet框架中需要满足servlet被多个线程同时调用，即servlet需要时线程安全的</li>
+<li>Servlet和JavaServer Page（JSP）：Servlet框架用于部署网页应用程序以及分发来自HTTP客户端的请求，到达服务器的请求可能会通过一个过滤器链被分发到正确的servlet或JSP，每个servlet都是一个程序逻辑组件，多个客户端可能同时请求同一个servlet服务，因此在servlet框架中需要满足servlet被多个线程同时调用，即servlet需要是线程安全的</li>
 <li>RMI：使代码能够调用在其他JVM中运行的对象。当RMI调用某个远程方法时，传递给方法的参数必须打包到一个字节流，通过网络传输给远程JVM，再由其拆包并传递给远程方法</li>
 </ul>
 <hr>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="/2019/03/19/JCP-线程安全性/" title="线程安全性">线程安全性</a></li>
+</ul>
 
       
     </div>
@@ -454,8 +457,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -470,7 +482,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">206</span>
+                  <span class="site-state-item-count">208</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -528,6 +540,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/2.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/02/25/《编译原理》/3.jpg">
-<meta property="og:updated_time" content="2019-03-04T11:01:04.383Z">
+<meta property="og:updated_time" content="2019-03-19T09:58:53.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《编译原理》">
 <meta name="twitter:description" content="网上看到一句话，机器生汇编，汇编生B，B生C，C生万物，这个生的逆向过程就是编译器要做的事情">
@@ -350,6 +350,14 @@
 <p>一种语言的<strong>语法</strong>描述了程序的正确形式，<strong>语义</strong>则定义了程序的含义</p>
 <p><strong>上下文无关文法</strong>：是广泛使用的一种描述语法的表示方法</p>
 <p>下图是编译器<strong>前端</strong>的模型<br><img src="/2019/02/25/《编译原理》/3.jpg" alt="编译器前端模型"></p>
+<ul>
+<li>词法分析：源代码程序被输入到<strong>扫描机</strong>，它运用一种类似于<strong>有限状态机</strong>的算法将源代码的字符序列分割成一系列的符号，产生的符号可以分为关键字、标识符、字面量和特殊符号。然后将标识符放到符号表，将数字、字符串常量放到文字表。C语言在词法分析之前，还会通过预处理器去处理宏替换和文件包含，对于工具Lex，参见<a href="/2019/03/19/Lex-Yacc入门/" title="Lex/Yacc入门">Lex/Yacc入门</a></li>
+<li>语法分析：对上一步产生的记号进行分析，产生<strong>语法树</strong>，采用<strong>上下文无关语法</strong>的分析方式，对应的工具是Yacc</li>
+<li>语义分析：经过该阶段，这个语法树的表达式都被标志了类型，如果类型需要隐式转换，该步骤会在语法树插入相应转化节点</li>
+<li>中间语言生成：编译器往往在源码级别会有一个优化，即源码级优化器。它会将这个语法树转换为中间代码，此时已经非常接近目标代码，但是中间代码一般不包括数据尺寸、变量地址等。最常见的中间代码类型是<strong>三地址码</strong>。中间代码是编译器<strong>前端和后端</strong>的分水岭。    前端负责产生机器无关的中间代码，后端将中间代码转化成目标机器代码</li>
+<li>目标代码生成与优化：这个过程非常依赖目标机器，CPU的复杂和语言的复杂使得编译后端也变得异常复杂</li>
+</ul>
+<hr>
 <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
 <li><a href="/2019/03/04/《词法分析》/" title="《词法分析》">《词法分析》</a></li>
 <li><a href="/2019/03/04/《语法分析》/" title="《语法分析》">《语法分析》</a></li>
@@ -478,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">206</span>
+                  <span class="site-state-item-count">208</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
