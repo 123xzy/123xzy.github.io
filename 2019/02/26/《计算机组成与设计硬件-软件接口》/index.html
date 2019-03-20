@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/02/26/《计算机组成与设计硬件-软件接口》/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/02/26/《计算机组成与设计硬件-软件接口》/2.jpg">
-<meta property="og:updated_time" content="2019-03-11T08:05:35.340Z">
+<meta property="og:updated_time" content="2019-03-20T03:56:31.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《计算机组成与设计硬件&#x2F;软件接口》">
 <meta name="twitter:description" content="成功的程序员总是关心其程序的性能">
@@ -364,11 +364,11 @@
 <li><strong>存储器层次</strong>：更快和更大总是矛盾的</li>
 <li><strong>通过冗余提高可靠性</strong>：通过使用冗余部件来提高系统可靠性，就是浪费一些东西来换取可靠性</li>
 </ul>
-<h1 id="大端和小端"><a href="#大端和小端" class="headerlink" title="大端和小端"></a>大端和小端</h1><p><img src="/2019/02/26/《计算机组成与设计硬件-软件接口》/1.jpg" alt=""><br><img src="/2019/02/26/《计算机组成与设计硬件-软件接口》/2.jpg" alt=""><br>两种方案虽有不同，但也有共识，即依次存储每一个数字，即先存0x12345678，再存0x11223344。大家的分歧在于，对于某一个要表示的值，因为只能一个字节一个字节的存嘛，我是把值的低位存到低地址，还是把值的高位存到低地址。前者使用的是“小端（Little endian）”字节序，即先存低位的那一端（两个数字的最低位分别是0x78、0x44），如上图中的第一个图；后者使用的是“大端（Big endian）”字节序，即先存高位的那一端（两个数字的最高位分别是0x12、0x11）,如上图中的第二个图。</p>
+<h1 id="大端和小端"><a href="#大端和小端" class="headerlink" title="大端和小端"></a>大端和小端</h1><p><img src="/2019/02/26/《计算机组成与设计硬件-软件接口》/1.jpg" alt=""><br><img src="/2019/02/26/《计算机组成与设计硬件-软件接口》/2.jpg" alt=""><br>MSB（Most Significant Bit）是最重要的字节，LSB则是最不重要的字节，对应上图，<code>0x78</code>就是LSB，<code>0x12</code>就是MSB</p>
+<p>大端和小端的区别就是Big-endian规定MSB在存储时放在低地址，在传输时MSB放在流的开始，LSB则相反</p>
 <p>前面的大端和小端都是在说计算机自己，也被称作主机字节序。其实，只要自己能够自圆其说是没啥问题的。问题是，网络的出现使得计算机可以通信了。通信，就意味着相处，相处必须得有共同语言。但是每个计算机都有自己的主机字节序</p>
-<p>TCP/IP协议隆重出场，RFC1700规定使用“大端”字节序为网络字节序，其他不使用大端的计算机要注意了，发送数据的时候必须要将自己的主机字节序转换为网络字节序（即“大端”字节序），接收到的数据再转换为自己的主机字节序。这样就与CPU、操作系统无关了，实现了网络通信的标准化</p>
+<p>TCP/IP协议（RFC1700）规定使用“大端”字节序为网络字节序，其他不使用大端的计算机发送数据的时候必须要将自己的主机字节序转换为网络字节序（即“大端”字节序），接收到的数据再转换为自己的主机字节序。这样就与CPU、操作系统无关了，实现了网络通信的标准化</p>
 <p>为了程序的兼容，你会看到，程序员们每次发送和接受数据都要进行转换，这样做的目的是保证代码在任何计算机上执行时都能达到预期的效果。</p>
-<p>这么常用的操作，BSD Socket提供了封装好的转换接口，方便程序员使用。包括从主机字节序到网络字节序的转换函数：htons、htonl；从网络字节序到主机字节序的转换函数：ntohs、ntohl。当然，有了上面的理论基础，也可以编写自己的转换函数</p>
 <hr>
 <ul>
 <li><a href="/2019/03/05/《存储器层次结构》/" title="《存储器层次结构》">《存储器层次结构》</a></li>
@@ -492,7 +492,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">208</span>
+                  <span class="site-state-item-count">211</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -505,7 +505,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
