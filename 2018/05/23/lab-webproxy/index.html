@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="CSAPP,LAB," />
+  <meta name="keywords" content="CSAPP，LAB," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="实现一个多线程带缓存的代理服务器！">
-<meta name="keywords" content="CSAPP,LAB">
+<meta name="keywords" content="CSAPP，LAB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web proxy">
 <meta property="og:url" content="http://yoursite.com/2018/05/23/lab-webproxy/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="实现一个多线程带缓存的代理服务器！">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-17T12:31:46.969Z">
+<meta property="og:updated_time" content="2019-03-22T10:19:01.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web proxy">
 <meta name="twitter:description" content="实现一个多线程带缓存的代理服务器！">
@@ -342,13 +342,31 @@
       
         <p>实现一个多线程带缓存的代理服务器！<br><a id="more"></a></p>
 <hr>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Web代理是在Web浏览器和终端服务器之间充当中间人的程序。浏览器不会直接联系最终服务器以获取网页，而是与代理联系，代理将请求转发到最终服务器。当终端服务器答复代理时，代理会将答复发送到浏览器</p>
+<p>代理的作用：</p>
+<ul>
+<li>在防火墙中使用代理，因此防火墙后面的浏览器只能通过代理与防火墙以外的服务器联系。</li>
+<li>充当匿名者，通过剥离对所有标识信息的请求，代理可以使浏览器匿名到Web服务器</li>
+<li>可以用于缓存web对象，方法是存储服务器中对象的本地副本，然后通过从缓存中读取对象 (而不是与远程服务器再次通信) 来响应将来的请求</li>
+</ul>
 <p>这次的作业主要分三个部分</p>
 <ul>
 <li>Sequential Proxy: 接收客户端发送的HTTP请求，解析之后向目标服务器转发，获得响应之后再转发回客户端</li>
 <li>Concurrent Proxy: 在第一步的基础上，支持多线程</li>
 <li>Cache Web Objects: 使用LRU缓存单独的对象，而不是整个页面</li>
 </ul>
-<h1 id="基于进程"><a href="#基于进程" class="headerlink" title="基于进程"></a>基于进程</h1><h1 id="基于I-O多路复用"><a href="#基于I-O多路复用" class="headerlink" title="基于I/O多路复用"></a>基于I/O多路复用</h1>
+<h1 id="Part-I"><a href="#Part-I" class="headerlink" title="Part I"></a>Part I</h1><p>请求的header一定要有的内容是：</p>
+<ul>
+<li><code>Host</code>: 如<code>Host: www.cmu.edu</code></li>
+<li><code>User-Agent</code>: 如 <code>User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3</code></li>
+<li><code>Connection</code>: 如 <code>Connection: close</code></li>
+<li><code>Proxy-Connection</code>: 如 <code>Proxy-Connection: close</code></li>
+</ul>
+<h1 id="Part-II"><a href="#Part-II" class="headerlink" title="Part II"></a>Part II</h1><p>在<a href="/2019/01/07/CSAPP-第十二章/" title="第十二章：并发编程">第十二章：并发编程</a>提到了三种方式实现并发服务器，作为参考</p>
+<h1 id="Part-III"><a href="#Part-III" class="headerlink" title="Part III"></a>Part III</h1><p>HTTP实际上定义了一个相当复杂的模型，通过该模型，web服务器可以指示如何缓存它们所服务的对象，客户端可以指定如何代表它们使用缓存，而我们只需要实现简化版</p>
+<p>此可能会出现一个巨型对象将消耗整个缓存的情况，从而防止缓存其他对象。为了避免这些问题，要设置<code>maximum cache size</code> <code>maximum cache object size</code></p>
+<p>对缓存的访问必须是线程安全的，确保缓存访问没有竞争条件可能是这个Lab更有趣的方面。事实上，有一个特殊的要求，即多个线程必须能够同时从缓存中读取。当然，一次只允许一个线程写入缓存，但读者必须不存在这种限制。因此，使用一个大型独占锁保护对缓存的访问不是一个可接受的解决方案。您可能需要探索一些选项，例如对缓存进行分区、使用<code>Pthreads readers-writers locks</code>或使用信号量来实现您自己的<code>readers-writers</code>解决方案。无论哪种情况，您不必实施严格的<code>LRU eviction policy</code>这一事实都会使您在支持多个读取器方面有一定的灵活性</p>
+
       
     </div>
     
@@ -365,9 +383,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
-          
-            <a href="/tags/LAB/" rel="tag"><i class="fa fa-tag"></i> LAB</a>
+            <a href="/tags/CSAPP，LAB/" rel="tag"><i class="fa fa-tag"></i> CSAPP，LAB</a>
           
         </div>
       
@@ -482,7 +498,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -537,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于进程"><span class="nav-number">1.</span> <span class="nav-text">基于进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于I-O多路复用"><span class="nav-number">2.</span> <span class="nav-text">基于I/O多路复用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-I"><span class="nav-number">2.</span> <span class="nav-text">Part I</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-II"><span class="nav-number">3.</span> <span class="nav-text">Part II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-III"><span class="nav-number">4.</span> <span class="nav-text">Part III</span></a></li></ol></div>
             
 
           </div>

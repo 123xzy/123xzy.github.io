@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/4.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/5.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/06/09/CSAPP-第十一章/6.JPG">
-<meta property="og:updated_time" content="2019-03-12T10:45:50.323Z">
+<meta property="og:updated_time" content="2019-03-22T10:22:02.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十一章：网络编程">
 <meta name="twitter:description" content="网络应用中，进程、信号、字节顺序、内存映射以及动态内存分配都扮演重要角色。我们要理解基本的客户端-服务器编程模型，编写使用因特网提供的服务的客户端-服务器程序，最后将所有概念结合，开发一个虽小但功能齐全的Web服务器，为真实的Web浏览器提供静态和动态的文本和图形内容">
@@ -402,7 +402,7 @@
 <p>具体参数解释和链接结构参见书本P657-658</p>
 <h2 id="getnameinfo"><a href="#getnameinfo" class="headerlink" title="getnameinfo"></a>getnameinfo</h2><p>该函数作用和<code>getaddrinfo</code>相反，将一个套接字地址结构转换成相应的主机和服务名字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int getnameinfo(const struct sockaddr *sa,socklen_t salen,</span><br><span class="line">	char *host,size_t hostlen,</span><br><span class="line">	char *service,size_t servlen,int flags);</span><br></pre></td></tr></table></figure></p>
 <p>下面的函数都是对上面的函数的封装</p>
-<h2 id="open-clientfd"><a href="#open-clientfd" class="headerlink" title="open_clientfd"></a>open_clientfd</h2><p>客户端调用该函数建立与服务器的连接，服务器运行再主机hostname上，并在port端口号上监听连接请求，他返回一个打开的套接字描述符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int open_clientfd(char *hostname,char *port);</span><br></pre></td></tr></table></figure></p>
+<h2 id="open-clientfd"><a href="#open-clientfd" class="headerlink" title="open_clientfd"></a>open_clientfd</h2><p>客户端调用该函数建立与服务器的连接，服务器运行在主机hostname上，并在port端口号上监听连接请求，他返回一个打开的套接字描述符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int open_clientfd(char *hostname,char *port);</span><br></pre></td></tr></table></figure></p>
 <h2 id="open-listenfd"><a href="#open-listenfd" class="headerlink" title="open_listenfd"></a>open_listenfd</h2><p>服务器调用该函数，创建一个监听描述符，准备好接受连接请求</p>
 <h1 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h1><p>HTTP是基于在因特网连接上传送的文本行的，可以使用linux上的<code>TELNET</code>程序来和因特网上的任何web服务器执行事务</p>
 <p>具体细节参考其他文章</p>
@@ -579,7 +579,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

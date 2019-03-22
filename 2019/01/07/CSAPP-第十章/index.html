@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第十章：系统级I/O">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-14T13:23:58.152Z">
+<meta property="og:updated_time" content="2019-03-22T12:46:01.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十章：系统级I&#x2F;O">
 <meta name="twitter:description" content="《CSAPP》第十章：系统级I/O">
@@ -342,6 +342,53 @@
       
         <p>《CSAPP》第十章：系统级I/O<br><a id="more"></a></p>
 <hr>
+<p>ANSI C提供标准I/O库，C++提供重载操作符，在Linux系统中使用内核提供的系统级Unix I/O函数来实现较高级别的I/O函数，学习Unix I/O有利于</p>
+<ul>
+<li>理解其他系统概念。I/O是系统不可或缺的一部分，它们之间是循环依赖。例如，I/O在进程的创建和执行中扮演关键角色，进程创建又在不同进程间的文件共享中扮演关键角色？？</li>
+<li>除了使用Unix I/O以外别无选择。例如标准I/O库没有提供读取文件元数据的方式，I/O库本身也存在问题，不能用于网络编程</li>
+<li>这章的学习将为学习网络编程和并发性奠定坚实的基础</li>
+</ul>
+<h1 id="Unix-I-O"><a href="#Unix-I-O" class="headerlink" title="Unix I/O"></a>Unix I/O</h1><p>Linux中，所有I/O设备都被模型化为文件，这种方式允许Linux内核引出一个简单、低级的应用接口，称为Unix I/O，这就使得<strong>所有输入输出都以一种统一的方式执行</strong></p>
+<ul>
+<li>打开文件：应用程序要求内核打开相应文件，内核就返回一个小的非负整数，叫做<strong>描述符</strong>。内核记录有关打开这个文件的所有信息，应用程序只需记住这个描述符</li>
+<li>标准输入、输出和错误：Shell创建每个进程的时候都会打开三个文件（可查看xv6源码的8507行）</li>
+<li>改变文件位置：这是从文件开头起始的字节偏移量，可通过<code>seek</code>显示设置文件的当前位置</li>
+<li>读写文件：读写文件就是磁盘和内存的交换</li>
+<li>关闭文件：当通知内核关闭程序时，内核就会释放文件打开时创建的数据结构，并将这个描述符恢复到可用的描述符池中</li>
+</ul>
+<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>Linux文件也有不同的类型</p>
+<ul>
+<li>普通文件：对内核而言，文本文件和二进制文件没有区别</li>
+<li>目录：包含一组链接的文件，其中每个链接都有一个文件名映射到一个文件</li>
+<li>套接字：用来与另一个进程进程跨网络通信的文件</li>
+</ul>
+<h2 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h2><p>作为上下文的一部分，每个进程都有一个当前工作目录，来确定在目录层次结构中的当前位置</p>
+<p>进程通过调用<code>open</code>函数来打开一个已经存在的文件或创建新文件<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">char</span> *filename,<span class="keyword">int</span> flags,<span class="keyword">mode_t</span> mode)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>该函数将<code>filename</code>转换为文件描述符并返回，返回的描述符是进程中未使用的最小描述符。</p>
+<p><code>flags</code>参数指明访问方式，如<code>O_RDONLY</code> <code>O_WRONLY</code> <code>O_RDWR</code> <code>O_CREATE</code>等模式，具体参考书</p>
+<p><code>mode</code>参数指明新文件的访问权限位。作为上下文一部分，每个进程都有一个<code>umask</code>，它通过调用<code>umask</code>函数来设置，此时文件的访问权限为<code>mode &amp; ~umask</code>，例如<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEF_MODE S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IWOTH</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEF_UMASK S_IWGRP | S_IWOTH</span></span><br><span class="line"></span><br><span class="line">umaks(DEF_UMASK);</span><br><span class="line">fd = open(<span class="string">"foo.txt"</span>,O_CREATE | O_WRONLY,DEF_MODE);</span><br></pre></td></tr></table></figure></p>
+<p>上面常见的文件就只有<code>S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IWOTH &amp; ~(S_IWGRP | S_IWOTH)</code>，也就是只有<code>S_IRUSR | S_IWUSR | S_IRGRP</code>属性，也就是文件的拥有者有读写权限，而所在组拥有写权限</p>
+<h2 id="读写"><a href="#读写" class="headerlink" title="读写"></a>读写</h2><p>通过下面两个函数执行输入输出<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> read(<span class="keyword">int</span> fd,<span class="keyword">void</span> *buf,<span class="keyword">size_t</span> n);</span><br><span class="line"><span class="keyword">ssize_t</span> write(<span class="keyword">int</span> fd,<span class="keyword">const</span> <span class="keyword">void</span> *buf,<span class="keyword">size_t</span> n);</span><br></pre></td></tr></table></figure></p>
+<p><code>read</code>函数从描述符<code>fd</code>的当前位置复制最多n个字节到内存位置<code>buf</code>，返回-1表示错误，返回0表示EOF，否则返回实际传送的字节数量</p>
+<p>在x86-64系统中，<code>size_t</code>定义为<code>unsigned long</code>，<code>ssize_t</code>定义为<code>long</code>，因为<code>read</code>函数可能返回负数，必须是有符号数，因为这个原因，该函数能读取的最大字节数减少了一半</p>
+<p>有些时候，两个函数传送的字节数量比定义的n值要少，这意味着出错误</p>
+<ul>
+<li>遇到EOF</li>
+<li>从终端读取文本行：如键盘和显示器，每个<code>read</code>函数读取一个文本行，返回的不足值就是文本行大小</li>
+<li>读写网络套接字：内部缓冲约束和网络延迟会引起返回不足值</li>
+</ul>
+<h1 id="RIO"><a href="#RIO" class="headerlink" title="RIO"></a>RIO</h1><p>RIO提供了两类不同的函数</p>
+<ul>
+<li>无缓冲的输入输出函数：直接在文件和内存之间传送数据，没有应用级缓存，它们对二进制数据读写到网络和从网络读写二进制数据很有用</li>
+<li>带缓存的输入函数：这些函数是线程安全</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * rio_readn - robustly read n bytes (unbuffered)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/* $begin rio_readn */</span></span><br><span class="line"><span class="keyword">ssize_t</span> rio_readn(<span class="keyword">int</span> fd, <span class="keyword">void</span> *usrbuf, <span class="keyword">size_t</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">size_t</span> nleft = n;</span><br><span class="line">    <span class="keyword">ssize_t</span> nread;</span><br><span class="line">    <span class="keyword">char</span> *bufp = usrbuf;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (nleft &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((nread = read(fd, bufp, nleft)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (errno == EINTR) <span class="comment">/* Interrupted by sig handler return */</span></span><br><span class="line">                nread = <span class="number">0</span>;      <span class="comment">/* and call read() again */</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;      <span class="comment">/* errno set by read() */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nread == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;              <span class="comment">/* EOF */</span></span><br><span class="line">        nleft -= nread;</span><br><span class="line">        bufp += nread;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (n - nleft);         <span class="comment">/* return &gt;= 0 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* $end rio_readn */</span></span><br></pre></td></tr></table></figure>
+<p><code>rio_readn</code>从描述符<code>fd</code>的当前位置最多传送n个字节到内存位置<code>usrbuf</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * rio_writen - robustly write n bytes (unbuffered)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/* $begin rio_writen */</span></span><br><span class="line"><span class="keyword">ssize_t</span> rio_writen(<span class="keyword">int</span> fd, <span class="keyword">void</span> *usrbuf, <span class="keyword">size_t</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">size_t</span> nleft = n;</span><br><span class="line">    <span class="keyword">ssize_t</span> nwritten;</span><br><span class="line">    <span class="keyword">char</span> *bufp = usrbuf;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (nleft &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((nwritten = write(fd, bufp, nleft)) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (errno == EINTR)  <span class="comment">/* Interrupted by sig handler return */</span></span><br><span class="line">                nwritten = <span class="number">0</span>;    <span class="comment">/* and call write() again */</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;       <span class="comment">/* errno set by write() */</span></span><br><span class="line">        &#125;</span><br><span class="line">        nleft -= nwritten;</span><br><span class="line">        bufp += nwritten;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* $end rio_writen */</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="/2019/03/08/MIT-6-828-book-xv6-Chapter-0/" title="MIT 6.828 book_xv6:Chapter 0">MIT 6.828 book_xv6:Chapter 0</a></li>
+<li>APUE：<a href="/2019/01/11/《APUE-标准IO库》/" title="第五章 标准I/O库">第五章 标准I/O库</a></li>
+</ul>
 
       
     </div>
@@ -436,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -465,7 +521,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -510,6 +566,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unix-I-O"><span class="nav-number">1.</span> <span class="nav-text">Unix I/O</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-number">2.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打开"><span class="nav-number">2.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写"><span class="nav-number">2.2.</span> <span class="nav-text">读写</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RIO"><span class="nav-number">3.</span> <span class="nav-text">RIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
