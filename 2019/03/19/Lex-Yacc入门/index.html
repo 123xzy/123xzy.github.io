@@ -89,16 +89,16 @@
 <meta name="keywords" content="编译原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lex&#x2F;Yacc入门">
-<meta property="og:url" content="http://yoursite.com/2019/03/19/Lex-Yacc入门/index.html">
+<meta property="og:url" content="https://123xzy.github.io/2019/03/19/Lex-Yacc入门/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="词法分析器（Scanner）和语法解析器">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2019/03/19/Lex-Yacc入门/1.JPG">
-<meta property="og:updated_time" content="2019-03-19T15:07:31.248Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/19/Lex-Yacc入门/1.JPG">
+<meta property="og:updated_time" content="2019-03-23T14:13:20.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lex&#x2F;Yacc入门">
 <meta name="twitter:description" content="词法分析器（Scanner）和语法解析器">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/19/Lex-Yacc入门/1.JPG">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/03/19/Lex-Yacc入门/1.JPG">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/19/Lex-Yacc入门/"/>
+  <link rel="canonical" href="https://123xzy.github.io/2019/03/19/Lex-Yacc入门/"/>
 
 
 
@@ -315,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/19/Lex-Yacc入门/">
+    <link itemprop="mainEntityOfPage" href="https://123xzy.github.io/2019/03/19/Lex-Yacc入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="123xzy">
@@ -420,22 +420,18 @@
 <li><code>int yywrap(void)</code>：在文件(或输入)的末尾调用。如果函数的返回值是1，就停止解析。因此它可以用来解析多个文件。代码可以写在第三段，这样可以解析多个文件。方法是使用yyin文件指针指向不同的文件，直到所有的文件都被解析。最后，yywrap() 可以返回1来表示解析的结束</li>
 </ul>
 <p>Lex其实就是词法分析器，通过配置文件<code>*.l</code>，依据正则表达式逐字符去顺序解析文件，<br>并动态更新内存的数据解析状态。不过Lex只有状态和状态转换能力。因为它没有堆栈，<br>它不适合用于剖析外壳结构。而yacc增加了一个堆栈，并且能够轻易处理像括号这样的<br>结构。Lex善长于模式匹配，如果有更多的运算要求就需要yacc了</p>
-<h1 id="Yacc"><a href="#Yacc" class="headerlink" title="Yacc"></a>Yacc</h1><p>yacc文法采用BNF(Backus-Naur Form)的变量规则描述。<strong>BNF文法</strong>最初由John Backus和Peter Naur发明，并且用于描述Algol60语言。BNF能够用于表达上下文无关的语言。现代程序语言大多数结构能够用BNF来描述</p>
+<h1 id="Yacc"><a href="#Yacc" class="headerlink" title="Yacc"></a>Yacc</h1><p>Yacc文法采用BNF(Backus-Naur Form)的变量规则描述。<strong>BNF文法</strong>最初由John Backus和Peter Naur发明，并且用于描述Algol60语言。BNF能够用于表达上下文无关的语言。现代程序语言大多数结构能够用BNF来描述</p>
 <p>出现在每个产生式左边(left-hand side：lhs)的符号是非终端符号，出现在产生式右边(right-hand side：rhs)的符号有非终端符号和终端符号，但终端符号只出现在右端</p>
 <p>1、yacc语法规则部分和BNF类同，先来看BNF巴克斯范式</p>
 <p>（1）&lt;&gt; 内包含的内容为必选项；</p>
 <p>（2）[]  内的包含的内容为可选项；</p>
 <p>（3）{ } 内包含的为可重复0至无数次的项；</p>
 <p>（4） | 表示在其左右两边任选一项，相当于”OR”的意思；<br>（5）::= 是“被定义为”的意思；<br>（6）双引号<code>“”</code>内的内容代表这些字符本身；而double _quote用来表示双引号</p>
-<p>2.Yacc文件格式<br>Yacc文件分为三部分：</p>
-<p>… definitions …<br>%%<br>… rules …<br>%%<br>… subroutines …</p>
+<p>2.Yacc文件格式<br>Yacc文件分为三部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">... definitions ...</span><br><span class="line">%%</span><br><span class="line">... rules ...</span><br><span class="line">%%</span><br><span class="line">... subroutines ...</span><br></pre></td></tr></table></figure></p>
 <p>3.定义部分<br>第一部分包括标志(token)定义和C代码(用“%{”和“%}”括起来)。</p>
 <p>如在定义部分定义标志：</p>
-<p>%token  INTEGER<br>当运行yacc后，会产生头文件，里面包含该标志的预定义，如：</p>
-<p>#ifndef  YYSTYPE</p>
-<p>#define  YYSTYPE int</p>
-<p>#endif</p>
-<p>#define  INTEGER  258<br>extern  YYSTYPE  yylval;<br>lex使用该头文件中的标志定义。Yacc调用lex的yylex()来获得标志(token)，与标志对应的值由lex放在变量yylval中。yylval的类型由YYSTYPE决定，YYSTYPE缺省类型是int。如：</p>
+<p>%token  INTEGER<br>当运行yacc后，会产生头文件，里面包含该标志的预定义，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifndef  YYSTYPE</span><br><span class="line">#define  YYSTYPE int</span><br><span class="line">#endif</span><br><span class="line">#define  INTEGER  258</span><br><span class="line">extern  YYSTYPE  yylval;</span><br></pre></td></tr></table></figure></p>
+<p>lex使用该头文件中的标志定义。Yacc调用lex的yylex()来获得标志(token)，与标志对应的值由lex放在变量yylval中。yylval的类型由YYSTYPE决定，YYSTYPE缺省类型是int。如：</p>
 <p>[0-9]+  {<br>yylval = atoi(yytext);<br>return INTEGER;<br>}<br>标志0-255被保留作为字符值，一般产生的token标志从258开始。如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-+]  return *yytext;  /* return operator */</span><br></pre></td></tr></table></figure>
 <p>返回加号或减号。注意要把减号放在前面，避免被认作是范围符号。</p>
@@ -463,9 +459,8 @@
 <p>7.If-Else的冲突<br>当有两个IF一个ELSE时，该ELSE和哪个IF匹配是一个问题。有两中匹配方法：与第一个匹配和与第二匹配。现代程序语言都让ELSE与最近的IF匹配，这也是yacc的缺省行为。</p>
 <p>虽然yacc行为正确，但为避免警告，可以给IF-ELSE语句比IF语句更高的优先级：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%nonassoc IFX</span><br><span class="line">%nonassoc ELSE</span><br><span class="line">stmt:  IF expr stmt %prec IFX</span><br><span class="line">| IF expr stmt ELSE stmt</span><br></pre></td></tr></table></figure></p>
 <p>8.出错处理<br>当yacc解析出错时，缺省的行为是调用函数yyerror()，然后从yylex返回一个值。一个更友好的方法是忽略一段错误输入流，继续开始扫描。实现方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">stmt:</span><br><span class="line">&apos;;&apos;</span><br><span class="line">| expr &apos;;&apos;</span><br><span class="line">| PRINT expr &apos;;&apos;</span><br><span class="line">| VARIABLE &apos;=&apos; expr &apos;;</span><br><span class="line"></span><br><span class="line">| WHILE &apos;(&apos; expr &apos;)&apos; stmt</span><br><span class="line">| IF &apos;(&apos; expr &apos;)&apos; stmt %prec IFX</span><br><span class="line">| IF &apos;(&apos; expr &apos;)&apos; stmt ELSE stmt</span><br><span class="line">| &apos;&#123;&apos; stmt_list &apos;&#125;&apos;</span><br><span class="line">| error &apos;;&apos;</span><br><span class="line">| error &apos;&#125;&apos;</span><br><span class="line">;</span><br></pre></td></tr></table></figure></p>
-<p>这里的error标志表示，当yacc发现错误时，它调用yyerror()，之后是输入流往前到‘；’或‘}’，然后继续扫描。</p>
-<p>9.Yacc源程序的风格<br>建议按照如下风格来写：</p>
-<p>终端符名全部用大写字母，非终端符全部用小写字母；<br>把语法规则和语义动作放在不同的行；<br>把左部相同的规则写在一起，左部只写一次，而后面所有规则都写在竖线“|”之后；<br>把分号“；”放在规则最后，独占一行；<br>用制表符来对齐规则和动作。</p>
+<p>这里的error标志表示，当yacc发现错误时，它调用yyerror()，之后是输入流往前到‘；’或‘}’，然后继续扫描</p>
+<p>9.Yacc源程序的风格<br>建议按照如下风格来写：<br>终端符名全部用大写字母，非终端符全部用小写字母；<br>把语法规则和语义动作放在不同的行；<br>把左部相同的规则写在一起，左部只写一次，而后面所有规则都写在竖线“|”之后；<br>把分号“；”放在规则最后，独占一行；<br>用制表符来对齐规则和动作</p>
 
       
     </div>
