@@ -1171,20 +1171,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[有限状态机]]></title>
+    <url>%2F2018%2F07%2F12%2F%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[之前在编译原理、计算机网络中都碰到了有限状态机（FSM）这个知识点，但一直都说不上来具体的概念是什么，总结一下 就如自己在学习的过程中遇到的一样，有限状态机常用在数据网络、拼写检查、语法检查中 带输出的有限状态机的形式定义： 有限状态机M=(S,I,O,f,g,$s_0$)由以下部分组成：一个有限状态集合S，有限的输入字母表I，有限输出字母表O，转移函数f，输出函数g，初始函数$s_0$]]></content>
+      <tags>
+        <tag>离散数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[谷歌云SSR免费搭建]]></title>
     <url>%2F2018%2F07%2F12%2F%E8%B0%B7%E6%AD%8C%E4%BA%91SSR%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%2F</url>
     <content type="text"><![CDATA[翻墙教程 前期准备：信用卡 购买服务器可以选择谷歌云等国外服务器 安装SSR1wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh 然后设置密码和端口，其他设置直接选择默认就好 客户端连接 成功！]]></content>
       <tags>
         <tag>翻墙</tag>
         <tag>SSR</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[有限状态机]]></title>
-    <url>%2F2018%2F07%2F12%2F%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%2F</url>
-    <content type="text"><![CDATA[之前在编译原理、计算机网络中都碰到了有限状态机（FSM）这个知识点，但一直都说不上来具体的概念是什么，总结一下 就如自己在学习的过程中遇到的一样，有限状态机常用在数据网络、拼写检查、语法检查中 带输出的有限状态机的形式定义： 有限状态机M=(S,I,O,f,g,$s_0$)由以下部分组成：一个有限状态集合S，有限的输入字母表I，有限输出字母表O，转移函数f，输出函数g，初始函数$s_0$]]></content>
-      <tags>
-        <tag>离散数学</tag>
       </tags>
   </entry>
   <entry>
@@ -1703,7 +1703,7 @@
   <entry>
     <title><![CDATA[阿谢的BLOG Beta3.9版 发布说明]]></title>
     <url>%2F2018%2F03%2F10%2F%E9%98%BF%E8%B0%A2%E7%9A%84BLOG-Beta3-9%E7%89%88-%E5%8F%91%E5%B8%83%E8%AF%B4%E6%98%8E%2F</url>
-    <content type="text"><![CDATA[折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。 安装 注册github账户 安装Git 安装node.js 安装hexo 使用入门 分类和标签 导航栏 摘要(文章折叠) markdown简单语法 部署 主题修改 图片 总结 安装 注册github：我想作为一个同性交友网站，github是每个程序员都需要注册和使用的。 安装Git: 学会使用Git就可以替代Windows下的命令行。 划重点：接下来的两步都是 文档|hexo 上面都的，要学会看文档，不管是哪种类型。 安装node.js 安装hexo 使用入门多标签:[tag1,tag2,tag3]导航栏：1hexo new page &quot;xxx&quot; 产生如下图所示的文件格式 markdown简单语法： 一级标题:# 摘要(文章折叠):&lt;!–more–&gt;之前的文字就会显示在文章首页，后面的文字就会被折叠。 链接和锚点: 123[安装](#1) &lt;span id = &quot;1&quot;&gt;**安装**&lt;/span&gt; 粗体:斜体，粗体，斜体和粗体 转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\” 文章间跳转: 1&#123;% post_link 文章文件名（不要后缀） 文章标题（可选） %&#125; 链接样式: 12345678910111213//修改文件 themes\next\source\css\_common\components\post\post.styl ，//在末尾添加如下css样式，颜色可以自己定义。.post-body p a&#123; color: #0593d3; border-bottom: none; border-bottom: 1px solid #0593d3; &amp;:hover &#123; color: #fc6423; border-bottom: none; border-bottom: 1px solid #fc6423; &#125;&#125; 主页文章添加阴影效果: 123456789// 打开\themes\next\source\css\_custom\custom.styl,向里面加入:.post &#123; margin-top: 60px; margin-bottom: 60px; padding: 25px; -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5); -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);&#125; 数学公式：在主题文件的_config.yml找到mathjax,并将其设置为trueLaTe常见符号123456789101112mathjax: enable: true per_page: true//并在需要数学公式的文章前将mathjax开关打开mathjax: true$$f([\frac&#123;1+\&#123;x,y\&#125;&#125;&#123;(\frac&#123;x&#125;&#123;y&#125;+\frac&#123;y&#125;&#123;x&#125;)(u+1)&#125;+a]^&#123;3\2&#125;)$$//效果如下所示 $$f([\frac{1+{x,y}}{(\frac{x}{y}+\frac{y}{x})(u+1)}+a]^{3\2})$$ 部署：123hexo cleanhexo generatehexo deploy 图片： 在根目录下_config.yml中找到post_asset_folder，并将其值修改为true； 右键Git Bash Here输入：npm install hexo-asset-image –save 输入hexo n “xxxx”,产生xxxx.md文件同时还会生成一个xxxx文件夹 将图片复制进xxxx文件夹,并在xxxx.md对应位置输入![t](xxxx/x.jpg) 注意:xxxx为文件夹的名字,x为图片的名字，jpg也是分大小写的。 总结其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。 参考:https://segmentfault.com/a/1190000009544924 更新站内搜索（2019.3.23 update）当博客中的文章越来越多时，自然就会有这个需求，因此有此次更新 这里第一步就不顺利，原因是环境变量设置错误，根据错误提示修改环境变量后解决 npm install hexo-generator-searchdb --save 在站点配置文件添加 12345search: path: search.xml field: post format: html limit: 10000 修改主题配置文件 12local_search: enable: true Sitemap（2019.3.23 update） 安装针对谷歌和百度的插件12npm install hexo-generator-sitemap --savenpm install hexo-generator-baidu-sitemap --save 重新部署就能在博客根目录的public下面发现生成了sitemap.xml以及baidusitemap.xml 下面访问就能查看自己网站的网页树 然后将该文件添加到百度站点 RSS（2019.3.23 update） 安装 1npm install hexo-generator-feed 在站点配置文件添加 1234567plugin:- hexo-generator-feed#Feed Atomfeed:type: atompath: atom.xmllimit: 20]]></content>
+    <content type="text"><![CDATA[折腾了一个晚上也算是搭建好了属于自己的小窝，我不是一个很会说话的人，即使我有酒和故事，我也不会和别人讲，但我愿意以文字的形式在这记录我的故事，记录我的成长。 安装 注册github账户 安装Git 安装node.js 安装hexo 使用入门 分类和标签 导航栏 摘要(文章折叠) markdown简单语法 部署 主题修改 图片 总结 安装 注册github：我想作为一个同性交友网站，github是每个程序员都需要注册和使用的。 安装Git: 学会使用Git就可以替代Windows下的命令行。 划重点：接下来的两步都是 文档|hexo 上面都的，要学会看文档，不管是哪种类型。 安装node.js 安装hexo 使用入门多标签:[tag1,tag2,tag3]导航栏：1hexo new page &quot;xxx&quot; 产生如下图所示的文件格式 markdown简单语法： 一级标题:# 摘要(文章折叠):&lt;!–more–&gt;之前的文字就会显示在文章首页，后面的文字就会被折叠。 链接和锚点: 123[安装](#1) &lt;span id = &quot;1&quot;&gt;**安装**&lt;/span&gt; 粗体:斜体，粗体，斜体和粗体 转义:比如我要打出&lt;!–more–&gt;，可以在”!”前添加”\” 文章间跳转: 1&#123;% post_link 文章文件名（不要后缀） 文章标题（可选） %&#125; 链接样式: 12345678910111213//修改文件 themes\next\source\css\_common\components\post\post.styl ，//在末尾添加如下css样式，颜色可以自己定义。.post-body p a&#123; color: #0593d3; border-bottom: none; border-bottom: 1px solid #0593d3; &amp;:hover &#123; color: #fc6423; border-bottom: none; border-bottom: 1px solid #fc6423; &#125;&#125; 主页文章添加阴影效果: 123456789// 打开\themes\next\source\css\_custom\custom.styl,向里面加入:.post &#123; margin-top: 60px; margin-bottom: 60px; padding: 25px; -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5); -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);&#125; 数学公式：在主题文件的_config.yml找到mathjax,并将其设置为trueLaTe常见符号123456789101112mathjax: enable: true per_page: true//并在需要数学公式的文章前将mathjax开关打开mathjax: true$$f([\frac&#123;1+\&#123;x,y\&#125;&#125;&#123;(\frac&#123;x&#125;&#123;y&#125;+\frac&#123;y&#125;&#123;x&#125;)(u+1)&#125;+a]^&#123;3\2&#125;)$$//效果如下所示 $$f([\frac{1+{x,y}}{(\frac{x}{y}+\frac{y}{x})(u+1)}+a]^{3\2})$$ 部署：123hexo cleanhexo generatehexo deploy 图片： 在根目录下_config.yml中找到post_asset_folder，并将其值修改为true； 右键Git Bash Here输入：npm install hexo-asset-image –save 输入hexo n “xxxx”,产生xxxx.md文件同时还会生成一个xxxx文件夹 将图片复制进xxxx文件夹,并在xxxx.md对应位置输入![t](xxxx/x.jpg) 注意:xxxx为文件夹的名字,x为图片的名字，jpg也是分大小写的。 总结其实很早就开始写Blog，之前是在CSDN，写着写着感觉不爽，想要有自己的定制Blog，于是就想到搭建属于自己的Blog。今后会在这上面写下自己的学习过程，自己的心得体会。搭建Blog之前，还没开始尝试，就去问了一个学长，可不可以教教我怎么搭建Blog，学长只和我说了一句话:”学计算机要有自学能力，不要一上来就问能不能教教我”,我当时就感觉很惭愧，觉得自己连怎么向别人提问题都不会。之前看过一本书叫《学会提问》，我想我有必要去再看一遍。 参考:https://segmentfault.com/a/1190000009544924 更新站内搜索（2019.3.23 update）当博客中的文章越来越多时，自然就会有这个需求，因此有此次更新 这里第一步就不顺利，原因是环境变量设置错误，根据错误提示修改环境变量后解决 npm install hexo-generator-searchdb --save 在站点配置文件添加 12345search: path: search.xml field: post format: html limit: 10000 修改主题配置文件 12local_search: enable: true Sitemap（2019.3.23 update） 安装针对谷歌和百度的插件12npm install hexo-generator-sitemap --savenpm install hexo-generator-baidu-sitemap --save 重新部署就能在博客根目录的public下面发现生成了sitemap.xml以及baidusitemap.xml 下面访问就能查看自己网站的网页树 然后将该文件添加到百度站点]]></content>
       <tags>
         <tag>hexo</tag>
         <tag>nodejs</tag>
