@@ -85,18 +85,18 @@
 
 
 
-<meta name="description" content="看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
+<meta name="description" content="看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
 <meta name="keywords" content="CSAPP,虚拟内存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第九章：虚拟内存">
 <meta property="og:url" content="https://123xzy.github.io/2018/05/28/CSAPP-第九章/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
+<meta property="og:description" content="看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-12T09:24:44.856Z">
+<meta property="og:updated_time" content="2019-03-24T11:55:35.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第九章：虚拟内存">
-<meta name="twitter:description" content="看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
+<meta name="twitter:description" content="看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
 
 
 
@@ -380,13 +380,20 @@
       
 
       
-        <p>看完这章但是知道写在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解<br><a id="more"></a></p>
+        <p>看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解<br><a id="more"></a></p>
 <hr>
-<p>早期计算机的程序是直接运行在物理内存上的，可以理解为编译好的程序直接写入了内存条，但是思考一个问题，运行在计算机中的程序肯定不止一个吧，每个程序占用一部分内存，自然就会产生内存不足的现象，这样直接使用物理内存的第一个问题就是内存使用效率不高，例如假设总共有50MB的内存，程序A使用10MB,这里需要明确一点的是程序内存的使用都是连续的，程序B使用30MB，程序C需要20M，显然要把程序A和B的数据都存入磁盘才可以去运行程序C，但是其实将程序A移除后，内存中就已经有20M空闲的内存，但却得不到利用，而且大量的数据在内存和磁盘中移动显然是低效率的<br>第二个问题就是安全问题，程序内存地址是不隔离的，程序之间可以很容易的访问相互之间的数据，这对于恶意程序显然是个好机会，通过轻易访问其他程序的内存，修改内存内容，执行破坏计算机的程序，想想都有点激动<br>第三个问题时地址空间的不确定性，每次运行程序对应的物理地址都是不确定的，这次可能是0x0000-0x1111,下次就可能是0x2222-0x3333，这种不确定性会给程序编写造成麻烦，例如如果了解汇编的话，程序跳转都是跳转到特定的地址，也就是说编译之后就会给出特定的内存地址，这就是虚拟地址带来的好处，但是如果是物理地址就不能带来这种便利</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>早期计算机的程序是直接运行在物理内存上的，可以理解为编译好的程序直接写入了内存条，但是思考一个问题，运行在计算机中的程序肯定不止一个吧，每个程序占用一部分内存，自然就会产生内存不足的现象，这样直接使用物理内存的第一个问题就是内存使用效率不高，例如假设总共有50MB的内存，程序A使用10MB,这里需要明确一点的是程序内存的使用都是连续的，程序B使用30MB，程序C需要20M，显然要把程序A和B的数据都存入磁盘才可以去运行程序C，但是其实将程序A移除后，内存中就已经有20M空闲的内存，但却得不到利用，而且大量的数据在内存和磁盘中移动显然是低效率的</p>
+<p>第二个问题就是安全问题，程序内存地址是不隔离的，程序之间可以很容易的访问相互之间的数据，这对于恶意程序显然是个好机会，通过轻易访问其他程序的内存，修改内存内容，执行破坏计算机的程序，想想都有点激动</p>
+<p>第三个问题时地址空间的不确定性，每次运行程序对应的物理地址都是不确定的，这次可能是0x0000-0x1111,下次就可能是0x2222-0x3333，这种不确定性会给程序编写造成麻烦，例如如果了解汇编的话，程序跳转都是跳转到特定的地址，也就是说编译之后就会给出特定的内存地址，这就是虚拟地址带来的好处，但是如果是物理地址就不能带来这种便利</p>
 <p>为了解决上述三个问题，就是在物理内存和程序之间引入一个抽象层，也就是虚拟内存，这就引出了这章要讲解的内容</p>
 <p>这章先讲解虚拟内存的实现原理，之后结合Linux讲解，然后还会有一个有一个malloc实验，号称是CSAPP Lab中最难的一个，当然我还没有完成</p>
-<p>程序执行最终还是要回到物理内存中的，但是既然程序使用的是虚拟地址，要怎么实现从虚拟地址到物理地址的转化呢？<br>现代CPU芯片中集成了一个叫做MMU（Memory management Unit）的硬件，程序有CPU输入执行，产生需要查询的虚拟地址传入MMU后，有其翻译成物理地址</p>
-<h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>进程使用该函数创建新的虚拟内存区域，并将对象映射到这些区域中<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start,<span class="keyword">size_t</span> length,<span class="keyword">int</span> prot,<span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">int</span> fd,<span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>程序执行最终还是要回到物理内存中的，但是既然程序使用的是虚拟地址，要怎么实现从虚拟地址到物理地址的转化呢？现代CPU芯片中集成了一个叫做MMU（Memory management Unit）的硬件，程序有CPU输入执行，产生需要查询的虚拟地址传入MMU后，由其翻译成物理地址</p>
+<h1 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h1><p>地址翻译是一个$N$元素的虚拟地址空间（Virtual Area Space，VAS）中的元素和一个$M$元素的物理地址空间（PAS）中元素的映射</p>
+<h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><p>Linux通过一个虚拟内存区域与一个磁盘对象关联起来，以初始化这个虚拟内存区域的内容</p>
+<h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>进程使用该函数创建新的虚拟内存区域，并将对象映射到这些区域中<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start,<span class="keyword">size_t</span> length,<span class="keyword">int</span> prot,<span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">int</span> fd,<span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h1 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h1><p>动态内存分配器维护着一个进程的虚拟内存区域，称为<strong>堆</strong></p>
+<h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><p>也是一种动态内存分配器，它自动释放程序不再需要的已分配块</p>
+<h1 id="内存错误"><a href="#内存错误" class="headerlink" title="内存错误"></a>内存错误</h1><p>内存出错总是让人恐惧的，因为它在时间和空间上，都距离错误出现的源头有一段距离</p>
 
       
     </div>
@@ -508,7 +515,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">212</span>
+                  <span class="site-state-item-count">215</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -521,7 +528,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -576,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存映射"><span class="nav-number">1.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">1.1.</span> <span class="nav-text">mmap</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址翻译"><span class="nav-number">2.</span> <span class="nav-text">地址翻译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存映射"><span class="nav-number">3.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">3.1.</span> <span class="nav-text">mmap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态内存分配"><span class="nav-number">4.</span> <span class="nav-text">动态内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收"><span class="nav-number">5.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存错误"><span class="nav-number">6.</span> <span class="nav-text">内存错误</span></a></li></ol></div>
             
 
           </div>
@@ -1099,6 +1106,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

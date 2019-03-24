@@ -94,8 +94,10 @@
 <meta property="og:description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/1.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/3.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/4.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/2.JPG">
-<meta property="og:updated_time" content="2019-03-20T04:10:14.917Z">
+<meta property="og:updated_time" content="2019-03-24T09:05:53.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《目标文件》">
 <meta name="twitter:description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
@@ -394,8 +396,9 @@
 <li>可执行文件：如Windows的<code>.exe</code></li>
 <li>共享目标文件：如Windows的<code>.dll</code>和Linux的<code>.so</code>，一种链接器可以将其和其他可重定位文件和共享目标文件链接产生新的目标文件；第二种动态链接器将其与可执行文件结合，成为进程镜像的一部分</li>
 <li>可重定位文件：如Windows的<code>.obj</code>和Linux的<code>.o</code>，可以被链接成可执行文件或共享目标文件</li>
-<li>核心转储文件：当进程意外终止，系统将进程的地址空间的内容和一些终止信息转储到该文件<br><img src="/2019/01/07/修养-《目标文件》/1.JPG" alt=""></li>
+<li>核心转储文件：当进程意外终止，系统将进程的地址空间的内容和一些终止信息转储到该文件</li>
 </ul>
+<p><img src="/2019/01/07/修养-《目标文件》/1.JPG" alt=""></p>
 <h1 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h1><p>一般按照信息的不同属性，以<strong>节</strong>（Section）或<strong>段</strong>（Segment）的形式存储。这里有个问题，在BIOS代码中，段和节是由区别的，而且是包含的关系，这怎么理解？？？<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">readseg(<span class="keyword">uint32_t</span> pa, <span class="keyword">uint32_t</span> count, <span class="keyword">uint32_t</span> offset)</span><br><span class="line">&#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (pa &lt; end_pa) &#123;</span><br><span class="line">                readsect((<span class="keyword">uint8_t</span>*) pa, offset);</span><br><span class="line">                ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>一般机器指令放在<strong>代码段</strong>（<code>.code</code>或<code>.text</code>），全局变量和局部静态变量放在<strong>数据段</strong>中（<code>.data</code>）</p>
 <p>数据和指令分开放置的好处：</p>
@@ -421,7 +424,16 @@
 <p>我们也可以<strong>自定义段</strong>，让变量或者代码能放到指定的段中，以实现特定的功能，如为了满足某些硬件的内存和I/O的地址布局，或Linux内核用来完成一些初始化和用户空间复制时出现页错误？？？</p>
 <p>GCC提供<code>__attribute__((section(&quot;name&quot;)))</code>属性来将变量和函数放到<code>name</code>段中</p>
 <h1 id="ELF文件"><a href="#ELF文件" class="headerlink" title="ELF文件"></a>ELF文件</h1><p>ELF文件的开始是一个<strong>File Header</strong>，它描述了文件的属性，如文件是否可执行、是静态链接还是动态链接、入口地址、目标硬件、目标OS等信息，除此之外，还有一个<strong>Section Table</strong>，描述接下来各个段的信息，如各个段在文件的偏移量、段的属性</p>
-<h2 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h2><h2 id="段表"><a href="#段表" class="headerlink" title="段表"></a>段表</h2><h2 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h2><h2 id="字符串表"><a href="#字符串表" class="headerlink" title="字符串表"></a>字符串表</h2><h1 id="链接的接口：符号"><a href="#链接的接口：符号" class="headerlink" title="链接的接口：符号"></a>链接的接口：符号</h1><p>链接的本质就是不同目标文件得到结合，这些目标文件之间必须要固定的规则，才能像积木一样结合在一起</p>
+<p>学习ELF最好的方法就是直接看<strong>源码</strong>定义，在<code>/usr/include/elf.h</code>，头文件定义分为32位和64位，我们以32位为准</p>
+<h2 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The ELF file header.  This appears at the start of every ELF file.  */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EI_NIDENT (16)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span> e_ident[EI_NIDENT];     <span class="comment">/* Magic number and other info */</span></span><br><span class="line">  Elf32_Half    e_type;                 <span class="comment">/* Object file type */</span></span><br><span class="line">  Elf32_Half    e_machine;              <span class="comment">/* Architecture */</span></span><br><span class="line">  Elf32_Word    e_version;              <span class="comment">/* Object file version */</span></span><br><span class="line">  Elf32_Addr    e_entry;                <span class="comment">/* Entry point virtual address */</span></span><br><span class="line">  Elf32_Off     e_phoff;                <span class="comment">/* Program header table file offset */</span></span><br><span class="line">  Elf32_Off     e_shoff;                <span class="comment">/* Section header table file offset */</span></span><br><span class="line">  Elf32_Word    e_flags;                <span class="comment">/* Processor-specific flags */</span></span><br><span class="line">  Elf32_Half    e_ehsize;               <span class="comment">/* ELF header size in bytes */</span></span><br><span class="line">  Elf32_Half    e_phentsize;            <span class="comment">/* Program header table entry size */</span></span><br><span class="line">  Elf32_Half    e_phnum;                <span class="comment">/* Program header table entry count */</span></span><br><span class="line">  Elf32_Half    e_shentsize;            <span class="comment">/* Section header table entry size */</span></span><br><span class="line">  Elf32_Half    e_shnum;                <span class="comment">/* Section header table entry count */</span></span><br><span class="line">  Elf32_Half    e_shstrndx;             <span class="comment">/* Section header string table index */</span></span><br><span class="line">&#125; Elf32_Ehdr;</span><br></pre></td></tr></table></figure>
+<p>虽然下图是64位可执行文件的文件头，但是依旧可以寻找一一对应关系<br><img src="/2019/01/07/修养-《目标文件》/3.JPG" alt=""></p>
+<p>关于魔数还有个小故事，这些故事归结起来就是马屁股和航天飞机，也就是经济学中的<strong>路径依赖</strong>，映射到互联网就是培养用户习惯，在我们的生活中，处处都是路径依赖，因为事务总不能脱离历史发展，那么有办法摆脱路径依赖，或者有办法找到好的路径吗？</p>
+<h2 id="段表"><a href="#段表" class="headerlink" title="段表"></a>段表</h2><p>段表描述了ELF文件的每个段的信息，如段名、长度、偏移、读写权利等，编译器、链接器和装载器都是依靠段表来定位和访问每个段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Section header.  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf32_Word    sh_name;                <span class="comment">/* Section name (string tbl index) */</span></span><br><span class="line">  Elf32_Word    sh_type;                <span class="comment">/* Section type */</span></span><br><span class="line">  Elf32_Word    sh_flags;               <span class="comment">/* Section flags */</span></span><br><span class="line">  Elf32_Addr    sh_addr;                <span class="comment">/* Section virtual addr at execution */</span></span><br><span class="line">  Elf32_Off     sh_offset;              <span class="comment">/* Section file offset */</span></span><br><span class="line">  Elf32_Word    sh_size;                <span class="comment">/* Section size in bytes */</span></span><br><span class="line">  Elf32_Word    sh_link;                <span class="comment">/* Link to another section */</span></span><br><span class="line">  Elf32_Word    sh_info;                <span class="comment">/* Additional section information */</span></span><br><span class="line">  Elf32_Word    sh_addralign;           <span class="comment">/* Section alignment */</span></span><br><span class="line">  Elf32_Word    sh_entsize;             <span class="comment">/* Entry size if section holds table */</span></span><br><span class="line">&#125; Elf32_Shdr;</span><br></pre></td></tr></table></figure>
+<p>段的名字只在链接和编译期间有意义，对操作系统没有意义<br><img src="/2019/01/07/修养-《目标文件》/4.JPG" alt=""></p>
+<h2 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h2><p>重定位表也是ELF的一个段，对于需要重定位的代码段或数据段，都会有一个相应的重定位表</p>
+<h2 id="字符串表"><a href="#字符串表" class="headerlink" title="字符串表"></a>字符串表</h2><p>往往把长度不定的字符串集中起来存放，然后使用字符串在表中的偏移来引用字符串</p>
+<h1 id="链接的接口：符号"><a href="#链接的接口：符号" class="headerlink" title="链接的接口：符号"></a>链接的接口：符号</h1><p>链接的本质就是不同目标文件得到结合，这些目标文件之间必须要固定的规则，才能像积木一样结合在一起</p>
 <p>在链接中，将函数和变量统称为<strong>符号</strong>，符号是链接中的粘合剂，整个链接都是基于符号完成的</p>
 <p>每个目标文件都有一个<strong>符号表</strong>，这个表记录了目标文件中的所有符号，每个符号对应的值，称为<strong>符号值</strong>，对于变量和函数，符号值就是地址。符号也有分类：</p>
 <ul>
@@ -551,7 +563,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">212</span>
+                  <span class="site-state-item-count">215</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -564,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

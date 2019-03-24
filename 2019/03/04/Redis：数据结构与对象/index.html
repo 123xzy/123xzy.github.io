@@ -94,7 +94,8 @@
 <meta property="og:description" content="五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/04/Redis：数据结构与对象/1.JPG">
-<meta property="og:updated_time" content="2019-03-20T02:58:42.642Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/04/Redis：数据结构与对象/2.jpg">
+<meta property="og:updated_time" content="2019-03-24T09:14:13.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《数据结构与对象》">
 <meta name="twitter:description" content="五种对象（字符串对象、列表对象、哈希对象、集合对象、有序集合对象）的底层数据结构以及对对象的性能和功能的影响，也趁机复习一下数据结构">
@@ -473,7 +474,24 @@
 </ul>
 <p>因为新添加的元素肯定小于或者大于现有所有元素，因此新元素要么放在底层数组的开头要么放在最末尾</p>
 <p>由于C是静态类型语言，应该避免将不同类型的数组放在同一个数据结构中。但有了升级，就能随意将不同类型添加到集合中，而不用担心类型出错。另外就是节约内存</p>
-<h1 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h1><p>是列表键和哈希键的底层实现之一</p>
+<h1 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h1><p>是列表键和哈希键的底层实现之一，当列表或者哈希键包含小整数值或者短字符串时，就会使用压缩列表</p>
+<p>压缩列表是为了节约内存而开发，是由一系列特殊编码的连续内存块组成的顺序性数据结构，其形式有点类似于数据库的行记录格式<br><img src="/2019/03/04/Redis：数据结构与对象/2.jpg" alt=""></p>
+<ul>
+<li><code>zlbytes</code>：整个压缩列表占用的字节数</li>
+<li><code>zltail</code>：列表尾节点到头结点的偏移量</li>
+<li><code>zllen</code>：节点数量</li>
+<li><code>entryX</code>：节点</li>
+<li><code>zlend</code>：特殊值<code>0xFF</code>，表示列表末尾</li>
+</ul>
+<p>每个节点由<code>previous_entry_length</code> <code>encoding</code> <code>content</code>三部分组成</p>
+<ul>
+<li><code>previous_entry_length</code>：当前一个节点的长度小于254字节，该属性长度只有1字节；如果大于等于254字节，该属性就有5字节，其中第一个字节设置为<code>0xFE</code>，后面的字节实际保存前一个节点的长度，例如<code>0xFE00002766</code>，实际长度就是<code>0x0000002766</code>。通过该属性和指针运算，就可以实现<strong>从表尾向表头遍历操作</strong></li>
+<li><code>encoding</code>：记录节点<code>content</code>保存的数据的类型及长度，编码的开头两位表示类型，例如<code>11</code>表示整数编码，<code>00 01 10</code>表示字节数组编码，其余字节均表示长度。例如<code>11000000</code>表示int16_t类型整数，<code>00bbbbbb</code>长度小于63字节的字节数组</li>
+<li><code>content</code>：保存节点的值</li>
+</ul>
+<h2 id="连锁更新"><a href="#连锁更新" class="headerlink" title="连锁更新"></a>连锁更新</h2><p>该现象的出现就是因为<code>previous_entry_length</code>属性，如果每个节点的长度都接近254字节，当插入一个大于254字节的节点时，就会引起这个现象</p>
+<p>虽然连锁更新的最坏复杂度为$O(N^2)$，但是发生的几率很低，因此不会影响性能</p>
+<p>可能导致连锁更新的API<code>ziplistPush</code> <code>ziplistInsert</code> <code>ziplistDelete</code> <code>ziplistDeleteRange</code></p>
 <h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>Redis使用上面这些数据结构，构造了一个对象系统，这个系统就包含了字符串对象、列表对象、哈希对象、集合对象、有序集合对象五类对象</p>
 <p>通过对象</p>
 <ul>
@@ -603,7 +621,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">212</span>
+                  <span class="site-state-item-count">215</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -616,7 +634,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -671,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单动态字符串"><span class="nav-number">1.</span> <span class="nav-text">简单动态字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与C字符串的区别"><span class="nav-number">1.1.</span> <span class="nav-text">与C字符串的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配策略"><span class="nav-number">1.2.</span> <span class="nav-text">内存分配策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空间预分配"><span class="nav-number">1.2.1.</span> <span class="nav-text">空间预分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#惰性空间释放"><span class="nav-number">1.2.2.</span> <span class="nav-text">惰性空间释放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制安全"><span class="nav-number">1.3.</span> <span class="nav-text">二进制安全</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链表"><span class="nav-number">2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希算法"><span class="nav-number">3.1.</span> <span class="nav-text">哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rehash"><span class="nav-number">3.2.</span> <span class="nav-text">rehash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳跃表"><span class="nav-number">4.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整数集合"><span class="nav-number">5.</span> <span class="nav-text">整数集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩列表"><span class="nav-number">6.</span> <span class="nav-text">压缩列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象"><span class="nav-number">7.</span> <span class="nav-text">对象</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单动态字符串"><span class="nav-number">1.</span> <span class="nav-text">简单动态字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与C字符串的区别"><span class="nav-number">1.1.</span> <span class="nav-text">与C字符串的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配策略"><span class="nav-number">1.2.</span> <span class="nav-text">内存分配策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空间预分配"><span class="nav-number">1.2.1.</span> <span class="nav-text">空间预分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#惰性空间释放"><span class="nav-number">1.2.2.</span> <span class="nav-text">惰性空间释放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制安全"><span class="nav-number">1.3.</span> <span class="nav-text">二进制安全</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链表"><span class="nav-number">2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希算法"><span class="nav-number">3.1.</span> <span class="nav-text">哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rehash"><span class="nav-number">3.2.</span> <span class="nav-text">rehash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳跃表"><span class="nav-number">4.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整数集合"><span class="nav-number">5.</span> <span class="nav-text">整数集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩列表"><span class="nav-number">6.</span> <span class="nav-text">压缩列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连锁更新"><span class="nav-number">6.1.</span> <span class="nav-text">连锁更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象"><span class="nav-number">7.</span> <span class="nav-text">对象</span></a></li></ol></div>
             
 
           </div>
@@ -1194,6 +1212,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

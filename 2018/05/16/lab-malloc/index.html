@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="编写动态存储分配器">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-18T00:19:24.591Z">
+<meta property="og:updated_time" content="2019-03-24T11:41:01.573Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Malloc">
 <meta name="twitter:description" content="编写动态存储分配器">
@@ -381,7 +381,41 @@
 
       
         <p>编写<strong>动态存储分配器</strong><br><a id="more"></a></p>
+<hr>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>本实验只需要修改<code>mm.c</code>，<code>mdriver.c</code>是评估所写程序性能的驱动程序</p>
+<p>要实现的动态存储分配器将由以下四个函数组成，它们均在<code>mm.h</code>中申明，在<code>mm.c</code>中实现了上述函数的最简单版本，在此基础上修改改进，</p>
+<ul>
+<li><code>int mm_init(void);</code>：应用程序调用该函数去初始化，如分配初始堆区域（heap area）</li>
+<li><code>void *mm_malloc(size_t size);</code>：返回一个指向指定大小块的指针，分配的块应位于堆区域内（heap region），且不能和其他块重叠</li>
+<li><code>void mm_free(void *ptr);</code>：释放指针所指的区域</li>
+<li><code>void *mm_realloc(void *ptr, size_t size);</code>：如果ptr为NULL，相当于<code>mm_malloc</code>；如果size为零，相当于<code>mm_free</code>；ptr不为NULL，则修改指向块的大小，并返回块的位置</li>
+</ul>
+<p>动态内存分配器很难正确编程, 因为它们涉及大量的非类型化指针操作。您会发现编写一个堆检查器来扫描堆并检查它的一致性是非常有帮助的。堆检查器可能检查的一些示例如下:</p>
+<ul>
+<li>Is every block in the free list marked as free?</li>
+<li>Are there any contiguous free blocks that somehow escaped coalescing?</li>
+<li>Is every free block actually in the free list?</li>
+<li>Do the pointers in the free list point to valid free blocks?</li>
+<li>Do any allocated blocks overlap?</li>
+<li>Do the pointers in a heap block point to valid heap addresses?</li>
+</ul>
+<p>在<code>memlib.c</code>中模拟动态内存分配器的内存系统。可以调用以下函数:</p>
+<ul>
+<li><code>void *memsbrk(int incr)</code>: Expands the heap by incr bytes, where incr is a positive non-zero integer and returns a generic pointer to the first byte of the newly allocated heap area. The semantics are identical to the Unix sbrk function, except that memsbrk accepts only a positive non-zero integer argument.</li>
+<li><code>void *memheaplo(void)</code>: Returns a generic pointer to the first byte in the heap.</li>
+<li><code>void *memheaphi(void)</code>: Returns a generic pointer to the last byte in the heap.</li>
+<li><code>sizet memheapsize(void)</code>: Returns the current size of the heap in bytes.</li>
+<li><code>sizet mempagesize(void)</code>：Returns the system’s page.</li>
+</ul>
+<p><code>mdriver.c</code>将测试编写程序的正确性、空间利用率和吞吐量。其中有一组<code>trace file</code>，包含了一系列分配、重新分配和释放操作，该驱动程序具有以下参数</p>
+<ul>
+<li><code>-t &lt;tracedir&gt;</code>:Look for the default trace files in directory tracedir instead of the default directory defined in config.h.</li>
+<li><code>-f &lt;tracefile&gt;</code>: Use one particular tracefile for testing instead of the default set of tracefiles.</li>
+<li><code>-h</code>: Print a summary of the command line arguments.</li>
+<li><code>-l</code>: Run and measure libc malloc in addition to the student’s malloc package.</li>
+<li><code>-v</code>: Verbose output. Print a performance breakdown for each tracefile in a compact table.</li>
+<li><code>-V</code>: More verbose output. Prints additional diagnostic information as each trace file is processed. Useful during debugging for determining which trace file is causing your malloc package to fail.</li>
+</ul>
 
       
     </div>
@@ -503,7 +537,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">212</span>
+                  <span class="site-state-item-count">215</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -516,7 +550,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
