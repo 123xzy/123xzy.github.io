@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Java,源码," />
 
 
 
@@ -86,14 +86,14 @@
 
 
 <meta name="description" content="Java基础类。最重要的类是Object（它是类层次结构的根）和 Class（它的实例表示正在运行的应用程序中的类）。把基本类型的值当成一个对象来表示通常很有必要。包装器类 Boolean、Character、Integer、Long、Float和Double">
-<meta name="keywords" content="Java">
+<meta name="keywords" content="Java,源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java.lang">
 <meta property="og:url" content="https://123xzy.github.io/2019/01/28/java-lang源码分析/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="Java基础类。最重要的类是Object（它是类层次结构的根）和 Class（它的实例表示正在运行的应用程序中的类）。把基本类型的值当成一个对象来表示通常很有必要。包装器类 Boolean、Character、Integer、Long、Float和Double">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-30T09:12:29.358Z">
+<meta property="og:updated_time" content="2019-03-25T00:10:12.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java.lang">
 <meta name="twitter:description" content="Java基础类。最重要的类是Object（它是类层次结构的根）和 Class（它的实例表示正在运行的应用程序中的类）。把基本类型的值当成一个对象来表示通常很有必要。包装器类 Boolean、Character、Integer、Long、Float和Double">
@@ -383,7 +383,17 @@
         <p>Java基础类。最重要的类是Object（它是类层次结构的根）和 Class（它的实例表示正在运行的应用程序中的类）。把基本类型的值当成一个对象来表示通常很有必要。包装器类 Boolean、Character、Integer、Long、Float和Double<br><a id="more"></a></p>
 <hr>
 <p>真的庆幸自己现在就开始看源码，就像发现了金矿一样兴奋，很多书中看到的积累的迷惑在源码面前都卸下了面具</p>
-<h1 id="Erroe和Exception"><a href="#Erroe和Exception" class="headerlink" title="Erroe和Exception"></a>Erroe和Exception</h1><p>每个包里都会定义一些<strong>类</strong>、<strong>错误</strong>、<strong>异常</strong>和<strong>接口</strong>。Error和Exception都继承自父类java.lang.Throwable<br><code>java.lang.Error</code>: An Error is a subclass of Throwable that indicates serious problems that a reasonable application should not try to catch. Most such errors are abnormal conditions. Error是<strong>unchecked exceptions</strong><br><code>java.lang.Exception</code>: The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch. Exception分为<strong>RuntimeException</strong>和<strong>checked exceptions</strong></p>
+<ul>
+<li>object 类</li>
+<li>数据类型类</li>
+<li>线程类</li>
+<li>字符串类 (String 类和 StringBuffer 类 )</li>
+<li>系统及运行类 (System 类和 Runtime 类 )</li>
+<li>错误和异常处理类 (Throwable 、 Exception 、 Error)</li>
+<li>过程类 (process)</li>
+<li>数学类 (Math)</li>
+</ul>
+<h1 id="Error和Exception"><a href="#Error和Exception" class="headerlink" title="Error和Exception"></a>Error和Exception</h1><p>每个包里都会定义一些<strong>类</strong>、<strong>错误</strong>、<strong>异常</strong>和<strong>接口</strong>。Error和Exception都继承自父类java.lang.Throwable<br><code>java.lang.Error</code>: An Error is a subclass of Throwable that indicates serious problems that a reasonable application should not try to catch. Most such errors are abnormal conditions. Error是<strong>unchecked exceptions</strong><br><code>java.lang.Exception</code>: The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch. Exception分为<strong>RuntimeException</strong>和<strong>checked exceptions</strong></p>
 <h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h1><h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h1 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable"></a>Runnable</h1><p>The interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run</p>
 
       
@@ -403,6 +413,8 @@
         <div class="post-tags">
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/源码/" rel="tag"><i class="fa fa-tag"></i> 源码</a>
           
         </div>
       
@@ -504,7 +516,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">215</span>
+                  <span class="site-state-item-count">216</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -517,7 +529,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -572,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Erroe和Exception"><span class="nav-number">1.</span> <span class="nav-text">Erroe和Exception</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class"><span class="nav-number">2.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">3.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runnable"><span class="nav-number">4.</span> <span class="nav-text">Runnable</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Error和Exception"><span class="nav-number">1.</span> <span class="nav-text">Error和Exception</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class"><span class="nav-number">2.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">3.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runnable"><span class="nav-number">4.</span> <span class="nav-text">Runnable</span></a></li></ol></div>
             
 
           </div>
