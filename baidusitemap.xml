@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://123xzy.github.io/2019/03/26/MIT-6-828-book-xv6-Appendix-B/</loc>
-    <lastmod>2019-03-26</lastmod>
+    <lastmod>2019-03-27</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
-    <lastmod>2019-03-26</lastmod>
+    <loc>https://123xzy.github.io/2019/03/27/Pearls-Chapter-1/</loc>
+    <lastmod>2019-03-27</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/21/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91%E3%80%8B/</loc>
+    <lastmod>2019-03-27</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
-    <lastmod>2019-03-26</lastmod>
+    <lastmod>2019-03-27</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
+    <lastmod>2019-03-27</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     <lastmod>2019-03-26</lastmod>
@@ -77,9 +83,6 @@
     <lastmod>2019-03-22</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/06/09/CSAPP-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/</loc>
-    <lastmod>2019-03-22</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/21/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91%E3%80%8B/</loc>
     <lastmod>2019-03-22</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/02/24/%E3%80%8A%E4%B8%80%E6%B2%99%E4%B8%80%E4%B8%96%E7%95%8C%E3%80%8B/</loc>
