@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="分布式开始啦！">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-14T05:26:39.785Z">
+<meta property="og:updated_time" content="2019-03-30T03:52:16.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《多机数据库的实现》">
 <meta name="twitter:description" content="分布式开始啦！">
@@ -382,7 +382,11 @@
       
         <p>分布式开始啦！<br><a id="more"></a></p>
 <hr>
-<h1 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h1><h1 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h1><h1 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h1>
+<h1 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h1><p>通过执行<code>SLAVEOF</code>命令可以让一个服务器去复制另一个服务器，进行复制的主从服务器将保存相同的数据</p>
+<h1 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h1><p>Sentinel是Redis高可用的解决方案</p>
+<p>由一个或多个Sentinel instance组成的Sentinel System可以监视任意多个主从服务器，当被监视的主服务器进入下线状态时，Sentinel System会自动将下线的主服务器下属的某个从服务器升级为主服务器，代替原来的主服务器继续执行命令</p>
+<h1 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h1><p>集群是Redis提供的分布式数据库方案，集群通过分片来进行数据共享，并提供复制和故障转移功能</p>
+
       
     </div>
     

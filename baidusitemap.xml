@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
+    <lastmod>2019-03-31</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
+    <lastmod>2019-03-31</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/01/27/%E3%80%8ANoSQL%E7%B2%BE%E7%B2%B9%E3%80%8B/</loc>
+    <lastmod>2019-03-31</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/02/17/%E3%80%8A%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF%E3%80%8B/</loc>
+    <lastmod>2019-03-31</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/05/Redis%EF%BC%9A%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2019-03-31</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/14/Redis%EF%BC%9A%E5%A4%9A%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2019-03-30</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/04/Redis%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AF%B9%E8%B1%A1/</loc>
+    <lastmod>2019-03-28</lastmod>
+  </url>  <url>
     <loc>https://123xzy.github.io/2019/03/26/MIT-6-828-book-xv6-Appendix-B/</loc>
     <lastmod>2019-03-27</lastmod>
   </url>  <url>
@@ -10,20 +31,11 @@
     <loc>https://123xzy.github.io/2019/03/21/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91%E3%80%8B/</loc>
     <lastmod>2019-03-27</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
-    <lastmod>2019-03-27</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
-    <lastmod>2019-03-27</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     <lastmod>2019-03-26</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/07/02/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B/</loc>
     <lastmod>2019-03-26</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/02/17/%E3%80%8A%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF%E3%80%8B/</loc>
-    <lastmod>2019-03-25</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/24/%E5%B0%8F%E8%AE%B0%EF%BC%9A%E5%81%9C%E4%B8%80%E5%81%9C%EF%BC%81/</loc>
     <lastmod>2019-03-25</lastmod>
@@ -47,9 +59,6 @@
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/04/Redis%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AF%B9%E8%B1%A1/</loc>
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/01/07/%E4%BF%AE%E5%85%BB-%E3%80%8A%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E3%80%8B/</loc>
@@ -178,12 +187,6 @@
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Assignment-Shell/</loc>
     <lastmod>2019-03-14</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/14/Redis%EF%BC%9A%E5%A4%9A%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2019-03-14</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/05/Redis%EF%BC%9A%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2019-03-14</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2018/03/27/Linux-%E7%AC%AC%E4%BA%94%E7%AB%A0/</loc>
     <lastmod>2019-03-13</lastmod>
   </url>  <url>
@@ -192,9 +195,6 @@
   </url>  <url>
     <loc>https://123xzy.github.io/2018/12/29/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B/</loc>
     <lastmod>2019-03-13</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/01/27/%E3%80%8ANoSQL%E7%B2%BE%E7%B2%B9%E3%80%8B/</loc>
-    <lastmod>2019-03-11</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/01/21/%E3%80%8ASpring-AOP%E3%80%8B/</loc>
     <lastmod>2019-03-11</lastmod>

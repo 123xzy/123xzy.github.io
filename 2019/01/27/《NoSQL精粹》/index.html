@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-11T14:19:59.983Z">
+<meta property="og:updated_time" content="2019-03-31T11:24:45.198Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -451,7 +451,17 @@
 <h2 id="放宽持久性"><a href="#放宽持久性" class="headerlink" title="放宽持久性"></a>放宽持久性</h2><p>有些场合牺牲持久性来获取更好的性能，也是一种选择。如果每个数据库大部分时间都在内存中运行，更新操作也直接写入内存，定期将数据写入磁盘，那就可以大大提升相应速度，代价就是更新数据的可能丢失</p>
 <h2 id="仲裁"><a href="#仲裁" class="headerlink" title="仲裁"></a>仲裁</h2><p>一致性和持久性之间的取舍，不是非此即彼的议题。处理请求的所用的节点越多，避免不一致问题的能力就越强。那如果要保证强一致性，需要使用多少个节点才行？</p>
 <p>假设将某份数据复制到三个节点中，不需要所有节点都确认写入操作，只要超过半数的节点确认就可以。在这种情况下，如果发生两个相互冲突的写入操作，那么只有一个操作能为超过半数的节点认可，这就是<strong>写入仲裁</strong></p>
-<p>P84</p>
+<h1 id="版本戳"><a href="#版本戳" class="headerlink" title="版本戳"></a>版本戳</h1><p>版本戳是一个字段，每当记录中的底层数据改变时，其值也随之改变</p>
+<p>有多种构建版本戳的方法</p>
+<ul>
+<li>计数器：每当资源更新，计数值+1，当需要一个主节点保证不同版本的计数器值不重复</li>
+<li>GUID：Globally Unique Identifier，一个保证唯一的较大随机数，可以将日期、硬件信息以及一些随机出现的资源组合起来构建此值，缺点就是无法直接判断版本新旧</li>
+<li>hash码：只要资源数据相同，生成的hash码就是一样的，只要hash码足够大，就是唯一的，GUID则是完全随机的</li>
+<li>时间戳：不需要主节点控制，但多个节点必须时钟同步</li>
+</ul>
+<p>在单服务器或主从复制模型中，使用基本的版本戳生成方案就好，但在对等分布模型中，版本戳的生成机制就需要改进</p>
+<p>最常用的版本戳形式是<strong>vector stamp</strong>（数组式版本戳），其由一系列计数器组成，每个计数器代表一个节点，当节点执行内部更新时，将对用计数器+1。只要两个节点通信，就同步其数组式版本戳</p>
+<p>P90</p>
 
       
     </div>
@@ -641,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性"><span class="nav-number">3.</span> <span class="nav-text">一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新一致性"><span class="nav-number">3.1.</span> <span class="nav-text">更新一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取一致性"><span class="nav-number">3.2.</span> <span class="nav-text">读取一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽一致性"><span class="nav-number">3.3.</span> <span class="nav-text">放宽一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP定理"><span class="nav-number">3.4.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽持久性"><span class="nav-number">3.5.</span> <span class="nav-text">放宽持久性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仲裁"><span class="nav-number">3.6.</span> <span class="nav-text">仲裁</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型"><span class="nav-number">1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式模型"><span class="nav-number">2.</span> <span class="nav-text">分布式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">2.1.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制"><span class="nav-number">2.2.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等复制"><span class="nav-number">2.3.</span> <span class="nav-text">对等复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性"><span class="nav-number">3.</span> <span class="nav-text">一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新一致性"><span class="nav-number">3.1.</span> <span class="nav-text">更新一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取一致性"><span class="nav-number">3.2.</span> <span class="nav-text">读取一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽一致性"><span class="nav-number">3.3.</span> <span class="nav-text">放宽一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP定理"><span class="nav-number">3.4.</span> <span class="nav-text">CAP定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放宽持久性"><span class="nav-number">3.5.</span> <span class="nav-text">放宽持久性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仲裁"><span class="nav-number">3.6.</span> <span class="nav-text">仲裁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#版本戳"><span class="nav-number">4.</span> <span class="nav-text">版本戳</span></a></li></ol></div>
             
 
           </div>
