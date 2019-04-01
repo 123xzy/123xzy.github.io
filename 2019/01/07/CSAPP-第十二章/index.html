@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/CSAPP-第十二章/2.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/CSAPP-第十二章/3.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/CSAPP-第十二章/4.JPG">
-<meta property="og:updated_time" content="2019-03-19T07:46:46.307Z">
+<meta property="og:updated_time" content="2019-04-01T06:29:13.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十二章：并发编程">
 <meta name="twitter:description" content="《CSAPP》第十二章：并发编程">
@@ -462,20 +462,20 @@
 </ul>
 <p><strong>共享变量</strong>就是当它的实例被一个以上的线程引用，例如在多线程程序下的全局变量</p>
 <h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><p>共享变量十分方便，却引入了<strong>同步错误</strong>的可能性。一般而言，不能预测OS是否将为线程选择一个正确的顺序</p>
-<p>为此引入了叫做<strong>信号量</strong>（$s$）的特殊类型变量，是具有非负整数的全局变量，只能有两种特殊操作处理</p>
+<p>为此引入了叫做<strong>信号量</strong>（$s$，semaphore）的特殊类型变量，是具有非负整数的全局变量，只能有两种特殊操作处理</p>
 <ul>
 <li>$P(s)$：如果$s$是非零的，将其减一，并立即返回，如果为零，就挂起这个线程，直到$s$变为非零，</li>
 <li>$V(s)$：将$s$加一，如果任何线程阻塞在$P$等待$s$变为非零，就重启这些线程中的某一个且是不可预测的</li>
 </ul>
 <p>$P$和$V$操作都是不可分割的，这使得信号量$s$绝不可能变为负值，这种属性称为<strong>信号量不变性</strong>，$P$和$V$来自荷兰语<strong>测试和增加</strong></p>
 <p>信号量提供一种方便的方法来确保对共享变量的互斥访问，基本思想就是将每个共享变量和一个信号量联系起来，然后使用$P(s)$和$V(s)$将相应的临界区包围起来</p>
-<p>这种信号量而成为<strong>二元信号量</strong>，因为它的值总是0或1，也常叫做<strong>互斥锁</strong>，相应的$P$和$V$操作就叫做<strong>加锁</strong>和<strong>解锁</strong></p>
+<p>这种信号量又称为<strong>二元信号量</strong>，因为它的值总是0或1，也常叫做<strong>互斥锁</strong>，相应的$P$和$V$操作就叫做<strong>加锁</strong>和<strong>解锁</strong></p>
 <h2 id="调度共享资源"><a href="#调度共享资源" class="headerlink" title="调度共享资源"></a>调度共享资源</h2><p>信号量的另一个作用是调度对共享资源的访问，在这种场景中，一个线程用信号量操作来通知另一个线程，程序状态的某个条件已经为真。经典例子就是<strong>生产者-消费者</strong>和<strong>读者-写者</strong>问题</p>
 <h3 id="生产者-消费者"><a href="#生产者-消费者" class="headerlink" title="生产者-消费者"></a>生产者-消费者</h3><p>生产者和消费者线程共享一个有$n$个槽的<strong>有限缓冲区</strong>，生产者线程反复生成新的项目，并插入缓冲区，消费者线程不断从缓冲区取出这些项目</p>
 <p>为此，我们要保证对缓冲区的访问是互斥的，还有调度对缓冲区的访问，例如如果缓冲区是满的，就要挂起生产者线程</p>
 <p>生产者-消费者模型很普遍，例如生产者编码视频帧，消费者解码并在屏幕上呈现出来，缓冲区的目的就是为了减少视频流的抖动</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> *buf;   <span class="comment">/* buffer array */</span></span><br><span class="line">    <span class="keyword">int</span> n;      <span class="comment">/* maximun number of slots */</span></span><br><span class="line">    <span class="keyword">int</span> front;  <span class="comment">/* buf[(front+1)%n] is first item */</span></span><br><span class="line">    <span class="keyword">int</span> rear;   <span class="comment">/* buf[rear%n] is last item */</span></span><br><span class="line">    <span class="keyword">sem_t</span> mutex;<span class="comment">/* protects accesses to buf */</span></span><br><span class="line">    <span class="keyword">sem_t</span> slots;<span class="comment">/* counts available slots */</span></span><br><span class="line">    <span class="keyword">sem_t</span> items;<span class="comment">/* counts available items */</span></span><br><span class="line">&#125;<span class="keyword">sbuf_t</span>;</span><br></pre></td></tr></table></figure>
-<p>上面定义了<code>sbuf_t</code>类型的缓冲区，项目存放在动态分配的整数数组<code>buf</code>中，<code>front</code>和<code>rear</code>记录数组的第一项和最后一项，三个信号量分别提供对缓冲区、空槽位和可用项目数量的互斥访问</p>
+<p>上面定义了<code>sbuf_t</code>类型的缓冲区，项目存放在动态分配的整数数组<code>buf</code>中，<code>front</code>和<code>rear</code>记录数组的第一项和最后一项，三个信号量分别提供对缓冲区、空槽位和已用项目数量的互斥访问</p>
 <h3 id="读者-写者"><a href="#读者-写者" class="headerlink" title="读者-写者"></a>读者-写者</h3><p>该问题是互斥问题的一个概括。一组并发的线程要访问一个共享对象，有些线程只读对象，叫做读者；有些线程只修改对象，叫做写者。写者必须拥有对对象的独占的访问，读者可以和无限个读者共享对象</p>
 <p>该模型也很常见，例如航空预定系统中，允许无限个用户查看座位，但是正在预定的写者必须拥有对数据库的独占的访问，在多线程缓存web代理中也是相同的模型，无限个线程从共享页面缓存中取出已有的页面，但向缓存写入新页面的线程必须独占的访问</p>
 <p>该线程也有多个变种，分别区别于读者和写者的优先级。如果读者优先，要求不要让读者等待，读者不会因为有一个写者在等待而等待，第二类，则是写者优先，要求一旦一个写者准备好可以写，就会尽可能完成写操作，如果有读者到来，就必须等待，即使写者也是等待的</p>
@@ -634,7 +634,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">217</span>
+                  <span class="site-state-item-count">219</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -647,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
