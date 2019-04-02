@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/03/29/CSAPP-第三章（2）/4.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2018/03/29/CSAPP-第三章（2）/5.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2018/03/29/CSAPP-第三章（2）/6.jpg">
-<meta property="og:updated_time" content="2018-05-31T08:44:53.447Z">
+<meta property="og:updated_time" content="2019-04-02T05:00:26.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章：程序的机器级表示（2）">
 <meta name="twitter:description" content="《CSAPP》第三章小结（续）">
@@ -390,7 +390,7 @@
         <p>《CSAPP》第三章小结（续）<br><a id="more"></a></p>
 <hr>
 <h1 id="算术和逻辑操作"><a href="#算术和逻辑操作" class="headerlink" title="算术和逻辑操作"></a><span id="1">算术和逻辑操作</span></h1><p>下图是常见的指令<img src="/2018/03/29/CSAPP-第三章（2）/1.jpg" alt=""></p>
-<h2 id="加载有效地址leaq"><a href="#加载有效地址leaq" class="headerlink" title="加载有效地址leaq"></a>加载有效地址leaq</h2><p>该指令实际是<code>movq</code>的变形，但它实际上根本没有引用内存，并不是从第一个操作数指定的位置读入数据，而是将有效地址写入目的操作数,例如<code>%rax</code>的值为x，那么指令<code>leaq 7(%rdx,%rdx,4),%rax</code>将设置寄存器<code>%rax</code>的值为5*x+7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">long scale(long x,long y,long z)</span><br><span class="line">&#123;</span><br><span class="line">	long t = x+4*y+12*z;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="加载有效地址leaq"><a href="#加载有效地址leaq" class="headerlink" title="加载有效地址leaq"></a>加载有效地址leaq</h2><p>该指令实际是<code>movq</code>的变形，但它实际上根本没有引用内存，并不是从第一个操作数指定的位置读入数据，而是将有效地址写入目的操作数,例如<code>%rax</code>的值为x，那么指令<code>leaq 7(%rdx,%rdx,4),%rax</code>将设置寄存器<code>%rax</code>的值为<code>5*x+7</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">long scale(long x,long y,long z)</span><br><span class="line">&#123;</span><br><span class="line">	long t = x+4*y+12*z;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scale:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	leaq	(%rdi,%rsi,4), %rcx  //x+4*y</span><br><span class="line">	leaq	(%rdx,%rdx,2), %rax  //z+2*z</span><br><span class="line">	salq	$2, %rax      //3*z左移两位为12*z </span><br><span class="line">	addq	%rcx, %rax    //x+4*y+12*z</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
 <h2 id="一元和二元操作"><a href="#一元和二元操作" class="headerlink" title="一元和二元操作"></a>一元和二元操作</h2><p>一元操作的操作数既是源又是目的，可以是内存也可以是寄存器。例如<code>incp(%rsp)</code>将是栈顶的八字节加一，类似于c语言中的++和–运算符<br>二元操作的第二个操作数既是源又是目的，类似于x-=y。不过源操作数是第一个，目的操作数第二个，例如指令<code>subq %rax,%rdx</code>是从<code>%rdx</code>中减去<code>%rax</code>，第二个操作数不能是立即数，并且如果是内存地址时，必须先读出值，执行操作，再写入内存</p>
 <h2 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h2><p>先是移位量，再是要移位的数，移位量可以是立即数，或者放在<code>%cl</code>寄存器中，特别规定只能以该寄存器作为操作数。<br>移位操作对w位长的数据值进行操作，移位量是由寄存器的低m位决定的，并且$2^m=w$,高位自动忽略。例如<code>%cl</code>的值为OxFF时，指令<code>salb</code>左移7位，<code>salw</code>左移15位，<code>sall</code>左移31位，<code>salq</code>左移63位，这块地方依旧有些不明白。<br>左移指令有<code>SA</code>L和<code>SHL</code>，效果相同，都是右边补0<br>右移指令有<code>SAP</code>和<code>SHR</code>，<code>SAR</code>执行算术移位（填上符号位），<code>SHR</code>执行逻辑移位（填上0）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">long shift(long x,long n)</span><br><span class="line">&#123;</span><br><span class="line">	x&lt;&lt;=4;</span><br><span class="line">	x&gt;&gt;=n;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -424,7 +424,7 @@
 <h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><p>跳转的目的地一般用label表明，产生目标代码文件时，汇编器会确定所有带label指令的地址，并将目的指令的地址编码为跳转指令的一部分</p>
 <ul>
 <li>直接跳转：以label为目标直接跳转</li>
-<li>间接跳转：跳转目标从寄存器或者内存位置读出，一般带有*号</li>
+<li>间接跳转：跳转目标从寄存器或者内存位置读出，一般带有<code>*</code>号</li>
 </ul>
 <p>最常见的是PC相对编码，将目标指令的地址与紧跟在跳转指令后面那条指令的地址的差作为编码，另一种则是给出绝对地址，用四字节直接指定目标，汇编器和链接器会选择合适的跳转目的编码，所以跳转指令的地址=目标指令的地址-跳转指令后一条指令的地址，当执行PC相对寻址时，程序计数器的值是跳转指令后面的那条指令的的地址，而不是跳转指令本身的地址<br>通过PC相对的跳转目标编码，将很容易将目标代码迁移至内存中<img src="/2018/03/29/CSAPP-第三章（2）/4.jpg" alt="">该图是链接后的反汇编版本，其中有两个跳转指令<code>jmp</code>、<code>jg</code>,其中<code>jmp</code>目的地址等于下一条指令地址<code>0x4004d5</code>加上相对编码<code>03</code>得到<code>0x4004d8</code>,同理<code>jg</code>的目的地址等于<code>0xd</code>+<code>0xf8</code>=<code>0xd5</code>,因为<code>f8</code>对应十进制<code>-8</code></p>
 <h3 id="条件控制实现条件分支"><a href="#条件控制实现条件分支" class="headerlink" title="条件控制实现条件分支"></a>条件控制实现条件分支</h3><p>刚学习的时候比较语句例如<code>cmpq    $-3, %rdi</code>和<code>jge    .L2</code>其实合起来相当于是else的条件而不是if的条件，当时理解的时候出现了偏差<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">test</span><span class="params">(<span class="keyword">long</span> x,<span class="keyword">long</span> y,<span class="keyword">long</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> val = x+y+z;</span><br><span class="line">	<span class="keyword">if</span>(x&lt;<span class="number">-3</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&lt;z)</span><br><span class="line">			val=x*y;</span><br><span class="line">		<span class="keyword">else</span> val = y*z;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (x&gt;<span class="number">2</span>)</span><br><span class="line">		val = x*z;</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -599,7 +599,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">219</span>
+                  <span class="site-state-item-count">220</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -612,7 +612,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

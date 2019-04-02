@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="具有良好局部性的程序倾向于一次又一次的访问相同的数据项集合">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-01T08:34:22.880Z">
+<meta property="og:updated_time" content="2019-04-02T05:02:42.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第六章：存储器层次结构">
 <meta name="twitter:description" content="具有良好局部性的程序倾向于一次又一次的访问相同的数据项集合">
@@ -384,7 +384,17 @@
 <hr>
 <p>存储的CPU寄存器的数据，只要0个周期就能访问，存储在高速缓存的数据，需要4-75个周期，存储在磁盘上的数据，则大约需要几千万个周期</p>
 <p>只有了解系统是如何将数据在存储器层次结构中上下移动的，才可以编写自己的程序，使得程序的数据项存储在层次结构中较高的地方</p>
-
+<p>了解如何看一眼源代码就能获得对程序局部性的高层次的认识，是程序员要掌握的一项重要和有用的技能</p>
+<h1 id="存储设备"><a href="#存储设备" class="headerlink" title="存储设备"></a>存储设备</h1><h1 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h1><p>局部性通常有两种形式：<strong>空间局部性</strong>和<strong>时间局部性</strong>。空间局部性好的代码倾向于在下次引用附近的内存位置，时间局部性好的代码倾向于引用相同的内存代码</p>
+<p>从硬件到操作系统，再到应用程序，它们的设计都用到了局部性原理</p>
+<ul>
+<li>硬件层：局部性原理允许计算机设计者引入高速缓存存储器来保存最近使用的指令和数据。从而提高对主存的访问速度</li>
+<li>操作系统层：允许系统使用主存作为虚拟地址空间最近被引用块的高速缓存</li>
+<li>应用程序层：如Web浏览器把最近引用的文档放在本地磁盘上，利用的就是时间局部性</li>
+</ul>
+<p>对于顺序访问数组元素的函数，具有步长为1的顺序引用模式具有较好的空间局部性，且随着步长的增加，空间局部性下降。而对于多维数组，如果是普通的行优先顺序访问数组元素，也具有良好的空间局部性，因为是步长为1的引用模式；如果是按照列顺序访问数组，就会得到步长为N的引用模式，空间局部性下降</p>
+<p>对于取指令，循环有好的时间和空间局部性，循环体越小，迭代次数越多，局部性越好？？</p>
+<h1 id="高速缓存"><a href="#高速缓存" class="headerlink" title="高速缓存"></a>高速缓存</h1>
       
     </div>
     
@@ -480,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -496,7 +515,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">219</span>
+                  <span class="site-state-item-count">220</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -509,7 +528,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -554,6 +573,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储设备"><span class="nav-number">1.</span> <span class="nav-text">存储设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部性"><span class="nav-number">2.</span> <span class="nav-text">局部性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高速缓存"><span class="nav-number">3.</span> <span class="nav-text">高速缓存</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
