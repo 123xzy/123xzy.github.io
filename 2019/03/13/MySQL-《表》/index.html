@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2019/03/13/MySQL-《表》/4.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/13/MySQL-《表》/3.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/13/MySQL-《表》/5.jpg">
-<meta property="og:updated_time" content="2019-03-20T02:58:48.569Z">
+<meta property="og:updated_time" content="2019-04-03T07:59:58.467Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="表">
 <meta name="twitter:description" content="表是关于特定实体的数据集合，这也是关系型数据库模型的核心。本章介绍InnoDB的逻辑存储及其实现分析数据在表中如何组织和存放">
@@ -422,7 +422,30 @@
 <h2 id="Redundant"><a href="#Redundant" class="headerlink" title="Redundant"></a>Redundant</h2><p><img src="/2019/03/13/MySQL-《表》/5.jpg" alt="">结构大同小异，不做分析</p>
 <h2 id="行溢出"><a href="#行溢出" class="headerlink" title="行溢出"></a>行溢出</h2><p>一般情况下，InnoDB的数据都是放在页种类为B-tree Node中，当发送行溢出时，数据存放在类型为UNcompress BLOG页中</p>
 <p>=</p>
-<h1 id="数据页结构"><a href="#数据页结构" class="headerlink" title="数据页结构"></a>数据页结构</h1><h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1>
+<h1 id="数据页结构"><a href="#数据页结构" class="headerlink" title="数据页结构"></a>数据页结构</h1><h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><p>为了保证数据的完整性，InnoDB通常提供以下几种约束方式</p>
+<ul>
+<li>Primary Key</li>
+<li>Unique Key</li>
+<li>Foreign Key</li>
+<li>Default</li>
+<li>NOT NULL</li>
+</ul>
+<p>约束更像是逻辑的概念，用来保证数据的完整性，而索引是一个数据结构，具有逻辑上的概念，在数据库上还代表物理存储的方式</p>
+<p>通过触发器也可以实现对数据的完整性。还可以实现对传统CHECK约束的支持、物化视图、高级复制、审计等高级特性</p>
+<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><p>View是一个命名的虚表，由一个SQL查询来定义，但其中没有实际的物理存储</p>
+<p>视图的主要用途之一是被用作一个抽象装置，对于一些应用程序，程序不关心基表的结构，只要按照视图定义来获取更新数据，View在一定程序起到了保护层的作用</p>
+<p>物化视图的数据存储在非易失的存储设备上，可以保存复杂查询的结果，从而直接查出结果</p>
+<p>MySQL本身不支持物化视图，但可以通过一定机制实现物化视图的功能。即通过触发器来实现当表变化时，就更新物化视图的基表来实现</p>
+<h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1><p>分区的过程是将一个表或索引分解为更小、更可管理的部分。在物理上这个表或索引可能由数十个物理分区组成。每个分区可以独立处理，也可以作为更大对象的一部分处理</p>
+<p>MySQL仅支持水平分区（即将同一个表不同行的记录分配到不同的物理文件中）。同时还是局部分区索引，一个分区既存放数据也存放索引，而全局分区则是索引放在一个对象，数据存放在各个分区中</p>
+<p>MySQL支持以下类型的分区</p>
+<ul>
+<li>RANGE：行数据基于一个给定连续区间的列值被放入分区</li>
+<li>LIST：和RANGE类似，但是LIST分区面向的是离散的值</li>
+<li>HASH：根据用户自定义的表达式的返回值来分区</li>
+<li>KEY：根据MySQL提供的哈希函数来进行分区</li>
+</ul>
+
       
     </div>
     

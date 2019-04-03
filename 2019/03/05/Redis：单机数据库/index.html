@@ -95,7 +95,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/05/Redis：单机数据库/1.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/05/Redis：单机数据库/2.jpg">
-<meta property="og:updated_time" content="2019-03-31T04:33:48.762Z">
+<meta property="og:updated_time" content="2019-04-03T09:10:54.778Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《单机数据库》">
 <meta name="twitter:description" content="对Redis服务器的数据库实现进行介绍">
@@ -458,9 +458,28 @@
 <li>check_num：根据前面四部分计算得到的校验和，会和载入数据计算得到的校验和进行比对，检查RDB的完整性</li>
 </ul>
 <p>对于key_value_pairs，TYPE指明了对象类型或底层编码，服务器根据该值决定如何读入和解释value的值。对于具有过期时间的键值对，还有两个字段，前面的EXPIRETIME_MS常量表示接下来读入的是以毫秒为单位的过期时间，ms就表示UNIX时间戳，也就是过期时间</p>
+<p>value字段根据保存值的对象不同会有不同的结构</p>
 <h1 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h1><p>与RDB保存数据库中的键值对来记录数据库状态不同，AOF（Append Only File）通过保存Redis服务器所执行的写命令来记录数据库状态 </p>
 <p>当服务器以AOF持久化模式运行时，只有当过期键被惰性删除或定期删除之后，才会在AOF文件追加一条命名，显式记录该键被删除</p>
 <p>由于AOF文件的更新频率比RDB高，所以在AOF持久化功能开启时，服务器会优先载入AOF文件</p>
+<p>AOF持久化功能的实现分为命令追加、文件写入、文件同步三个步骤</p>
+<p>当服务器执行完一个写命名后，会以协议格式将被执行的写命令追加到服务器状态的aof_buf缓冲区的末尾</p>
+<p>服务器在一个事件循环中会调用flush44AppendOnlyFile函数，来将aof_buf缓冲区的内容写入和保存到AOF文件里面，该函数的行为有配置文件中的参数appendfsync决定，具体参见配置文件注解</p>
+<p>对于AOF文件载入，服务器会创建一个不带网络连接的伪客户端，有其来执行AOF中的指令，使数据库恢复</p>
+<p>为了解决AOF文件体积膨胀的问题，Redis提供了AOF文件重写功能，服务器可以创建一个新的AOF文件来代替现有的AOF文件，但是新文件中不会包含冗余命令，而且保存的数据库状态相同</p>
+<p>虽然叫AOF文件重写，但是不对现有AOF文件做任何读取、分析操作，而是直接读取当前数据库状态来完成。该功能通过aof_rewrite()函数实现</p>
+<p>但是因为这个函数进行大量的写入操作，调用该函数的线程被长时间阻塞，所以Redis服务器将AOF重写操作放入子进程</p>
+<ul>
+<li>子进程进行AOF重写，父进程（即服务器）可以继续处理命令请求</li>
+<li>使用子进程而不是线程，因为子进程带有父进程的数据副本，可以避免使用锁的情况下，保证数据的安全性？？？</li>
+</ul>
+<p>使用子进程也会产生一个数据不一致的问题，在子进程重写AOF期间，父进程服务器接受的新的命令请求会修改数据库当前状态。为了解决这个问题，服务器设置了一个AOF重写缓冲区。在服务器创建子进程之后，这个缓冲区得到使用，也就是说在子进程重写AOF期间，服务器要将执行的命令写入AOF缓冲区和AOF重写缓冲区</p>
+<p>当子进程完成AOF重写之后，会向父进程发送一个信号，服务器接到这个信号之后，会调用信号处理函数</p>
+<ul>
+<li>将AOF重写缓冲区所有内容写入新的AOF文件</li>
+<li>将新的AOF文件改名，原子地覆盖现有的AOF文件</li>
+</ul>
+<p>父进程只有在执行信号处理函数时会造成阻塞，对命令请求的影响讲到最低</p>
 <h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p>Redis是一个事件驱动程序，需处理以下两类事件</p>
 <ul>
 <li>文件事件：Redis服务器通过套接字与客户端进行连接，而文件事件就是服务器对套接字操作的抽象，服务器和客户端通信会产生相应的文件事件，而服务器通过监听并处理这些事件来完成一系列的网络通信操作</li>
