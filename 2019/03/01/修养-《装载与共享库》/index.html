@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -85,13 +85,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿谢的BLOG">
-<meta property="og:url" content="https://123xzy.github.io/archives/2019/page/5/index.html">
+<meta name="description" content="介绍ELF文件在linux下的装载过程和linux下共享库的管理问题">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《装载与共享库》">
+<meta property="og:url" content="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="介绍ELF文件在linux下的装载过程和linux下共享库的管理问题">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/1.jpg">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/2.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/3.jpg">
+<meta property="og:updated_time" content="2019-04-04T09:11:55.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿谢的BLOG">
+<meta name="twitter:title" content="《装载与共享库》">
+<meta name="twitter:description" content="介绍ELF文件在linux下的装载过程和linux下共享库的管理问题">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/1.jpg">
 
 
 
@@ -121,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://123xzy.github.io/archives/2019/page/5/"/>
+  <link rel="canonical" href="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/"/>
 
 
 
 
 
-  <title>Archive | 阿谢的BLOG</title>
+  <title>《装载与共享库》 | 阿谢的BLOG</title>
   
 
 
@@ -146,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -294,410 +303,171 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://123xzy.github.io/2019/03/01/修养-《装载与共享库》/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="123xzy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿谢的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">《装载与共享库》</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-01T17:03:54+08:00">
+                2019-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        Excellent! 220 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/JVM线程安全与锁优化/" itemprop="url">
-              
-                <span itemprop="name">线程安全与锁优化</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T18:33:56+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/JVM内存模型与线程/" itemprop="url">
-              
-                <span itemprop="name">内存模型与线程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T18:33:41+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/Redis：《Redis设计与实现》/" itemprop="url">
-              
-                <span itemprop="name">《Redis设计与实现》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T17:47:47+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>介绍ELF文件在linux下的<strong>装载过程</strong>和linux下<strong>共享库</strong>的管理问题<br><a id="more"></a></p>
+<hr>
+<h1 id="装载"><a href="#装载" class="headerlink" title="装载"></a>装载</h1><p>程序==菜谱<br>CPU==人<br>硬件==其他厨具<br>进程==炒菜的过程</p>
+<p>32位平台下，有4GB虚拟空间、linux默认分配1GB给OS，3GB给进程</p>
+<p>对于程序来说，将程序需要的所有指令和数据载入内存运行，就是<strong>静态装入</strong>，但是当所需要的内存经常大于物理内存的数量，又不能无限添加内存。由于程序运行时<strong>局部性原理</strong>，就可以将程序最常用的部分驻留在内存中，这就是<strong>动态装入</strong>，<strong>覆盖装入</strong>和<strong>页映射</strong>是典型的动态装载方法</p>
+<p>覆盖装入几乎已经被淘汰，大致思想就是，把挖掘内存潜力的任务交给程序员，并把程序分成多个模块，并编写一个管理这些模块合适驻留内存的辅助器称为覆盖管理器，不详述</p>
+<p>页映射随着虚拟存储的发明而诞生。把内存和所有磁盘数据和指令按照页为单位划分成若干页，以后所有装载和操作的单位就是页。有时候程序的页数远超过物理页数，此时就需要算法去选择舍去那个页来装载需要的页。一种是先进先出算法，另一种是最少使用算法，而这个控制程序就是现代操作系统，更准确的说是操作系统的<strong>存储管理器</strong></p>
+<p>可执行文件的页可能被装入内存中的任意页，程序如果使用物理地址直接操作，每次装入时都需要重定位，因此才需要<strong>虚拟存储</strong>和现代的硬件MMU提供地址转换功能</p>
+<p>接下来剖析：创建一个进程，然后装载相应的可执行文件并执行</p>
+<ul>
+<li>创建一个独立的<strong>虚拟地址空间</strong>：由一组页映射函数将虚拟空间的各个页映射至相应的物理空间，那么创建一个虚拟空间实际上就是创建映射函数需要的数据结构？？</li>
+<li>读取可执行文件头，并建立<strong>虚拟空间与可执行文件的映射关系</strong>：第一步做的是虚拟空间和物理内存的映射关系，这步要做的是虚拟空间和可执行文件的映射关系。当操作系统捕捉到页错误时，需要知道程序需要的页在可执行文件的哪个位置，这就是虚拟空间和可执行文件之间的映射关系。可执行文件在装载时实际就是被映射的虚拟空间，但是考虑到<strong>偏移</strong>、<strong>字段对齐</strong>等因素，还是会有些许区别。linux把进程的虚拟空间中得到一个段叫做<strong>虚拟内存区域</strong>（VMA，如代码区、只读常量区、全局区、BSS段、堆区、栈区）</li>
+<li>将CPU的PC设置为可执行文件的入口地址，启动执行：这一步在OS层面很复杂，设计内核堆栈和用户堆栈的切换、CPU运行权限的切换，不过从进程角度就简单认为执行了一条跳转指令，跳到可执行文件的入口地址</li>
+</ul>
+<h2 id="页错误"><a href="#页错误" class="headerlink" title="页错误"></a>页错误</h2><p>上面的步骤只是通过可执行文件头部的信息建立可执行文件和进程虚拟内存之间的映射关系，可执行文件的真正指令和数据并没有载入内存</p>
+<p>当CPU执行指令时，发现指令对应的页面是一个空页面，就认为这是一个页错误（Page Fault）。CPU会将控制权交给操作系统，其由专门的页错误处理程序</p>
+<p>OS会先查询上面装载中第二步构造的数据结构，找到缺失页所在的VMA，计算出相关页面在可执行文件中的偏移，然后在物理内存中分配一个物理页面，将进程中该虚拟页和物理页之间建立映射关系，之后把控制权交还给进程</p>
+<h1 id="进程虚拟内存空间分布"><a href="#进程虚拟内存空间分布" class="headerlink" title="进程虚拟内存空间分布"></a>进程虚拟内存空间分布</h1><p>可执行文件拥有众多的段，但在映射的时候，是以系统的页长度为单位，这就会造成内存的浪费。为解决这个问题，可以将拥有相同权限的段合并在一起，然后映射到页中<img src="/2019/03/01/修养-《装载与共享库》/1.jpg" alt=""></p>
+<p>在ELF中，数据分类的单位是Section，而从装载的角度，用Segment重新划分了ELF的每个Section，ELF中描述Segment的结构叫做Program Header，其描述了ELF文件如何被OS映射到进程的虚拟空间<img src="/2019/03/01/修养-《装载与共享库》/2.JPG" alt=""></p>
+<h2 id="堆和栈"><a href="#堆和栈" class="headerlink" title="堆和栈"></a>堆和栈</h2><p>在进程的虚拟地址空间中，除了保存ELF文件的Segment，还保存进程需要的栈和堆<img src="/2019/03/01/修养-《装载与共享库》/3.jpg" alt=""></p>
+<p>进程刚启动的时候，需要知道一些进程运行环境，如运行参数和环境变量，OS在进程启动之前将这些信息提前保存到进程的虚拟空间的栈中（也就是上图的STACK VMA）</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/《长期中的真实经济》/" itemprop="url">
-              
-                <span itemprop="name">《长期中的真实经济》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T11:04:48+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/《宏观经济学的数据》/" itemprop="url">
-              
-                <span itemprop="name">《宏观经济学的数据》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T10:39:59+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/《经济学原理（微观）》/" itemprop="url">
-              
-                <span itemprop="name">《经济学原理（微观）》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T10:19:22+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/02/《经济学原理（宏观）》/" itemprop="url">
-              
-                <span itemprop="name">《经济学原理（宏观）》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-02T10:17:09+08:00"
-              content="2019-03-02" >
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/01/《库与运行库》/" itemprop="url">
-              
-                <span itemprop="name">《库与运行库》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-01T17:05:34+08:00"
-              content="2019-03-01" >
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/01/修养-《装载与共享库》/" itemprop="url">
-              
-                <span itemprop="name">《装载与共享库》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-01T17:03:54+08:00"
-              content="2019-03-01" >
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/01/《动态链接》/" itemprop="url">
-              
-                <span itemprop="name">《动态链接》</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-01T17:01:44+08:00"
-              content="2019-03-01" >
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/《动态链接》/" rel="next" title="《动态链接》">
+                <i class="fa fa-chevron-left"></i> 《动态链接》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/01/《库与运行库》/" rel="prev" title="《库与运行库》">
+                《库与运行库》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2019/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/2019/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/12/">12</a><a class="extend next" rel="next" href="/archives/2019/page/6/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -705,6 +475,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -725,8 +499,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -799,6 +582,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#装载"><span class="nav-number">1.</span> <span class="nav-text">装载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#页错误"><span class="nav-number">1.1.</span> <span class="nav-text">页错误</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程虚拟内存空间分布"><span class="nav-number">2.</span> <span class="nav-text">进程虚拟内存空间分布</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈"><span class="nav-number">2.1.</span> <span class="nav-text">堆和栈</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -938,6 +737,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1312,26 +1115,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

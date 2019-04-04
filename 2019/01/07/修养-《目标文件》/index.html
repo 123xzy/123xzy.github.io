@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/3.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/4.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/01/07/修养-《目标文件》/2.JPG">
-<meta property="og:updated_time" content="2019-03-24T09:05:53.673Z">
+<meta property="og:updated_time" content="2019-04-04T06:35:17.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《目标文件》">
 <meta name="twitter:description" content="编译器编译源码生成的文件就叫目标文件，那目标文件里面到底长什么样？">
@@ -444,6 +444,16 @@
 <li>行号信息</li>
 </ul>
 <p>我们只关心全局符号，其他符号对于链接过程都是无关紧要的，<code>readelf</code> <code>objdump</code> <code>nm</code>都能查看符号表<br><img src="/2019/01/07/修养-《目标文件》/2.JPG" alt=""></p>
+<p>符号表就是一个elf32_sym结构的数组，每个元素对应一个符号<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Symbol table entry.  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf32_Word    st_name;                <span class="comment">/* Symbol name (string tbl index) */</span></span><br><span class="line">  Elf32_Addr    st_value;               <span class="comment">/* Symbol value */</span></span><br><span class="line">  Elf32_Word    st_size;                <span class="comment">/* Symbol size */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span> st_info;                <span class="comment">/* Symbol type and binding */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span> st_other;               <span class="comment">/* Symbol visibility */</span></span><br><span class="line">  Elf32_Section st_shndx;               <span class="comment">/* Section index */</span></span><br><span class="line">&#125; Elf32_Sym;</span><br></pre></td></tr></table></figure></p>
+<p>每个元素都会有相关的宏定义，代表不同的含义，具体参考<code>elf.h</code></p>
+<p>特殊符号:在使用ld作为链接器来生成可执行文件时，会定义很多特殊符号，这些符号被定义在ld链接器的链接脚本中。链接器会在程序最终链接成可执行文件的时候将其解析成正确的值，如<code>_executable_start</code>表示程序起始地址 <code>_etext</code>表示代码段结束地址等</p>
+<p>编译器默认函数和初始化的全局变量为强符号，未初始化的全局变量为弱符号，也可以通过GCC的<code>__attribute__((weak))</code>定义任何一个强符号为弱符号，且对于强弱符号有以下规则</p>
+<ul>
+<li>强符号不能重复定义</li>
+<li>优先选择强符号定义</li>
+<li>都是弱符号定义时，选择占用空间最大的那个</li>
+</ul>
+<p>目标文件会引用定义在其他目标文件中的符号，并在最终链接成可执行文件，如果没有找到该符号定义，就会报错的符号引用称为强引用，反之则为弱引用，可通过<code>__attribute__((weakref))</code>声明对一个外部引用为弱引用</p>
 
       
     </div>

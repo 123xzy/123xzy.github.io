@@ -85,15 +85,18 @@
 
 
 
+<meta name="description" content="要编写线程安全的代码，其核心就是要对状态访问操作进行管理，尤其是对共享和可变的状态的管理">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程安全性">
 <meta property="og:url" content="https://123xzy.github.io/2019/03/19/JCP-线程安全性/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
+<meta property="og:description" content="要编写线程安全的代码，其核心就是要对状态访问操作进行管理，尤其是对共享和可变的状态的管理">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-19T09:02:58.425Z">
+<meta property="og:updated_time" content="2019-04-04T00:56:03.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程安全性">
+<meta name="twitter:description" content="要编写线程安全的代码，其核心就是要对状态访问操作进行管理，尤其是对共享和可变的状态的管理">
 
 
 
@@ -377,8 +380,16 @@
       
 
       
-        <a id="more"></a>
+        <p>要编写线程安全的代码，其核心就是要对状态访问操作进行管理，尤其是对共享和可变的状态的管理<br><a id="more"></a></p>
 <hr>
+<p>当多个线程访问某个类时，这个类始终都能表现出<strong>正确</strong>的行为，那这个类就是线程安全的</p>
+<p><strong>无状态</strong>（既不包含任何域，也不包含任何对其他类中域的引用）的对象一定是线程安全的</p>
+<p>最常见的<strong>竞态条件</strong>（Race Condition）就是先检查后执行操作，其本质就是通过一种可能失效的观察结果来做出判断或执行某个计算</p>
+<p>为了保证线程安全性，<strong>先检查后执行</strong>（如延迟初始化）和<strong>读取-修改-写入</strong>（如递增）等操作必须是原子的，这类操作都是复合操作，必须通过加锁等机制让其变为原子性的</p>
+<p>Java提供了一种内置的锁机制来执行原子性：Synchronize Block。其包括两个部分：一个作为锁的对象引用，一个作为由这个锁对象保护的代码块。以Synchronize修饰的方法就是横跨整个方法体的同步代码块，其中该同步代码块的锁就是方法调用所在的对象。每个Java对象都可以用作一个实现同步的锁，这些锁称为内置锁或监视器锁？？？</p>
+<p>当某个线程请求其他线程持有的锁时，会被阻塞。但是某个线程试图获得自己持有的锁时，就会成功。这种重入意味着获取锁的操作的粒度是线程，而不是调用（Pthread中互斥体的获取操作是以调用为粒度）？？？</p>
+<p>重入的一种实现方式就是，为每个锁关联一个获取计数值和一个所有者线程</p>
+<p>当执行时间较长的计算或可能无法快速完成的操作时，一定不要持有锁</p>
 
       
     </div>
