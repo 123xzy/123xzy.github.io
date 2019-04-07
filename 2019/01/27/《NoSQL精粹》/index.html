@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="NoSQL = Not Only SQL">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-03T14:07:08.967Z">
+<meta property="og:updated_time" content="2019-04-07T13:40:33.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《NoSQL精粹》">
 <meta name="twitter:description" content="NoSQL = Not Only SQL">
@@ -467,7 +467,6 @@
 <p>第一步就是map，他就是一个函数，输入是某个聚合，输出则是一大把键值对。每个应用程序的映射函数各自独立，以便安全执行并发运算。化简函数则接受多个映射函数的输出值作为输入，然后将其合并</p>
 <p>许多map-reduce计算，即使将其分布到集群中的多台机器上执行，也比较耗时，而且计算过程中，新数据会不断涌入，为了保证输出的数据不过时，通常将map-reduce组成易于增量更新的形式</p>
 <p>在这一形式中，映射阶段较容易处理，只要输入数据改变时，重新执行映射函数。但是化简步骤较麻烦，只要某个映射输出结果改变，就要再次化简。为了减少重新化简的计算量，可以将未改变的部分作为物化视图</p>
-<p>P100</p>
 
       
     </div>
@@ -589,7 +588,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">220</span>
+                  <span class="site-state-item-count">221</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

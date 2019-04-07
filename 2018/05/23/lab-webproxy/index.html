@@ -95,7 +95,11 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/2.JPG">
-<meta property="og:updated_time" content="2019-04-01T07:39:16.253Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/3.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/4.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/5.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/23/lab-webproxy/6.JPG">
+<meta property="og:updated_time" content="2019-04-07T05:28:22.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web proxy">
 <meta name="twitter:description" content="实现一个多线程带缓存的代理服务器！">
@@ -415,7 +419,9 @@
 <h1 id="Part-III"><a href="#Part-III" class="headerlink" title="Part III"></a>Part III</h1><p>HTTP实际上定义了一个相当复杂的模型，通过该模型，web服务器可以指示如何缓存它们所服务的对象，客户端可以指定如何代表它们使用缓存，而我们只需要实现简化版</p>
 <p>此可能会出现一个巨型对象将消耗整个缓存的情况，从而防止缓存其他对象。为了避免这些问题，要设置<code>maximum cache size</code> <code>maximum cache object size</code></p>
 <p>对缓存的访问必须是线程安全的，确保缓存访问没有竞争条件可能是这个Lab更有趣的方面。事实上，有一个特殊的要求，即多个线程必须能够同时从缓存中读取。当然，一次只允许一个线程写入缓存，但读者必须不存在这种限制。因此，使用一个大型独占锁保护对缓存的访问不是一个可接受的解决方案。您可能需要探索一些选项，例如对缓存进行分区、使用<code>Pthreads readers-writers locks</code>或使用信号量来实现您自己的<code>readers-writers</code>解决方案。无论哪种情况，您不必实施严格的<code>LRU eviction policy</code>这一事实都会使您在支持多个读取器方面有一定的灵活性</p>
-<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><a href="https://github.com/123xzy/CSAPP/tree/master/lab/proxylab-handout" target="_blank" rel="noopener">源代码</a><br><a href="http://www.cnblogs.com/lessmore/p/csapp-proxy-lab-2014-12.html" target="_blank" rel="noopener">参考</a></p>
+<p>写代码花了半天，调BUG花了一天，兜兜转转终于写出个能跑的代理服务器，虽然还是有很多BUG存在。调试BUG期间也是相当痛苦，尤其是在多线程的环境下，总感觉有股不自信在，或许是因为第一次接触，<br><img src="/2018/05/23/lab-webproxy/3.JPG" alt=""><br><img src="/2018/05/23/lab-webproxy/4.JPG" alt=""><br><img src="/2018/05/23/lab-webproxy/5.JPG" alt=""><br>虽然整个循环已经建立，也就说能写入缓存，也能从缓存获取，但是依旧有一些BUG存在，之后会不断完善<br><img src="/2018/05/23/lab-webproxy/6.JPG" alt=""></p>
+<p>完成这个实验，其实不要对多线程感到恐惧，并没有那么神秘，心态放端正</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><a href="https://github.com/123xzy/CSAPP/tree/master/lab/proxylab-handout" target="_blank" rel="noopener">源代码</a></p>
 
       
     </div>
@@ -535,7 +541,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">220</span>
+                  <span class="site-state-item-count">221</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
