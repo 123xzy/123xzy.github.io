@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="分布式开始啦！">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-30T03:52:16.286Z">
+<meta property="og:updated_time" content="2019-04-08T11:05:03.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《多机数据库的实现》">
 <meta name="twitter:description" content="分布式开始啦！">
@@ -383,7 +383,11 @@
         <p>分布式开始啦！<br><a id="more"></a></p>
 <hr>
 <h1 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h1><p>通过执行<code>SLAVEOF</code>命令可以让一个服务器去复制另一个服务器，进行复制的主从服务器将保存相同的数据</p>
-<h1 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h1><p>Sentinel是Redis高可用的解决方案</p>
+<p>通过<strong>同步</strong>和<strong>命名传播</strong>两个操作实现复制。首先，从服务器发送<code>SYNC</code>命令，主服务器接受后将会执行<code>BGSAVE</code>，生成RDB文件，并返回。在生成RDB期间，主服务器将执行的写命令写入缓冲区，并发送给从服务器</p>
+<p>当完成上述同步命令后，主从数据库的一致性只是暂时的。主服务器需要通过命令传播实时将写命令发送给从服务器</p>
+<p>上面试旧版的复制策略，这种方式的缺点在于从服务器每次执行SYNC命令时，都会得到一个RDB文件，这对于主从服务器都是一种浪费，因为主从服务器可能只是相差几个写命令，例如从服务器突然掉线几秒钟，为了同步这几秒期间的数据，要同步整个RDB，显然不值得</p>
+<p>新版的复制功能使用<code>PSYNC</code>命令， 该命令具有<strong>完整重同步</strong>和<strong>部分重同步</strong>（Partial），就是为了解决上面断线后同步时的低效情况</p>
+<h2 id="部分重同步"><a href="#部分重同步" class="headerlink" title="部分重同步"></a>部分重同步</h2><h1 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h1><p>Sentinel是Redis高可用的解决方案</p>
 <p>由一个或多个Sentinel instance组成的Sentinel System可以监视任意多个主从服务器，当被监视的主服务器进入下线状态时，Sentinel System会自动将下线的主服务器下属的某个从服务器升级为主服务器，代替原来的主服务器继续执行命令</p>
 <h1 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h1><p>集群是Redis提供的分布式数据库方案，集群通过分片来进行数据共享，并提供复制和故障转移功能</p>
 
@@ -507,7 +511,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">221</span>
+                  <span class="site-state-item-count">223</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -575,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复制"><span class="nav-number">1.</span> <span class="nav-text">复制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sentinel"><span class="nav-number">2.</span> <span class="nav-text">Sentinel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群"><span class="nav-number">3.</span> <span class="nav-text">集群</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复制"><span class="nav-number">1.</span> <span class="nav-text">复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分重同步"><span class="nav-number">1.1.</span> <span class="nav-text">部分重同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sentinel"><span class="nav-number">2.</span> <span class="nav-text">Sentinel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群"><span class="nav-number">3.</span> <span class="nav-text">集群</span></a></li></ol></div>
             
 
           </div>

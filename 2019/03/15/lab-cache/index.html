@@ -94,7 +94,7 @@
 <meta property="og:description" content="了解cache memories可能对C程序的性能产生的影响">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/15/lab-cache/1.JPG">
-<meta property="og:updated_time" content="2019-04-01T08:27:00.357Z">
+<meta property="og:updated_time" content="2019-04-08T12:19:51.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cache">
 <meta name="twitter:description" content="了解cache memories可能对C程序的性能产生的影响">
@@ -384,19 +384,20 @@
       
         <p>了解<strong>cache memories</strong>可能对C程序的性能产生的影响<br><a id="more"></a></p>
 <hr>
+<p>[参考] <a href="/2018/05/28/CSAPP-第九章/" title="第九章：虚拟内存">第九章：虚拟内存</a></p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>第一部分编写一个模拟缓存行为的C程序，第二部分将优化一个矩阵转置函数，最大限度地减少缓存丢失的次数</p>
 <p>实验中只要修改<code>csim.c</code>和<code>trans.c</code>两个文件</p>
 <p>在实验目录中有一个<code>trace</code>文件夹，里面包含了一系列的<code>reference trace files</code>，去评估编写第一部分代码的正确性。该文件由<code>valgrind</code>生成，生成的数据具有以下形式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[space]operation address,size</span><br></pre></td></tr></table></figure></p>
 <p>其中在<code>operation</code>中，<code>I</code>表示指令加载，<code>L</code>表示数据加载，<code>S</code>表示数据存储，<code>M</code>表示数据修改；<code>address</code>表示64位十六进制内存地址，<code>size</code>指定了操作访问的字节数</p>
 <h1 id="Part-A"><a href="#Part-A" class="headerlink" title="Part A"></a>Part A</h1><p>在Part A部分中，将在csim.c中编写一个缓存模拟器，该模拟器将valgrind内存跟踪作为输入，模拟此跟踪上的缓存内存的hit/miss行为，并输出命中次数、错过次数和逐出次数。</p>
-<p>我们为您提供了一个名为csim-ref的参考缓存模拟器的二进制可执行文件，valgrind 跟踪文件上的行为。在选择要驱逐的缓存行时，它使用LRU（最近使用最少的）替换策略。引用模拟器采用以下命令行参数：<br><code>./csim-ref [-hv] -s &lt;s&gt; -E &lt;E&gt; -b &lt;b&gt; -t &lt;tracefile&gt;</code></p>
+<p>我们为您提供了一个名为csim-ref的参考缓存模拟器的二进制可执行文件，valgrind跟踪文件上的行为。在选择要驱逐的缓存行时，它使用LRU（最近使用最少的）替换策略。编写的模拟器要能处理以下命令行参数：<br><code>./csim-ref [-hv] -s &lt;s&gt; -E &lt;E&gt; -b &lt;b&gt; -t &lt;tracefile&gt;</code></p>
 <ul>
 <li>-h: Optional help flag that prints usage info</li>
 <li>-v: Optional verbose flag that displays trace info</li>
-<li>-s <s>: Number of set index bits (S =2s is the number of sets)</s></li>
-<li>-E <e>: Associativity (number of lines per set)</e></li>
-<li>-b <b>: Number of block bits (B =2b is the block size)</b></li>
-<li>-t <tracefile>: Name of the valgrind trace to replay</tracefile></li>
+<li>-s: Number of set index bits (S =2s is the number of sets)</li>
+<li>-E: Associativity (number of lines per set)</li>
+<li>-b: Number of block bits (B =2b is the block size)</li>
+<li>-t: Name of the valgrind trace to replay</li>
 </ul>
 <p><img src="/2019/03/15/lab-cache/1.JPG" alt=""></p>
 
@@ -520,7 +521,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">221</span>
+                  <span class="site-state-item-count">223</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
