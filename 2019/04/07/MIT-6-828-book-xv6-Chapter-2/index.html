@@ -94,7 +94,8 @@
 <meta property="og:description" content="页表">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
-<meta property="og:updated_time" content="2019-04-08T12:39:07.482Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG">
+<meta property="og:updated_time" content="2019-04-09T13:22:36.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 2">
 <meta name="twitter:description" content="页表">
@@ -390,7 +391,14 @@
 <p><img src="/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG" alt=""><br>如图2-1所示，实际转换分两个步骤进行。页表作为两级树（two-level tree）存储在物理内存中。树的根目录是4096字节的页目录，其中包含对页表页的1024个类似于PTE的引用。每个页面页是一个包含1024个32位PTE的数组。分页硬件使用虚拟地址的前10位来选择页目录项。如果存在页目录项，分页硬件将使用虚拟地址的接下来10位从页面目录项所引用的页面表页中选择PTE。如果页目录项或PTE不存在，分页硬件将引发故障。这种两级结构允许页表在大量虚拟地址没有映射的常见情况下省略整个页表页。</p>
 <p>每个PTE都包含标志位，这些标记位告诉分页硬件是否允许使用关联的虚拟地址。PTE_P指示PTE是否存在：如果未设置PTE，则对页面的引用会导致错误。PTE_W控制是否允许指令对页面进行写入；如果未设置，则只允许读取指令。PTE_U控制是否允许用户程序使用该页面；如果清除，则只允许内核使用该页面。图2-1 显示了它是如何工作的。标志和所有其他页面硬件相关结构在mmu.h（0700）中定义。</p>
 <p>一些关于术语的说明。物理内存是指DRAM中的存储单元。物理内存的每个字节有一个地址，称为物理地址。指令仅使用虚拟地址（分页硬件将其转换为物理地址），然后发送到DRAM硬件以读取或写入存储。在这个层次的讨论中，没有虚拟内存这样的东西，只有虚拟地址。</p>
-<h1 id="进程地址空间"><a href="#进程地址空间" class="headerlink" title="进程地址空间"></a>进程地址空间</h1>
+<h1 id="进程地址空间"><a href="#进程地址空间" class="headerlink" title="进程地址空间"></a>进程地址空间</h1><p><img src="/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG" alt=""></p>
+<p>由entry创建的页表具有足够的映射，以允许内核的C代码开始运行。但是，main通过调用kvmalloc（1857）立即切换到新的页面表，因为内核有一个更详细的描述进程地址空间的计划。</p>
+<p>进程有一个单独的页面表，xv6告诉页面表硬件在进程之间切换时切换页表。如图2-2所示，进程的用户内存从虚拟地址零开始，并可以增长为KERNBASE，从而允许进程处理多达2GB的内存。文件memlayout.h（0200）声明xv6内存布局的常量，以及将虚拟转换为物理地址的宏。</p>
+<p>当进程要求xv6提供更多内存时，xv6首先找到可用的物理页来提供存储，然后将PTES添加到指向新物理页的进程页表中。xv6在这些PTES中设置PTE_U、PTE_W和PTE_P标志。大多数进程不使用整个用户地址空间；xv6在未使用的PTES中清除PTE_P标志。不同进程的页面表将用户地址转换为不同的物理内存页，以便每个进程都有私有用户内存。</p>
+<p>Xv6包括内核在每个进程的页面表中运行所需的所有映射；这些映射都出现在KERNBASE上方。它将虚拟地址<code>KERNBASE:KERNBASE+PHYSTOP</code>映射到<code>0:PHYSTOP</code>。此映射的一个原因是内核可以使用自己的指令和数据。另一个原因是内核有时需要能够编写给定的物理内存页，例如在创建页表页时；让每个物理页面都显示在可预测的虚拟地址，这就很方便了。这种安排的一个缺陷是xv6不能使用超过2GB的物理内存。一些使用内存映射的I/O设备出现在0xFE000000开始的物理地址上，因此xv6页表包括它们的直接映射。Xv6在KERNBASE上方的PTES中没有设置PTE_U标志，因此只有内核可以使用它们。</p>
+<p>让每个进程的页表同时包含用户内存和整个内核的映射，这样可以在系统调用和中断期间，方便地切换到内核：这样的切换不需要页表切换。对于内核大部分没有自己的页面表；它几乎总是借用一些进程的页面表。</p>
+<p>总的来说，xv6可确保每个进程只能使用自己的内存，并且每个进程都将其内存视为具有从零开始的连续虚拟地址。xv6通过仅在引用进程自身内存的虚拟地址的PTES上设置PTE_U位来实现第一个要求。它使用页面表将连续的虚拟地址转换为恰好分配给进程的任意物理页的功能，来实现第二个要求。</p>
+
       
     </div>
     
@@ -509,7 +517,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">223</span>
+                  <span class="site-state-item-count">225</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -522,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">93</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

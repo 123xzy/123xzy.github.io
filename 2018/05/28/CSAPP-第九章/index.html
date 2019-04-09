@@ -94,7 +94,9 @@
 <meta property="og:description" content="看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/28/CSAPP-第九章/1.jpg">
-<meta property="og:updated_time" content="2019-04-08T12:57:37.930Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/28/CSAPP-第九章/2.jpg">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/28/CSAPP-第九章/3.jpg">
+<meta property="og:updated_time" content="2019-04-09T12:07:34.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第九章：虚拟内存">
 <meta name="twitter:description" content="看完这章但是直到现在才去总结，确实是因为对虚拟内存的理解不够，可当我看了《程序员的自我修养》，有种豁然开朗的感觉，至少对虚拟内存的由来有了了解">
@@ -394,10 +396,29 @@
 <li>经常遇到Segment fault，理解虚拟内存和例如malloc之类管理虚拟内存的分配程序，可以避免这些错误</li>
 </ul>
 <p>这章先讲解虚拟内存的实现原理，之后结合Linux讲解，然后还会有一个有一个malloc实验，号称是CSAPP Lab中最难的一个，当然我还没有完成</p>
-<h1 id="虚拟地址"><a href="#虚拟地址" class="headerlink" title="虚拟地址"></a>虚拟地址</h1><p><strong>物理地址</strong>：计算机的主存被组成一个由M个连续字节大小的单元组成的数组，每个字节都有唯一的物理地址。CPU使用这种地址就叫做<strong>物理寻址</strong></p>
+<h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p><strong>物理地址</strong>：计算机的主存被组成一个由M个连续字节大小的单元组成的数组，每个字节都有唯一的物理地址。CPU使用这种地址就叫做<strong>物理寻址</strong></p>
 <p><img src="/2018/05/28/CSAPP-第九章/1.jpg" alt="">现代操作系统使用<strong>虚拟寻址</strong>，CPU生成的是虚拟地址（Virtual Address，VM），由MMU翻译成物理地址。<strong>地址翻译需要硬件和操作系统紧密合作</strong>。CPU上有内存管理单元（MMU）利用存放在主存上的查询表来动态翻译虚拟地址，该表的内容有操作系统内核管理</p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p>在一个带虚拟地址的系统中，CPU在一个$N=2^n$个地址的地址空间生成虚拟地址，每个地址空间称为<strong>虚拟地址空间</strong>。这里的$n$就是地址空间大小，也就是常说的系统是32位还是64位</p>
+<p>地址空间的概念成功区分了数据对象（<strong>字节</strong>）和它们的属性（<strong>地址</strong>）。虚拟内存的基本思想就是允许每个数据对象有多个独立的地址，每个地址都选自不同的地址空间。因此对于主存中的字节都有一个来自虚拟地址空间的虚拟地址和一个来自物理地址空间的物理地址</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>逻辑上讲，虚拟内存被组成一个由<strong>存放在磁盘上</strong>的N个连续的字节大小的单元组成的数组。磁盘上的数据被缓存到主存中。因为磁盘和主存的传输单元为块，VM系统通过将虚拟内存分为<strong>虚拟页</strong>（VP）大小的固定块来做统一，同样物理页（PP）也分割为同样大小的块，称为<strong>页帧</strong></p>
+<p>为了讨论清晰，用SRAM缓存表示位于CPU和主存之间的L1、L2和L3高速缓存，用DRAM表示虚拟内存系统的缓存，它在主存中缓存虚拟页</p>
+<h2 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h2><p>虚拟内存系统需要判断虚拟页是否缓存在DRAM中，并确定是在哪个物理页上，如果没有缓存，系统要判断存放在磁盘的位置，并将其复制到DRAM中</p>
+<p>这些功能需要操作系统软件、MMU中的地址翻译软件和一个存放在物理内存中的叫做<strong>页表</strong>（Page table）的数据结构联合提供。下图展示了页表的组织结构<img src="/2018/05/28/CSAPP-第九章/2.jpg" alt=""></p>
+<p>CPU输出一个VA到MMU的地址翻译硬件，其将VM作为一个索引来定位在页表中的位置（如定位到了PTE 2），由于PTE 2的有效位为1，地址翻译硬件就知道要找的数据就存放在DRAM中，也就是<strong>命中</strong>，之后就会使用有效位接下来的物理内存地址，构造数据的物理地址</p>
+<p>如果没有命中，也就是虚拟地址索引的PTE有效位为0，就发生<strong>缺页异常</strong>，这会调用内核中的缺页异常调用程序。程序会在DRAM中选择一个牺牲页，将其复制回磁盘，并修改页表。接下来就是根据磁盘地址从磁盘中把缺页复制到内存中。当异常处理程序返回时，就会重启导致缺页的指令。这种直到不命中时，才将页从DRAM换入或换出磁盘的策略就叫<strong>按需页面调度</strong></p>
+<p>虽然页面调度的处罚代价非常高，但是虚拟内存工作的非常好，因为<strong>局部性</strong>。因此只要程序有良好的时间局部性，虚拟内存系统就能工作的相当好</p>
+<h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><p>虚拟内存不仅仅是提供比DRAM更大的页面，而是能简化<strong>内存管理</strong>，提供<strong>内存保护</strong></p>
+<p>实际上，操作系统为每个进程都提供了一个独立的页表，也就是独立的虚拟地址空间。如下图<img src="/2018/05/28/CSAPP-第九章/3.jpg" alt=""></p>
+<p>按需调度和独立的虚拟地址空间简化了很多方面，如</p>
+<ul>
+<li>简化链接：独立的地址空间使得每个进程的内存映象都有相同的基本格式。这简化了链接器的设计与实现，允许链接器生成完全链接的可执行文件，这些可执行文件是独立于物理内存的最终位置的</li>
+<li>简化加载：要把目标文件中的<code>.text</code>等节加载到新创建的进程中，Linux加载器为代码和数据段分配虚拟页，即在页表中添加一个PTE，并标记为无效，将页表条目指向目标文件位置</li>
+<li>简化共享：操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而实现代码共享</li>
+<li>简化内存分配：当调用例如malloc时，操作系统分配适当大小的虚拟内存页面，并映射到物理内存中相同大小的任意位置上的物理页面</li>
+</ul>
+<p>现代计算机系统不允许用户进程修改只读代码段，不允许修改内核代码，不允许读写其他进程的私有内存，不允许修改与其他进程共享的页面，除非通过调用显式的进程间通信系统调用</p>
+<p>在一条PTE中，除了有效位外，还有许多标志位，控制读写许可。如果指令违反了这些许可条件，CPU就会触发一个一般保护故障，将控制传给内核中的异常处理程序，Linux shell将这种异常报告为<strong>Segmentation fault</strong></p>
 <h1 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h1><p>地址翻译是一个$N$元素的虚拟地址空间（Virtual Area Space，VAS）中的元素和一个$M$元素的物理地址空间（PAS）中元素的映射</p>
-<p>程序执行最终还是要回到物理内存中的，但是既然程序使用的是虚拟地址，要怎么实现从虚拟地址到物理地址的转化呢？现代CPU芯片中集成了一个叫做MMU（Memory management Unit）的硬件，程序有CPU输入执行，产生需要查询的虚拟地址传入MMU后，由其翻译成物理地址</p>
 <h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><p>Linux通过一个虚拟内存区域与一个磁盘对象关联起来，以初始化这个虚拟内存区域的内容</p>
 <p>内存映射文件是由一个文件到一块内存的映射,使进程虚拟地址空间的某个区域与磁盘上某个文件的部分或全部内容的建立映射。建立映射后，通过该区域可以直接对被映射的磁盘文件进行访问.而不必执行文件I/O操作也无需对文件内容进行缓冲处理。就好像整个被映射的文件都加载到了内存一样，因此内存文件映射非常适合于用来管理大文件。内存映射文件对程序的提速，只在处理大文件或非常频繁的文件读写操作时效果才明显。通过内存映射，相当于将磁盘上的文件所在空间建立成一块虚拟内存，程序访问时可按内存的方式进行，省去了普通io方式的一些环节，其实真正要读写操作时，会进行换页，将这些个“虚拟内存”读到物理内存中。总之，内存映射文件是应用虚拟内存的技术来达到加速处理的</p>
 <h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>进程使用该函数创建新的虚拟内存区域，并将对象映射到这些区域中<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start,<span class="keyword">size_t</span> length,<span class="keyword">int</span> prot,<span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">int</span> fd,<span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
@@ -525,7 +546,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">223</span>
+                  <span class="site-state-item-count">225</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -538,7 +559,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">93</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -593,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟地址"><span class="nav-number">2.</span> <span class="nav-text">虚拟地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址翻译"><span class="nav-number">3.</span> <span class="nav-text">地址翻译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存映射"><span class="nav-number">4.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">4.1.</span> <span class="nav-text">mmap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态内存分配"><span class="nav-number">5.</span> <span class="nav-text">动态内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存错误"><span class="nav-number">7.</span> <span class="nav-text">内存错误</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#地址空间"><span class="nav-number">2.1.</span> <span class="nav-text">地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">2.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页表"><span class="nav-number">2.3.</span> <span class="nav-text">页表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存管理"><span class="nav-number">3.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址翻译"><span class="nav-number">4.</span> <span class="nav-text">地址翻译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存映射"><span class="nav-number">5.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">5.1.</span> <span class="nav-text">mmap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态内存分配"><span class="nav-number">6.</span> <span class="nav-text">动态内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收"><span class="nav-number">7.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存错误"><span class="nav-number">8.</span> <span class="nav-text">内存错误</span></a></li></ol></div>
             
 
           </div>

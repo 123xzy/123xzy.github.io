@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://123xzy.github.io/2018/05/28/CSAPP-%E7%AC%AC%E4%B9%9D%E7%AB%A0/</loc>
-    <lastmod>2019-04-08</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/</loc>
-    <lastmod>2019-04-08</lastmod>
+    <lastmod>2019-04-09</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2018/05/28/CSAPP-%E7%AC%AC%E4%B9%9D%E7%AB%A0/</loc>
+    <lastmod>2019-04-09</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Paper-MapReduce/</loc>
+    <lastmod>2019-04-09</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
+    <lastmod>2019-04-09</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
+    <lastmod>2019-04-09</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
+    <lastmod>2019-04-09</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/15/lab-cache/</loc>
     <lastmod>2019-04-08</lastmod>
@@ -20,9 +32,6 @@
     <lastmod>2019-04-08</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/</loc>
-    <lastmod>2019-04-08</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     <lastmod>2019-04-08</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/05/Redis%EF%BC%9A%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
@@ -530,9 +539,6 @@
     <lastmod>2018-09-26</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/09/11/%E3%80%8A%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8Fvs%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E3%80%8B/</loc>
-    <lastmod>2018-09-12</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2018/07/12/%E3%80%8A%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E3%80%8B/</loc>
     <lastmod>2018-09-12</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/09/11/%E3%80%8A%E4%B8%89%E4%B8%AA%E6%95%B0%E4%B9%8B%E5%92%8C%E3%80%8B/</loc>
