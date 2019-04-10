@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
     <loc>https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/</loc>
-    <lastmod>2019-04-09</lastmod>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Assignment-Shell/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-System-Calls/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-book-xv6-Appendix-A/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/26/MIT-6-828-book-xv6-Appendix-B/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-book-xv6-Chapter-0/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
+    <lastmod>2019-04-10</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Lab-Guide/</loc>
+    <lastmod>2019-04-10</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/05/28/CSAPP-%E7%AC%AC%E4%B9%9D%E7%AB%A0/</loc>
     <lastmod>2019-04-09</lastmod>
@@ -11,9 +44,6 @@
     <lastmod>2019-04-09</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
-    <lastmod>2019-04-09</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     <lastmod>2019-04-09</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
@@ -28,12 +58,6 @@
     <loc>https://123xzy.github.io/2019/03/14/Redis%EF%BC%9A%E5%A4%9A%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2019-04-08</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-System-Calls/</loc>
-    <lastmod>2019-04-08</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/</loc>
-    <lastmod>2019-04-08</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2019/03/05/Redis%EF%BC%9A%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2019-04-08</lastmod>
   </url>  <url>
@@ -41,9 +65,6 @@
     <lastmod>2019-04-08</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/01/27/%E3%80%8ANoSQL%E7%B2%BE%E7%B2%B9%E3%80%8B/</loc>
-    <lastmod>2019-04-07</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
     <lastmod>2019-04-07</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/05/23/lab-webproxy/</loc>
@@ -100,17 +121,11 @@
     <loc>https://123xzy.github.io/2019/03/24/%E5%B0%8F%E8%AE%B0%EF%BC%9A%E5%81%9C%E4%B8%80%E5%81%9C%EF%BC%81/</loc>
     <lastmod>2019-04-01</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
-    <lastmod>2019-03-31</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2019/02/17/%E3%80%8A%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF%E3%80%8B/</loc>
     <lastmod>2019-03-31</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/04/Redis%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AF%B9%E8%B1%A1/</loc>
     <lastmod>2019-03-28</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/26/MIT-6-828-book-xv6-Appendix-B/</loc>
-    <lastmod>2019-03-27</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/21/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91%E3%80%8B/</loc>
     <lastmod>2019-03-27</lastmod>
@@ -128,9 +143,6 @@
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/05/16/lab-malloc/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/03/11/GDB-GCC/</loc>
@@ -208,9 +220,6 @@
     <loc>https://123xzy.github.io/2019/03/02/Redis%EF%BC%9A%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B/</loc>
     <lastmod>2019-03-17</lastmod>
   </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Lab-Guide/</loc>
-    <lastmod>2019-03-16</lastmod>
-  </url>  <url>
     <loc>https://123xzy.github.io/2019/02/26/lab-arch/</loc>
     <lastmod>2019-03-15</lastmod>
   </url>  <url>
@@ -219,15 +228,6 @@
   </url>  <url>
     <loc>https://123xzy.github.io/2018/07/12/%E8%B0%B7%E6%AD%8C%E4%BA%91SSR%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2019-03-15</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-book-xv6-Chapter-0/</loc>
-    <lastmod>2019-03-14</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-book-xv6-Appendix-A/</loc>
-    <lastmod>2019-03-14</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Assignment-Shell/</loc>
-    <lastmod>2019-03-14</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/03/27/Linux-%E7%AC%AC%E4%BA%94%E7%AB%A0/</loc>
     <lastmod>2019-03-13</lastmod>

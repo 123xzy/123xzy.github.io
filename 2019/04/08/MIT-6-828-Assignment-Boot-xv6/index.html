@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/2.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/08/MIT-6-828-Assignment-Boot-xv6/3.JPG">
-<meta property="og:updated_time" content="2019-04-08T09:08:38.834Z">
+<meta property="og:updated_time" content="2019-04-10T09:17:11.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Assignment:Boot xv6">
 <meta name="twitter:description" content="启动！">
@@ -388,6 +388,7 @@
       
         <p>启动！<br><a id="more"></a></p>
 <hr>
+<a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
 <p>CPU上电时执行的第一条指令是jump存储在ROM中的指令。BIOS将把存储在硬盘第一扇区中的512字节引导扇区加载到物理地址0x7c00到0x7dff的内存中。接下来，是时候执行引导加载程序代码（从实模式切换到保护模式）并进入内核</p>
 <p>先在0x7c00处切断点，看看在执行boot loader之前，寄存器和堆栈的状况。可以看到<code>%eip</code>存储CPU要读取指令的地址，段寄存器<code>%ss</code>为0，也就是处于实模式下<img src="/2019/04/08/MIT-6-828-Assignment-Boot-xv6/4.JPG" alt=""></p>
 <p>当要正式进入boot loader（即boot main）之前，查看寄存器和堆栈的情况。栈顶寄存器<code>%esp</code>初始化为正确的0x7c00，段寄存器<code>%ss</code>也表示此时处于保护模式下<img src="/2019/04/08/MIT-6-828-Assignment-Boot-xv6/5.JPG" alt=""></p>

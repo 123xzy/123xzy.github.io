@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="实验2：内存管理">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-24T09:52:47.129Z">
+<meta property="og:updated_time" content="2019-04-10T14:36:47.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Memory Management">
 <meta name="twitter:description" content="实验2：内存管理">
@@ -382,7 +382,8 @@
       
         <p>实验2：内存管理<br><a id="more"></a></p>
 <hr>
-<p>该实验<a href="https://pdos.csail.mit.edu/6.828/2014/labs/lab2/" target="_blank" rel="noopener">原始指南</a></p>
+<a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
+<p>该实验<a href="https://pdos.csail.mit.edu/6.828/2018/labs/lab2/" target="_blank" rel="noopener">原始指南</a></p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本实验中，将编写操作系统的内存管理代码。内存管理有两个组成部分</p>
 <ul>
 <li>内核的物理内存分配器：因此内核可以分配内存，释放内存。分配器将以4096字节为单位运行，即<strong>页</strong>。这次lab的任务是维护数据结构，记录哪些物理页面是空闲的，哪些是已分配的，以及共享每个已分配页面的进程数。除此之外，还要编写例程来分配和释放内存页面</li>
@@ -397,6 +398,18 @@
 <li>kclock.h：其中BIOS记录PC包含的物理内存量等</li>
 </ul>
 <p>重点阅读<code>memlayout.h</code> 以及 <code>pmap.h</code>，还需参考 <code>inc/mmu.h</code></p>
+<h1 id="第1部分：物理页面管理"><a href="#第1部分：物理页面管理" class="headerlink" title="第1部分：物理页面管理"></a>第1部分：物理页面管理</h1><p>The operating system must keep track of which parts of physical RAM are free and which are currently in use. JOS manages the PC’s physical memory with page granularity so that it can use the MMU to map and protect each piece of allocated memory.</p>
+<p>You’ll now write the physical page allocator. It keeps track of which pages are free with a linked list of struct PageInfo objects (which, unlike xv6, are not embedded in the free pages themselves), each corresponding to a physical page. You need to write the physical page allocator before you can write the rest of the virtual memory implementation, because your page table management code will need to allocate physical memory in which to store page tables.</p>
+<h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1"></a>练习1</h2><p><code>In the file kern/pmap.c, you must implement code for the following functions (probably in the order given).</code></p>
+<ul>
+<li>boot_alloc()</li>
+<li>mem_init() (only up to the call to check_page_free_list(1))</li>
+<li>page_init()</li>
+<li>page_alloc()</li>
+<li>page_free()</li>
+</ul>
+<p><code>check_page_free_list() and check_page_alloc() test your physical page allocator. You should boot JOS and see whether check_page_alloc() reports success. Fix your code so that it passes. You may find it helpful to add your own assert()s to verify that your assumptions are correct.</code></p>
+<h1 id="第2部分：虚拟内存"><a href="#第2部分：虚拟内存" class="headerlink" title="第2部分：虚拟内存"></a>第2部分：虚拟内存</h1><h1 id="第3部分：内核地址空间"><a href="#第3部分：内核地址空间" class="headerlink" title="第3部分：内核地址空间"></a>第3部分：内核地址空间</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/bdhmwz/p/4960034.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/gatsby123/p/9832223.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/fatsheep9146/p/5124921.html" target="_blank" rel="noopener">参考</a></p>
 
       
     </div>
@@ -584,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第1部分：物理页面管理"><span class="nav-number">2.</span> <span class="nav-text">第1部分：物理页面管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习1"><span class="nav-number">2.1.</span> <span class="nav-text">练习1</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第2部分：虚拟内存"><span class="nav-number">3.</span> <span class="nav-text">第2部分：虚拟内存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第3部分：内核地址空间"><span class="nav-number">4.</span> <span class="nav-text">第3部分：内核地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

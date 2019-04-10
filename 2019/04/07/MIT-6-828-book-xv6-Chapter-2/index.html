@@ -95,7 +95,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG">
-<meta property="og:updated_time" content="2019-04-09T13:22:36.154Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/3.JPG">
+<meta property="og:updated_time" content="2019-04-10T09:17:27.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 2">
 <meta name="twitter:description" content="页表">
@@ -385,6 +386,7 @@
       
         <p>页表<br><a id="more"></a></p>
 <hr>
+<a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
 <p>页表是操作系统控制内存地址含义的机制。它们允许xv6将不同进程的地址空间复用到一个物理内存上,并保护不同进程的内存。页面表提供的间接级别也是许多巧妙技巧的来源。xv6主要使用页表来复用地址空间和保护内存。它还使用了一些简单的页表技巧：在多个地址空间中映射相同的内存（内核），在一个地址空间中多次映射相同的内存（每个用户页面也映射到内核的物理内存视图中），以及保护用户堆栈用一个未映射的页面。本章的其余部分解释了x86硬件提供的页表以及xv6如何使用这些页表。</p>
 <h1 id="分页硬件"><a href="#分页硬件" class="headerlink" title="分页硬件"></a>分页硬件</h1><p>作为提醒，x86指令（包括用户和内核）操作虚拟地址。计算机的RAM（物理内存）使用物理地址索引。X86页表硬件通过将每个虚拟地址映射到物理地址来连接这两种地址。</p>
 <p>从逻辑上讲，x86页表是由$2^{20}(1,048,576)$个页表项（PTEs，page table entries）组成的数组。每个PTE都包含一个20位的物理页码（PPN，physical page number ） 和一些标志。分页硬件通过使用其前20位索引到页面表中查找PTE，并将地址的前20位替换为 PTE中的PPN，从而转换虚拟地址。分页硬件将较低的12位从虚拟复制到已翻译的物理地址。因此，页表提供了操作系统对$4096(2^{12})$字节对齐块的粒度的虚拟到物理地址转换的控制。这样的块称为页。</p>
@@ -398,6 +400,36 @@
 <p>Xv6包括内核在每个进程的页面表中运行所需的所有映射；这些映射都出现在KERNBASE上方。它将虚拟地址<code>KERNBASE:KERNBASE+PHYSTOP</code>映射到<code>0:PHYSTOP</code>。此映射的一个原因是内核可以使用自己的指令和数据。另一个原因是内核有时需要能够编写给定的物理内存页，例如在创建页表页时；让每个物理页面都显示在可预测的虚拟地址，这就很方便了。这种安排的一个缺陷是xv6不能使用超过2GB的物理内存。一些使用内存映射的I/O设备出现在0xFE000000开始的物理地址上，因此xv6页表包括它们的直接映射。Xv6在KERNBASE上方的PTES中没有设置PTE_U标志，因此只有内核可以使用它们。</p>
 <p>让每个进程的页表同时包含用户内存和整个内核的映射，这样可以在系统调用和中断期间，方便地切换到内核：这样的切换不需要页表切换。对于内核大部分没有自己的页面表；它几乎总是借用一些进程的页面表。</p>
 <p>总的来说，xv6可确保每个进程只能使用自己的内存，并且每个进程都将其内存视为具有从零开始的连续虚拟地址。xv6通过仅在引用进程自身内存的虚拟地址的PTES上设置PTE_U位来实现第一个要求。它使用页面表将连续的虚拟地址转换为恰好分配给进程的任意物理页的功能，来实现第二个要求。</p>
+<h1 id="代码：创建地址空间"><a href="#代码：创建地址空间" class="headerlink" title="代码：创建地址空间"></a>代码：创建地址空间</h1><p>main调用kvmalloc（1857）来创建并切换到一个页面表，其中包含内核运行所需的KERNBASE 上面的映射。大部分工作发生在setupkvm（1837）。它首先分配一个内存页来保存页面目录。然后调用mappages来安装内核所需的地址翻译，这些翻译在kmap（1828）数组中进行了描述。这些翻译包括内核的指令和数据、最多PHYSTOP字节的物理内存以及I/O设备的内存范围。setupkvm不会为用户内存安装任何映射；这种情况稍后发生。</p>
+<p>Mappages（1779）将一系列虚拟地址的映射装到页面表中，以形成相应的物理地址范围。它按页间隔对范围内的每个虚拟地址分别执行此操作。对于要映射的每个虚拟地址，mappages调用walkpgdir，以查找该地址的PTE地址。然后，它初始化PTE以保存相关的物理页码和所需的权限（PTE_W/PTE_U）和PTE_P，使得PTE标记为有效（1791）。</p>
+<p>walkpgdir（1754）模仿x86分页硬件的操作。因为它也是遍历PTE，去寻找虚拟地址（参见图 2-1）。walkpgdir使用虚拟地址的前10位查找页面目录项（1759）。如果页面目录条目不存在，则该页面表页尚未分配。如果设置了alloc参数, 则walkpgdir将其分配，并将其物理地址放在页面目录中。最后，它使用虚拟地址的后10位在页面表页面（1772）中查找PTE的地址。</p>
+<h1 id="物理内存分配"><a href="#物理内存分配" class="headerlink" title="物理内存分配"></a>物理内存分配</h1><p>内核需要在运行时为页表、进程用户内存、内核堆栈和管道缓冲区分配和释放物理内存。</p>
+<p>xv6使用内核末端和PHYSTOP之间的物理内存来进行运行时分配。它一次分配和释放4096字节的页面。它通过在页面本身中遍历链接列表来跟踪哪些页面是空闲的。分配包括从链接列表中删除页面；释放包括将释放的页面添加到列表中。</p>
+<p>这里存在一个引导问题（bootstrap problem）：必须映射所有物理内存，才能使分配器初始化空闲列表，但创建一个包含这些映射的页表涉及分配页表页。xv6通过在输入（entry）过程中使用单独的页面分配器来解决此问题，该分配器在内核的数据段后面分配内存。此分配器不支持释放，并受到entrypgdir中的4MB映射的限制，但这足以分配第一个内核页表。</p>
+<h1 id="代码：物理内存分配器"><a href="#代码：物理内存分配器" class="headerlink" title="代码：物理内存分配器"></a>代码：物理内存分配器</h1><p>分配器的数据结构是可用于分配的物理内存页的免费列表。每个空闲页的列表元素都是结构run（3014）。分配器在哪里获得内存来容纳该数据结构？它将每个空闲页面的run结构存储在免费页面本身中，因为那里没有其他存储。空闲列表受旋转锁（3018-3022，spin block）的保护。列表和锁被包装在一个结构中，以明确锁保护结构中的字段。现在，忽略锁，以及acquire和release的调用；第4章将详细介绍锁。</p>
+<p>main调用kinit1和kinit2来初始化分配器（3030）。有两个调用的原因是，对于大部分main不能使用锁或超过4MB的内存。对kinit1的调用设置为在前4MB中的无锁定分配，对kinit2的调用启用锁定和安排更多的内存是可分配的。main应该确定有多少物理内存是可用的，但这在x86上证明是困难的。相反，它假定计算机有240MB（PHYSTOP）的物理内存，并使用内核末端和PHYSTOP之间的所有内存作为空闲内存的初始池。kinit1和kinit2调用freerange，其通过对kfree的每页调用将内存添加到免费列表中。PTE只能引用在4096字节边界上对齐的物理地址（是4096的倍数），因此freerange使用PGROUNDUP来确保它只释放对齐的物理地址。分配器从没有内存开始；这些免费的调用给它一些管理。</p>
+<p>分配器通过其在高内存中映射的虚拟地址来引用物理页，而不是通过它们的物理地址来引用物理页，这就是kinit使用<code>p2v(PHYSTOP)</code>将PHYSTOP（物理地址）转换为虚拟地址的原因。分配器有时将地址视为整数，以便对其执行算术运算（例如，遍历kinit中的所有页面），有时使用地址作为读取和写入内存的指针（例如，操作存储在每个页面中的运行结构）；这种地址的双重使用是分配器代码充满C型强制转换的主要原因。另一个原因是，释放和分配本质上改变了内存的类型。</p>
+<p>函数kfree（3065）首先将已释放内存中的每个字节设置为值1。这将导致在释放内存后使用内存的代码（使用”悬空引用”）来读取垃圾，而不是旧的有效内容；这样做使得引用无效内存的代码损坏的更快。然后kfree强制转换v指向一个指向struct run的指针，在<code>r-&gt;next</code>中记录空闲列表的旧开始，并将空闲列表设置为r。kalloc则删除并返回空闲列表中的第一个元素。</p>
+<h1 id="地址空间的用户部分"><a href="#地址空间的用户部分" class="headerlink" title="地址空间的用户部分"></a>地址空间的用户部分</h1><p><img src="/2019/04/07/MIT-6-828-book-xv6-Chapter-2/3.JPG" alt=""></p>
+<p>图2-3显示了xv6中执行进程的用户内存的布局。堆（heap）位于堆栈上方，以便它可以扩展（使用sbrk）。堆栈是一个单一的页，并显示exec创建时的初始内容。包含命令行参数的字符串以及指向它们的指针数组，位于堆栈的最顶层中。在下面的值是允许程序从mian上开始的值，就好像函数刚刚启动并调用main(argc, argc)。为了保护堆栈页面上不断增长的堆栈，xv6将在堆栈正下方放置一个保护页（guard page）。保护页未映射，因此，如果堆栈用完栈页，硬件将生成异常，因为它无法转换错误地址。</p>
+<h1 id="代码：exec"><a href="#代码：exec" class="headerlink" title="代码：exec"></a>代码：exec</h1><p>Exec是创建地址空间的用户部分的系统调用。它用存储在文件系统中的文件初始化地址空间的用户部分。Exec（6310）使用namei（6321）打开命名的二进制路径，这在第6章中进行了解释。然后，它读取ELF header。Xv6应用程序以广泛使用的ELF格式进行描述，格式定义在elf.h。ELF 二进制文件包含一个ELF header，即struct elfhdr（0955），然后是一系列程序节标头，即struct proghdr（0955）。每个proghdr描述了必须加载到内存中的应用程序的一部分；xv6程序只有一个程序节标头，但其他系统可能有单独的指令和数据部分。</p>
+<p>第一步是快速检查文件是否是ELF二进制文件。ELF二进制文件以四字节魔数0x7F”：”E”、”L”、”F” 或ELF_MAGIC（0952）开头。如果ELF header具有正确的魔数，exec假定二进制文件的格式良好。</p>
+<p>Exec使用setupkvm（6334）分配一个没有用户映射的新页面表，用allocuvm（6334）为每个 ELF段分配内存，并用loaduvm（6334）将每个段加载到内存中。allocuvm检查在KERNBASE下面检查请求的虚拟地址。loaduvm（1918）使用walkpgdir查找分配的内存的物理地址，以便在其中写入ELF段的每一页，readi则读入文件。</p>
+<p>使用exec创建的第一个用户程序<code>/init</code>的程序节标头如下所示：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># objdump -p _init</span></span><br><span class="line">_init: file format elf32-i386</span><br><span class="line">Program Header: LOAD off <span class="number">0x00000054</span> vaddr <span class="number">0x00000000</span> paddr <span class="number">0x00000000</span> align <span class="number">2</span>**<span class="number">2</span> filesz <span class="number">0x000008c0</span> memsz <span class="number">0x000008cc</span> flags rwx</span><br></pre></td></tr></table></figure></p>
+<p>程序节标头的文件大小可能小于memsz，这表明它们之间的间隙应该用0（对于C全局变量）来填充，而不是从文件中读取。对于<code>/init</code>，文件大小（filesz）是2240字节，内存大小（memsz）则是2252个字节，因此分配了足够的物理内存来容纳2240字节，但只从文件<code>/init</code> 读取2240字节。</p>
+<p>现在exec分配并初始化用户堆栈。它只分配一个堆栈页。Exec将参数字符串复制到堆栈的顶部，并将指向它们的指针记录在ustack中。它在传递给main的argv列表的末尾放置一个空指针。在 ustack的前三个条目是假的return PC，argc，和argv指针。</p>
+<p>Exec将无法访问的页面放置在堆栈页的正下方，因此尝试使用多个页面的程序将出现故障。这个无法访问的页还允许exec处理过大的参数；在这种情况下，exec用来将参数复制到堆栈的copyout函数将注意到目标页是不可访问，并将返回–1。</p>
+<p>在准备新内存映像的过程中，如果exec检测到像无效的程序段这样的错误，它将跳到标签bad，释放新映像，并返回–1。Exec必须等待释放旧映像，直到它确定系统调用将成功：如果旧映像消失，系统调用将无法返回–1。Exec中唯一的错误情况发生在映像的创建过程中。映像完成后，exec可以安装新映像（6394）并释放旧映像（6394）。最后exec返回0。</p>
+<h1 id="真实世界"><a href="#真实世界" class="headerlink" title="真实世界"></a>真实世界</h1><p>与大多数操作系统一样，xv6使用分页硬件进行内存保护和映射。大多数操作系统对分页的使用要比xv6复杂得多；例如，xv6缺少来自磁盘、写入时复制分叉、共享内存、延迟分配的页面和自动扩展堆栈的需求分页。X86支持使用分段的地址转换（见附录B），但xv6仅使用段实现per-cpu变量（如proc）的常见技巧，这些变量位于固定地址上，但在不同CPU上具有不同的值（请参见seginit）。在非段式架构上实现per-cpu（或per-thread）存储将专门用于保存指向per-cpu数据区域的指针的寄存器，但x86的常规寄存器很少，因此使用分段所需的额外工作是值得的。</p>
+<p>在具有大量内存的计算机上，使用x86的4MB”超级页面”可能是有意义的。当物理内存较小时，小页面是有意义的，可以以精细的粒度分配和分页到磁盘。例如，如果程序只使用8KB的内存，则为其提供4Mb的物理页是一种浪费。较大的页面在具有大量RAM的计算机上是有意义的，并且可能会减少页面表操作的开销。Xv6在一个地方使用超级页面：初始页面表（1311）。数组初始化设置两个1024 PDE，索引为0和512（KERNBE&gt;&gt;PDXSHIFT），使其他PDES为零。Xv6在这两个PDES中设置PTE_ PS位，将它们标记为超级页面。内核还告诉分页硬件允许超级页面，方法是在%cr4中设置CR_PSE位（页面大小扩展）。</p>
+<p>Xv6应确定实际的RAM配置，而不是假定240MB。在x86上，至少有三种常见的算法：第一种算法是探测物理地址空间，以查找行为类似于内存的区域，从而保留写入它们的值；二是从PC的非易失性RAM中已知的16位位置读取内存的大量KB字节；第三是在BIOS内存中查找作为多处理器表的一部分留下的内存布局表。读取内存布局表很复杂。</p>
+<p>内存分配是很久以前的热门话题，基本问题是有效利用有限内存和为未知的未来请求做准备；参见Knuth。如今，人们更关心的是速度而不是空间效率。此外，一个更精细的内核可能会分配许多不同大小的小块，而不是（如xv6）仅仅4096字节块；一个真正的内核分配器将需要处理小的分配以及大的分配块。</p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><ul>
+<li>Look at real operating systems to see how they size memory.</li>
+<li>If xv6 had not used super pages, what would be the right declaration for entrypgdir?</li>
+<li>Modify xv6 so that the pages for the kernel are shared among processes, which reduces memory consumption.</li>
+<li>Unix implementations of exec traditionally include special handling for shell scripts. If the ﬁle to execute begins with the text #!, then the ﬁrst line is taken to be a program to run to interpret the ﬁle. For example, if exec is called to run myprog arg1 and myprog’s ﬁrst line is #!/interp, then exec runs /interp with command line /interp myprog arg1. Implement support for this convention in xv6.</li>
+</ul>
 
       
     </div>
@@ -585,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number">1.</span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number">2.</span> <span class="nav-text">进程地址空间</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number">1.</span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number">2.</span> <span class="nav-text">进程地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：创建地址空间"><span class="nav-number">3.</span> <span class="nav-text">代码：创建地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理内存分配"><span class="nav-number">4.</span> <span class="nav-text">物理内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：物理内存分配器"><span class="nav-number">5.</span> <span class="nav-text">代码：物理内存分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址空间的用户部分"><span class="nav-number">6.</span> <span class="nav-text">地址空间的用户部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：exec"><span class="nav-number">7.</span> <span class="nav-text">代码：exec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number">8.</span> <span class="nav-text">真实世界</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number">9.</span> <span class="nav-text">练习</span></a></li></ol></div>
             
 
           </div>

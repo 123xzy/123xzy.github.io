@@ -95,7 +95,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/08/MIT-6-828-book-xv6-Chapter-0/1.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/08/MIT-6-828-book-xv6-Chapter-0/2.JPG">
-<meta property="og:updated_time" content="2019-03-14T12:05:58.788Z">
+<meta property="og:updated_time" content="2019-04-10T09:16:47.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 0">
 <meta name="twitter:description" content="概述。一次大胆的尝试！尝试将这本小册子翻译出来！">
@@ -385,6 +385,7 @@
       
         <p>概述。一次大胆的尝试！尝试将这本小册子翻译出来！<br><a id="more"></a></p>
 <hr>
+<a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
 <p>这本书要和<code>xv6</code>源码一起阅读</p>
 <h1 id="操作系统接口"><a href="#操作系统接口" class="headerlink" title="操作系统接口"></a>操作系统接口</h1><p>操作系统的任务是在多个程序之间共享计算机，并提供比硬件单独支持更有用的服务集合。操作系统管理和抽象低级硬件，因此像文字处理机就不需要考虑使用哪种类型的磁盘。它还支持多路复用硬件，允许程序间共享计算机（或近似于）并发运行。最后，操作系统提供了程序交互的受控方式，以便程序之间可以共享数据或者协同工作。</p>
 <p>OS通过接口向用户程序提供服务，而设计好的接口是很困难的。一方面，我们希望接口简单和紧凑（窄接口比较容易确保对某一特定点的关注。这点很像铺设自来水管道。管路最初阶段可能从需求和效率考虑需要大口径的，但要入户的时候就要转成小口径，译者注），因为这样更容易正确实现。 另一方面，我们倾向于向应用程序提供更多巧妙的功能。解决这种紧张关系的技巧是设计依赖提供更大的通用性的机制的接口。</p>
