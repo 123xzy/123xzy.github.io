@@ -93,10 +93,12 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="锁是数据库系统区别于文件系统的一个关键特性">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-20T02:22:10.974Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/20/MySQL-锁/1.JPG">
+<meta property="og:updated_time" content="2019-04-13T14:33:38.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锁">
 <meta name="twitter:description" content="锁是数据库系统区别于文件系统的一个关键特性">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/03/20/MySQL-锁/1.JPG">
 
 
 
@@ -383,7 +385,21 @@
         <p>锁是数据库系统区别于文件系统的一个关键特性<br><a id="more"></a></p>
 <hr>
 <p>锁机制用于管理对共享资源的并发访问，不同的数据库虽然有相同的SQL，但却设计了不同的锁。InnoDB的锁提供了一致性的非锁定读、行级锁支持</p>
-
+<h1 id="lock-amp-latch"><a href="#lock-amp-latch" class="headerlink" title="lock &amp; latch"></a>lock &amp; latch</h1><p>latch主要分为mutex和rwlock，用来保证<strong>并发线程</strong>操作临界资源的正确性，用来保护内存中的数据结构，没有死锁检测机制，这种锁更像是之前在CSAPP中学的锁</p>
+<p>lock的对象则是<strong>事务</strong>，用来锁定数据库的表、页和行</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>InnoDB中实现了两种行级锁</p>
+<ul>
+<li>S lock：允许事务读取一行数据</li>
+<li>X lock：允许事务删除或更新一行数据</li>
+</ul>
+<p>上面两种锁，很像CSAPP中提到的读者-写者模型，也就是读写锁</p>
+<p>InnoDB也支持不同粒度的锁，但不是特定粒度的锁，而是一种叫做Intention Lock（意向锁），要对记录上锁，就要将对应的页、表和数据库上意向锁。意向锁其实是表级别的锁，又分为</p>
+<ul>
+<li>IS lock：事务想要获取表中某几行的S lock</li>
+<li>IX lock：事务想要获取表中某几行的X lock</li>
+</ul>
+<p>可以通过<code>mysql&gt; desc information_schema.INNODB_xxx;</code>查看<code>INNODB_TRX</code>（事务的状态信息） <code>INNODB_LOCKS</code>（锁的状态） <code>INNODB_LOCK_WAITS</code>（反应事务请求和等待锁的状态）三张表的结构<img src="/2019/03/20/MySQL-锁/1.JPG" alt=""></p>
+<h1 id="一致性非锁定读"><a href="#一致性非锁定读" class="headerlink" title="一致性非锁定读"></a>一致性非锁定读</h1>
       
     </div>
     
@@ -479,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -495,7 +520,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">225</span>
+                  <span class="site-state-item-count">229</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -508,7 +533,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -553,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lock-amp-latch"><span class="nav-number">1.</span> <span class="nav-text">lock &amp; latch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性非锁定读"><span class="nav-number">3.</span> <span class="nav-text">一致性非锁定读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
