@@ -85,18 +85,18 @@
 
 
 
-<meta name="description" content="锁">
+<meta name="description" content="Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问">
 <meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MIT 6.828 book_xv6:Chapter 4">
 <meta property="og:url" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-4/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="锁">
+<meta property="og:description" content="Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-13T14:33:35.764Z">
+<meta property="og:updated_time" content="2019-04-14T13:40:45.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 4">
-<meta name="twitter:description" content="锁">
+<meta name="twitter:description" content="Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问">
 
 
 
@@ -380,10 +380,9 @@
       
 
       
-        <p>锁<br><a id="more"></a></p>
+        <p>Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问数据结构。在此情况下，我们说锁保护了数据结构。<br><a id="more"></a></p>
 <hr>
 <a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
-<p>Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问数据结构。在此情况下，我们说锁保护了数据结构。</p>
 <p>本章的其余部分解释了为什么xv6需要锁，xv6是如何实现锁的，以及它是如何使用锁的。一个关键的观察是，如果你看xv6中的一行代码，你必须问自己，是否有另一个处理器可以改变该行的预期行为（例如，因为另一个处理器也在执行该行或另一行代码去修改共享变量），以及如果中断处理程序运行时会发生什么情况。在这两种情况下，您必须记住，一个C语句可以是多条机器指令，因此另一个处理器或中断可能会在C语句的中间出现。不能假定页面上的代码行是按顺序执行的，也不能假定单个C语句将以原子方式执行。并发使得对正确性的推理变得更加困难。</p>
 <h1 id="竞争条件"><a href="#竞争条件" class="headerlink" title="竞争条件"></a>竞争条件</h1>
       
@@ -425,8 +424,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/13/Redis：独立功能的实现/" rel="prev" title="Redis：独立功能的实现">
-                Redis：独立功能的实现 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/13/Redis：独立功能的实现/" rel="prev" title="《独立功能的实现》">
+                《独立功能的实现》 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,7 +503,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">229</span>
+                  <span class="site-state-item-count">231</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -517,7 +516,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
