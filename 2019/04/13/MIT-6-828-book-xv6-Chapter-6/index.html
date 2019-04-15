@@ -93,10 +93,14 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="文件系统的目的是为了组织和保存数据。文件系统通常支持在用户和应用之间分享数据，并且支持持久化，以便数据在重启后依旧有效。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-14T13:40:14.237Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/2.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/4.JPG">
+<meta property="og:updated_time" content="2019-04-15T12:42:30.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 6">
 <meta name="twitter:description" content="文件系统的目的是为了组织和保存数据。文件系统通常支持在用户和应用之间分享数据，并且支持持久化，以便数据在重启后依旧有效。">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG">
 
 
 
@@ -391,7 +395,38 @@
 <li>访问磁盘的速度比访问内存要慢数量级，因此文件系统必须维护常用块的内存中缓存。</li>
 </ul>
 <p>本章剩余部分解释了xv6如何解决上述挑战</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h1 id="Buﬀer-cache-Layer"><a href="#Buﬀer-cache-Layer" class="headerlink" title="Buﬀer cache Layer"></a>Buﬀer cache Layer</h1>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG" alt=""></p>
+<p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/2.JPG" alt=""></p>
+<h1 id="Buﬀer-cache-Layer"><a href="#Buﬀer-cache-Layer" class="headerlink" title="Buﬀer cache Layer"></a>Buﬀer cache Layer</h1><h1 id="Logging-layer"><a href="#Logging-layer" class="headerlink" title="Logging layer"></a>Logging layer</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/4.JPG" alt=""></p>
+<h1 id="Inode-layer"><a href="#Inode-layer" class="headerlink" title="Inode layer"></a>Inode layer</h1><h1 id="File-descriptor-layer"><a href="#File-descriptor-layer" class="headerlink" title="File descriptor layer"></a>File descriptor layer</h1><p>Unix接口的一个很酷的方面是，Unix中的大多数资源都可以表示为文件，包括控制台、管道等设备，当然还有实际文件。文件描述符是实现这种一致性（uniformity）的层。</p>
+<p>正如我们在第0章中看到的那样，Xv6为每个进程提供了独有的打开文件表或文件描述符。每个打开的文件都由一个struct file（4000）表示，该结构是一个inode或pipe 的包装，外加上一个I/O偏移量。Open的每次调用都会创建一个新的打开文件（一个新的struct file）：如果多个进程独立打开同一文件，则不同的实例将具有不同的I/O偏移量。另一方面，单个打开的文件（相同的结构文件）可以在一个进程的文件表中多次出现，也可以在多个进程的文件表中出现。如果一个进程使用open去打开文件，然后使用dup创建别名，或者使用fork与子进程共享，则会发生这种情况。引用计数值跟踪对特定打开文件的引用数。文件可以打开读取或写入，也可以同时。readable和writable字段跟踪这一点。</p>
+<p>系统中所有打开的文件都保存在全局文件表中。文件表具有分配文件（filealloc）、创建重复引用（filealloc）、释放引用（filecloc）以及读取和写入数据（filealloc和filealloc）的函数。</p>
+<p>前三个遵循现在熟悉的形式。Filealloc（5625）扫描文件表中的未引用文件（f-&gt;ref == 0），并返回新引用；filedup（5652）递增引用计数；fileclose（5664）减少它。当文件的引用计数达到零时，fileclose会根据类型释放基础管道或inode。</p>
+<p>函数filestat、fileread和filewrite实现文件上的stat、read和write操作。Filestat（5702）只允许作用在inodes和调用stati。Fileread和filewrite通过open mode检查操作是否被允许，然后将调用传递给管道或inode实现。如果文件表示inode，则fileread和filewrite使用I/O偏移量作为操作的偏移量，然后将其推进（5725-5726、5765-5766）。管道没有偏移量的概念。回想一下，inode函数要求调用方处理锁定（5705-5707，5724-5727，5764-5778）。Inode锁定具有一种方便的副作用，即读取和写入偏移量以原子方式进行更新，因此同时对同一文件的多次写入不能覆盖彼此的数据，尽管它们的写入最终可能会相互交错。</p>
+<h1 id="Code-System-calls"><a href="#Code-System-calls" class="headerlink" title="Code: System calls"></a>Code: System calls</h1><p>使用较低层提供的大多数系统调用实现的功能是微不足道的（trivial，请参见sysfile.c）。但仍有几个调用值得仔细研究。</p>
+<p>函数sys_link和sys_unlink编辑目录，创建或删除对inodes的引用。它们是使用事务的力量的另一个很好的例子。Sys_link（5913）从获取其参数开始，一个新字符串和一个旧的字符串（5918）。假设旧的存在，且不是一个目录（5922-5925），sys_link增加其ip-&gt;nlink。然后，sys_link调用nameiparent来查找新字符串的（5938）的父目录和最终路径元素，并创建一个指向旧inode（5938）的新目录条目。新的父目录必须存在，并且与现有inode位于同一设备上：inode数字在单个磁盘上只有唯一的含义。如果发生这样的错误，sys_link必须返回并减少ip-&gt;nlink。</p>
+<p>事务简化了实现，因为虽然它需要更新多个磁盘块，但我们不必担心执行这些操作的顺序。他们要么都成功，要么不成功。例如，如果没有事务，在创建链接之前更新ip-&gt;nlink会使文件系统暂时处于不安全状态，而两者之间的崩溃可能会导致严重破坏(havoc)。有了事务，我们不必担心这一点。</p>
+<p>Sys_link为现有的inode创建一个新名称。函数create（6057）为新的inode创建一个新名称。它是三个文件创建系统调用的泛化：使用O_CREATE标志的open创建一个新的普通文件，mkdir 创建一个新的目录，mkdev创建一个新的设备文件。与sys_link一样，create通过调用nameiparent来得到父目录的inode。然后，它调用dirlookup来检查名称是否已经存在（6067）。如果名称确实存在，则create的行为取决于它所使用的系统调用：open与mkdir和mkdev具有不同的语义。如果create是代表open使用的（type == T_FILE）并且存在的名称本身就是一个常规文件，则open该名称将其视为成功，因此也可以创建（6071）。否则，它是一个错误（6072-6073）。如果名称不存在，create通过ialloc（6076）创建一个新的inode。如果新的inode是一个目录，create初始化它…条目。最后，既然数据已正确初始化，create可以将其链接到父目录（6089）。create，像sys_link，同时持有两个inode的锁：ip和dp。不存在死锁的可能性，因为inode ip是新分配的：系统中没有其他进程会持有ip锁，然后尝试锁定dp。</p>
+<p>使用create，可以很容易地实现sys_open、sys_mkdir和sys_mnod。Sys_open（6101）是最复杂的，因为创建新文件只是它所能做的事情的一小部分。如果打开的是O_ CREATE标志，则调用create（6114）。否则，它调用namei（6120）。Create返回锁定的inode，但namei不返回，因此sys_open必须锁定inode本身。这提供了一个方便的地方来检查目录是否只为读取而不是写入打开。假设inode是以这样或那样的方式获得的，sys_open会分配一个文件和一个文件描述符（6132），然后填充该文件（6142-6146）。请注意，没有其他进程可以访问部分初始化的文件，因为它只在当前进程的表中。</p>
+<p>在我们有一个文件系统之前，第5章就讲述了管道的实现。函数sys_pipe通过提供一种创建管道对的方法，将该实现连接到文件系统。它的参数是指向两个整数的空间的指针，它将在其中记录两个新的文件描述符。然后，它分配管道并安装文件描述符。</p>
+<h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1><p>现实操作系统中的缓冲区缓存比xv6要复杂得多，但它提供了同样的两个用途：缓存和同步对磁盘的访问。Xv6 的缓冲区缓存与V6一样，使用的是最近使用的简单（LRU）逐出策略；有许多更复杂的策略可以实现，每个策略对某些工作负载都有好处，但对其他工作负载就没有那么好。更高效的LRU缓存将消除链接列表，而是使用哈希表进行查找，并为LRU驱逐策略使用堆。现代缓冲区缓存通常与虚拟内存系统集成，以支持内存映射文件。</p>
+<p>Xv6的日志记录系统效率低下。提交不能与文件系统调用同时进行。系统记录整个块，即使只更改了块中的几个字节。它执行同步日志写入，一次一个块，每个块都可能需要整个磁盘旋转时间。真正的日志记录系统解决了所有这些问题。</p>
+<p>日志记录并不是提供崩溃恢复的唯一方法。早期的文件系统在重新启动期间使用了清除器（scacenger）（例如，UNIX的fsck程序）来检查每个文件和目录以及块和inode空闲列表，查找和解决不一致的问题。清除大型文件系统可能需要数小时，在某些情况下，无法以导致原始系统调用为原子的方式解决不一致问题。从日志中恢复的速度要快得多，并导致系统调用在发生崩溃时是原子的。</p>
+<p>Xv6使用与早期UNIX相同的INODES和目录的基本磁盘布局；多年来，这一计划一直非常持久。BSD的UFS/FFS和Linux的ext2ext3使用的数据结构基本相同。文件系统布局中最低效的部分是目录，它需要在每次查找过程中对所有磁盘块进行线性扫描。当目录只有几个磁盘块时，这是合理的，但对于包含许多文件的目录来说，成本很高。仅举几例，微软Windows的NTFS、Mac OS X’s HFS和Solaris的ZFS，实现了一个目录作为磁盘上的平衡树块。这很复杂，但保证了对数时间目录查找。</p>
+<p>Xv6对磁盘故障很天真：如果磁盘操作失败，xv6就会恐慌。这是否合理取决于硬件：如果操作系统位于使用冗余来屏蔽磁盘故障的特殊硬件之上，则操作系统可能很少看到故障，从而认为panic是可接受的。另一方面，使用普通磁盘的操作系统应该做好出现故障的准备，并更优雅地处理这些故障，因此在一个文件中丢失一个块不会影响文件系统其余部分的使用。</p>
+<p>Xv6要求文件系统适合一个磁盘设备，并且大小不变。随着大型数据库和多媒体文件对存储的要求越来越高，操作系统正在开发消除”每个文件系统一个磁盘”瓶颈的方法。基本方法是将多个磁盘合并到一个逻辑磁盘中。RAID等硬件解决方案仍然是最流行的解决方案，但目前的趋势是尽可能多地在软件中实现这种逻辑。这些软件实现通常允许丰富的功能，如通过动态添加或删除磁盘来增长或收缩逻辑设备。当然，可以动态增长或收缩的存储层需要一个可以执行同样操作的文件系统: xv6使用的固定大小的inode块数组在这种环境中无法正常工作。</p>
+<p>将磁盘管理与文件系统分开可能是最干净的设计，但两者之间的复杂接口导致一些系统（如Sun 的ZFS）将它们组合在一起。</p>
+<p>Xv6的文件系统缺乏现代文件系统的许多其他功能；例如，它缺乏对快照和增量备份的支持。</p>
+<p>现代Unix系统允许使用与磁盘存储相同的系统调用访问多种资源：命名管道、网络连接、远程访问的网络文件系统以及监视和控制接口（如/procp）。这些系统通常为每个打开的文件提供一个函数指针表，每个操作一个，并调用函数指针来调用inode对调用的实现，而不是在fileread和filewrite中的xv6的语句。网络文件系统和用户级文件系统提供的功能可将这些调用转换为网络RPCS，并等待响应后再返回。</p>
+<h1 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h1><ul>
+<li>Why panic in balloc? Can xv6 recover? </li>
+<li>Why panic in ialloc? Can xv6 recover? </li>
+<li>Why doesn’t filealloc panic when it runs out of ﬁles? Why is this more common and therefore worth handling? </li>
+<li>Suppose the ﬁle corresponding to ip gets unlinked by another process between sys_link’s calls to iunlock(ip) and dirlink. Will the link be created correctly? Why or why not? </li>
+<li>create makes four function calls (one to ialloc and three to dirlink) that it requires to succeed. If any doesn’t, create calls panic. Why is this acceptable? Why can’t any of those four calls fail? </li>
+<li>sys_chdir calls iunlock(ip) before iput(cp-&gt;cwd), which might try to lock cp-&gt;cwd, yet postponing iunlock(ip) until after the iput would not cause deadlocks. Why not?</li>
+</ul>
+
       
     </div>
     
@@ -510,7 +545,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">231</span>
+                  <span class="site-state-item-count">232</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -578,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Buﬀer-cache-Layer"><span class="nav-number">2.</span> <span class="nav-text">Buﬀer cache Layer</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Buﬀer-cache-Layer"><span class="nav-number">2.</span> <span class="nav-text">Buﬀer cache Layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logging-layer"><span class="nav-number">3.</span> <span class="nav-text">Logging layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inode-layer"><span class="nav-number">4.</span> <span class="nav-text">Inode layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-descriptor-layer"><span class="nav-number">5.</span> <span class="nav-text">File descriptor layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-System-calls"><span class="nav-number">6.</span> <span class="nav-text">Code: System calls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Real-world"><span class="nav-number">7.</span> <span class="nav-text">Real world</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercises"><span class="nav-number">8.</span> <span class="nav-text">Exercises</span></a></li></ol></div>
             
 
           </div>

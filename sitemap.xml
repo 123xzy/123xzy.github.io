@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/</loc>
+    
+    <lastmod>2019-04-15T13:40:52.645Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
+    
+    <lastmod>2019-04-15T12:44:17.169Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
+    
+    <lastmod>2019-04-15T12:42:30.769Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2018/05/16/lab-malloc/</loc>
+    
+    <lastmod>2019-04-14T14:40:18.823Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/03/15/lab-performance/</loc>
+    
+    <lastmod>2019-04-14T14:39:26.898Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Paper-MapReduce/</loc>
     
     <lastmod>2019-04-14T13:43:23.590Z</lastmod>
@@ -12,13 +47,6 @@
     <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-4/</loc>
     
     <lastmod>2019-04-14T13:40:45.043Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
-    
-    <lastmod>2019-04-14T13:40:14.237Z</lastmod>
     
   </url>
   
@@ -40,13 +68,6 @@
     <loc>https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/</loc>
     
     <lastmod>2019-04-14T00:39:38.565Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
-    
-    <lastmod>2019-04-14T00:37:39.894Z</lastmod>
     
   </url>
   
@@ -422,13 +443,6 @@
   </url>
   
   <url>
-    <loc>https://123xzy.github.io/2018/05/16/lab-malloc/</loc>
-    
-    <lastmod>2019-03-24T11:41:01.573Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://123xzy.github.io/2018/03/11/GDB-GCC/</loc>
     
     <lastmod>2019-03-24T02:25:55.436Z</lastmod>
@@ -558,13 +572,6 @@
     <loc>https://123xzy.github.io/2019/03/15/lab-shell/</loc>
     
     <lastmod>2019-03-18T00:19:22.177Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/03/15/lab-performance/</loc>
-    
-    <lastmod>2019-03-18T00:16:08.371Z</lastmod>
     
   </url>
   
