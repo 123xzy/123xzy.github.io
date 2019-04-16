@@ -93,10 +93,12 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="任何操作系统都可能使用比计算机的处理器数量更多的进程运行，因此需要一个计划来在进程之间分配处理器的时间。理想情况下，共享对用户进程是透明的。一种常见的方法是为每个进程提供一种错觉，即它有自己的虚拟处理器，并在单个物理处理器上使操作系统复用多个虚拟处理器。本章说明xv6如何在多个进程之间多路复用处理器。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-15T13:40:52.645Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/1.JPG">
+<meta property="og:updated_time" content="2019-04-16T07:44:35.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 5">
 <meta name="twitter:description" content="任何操作系统都可能使用比计算机的处理器数量更多的进程运行，因此需要一个计划来在进程之间分配处理器的时间。理想情况下，共享对用户进程是透明的。一种常见的方法是为每个进程提供一种错觉，即它有自己的虚拟处理器，并在单个物理处理器上使操作系统复用多个虚拟处理器。本章说明xv6如何在多个进程之间多路复用处理器。">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/1.JPG">
 
 
 
@@ -384,6 +386,9 @@
 <a id="more"></a>
 <hr>
 <a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
+<h1 id="Multiplexing"><a href="#Multiplexing" class="headerlink" title="Multiplexing"></a>Multiplexing</h1><p>Xv6多路复用方法是在两种情况下将每个处理器从一个进程切换到另一个进程。首先, 当进程等待设备或管道 ito 完成, 或等待孩子退出, 或在睡眠系统调用中等待时, xv6 的睡眠和唤醒机制会切换。其次, 当进程执行用户指令时, xv6 会定期强制切换。这种多路复用会造成每个进程都有自己的 CPU 的错觉, 就像 xv6 使用内存分配器和硬件页表创建每个进程都有自己的内存的错觉一样。</p>
+<p><img src="/2019/04/15/MIT-6-828-book-xv6-Chapter-5/1.JPG" alt=""></p>
+<h1 id="Code-Pipes"><a href="#Code-Pipes" class="headerlink" title="Code: Pipes"></a>Code: Pipes</h1><h1 id="Code-Wait-exit-and-kill"><a href="#Code-Wait-exit-and-kill" class="headerlink" title="Code: Wait, exit, and kill"></a>Code: Wait, exit, and kill</h1><h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1>
       
     </div>
     
@@ -473,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -547,6 +561,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Multiplexing"><span class="nav-number">1.</span> <span class="nav-text">Multiplexing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Pipes"><span class="nav-number">2.</span> <span class="nav-text">Code: Pipes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Wait-exit-and-kill"><span class="nav-number">3.</span> <span class="nav-text">Code: Wait, exit, and kill</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Real-world"><span class="nav-number">4.</span> <span class="nav-text">Real world</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
