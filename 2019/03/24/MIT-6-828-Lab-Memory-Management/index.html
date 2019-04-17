@@ -93,10 +93,12 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="实验2：内存管理">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-10T14:36:47.136Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/1.JPG">
+<meta property="og:updated_time" content="2019-04-17T09:32:02.637Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Memory Management">
 <meta name="twitter:description" content="实验2：内存管理">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/1.JPG">
 
 
 
@@ -398,8 +400,8 @@
 <li>kclock.h：其中BIOS记录PC包含的物理内存量等</li>
 </ul>
 <p>重点阅读<code>memlayout.h</code> 以及 <code>pmap.h</code>，还需参考 <code>inc/mmu.h</code></p>
-<h1 id="第1部分：物理页面管理"><a href="#第1部分：物理页面管理" class="headerlink" title="第1部分：物理页面管理"></a>第1部分：物理页面管理</h1><p>The operating system must keep track of which parts of physical RAM are free and which are currently in use. JOS manages the PC’s physical memory with page granularity so that it can use the MMU to map and protect each piece of allocated memory.</p>
-<p>You’ll now write the physical page allocator. It keeps track of which pages are free with a linked list of struct PageInfo objects (which, unlike xv6, are not embedded in the free pages themselves), each corresponding to a physical page. You need to write the physical page allocator before you can write the rest of the virtual memory implementation, because your page table management code will need to allocate physical memory in which to store page tables.</p>
+<h1 id="第1部分：物理页面管理"><a href="#第1部分：物理页面管理" class="headerlink" title="第1部分：物理页面管理"></a>第1部分：物理页面管理</h1><p>操作系统需要追踪那部分物理内存是空闲的，那部分是正在使用的。JOS以页粒度（page granularity）管理PC的物理内存，以便可以使用MMU映射和保护每个分配的内存。</p>
+<p>现在要编写物理页分配器（physical page allocator）。它通过以struct PageInfo组成的链表跟踪哪些页面是空闲的（与xv6不同，它们没有嵌入到自由页面本身中？？？），每个对应于一个物理页面。在编写剩余的虚拟内存实现之前，您需要编写物理页分配器，因为页表管理代码需要分配用于存储页表的物理内存。</p>
 <h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1"></a>练习1</h2><p><code>In the file kern/pmap.c, you must implement code for the following functions (probably in the order given).</code></p>
 <ul>
 <li>boot_alloc()</li>
@@ -409,7 +411,15 @@
 <li>page_free()</li>
 </ul>
 <p><code>check_page_free_list() and check_page_alloc() test your physical page allocator. You should boot JOS and see whether check_page_alloc() reports success. Fix your code so that it passes. You may find it helpful to add your own assert()s to verify that your assumptions are correct.</code></p>
-<h1 id="第2部分：虚拟内存"><a href="#第2部分：虚拟内存" class="headerlink" title="第2部分：虚拟内存"></a>第2部分：虚拟内存</h1><h1 id="第3部分：内核地址空间"><a href="#第3部分：内核地址空间" class="headerlink" title="第3部分：内核地址空间"></a>第3部分：内核地址空间</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/bdhmwz/p/4960034.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/gatsby123/p/9832223.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/fatsheep9146/p/5124921.html" target="_blank" rel="noopener">参考</a></p>
+<p>先看看相关的函数理理思路：<br><code>mem_init()</code>：在内核刚开始运行时就会调用这个子函数，对整个操作系统的内存管理系统进行一些初始化的设置，比如设定页表等等操作。该函数里面又会有以下子函数。<br><code>static void i386_detect_memory(void)</code>：在<a href="/2019/03/14/MIT-6-828-Lab-Booting-a-PC/" title="MIT 6.828 Lab:Booting a PC">MIT 6.828 Lab:Booting a PC</a>的图中我们看到物理内存被默认分为三个部分。</p>
+<ul>
+<li><code>0x00000~0xA0000</code>，这部分也叫basemem，是可用的</li>
+<li><code>0xA0000~0x100000</code>，这部分叫做IO hole，是不可用的，主要被用来分配给外部设备、BIOS ROM</li>
+<li><code>0x100000~0x...</code>，这部分叫做extmem，是可用的，这是最重要的内存区域</li>
+</ul>
+<p>该函数会去探测basemem和extmem的大小，并计算出对应的物理页的数量。</p>
+<h1 id="第2部分：虚拟内存"><a href="#第2部分：虚拟内存" class="headerlink" title="第2部分：虚拟内存"></a>第2部分：虚拟内存</h1><p><img src="/2019/03/24/MIT-6-828-Lab-Memory-Management/1.JPG" alt=""></p>
+<h1 id="第3部分：内核地址空间"><a href="#第3部分：内核地址空间" class="headerlink" title="第3部分：内核地址空间"></a>第3部分：内核地址空间</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/bdhmwz/p/4960034.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/gatsby123/p/9832223.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/fatsheep9146/p/5124921.html" target="_blank" rel="noopener">参考</a></p>
 
       
     </div>
@@ -529,7 +539,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">232</span>
+                  <span class="site-state-item-count">234</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -542,7 +552,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

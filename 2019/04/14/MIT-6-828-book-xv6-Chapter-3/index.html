@@ -94,7 +94,7 @@
 <meta property="og:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/1.JPG">
-<meta property="og:updated_time" content="2019-04-16T12:15:01.676Z">
+<meta property="og:updated_time" content="2019-04-17T05:59:57.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 3">
 <meta name="twitter:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
@@ -414,8 +414,9 @@
 <h1 id="Code-The-ﬁrst-system-call"><a href="#Code-The-ﬁrst-system-call" class="headerlink" title="Code: The ﬁrst system call"></a>Code: The ﬁrst system call</h1><p>第1章结尾的initcode.S就调用了系统调用，让我们再来看看（8213）。该进程在进程的堆栈上推入了exec调用的参数，并将系统调用号放在%eax中。系统调用号与syscalls数组中的条目匹配，syscalls数组是函数指针（3600）的表。我们需要安排int指令将处理器从用户模式切换到内核模式，内核调用正确的内核函数（即sys_exec），内核可以检索sys_exec的参数。接下来的几个小节介绍了xv6如何安排此系统调用，然后我们将发现，我们可以重用相同的代码来处理中断和异常。</p>
 <h1 id="Code-Assembly-trap-handlers"><a href="#Code-Assembly-trap-handlers" class="headerlink" title="Code: Assembly trap handlers"></a>Code: Assembly trap handlers</h1><p>Xv6必须设置x86硬件，以便在遇到int指令时执行一些合理的操作，这将导致处理器生成陷阱。X86允许256个不同的中断。对于软件异常（如除法错误或尝试访问无效内存地址）定义了中断0-31。Xv6将32个硬件中断映射到32-63范围，并使用中断64作为系统调用中断。</p>
 <p>从main调用的Tvinit（3317）设置了表idt中的256个条目。中断i由vectors[i]对应地址处的代码处理。每个入口点都是不同的，因为x86不向中断处理程序提供陷阱号。使用256种不同的处理程序是区分256种情况的唯一方法。</p>
-<p>Tvinit处理T_SYSCALL，用户系统调用陷阱，特别是：它指定门的类型为”陷阱”通过传递值1作为第二个参数。陷阱门不清除FL标志，允许在系统调用处理程序期间进行其他中断。</p>
-<p>内核还将系统调用门权限设置为 DPL _ USER，它允许用户程序使用显式 int 指令生成陷阱。xv6 不允许进程用 int 引发其他中断 (例如，设备中断);如果他们尝试，他们将遇到一个一般的保护异常，这去向量13。</p>
+<p>Tvinit处理T_SYSCALL，用户系统调用陷阱，特别是：它通过传递值1作为第二个参数来指定门的类型为”陷阱”。陷阱门（trap gate）不清除FL标志，允许在系统调用处理程序期间进行其他中断。</p>
+<p>内核还将系统调用门权限设置为DPL_USER，它允许用户程序使用显式int指令生成陷阱。xv6不允许进程用int引发其他中断（例如，设备中断）；如果他们尝试，他们将遇到一个一般的保护异常，这指向了异常向量13。</p>
+<p>当将保护级别从用户模式更改为内核模式时，内核不应使用用户进程的堆栈，因为它可能无效。用户进程可能是恶意的，或包含导致用户%esp指向不属于该进程的用户内存的地址的错误。Xv6 通过设置任务段描述符，通过该描述符加载堆栈段选择器和% esp 的新值，对 x86 硬件进行编程，以便在陷阱上执行堆栈开关。函数功出来的用金门 (1873) 将用户进程内核堆栈顶部的地址存储到任务段描述符中。当陷阱发生时，处理器硬件执行以下操作。如果处理器在用户模式下执行，它将从任务段描述符加载% esp 和% ss，将旧用户% ss 和% esp 推送到新堆栈上。如果处理器在内核模式下执行，则上述情况都不会发生。然后，处理器将推送% eflags、% cs 和% eip 寄存器。对于一些陷阱，处理器..。</p>
 
       
     </div>
@@ -535,7 +536,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">232</span>
+                  <span class="site-state-item-count">234</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -548,7 +549,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
