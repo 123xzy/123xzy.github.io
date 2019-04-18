@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="《CSAPP》第三章小结（续）">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-02T04:22:17.310Z">
+<meta property="og:updated_time" content="2019-04-18T06:33:20.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章：程序的机器级表示（3）">
 <meta name="twitter:description" content="《CSAPP》第三章小结（续）">
@@ -383,7 +383,8 @@
         <p>《CSAPP》第三章小结（续）<br><a id="more"></a></p>
 <hr>
 <h1 id="数组分配和访问"><a href="#数组分配和访问" class="headerlink" title="数组分配和访问"></a><span id="1">数组分配和访问</span></h1><p>对于数组A，A就是指向数组开头的指针，值为$x_A$，数组元素<code>i</code>存放在地址为<em>$x_A+L</em>i$的地方，对应汇编代码<code>movl (%rdx,%rcx,4),%eax</code></p>
-
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>struct的所有组成部分都存放在内存中一段连续的区域内，指向结构的指针就是结构第一个字节的地址。编译器维护关于每个结构类型的信息，指示每个字段的字节偏移，以这些偏移作为内存引用指令中的偏移，从而产生对结构元素的引用</p>
+<h1 id="控制与数据"><a href="#控制与数据" class="headerlink" title="控制与数据"></a>控制与数据</h1><h1 id="浮点代码"><a href="#浮点代码" class="headerlink" title="浮点代码"></a>浮点代码</h1>
       
     </div>
     
@@ -570,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数组分配和访问"><span class="nav-number">1.</span> <span class="nav-text">数组分配和访问</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数组分配和访问"><span class="nav-number">1.</span> <span class="nav-text">数组分配和访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number">2.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制与数据"><span class="nav-number">3.</span> <span class="nav-text">控制与数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#浮点代码"><span class="nav-number">4.</span> <span class="nav-text">浮点代码</span></a></li></ol></div>
             
 
           </div>

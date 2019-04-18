@@ -94,7 +94,8 @@
 <meta property="og:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/1.JPG">
-<meta property="og:updated_time" content="2019-04-17T05:59:57.034Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/2.JPG">
+<meta property="og:updated_time" content="2019-04-18T11:22:02.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 3">
 <meta name="twitter:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
@@ -416,8 +417,35 @@
 <p>从main调用的Tvinit（3317）设置了表idt中的256个条目。中断i由vectors[i]对应地址处的代码处理。每个入口点都是不同的，因为x86不向中断处理程序提供陷阱号。使用256种不同的处理程序是区分256种情况的唯一方法。</p>
 <p>Tvinit处理T_SYSCALL，用户系统调用陷阱，特别是：它通过传递值1作为第二个参数来指定门的类型为”陷阱”。陷阱门（trap gate）不清除FL标志，允许在系统调用处理程序期间进行其他中断。</p>
 <p>内核还将系统调用门权限设置为DPL_USER，它允许用户程序使用显式int指令生成陷阱。xv6不允许进程用int引发其他中断（例如，设备中断）；如果他们尝试，他们将遇到一个一般的保护异常，这指向了异常向量13。</p>
-<p>当将保护级别从用户模式更改为内核模式时，内核不应使用用户进程的堆栈，因为它可能无效。用户进程可能是恶意的，或包含导致用户%esp指向不属于该进程的用户内存的地址的错误。Xv6 通过设置任务段描述符，通过该描述符加载堆栈段选择器和% esp 的新值，对 x86 硬件进行编程，以便在陷阱上执行堆栈开关。函数功出来的用金门 (1873) 将用户进程内核堆栈顶部的地址存储到任务段描述符中。当陷阱发生时，处理器硬件执行以下操作。如果处理器在用户模式下执行，它将从任务段描述符加载% esp 和% ss，将旧用户% ss 和% esp 推送到新堆栈上。如果处理器在内核模式下执行，则上述情况都不会发生。然后，处理器将推送% eflags、% cs 和% eip 寄存器。对于一些陷阱，处理器..。</p>
-
+<p>当将保护级别从用户模式更改为内核模式时，内核不应使用用户进程的堆栈，因为它可能无效。用户进程可能是恶意的，或包含导致用户%esp指向不属于该进程的用户内存的地址的错误。Xv6 通过设置任务段描述符，通过该描述符加载堆栈段选择器和%esp的新值，对x86硬件进行编程，以便在陷阱上执行堆栈开关。函数switchuvm（1873）将用户进程内核堆栈顶部的地址存储到任务段描述符中。</p>
+<p>当陷阱发生时，处理器硬件执行以下操作。如果处理器在用户模式下执行，它将从任务段描述符加载%esp和%ss，将旧用户%ss和%esp push到新堆栈上。如果处理器在内核模式下执行，则上述情况都不会发生。然后，处理器将push %eflags、%cs和%eip寄存器。对于一些陷阱，处理器也会推入错误字。处理器然后从相关的IDT条目中加载%eip和%cs。</p>
+<p>xv6使用Perl脚本（3200）生成IDT条目指向的入口点。如果处理器没有，则每个条目都会push错误代码，push中断号，然后跳转到alltraps。</p>
+<p><img src="/2019/04/14/MIT-6-828-book-xv6-Chapter-3/2.JPG" alt="">Alltraps（3254）继续保存处理器寄存器：它push %ds、%es、%fs、%gs和通用寄存器（3255-3260）。这种努力的结果是，内核堆栈现在包含一个strict trapframe（0602），其中包含发生陷阱时的处理器寄存器（参见图3-2）。处理器先push%ss、%esp、%eflags、%cs和%eip。处理器或陷阱向量push一个错误号，alltraps push其余的。陷阱帧包含在内核返回到当前进程时还原用户模式处理器寄存器所需的所有信息，以便处理器可以完全像陷阱启动时那样继续。回顾第2章，userinit手动构建一个陷阱来实现此目标（参见图1-4）。</p>
+<p>在第一个系统调用的情况下，保存的%eip是在int指令之后的指令地址。%cs是用户代码段选择器。%eflags是在执行int指令时的标志寄存器（eflags register）的内容。作为保存通用寄存器的一部分，alltraps还保存%eax，其中包含供内核稍后检查的系统调用号。</p>
+<p>现在，用户模式时的处理器寄存器已保存，alltraps已经完成设置处理器去运行内核C代码。处理器在进入处理程序之前设置选择器%cs和%ss；alltraps设置%ds和%es（3263-3265）。它将%fs和%gs设置为指向per-CPU数据段（3266-3268）的SEG_KCPU。</p>
+<p>正确设置段后，alltraps都可以调用C陷阱处理程序trap。它将%esp（指向它刚刚构造的陷阱帧）推送到堆栈上，作为trap（3271）的参数。然后调用trap（3272）。trap返回后，alltraps通过增加堆栈指针（3273）来弹出所有参数，然后开始在标签trapret执行代码。当第一个用户进程运行此代码以退出到用户空间时，我们在第2章中跟踪了此代码。同样的顺序也发生在这里：弹出陷阱帧恢复用户模式寄存器，然后iret跳回用户空间。  </p>
+<p>到目前为止，讨论已经讨论了在用户模式下发生的陷阱，但在内核执行过程中也可能发生陷阱。在这种情况下，硬件不会切换堆栈或保存堆栈指针或堆栈段选择器；否则，会出现与用户模式陷阱相同的步骤，并执行相同的xv6陷阱处理代码。当iret稍后还原内核模式%cs时，处理器将继续在内核模式下执行。</p>
+<h1 id="Code-C-trap-handler"><a href="#Code-C-trap-handler" class="headerlink" title="Code: C trap handler"></a>Code: C trap handler</h1><p>我们在上一节中看到，每个处理程序都设置了一个陷阱框架（trap frame），然后调用C函数trap。Trap（3351）查看硬件陷阱编号<code>tf-trapn</code>p，以决定为什么调用它以及需要做什么。如果陷阱是T_SYSCALL，Trap调用系统调用处理程序 syscall。我们将在第5章中回头看两次<code>proc-&gt;killed</code>检查。</p>
+<p>检查系统调用后，trap将查找硬件中断（我们将在下面讨论）。除了预期的硬件设备外，陷阱还可能是由虚假中断、不需要的硬件中断引起的。</p>
+<p>如果陷阱不是系统调用，也不是寻求注意的硬件设备，则trap假定它是由不正确的行为（例如，除以零）引起的，这部分代码作为陷阱之前执行的代码的一部分。如果导致陷阱的代码是用户程序，则xv6打印详细信息，然后设置<code>cp-&gt;killed</code>以记住清理用户进程。我们将在第5章中了解xv6是如何进行此清理的。</p>
+<p>如果是内核在运行，那就必须有一个内核错误：trap打印有关意外的细节，然后调用panic。</p>
+<h1 id="Code-System-calls"><a href="#Code-System-calls" class="headerlink" title="Code: System calls"></a>Code: System calls</h1><p>对于系统调用，trap调用syscall（3625）。Syscall从陷阱帧（trap frame）加载系统调用号码，其保存在%eax，并将索引加载到系统调用表中。对于第一个系统调用，%eax包含值SYS_exec（3457），syscall将调用系统调用表的<code>SYS_exec&#39;th</code>条目，这与调用sys_exec相对应。</p>
+<p>Syscall将系统调用函数的返回值记录在%eax。当陷阱返回到用户空间时，它将从<code>cp-&gt;tf</code>中的值加载到机器寄存器中。因此，当exec返回时，它将返回系统调用处理程序返回的值(3631)。系统调用通常返回负数以指示错误，并表示成功的正数。如果系统调用号无效，syscall将打印错误并返回–1。</p>
+<p>后面的章节将研究特定系统调用的实现。本章涉及系统调用的机制。还有一点机制：找到系统调用参数。辅助函数<code>argint</code>和<code>argptr</code>，<code>argstr</code>检索第n个系统调用参数，参数可以是整数、指针或字符串。argint使用用户空间%esp寄存器来定位第n个参数：%esp指向系统调用存根（system call stub）的返回地址处。参数就在它的正上方，即在<code>%esp+4</code>。然后第n个参数是<code>%esp+4+4*n</code></p>
+<p>argint调用fetchint从用户内存中读取该地址的值，并将其写入<code>*ip</code>。fetchint可以简单地将地址强制转换为指针，因为用户和内核共享相同的页面表，但内核必须验证用户的指针确实是地址空间的用户部分中的指针。内核设置了页面表硬件，以确保进程无法访问其本地专用内存之外的内存：如果用户程序尝试在<code>p-&gt;sz</code>或更高的地址读取或写入内存，处理器将导致分段陷阱，陷阱会杀死这个过程，正如我们上面看到的。现在，内核正在运行，它可以取消用户可能已传递的任何地址，因此它必须明确检查该地址是否低于p-&gt;sz。</p>
+<p>argptr的目的与argint相似：它解释第n个系统调用参数。argptr调用argint将参数作为整数获取，然后检查整数作为用户指针是否确实在地址空间的用户部分。请注意，在调用代码argptr时会发生两次检查。首先，在获取参数的过程中检查用户堆栈指针。然后检查参数，它本身就是一个用户指针。</p>
+<p>argstr是系统调用参数三人组的最后一个成员。它将第n个参数解释为指针。它确保指针指向NUL-terminated的字符串，并且完整的字符串位于用户地址空间部分的末尾以下。</p>
+<p>系统调用实现（例如，sysprocr.c和sysfile.c）通常是包装器：它们使用argint、argptr和argstr对参数进行解码，然后调用实际实现。在第2章中，sys_exec使用这些函数来获取其参数。</p>
+<h1 id="Code-Interrupts"><a href="#Code-Interrupts" class="headerlink" title="Code: Interrupts"></a>Code: Interrupts</h1><p>主板上的设备可以生成中断，xv6必须设置硬件来处理这些中断。如果没有设备支持，xv6将无法使用。用户无法在键盘上键入，文件系统无法将数据存储在磁盘上等。幸运的是，添加中断和对简单设备的支持不需要太多的复杂性。正如我们将看到的，中断可以使用与系统调用和异常相同的代码。</p>
+<p>中断类似于系统调用，但设备随时生成中断。当设备需要得到注意时，主板上有硬件可向CPU发出信号（例如，用户在键盘上键入了字符）。我们必须对设备进行编程以生成中断，并安排CPU接收中断。</p>
+<p>让我们来看看计时器设备和计时器中断。我们希望计时器硬件生成中断，例如，每秒100次，这样内核就可以跟踪时间的推移，并且内核就可以在多个正在运行的进程之间进行时间划分。选择每秒100次，可以实现体面的交互性能，同时不干扰处理器处理中断。</p>
+<p>与x86处理器本身一样，PC主板也在不断发展，中断的提供方式也在演变。早期的主板有一个简单的可编程中断控制器（称为PIC， programmable interrupt controler），您可以在picirq.c中找到管理它的代码。</p>
+<p>随着多处理器 PC 主板的出现，需要一种新的处理中断的方法，因为每个 CPU 都需要一个中断控制器来处理发送给它的中断，并且必须有一种将中断路由到处理器的方法。这种方式由两部分组成: 在 i o 系统中的部分 (IO APIC，ioapic. c)，以及连接到每个处理器的部分 (本地 APIC，lapic. c)。Xv6 是为具有多个处理器的主板而设计的，每个处理器都必须编程以接收中断。</p>
+<p>为了在单处理器上正常工作，Xv6 对可编程控制器 (PIC) (7432) 进行编程。每个 PIC 最多可以处理8个中断 (即设备)，并在处理器的中断引脚上对其进行复用。为了允许8台以上的设备，可以级联 Pic，通常主板至少有2个。使用 inb 和 outb 指令 Xv6 程序的主机生成 IRQ 0 到7和从程序生成 IRQ 8 到16。最初 xv6 程序的 PIC，以掩盖所有中断。Timer. c 中的代码设置计时器 1，并在 PIC (8074) 上启用计时器中断。此说明忽略了编制 PIC 方案的一些细节。PIC (以及 IOAPIC 和 LAPIC) 的这些详细信息对本文文本并不重要，但感兴趣的读者可以查阅源文件中引用的每个设备的手册。</p>
+<p>在多处理器上，xv6 必须对每个处理器上的 IOAPIC 和 LAPIC 进行编程。IO APIC 有一个表，处理器可以通过内存映射的 ito 对表中的条目进行编程，而不是使用 inb 和 outb 指令。在初始化过程中，xv6 程序将中断0映射到 IRQ 0，依此类推，但禁用它们。特定设备启用特定中断，并说明中断应路由到哪个处理器。例如，xv6 将键盘中断路由到处理器 0 (8016)。Xv6 将磁盘中断路由到系统上编号最高的处理器，我们将在下面看到。定时器芯片位于 LAPIC 内部，因此每个处理器都可以独立接收计时器中断。Xv6 将其设置在 lapicinit (7151) 中。关键行是对计时器 (7164) 进行编程的行。此行告诉 LAPIC 定期在 IRQ _ TIMER (即 IRQ 0) 生成中断。线路 (7193) 支持 CPU LAPIC 上的中断，这将导致它向本地处理器传递中断。</p>
+<p>处理器可以控制是否希望通过 eflags 寄存器中的 IF 标志接收中断。指令 cli 通过清除 IF 来禁用处理器上的中断，sti 在处理器上启用中断。Xv6 在引导主 cpu (8912) 和其他处理器 (1126) 时禁用中断。每个处理器上的调度程序启用中断 (2714)。为了控制某些代码片段不会中断，xv6 在这些代码片段期间禁用中断 (例如，请参见交换机 (1873))。</p>
+<p>计时器通过向量32中断 (其中 xv6 选择处理 IRQ 0)，其中 xv6 设置在 idtinit (1265)。向量32和向量 64 (系统调用的区别) 之间的唯一区别是向量32是中断门而不是陷阱门。中断门清除 if，以便中断的处理器在处理当前中断时不会接收中断。从这里开始，直到陷阱，中断遵循与系统调用和异常相同的代码路径，建立陷阱框架。当它被调用为时间中断时，陷阱只做两件事: 增加刻度变量 (3367)，和调用唤醒。正如我们将在第5章中看到的那样，后者可能会导致中断在不同的过程中返回。</p>
+<h1 id="Drivers"><a href="#Drivers" class="headerlink" title="Drivers"></a>Drivers</h1><h1 id="Code-Disk-driver"><a href="#Code-Disk-driver" class="headerlink" title="Code: Disk driver"></a>Code: Disk driver</h1><h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1><h1 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h1>
       
     </div>
     
@@ -604,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Systems-calls，exceptions，and-interrupts"><span class="nav-number">1.</span> <span class="nav-text">Systems calls，exceptions，and interrupts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X86-protection"><span class="nav-number">2.</span> <span class="nav-text">X86 protection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-The-ﬁrst-system-call"><span class="nav-number">3.</span> <span class="nav-text">Code: The ﬁrst system call</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Assembly-trap-handlers"><span class="nav-number">4.</span> <span class="nav-text">Code: Assembly trap handlers</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Systems-calls，exceptions，and-interrupts"><span class="nav-number">1.</span> <span class="nav-text">Systems calls，exceptions，and interrupts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X86-protection"><span class="nav-number">2.</span> <span class="nav-text">X86 protection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-The-ﬁrst-system-call"><span class="nav-number">3.</span> <span class="nav-text">Code: The ﬁrst system call</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Assembly-trap-handlers"><span class="nav-number">4.</span> <span class="nav-text">Code: Assembly trap handlers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-C-trap-handler"><span class="nav-number">5.</span> <span class="nav-text">Code: C trap handler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-System-calls"><span class="nav-number">6.</span> <span class="nav-text">Code: System calls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Interrupts"><span class="nav-number">7.</span> <span class="nav-text">Code: Interrupts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Drivers"><span class="nav-number">8.</span> <span class="nav-text">Drivers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Disk-driver"><span class="nav-number">9.</span> <span class="nav-text">Code: Disk driver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Real-world"><span class="nav-number">10.</span> <span class="nav-text">Real world</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercises"><span class="nav-number">11.</span> <span class="nav-text">Exercises</span></a></li></ol></div>
             
 
           </div>
