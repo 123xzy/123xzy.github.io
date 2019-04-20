@@ -2,23 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://123xzy.github.io/2018/05/16/lab-buffer/</loc>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
     
-    <lastmod>2019-04-19T14:03:37.165Z</lastmod>
+    <lastmod>2019-04-20T13:52:11.250Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/</loc>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
     
-    <lastmod>2019-04-19T09:05:20.526Z</lastmod>
+    <lastmod>2019-04-20T13:05:12.331Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2018/04/17/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%883%EF%BC%89/</loc>
+    
+    <lastmod>2019-04-20T07:33:52.893Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://123xzy.github.io/2018/03/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%8B/</loc>
     
-    <lastmod>2019-04-19T01:58:40.098Z</lastmod>
+    <lastmod>2019-04-20T07:33:43.212Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2018/05/16/lab-buffer/</loc>
+    
+    <lastmod>2019-04-20T06:13:30.407Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/</loc>
+    
+    <lastmod>2019-04-20T05:27:34.492Z</lastmod>
     
   </url>
   
@@ -124,13 +145,6 @@
     <loc>https://123xzy.github.io/2019/03/15/lab-performance/</loc>
     
     <lastmod>2019-04-14T14:39:26.898Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Paper-MapReduce/</loc>
-    
-    <lastmod>2019-04-14T13:43:23.590Z</lastmod>
     
   </url>
   
@@ -264,20 +278,6 @@
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Lab-Guide/</loc>
     
     <lastmod>2019-04-10T09:16:18.273Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
-    
-    <lastmod>2019-04-09T06:40:27.818Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
-    
-    <lastmod>2019-04-09T06:17:47.781Z</lastmod>
     
   </url>
   

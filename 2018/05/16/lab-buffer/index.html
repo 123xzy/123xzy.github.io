@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="CSAPP,LAB," />
+  <meta name="keywords" content="CSAPP，AB," />
 
 
 
@@ -86,7 +86,7 @@
 
 
 <meta name="description" content="I am a hacker!!">
-<meta name="keywords" content="CSAPP,LAB">
+<meta name="keywords" content="CSAPP，AB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Buflab">
 <meta property="og:url" content="https://123xzy.github.io/2018/05/16/lab-buffer/index.html">
@@ -99,7 +99,10 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/6.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/4.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/3.JPG">
-<meta property="og:updated_time" content="2019-04-19T14:03:37.165Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/9.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/8.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/7.JPG">
+<meta property="og:updated_time" content="2019-04-20T06:13:30.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
 <meta name="twitter:description" content="I am a hacker!!">
@@ -391,7 +394,7 @@
 <hr>
 <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><a href="http://csapp.cs.cmu.edu/2e/buflab.pdf" target="_blank" rel="noopener">原文指南</a></p>
 <p>该任务帮助详细了解IA-32调用方式和栈组织，其涉及对可执行文件<code>bufbomb</code>实行一系列的缓冲区溢出攻击（buffer overflow attacks）</p>
-<p>在本实验中, 将获得有关通用的寻找操作系统和网络服务器中的安全弱点的方法的第一手经验。我们的目的是帮助您了解程序的运行时操作, 并了解这种形式的安全弱点的性质, 以便您在编写系统代码时避免它。我们不容忍使用这种或任何其他形式的攻击来获得对任何系统资源的未经授权的访问</p>
+<p>在本实验中，将获得有关通用的寻找操作系统和网络服务器中的安全弱点的方法的第一手经验。我们的目的是帮助您了解程序的运行时操作，并了解这种形式的安全弱点的性质，以便您在编写系统代码时避免它。我们不容忍使用这种或任何其他形式的攻击来获得对任何系统资源的未经授权的访问</p>
 <p>在实验材料中有三个可执行文件</p>
 <ul>
 <li>bufbomb：将要攻击的程序</li>
@@ -410,12 +413,19 @@
 <li><code>-n</code>：使用<code>Nitro</code>模式，将在Level 4中使用</li>
 <li><code>-s</code>：提交</li>
 </ul>
-<h1 id="Candle"><a href="#Candle" class="headerlink" title="Candle"></a>Candle</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">int</span> val; </span><br><span class="line">	<span class="comment">/* Put canary on stack to detect possible corruption */</span> </span><br><span class="line">	<span class="keyword">volatile</span> <span class="keyword">int</span> local = uniqueval();</span><br><span class="line"></span><br><span class="line">	val = getbuf();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Check for corrupted stack */</span> </span><br><span class="line"> 	<span class="keyword">if</span> (local != uniqueval()) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Sabotaged!: the stack has been corrupted\n"</span>); </span><br><span class="line"> 	&#125; </span><br><span class="line"> 	<span class="keyword">else</span> <span class="keyword">if</span> (val == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Boom!: getbuf returned 0x%x\n"</span>, val); </span><br><span class="line">		validate(<span class="number">3</span>); </span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Dud: getbuf returned 0x%x\n"</span>, val); </span><br><span class="line">	&#125;	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Candle"><a href="#Candle" class="headerlink" title="Candle"></a>Candle</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">int</span> val; </span><br><span class="line">	<span class="comment">/* Put canary on stack to detect possible corruption */</span> </span><br><span class="line">	<span class="keyword">volatile</span> <span class="keyword">int</span> local = uniqueval();</span><br><span class="line"></span><br><span class="line">	val = getbuf();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Check for corrupted stack */</span> </span><br><span class="line"> 	<span class="keyword">if</span> (local != uniqueval()) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Sabotaged!: the stack has been corrupted\n"</span>); </span><br><span class="line"> 	&#125; </span><br><span class="line"> 	<span class="keyword">else</span> <span class="keyword">if</span> (val == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Boom!: getbuf returned 0x%x\n"</span>，val); </span><br><span class="line">		validate(<span class="number">3</span>); </span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Dud: getbuf returned 0x%x\n"</span>，val); </span><br><span class="line">	&#125;	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当getbuf执行返回语句时，程序会返回上面的test函数执行，任务就是改变这种行为，使得进入下面的函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">smoke</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Smoke!: You called smoke()\n"</span>); </span><br><span class="line">	validate(<span class="number">0</span>); </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="/2018/05/16/lab-buffer/5.JPG" alt="">反汇编查看bufbomb代码，并形成如下状态的运行栈<img src="/2018/05/16/lab-buffer/6.jpg" alt=""><br>也就说缓冲区起始位置距离返回地址的位置为0x28，也就是40个字节，因此填充40个字节符号后，将smoke函数的起始地址填入即可，注意地址要按小端法表示<br><img src="/2018/05/16/lab-buffer/4.JPG" alt=""><br><img src="/2018/05/16/lab-buffer/3.JPG" alt=""></p>
-<h1 id="Sparkler"><a href="#Sparkler" class="headerlink" title="Sparkler"></a>Sparkler</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fizz</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (val == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Fizz!: You called fizz(0x%x)\n"</span>, val); </span><br><span class="line">		validate(<span class="number">1</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Misfire: You called fizz(0x%x)\n"</span>, val);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Sparkler"><a href="#Sparkler" class="headerlink" title="Sparkler"></a>Sparkler</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fizz</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (val == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Fizz!: You called fizz(0x%x)\n"</span>，val); </span><br><span class="line">		validate(<span class="number">1</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Misfire: You called fizz(0x%x)\n"</span>，val);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>level 1实验的要求和level 0相似，但它需要程序从getbuf()返回后执行fizz(int val)函数，并且为fizz(int val)函数传递你自己独有的cookie参数。</p>
-<h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1>
+<p>调用者负责将参数压入到栈上，参数位置是（%esp），即栈顶所指的位置。从fizz的反汇编代码中也看出参数应该是在<code>%eax</code>，也就是在<code>0x8(%ebp)</code>，</p>
+<p>要传入的参数就是userID对应到的cookie，如下所示<img src="/2018/05/16/lab-buffer/9.JPG" alt=""></p>
+<p>得到的攻击字符串自然如下所示<img src="/2018/05/16/lab-buffer/8.JPG" alt=""></p>
+<p>Sparkler GET！<img src="/2018/05/16/lab-buffer/7.JPG" alt=""></p>
+<h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> global_value = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> val)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (global_value == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Bang!: You set global_value to 0x%x\n"</span>, global_value); </span><br><span class="line">		validate(<span class="number">2</span>); </span><br><span class="line">	&#125; <span class="keyword">else</span> </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Misfire: global_value = 0x%x\n"</span>, global_value); </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更复杂的缓冲区攻击形式包括提供一个字符串，对实际的机器指令进行编码。然后，攻击字符串将用堆栈上这些指令的起始地址覆盖返回指针。当调用函数（在本例中为getbuf）执行其ret指令时，程序将开始执行堆栈上的指令，而不是返回。有了这种形式的攻击，你可以让程序做几乎任何事情。您放置在堆栈上的代码称为利用代码。不过，这种攻击方式很棘手，因为你必须把机器代码放到堆栈上，并将返回指针设置为此代码的开头。</p>
+<p>在该任务之前，您必须将全局变量global_value设置为userid对应的cookie。攻击代码应设置global_value，将bang的地址推入栈中，并执行ret指令跳转到bang。</p>
+<h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1>
       
     </div>
     
@@ -432,9 +442,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
-          
-            <a href="/tags/LAB/" rel="tag"><i class="fa fa-tag"></i> LAB</a>
+            <a href="/tags/CSAPP，AB/" rel="tag"><i class="fa fa-tag"></i> CSAPP，AB</a>
           
         </div>
       
@@ -549,7 +557,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">98</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

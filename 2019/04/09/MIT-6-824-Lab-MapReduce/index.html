@@ -93,10 +93,13 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="构建MapReduce库">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-09T06:40:27.818Z">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/1.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/2.JPG">
+<meta property="og:updated_time" content="2019-04-20T13:52:11.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.824 Lab:MapReduce">
 <meta name="twitter:description" content="构建MapReduce库">
+<meta name="twitter:image" content="https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/1.JPG">
 
 
 
@@ -382,8 +385,11 @@
       
         <p>构建MapReduce库<br><a id="more"></a></p>
 <hr>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本实验中，将构建一个MapReduce库，熟悉如何使用哪个Go中编程和构建容错分布式系统。在第一部分中，将编写一个简单的MapReduce程序。在第二部分中，您将编写一个Master，将任务分发给MapReduce的workers，并处理workers的失败</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本实验中，将构建一个MapReduce库，熟悉如何使用Go中编程和构建容错分布式系统。在第一部分中，将编写一个简单的MapReduce程序。在第二部分中，您将编写一个Master，将任务分发给MapReduce的workers，并处理workers的失败</p>
 <p>首先从网上获取实验需要的源代码，并熟悉。开始实验之前最好先熟悉一下go语言</p>
+<p>接下来的任务就是编写/修改<code>doMap</code>，<code>doReduce</code>。。您还必须在<code>../main/wc.go</code>中编写map和reduce函数。</p>
+<h1 id="Part-I-Map-Reduce-input-and-output"><a href="#Part-I-Map-Reduce-input-and-output" class="headerlink" title="Part I: Map/Reduce input and output"></a>Part I: Map/Reduce input and output</h1><p>Map/Reduce实现缺少一些部分。在编写第一个Map/Reduce函数之前，需要修复sequential实现。特别是，我们给你的代码缺少两个关键部分：分割map任务输出的函数，以及收集reduce任务的所有输入的函数。这些任务分别由common_map.go中的doMap()函数和common_reduce.go中的doReduce()函数执行。这些文件中的注释应该指向正确的方向。</p>
+<p>为了帮助您确定是否正确实现了doMap()和doReduce()，我们为您提供了一个Go测试套件，用于检查实现的正确性。这些测试在test_test.go文件中实现。<img src="/2019/04/09/MIT-6-824-Lab-MapReduce/1.JPG" alt=""><br>加入参数<code>-v</code>获得测试更多的信息，用于调试<img src="/2019/04/09/MIT-6-824-Lab-MapReduce/2.JPG" alt=""></p>
 
       
     </div>
@@ -424,8 +430,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/09/MIT-6-824-Paper-MapReduce/" rel="prev" title="MIT 6.824 Paper:MapReduce">
-                MIT 6.824 Paper:MapReduce <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/13/MIT-6-828-book-xv6-Chapter-4/" rel="prev" title="MIT 6.828 book_xv6:Chapter 4">
+                MIT 6.828 book_xv6:Chapter 4 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -516,7 +522,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">98</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -571,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-I-Map-Reduce-input-and-output"><span class="nav-number">2.</span> <span class="nav-text">Part I: Map/Reduce input and output</span></a></li></ol></div>
             
 
           </div>
