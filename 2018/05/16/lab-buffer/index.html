@@ -102,7 +102,11 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/9.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/8.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/7.JPG">
-<meta property="og:updated_time" content="2019-04-20T06:13:30.407Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/12.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/10.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/13.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/11.JPG">
+<meta property="og:updated_time" content="2019-04-22T11:37:13.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
 <meta name="twitter:description" content="I am a hacker!!">
@@ -424,7 +428,12 @@
 <p>Sparkler GET！<img src="/2018/05/16/lab-buffer/7.JPG" alt=""></p>
 <h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> global_value = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> val)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (global_value == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Bang!: You set global_value to 0x%x\n"</span>, global_value); </span><br><span class="line">		validate(<span class="number">2</span>); </span><br><span class="line">	&#125; <span class="keyword">else</span> </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Misfire: global_value = 0x%x\n"</span>, global_value); </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>更复杂的缓冲区攻击形式包括提供一个字符串，对实际的机器指令进行编码。然后，攻击字符串将用堆栈上这些指令的起始地址覆盖返回指针。当调用函数（在本例中为getbuf）执行其ret指令时，程序将开始执行堆栈上的指令，而不是返回。有了这种形式的攻击，你可以让程序做几乎任何事情。您放置在堆栈上的代码称为利用代码。不过，这种攻击方式很棘手，因为你必须把机器代码放到堆栈上，并将返回指针设置为此代码的开头。</p>
-<p>在该任务之前，您必须将全局变量global_value设置为userid对应的cookie。攻击代码应设置global_value，将bang的地址推入栈中，并执行ret指令跳转到bang。</p>
+<p>global_value是一个全局变量，它没有储存在栈里面。所以在程序执行过程中，只能通过赋值语句来改变global_value的值。即这次我们不仅要让函数跳到bang中，而且要模拟一个函数调用来先进行赋值。</p>
+<p>因此思路就是先覆盖返回地址，使其跳转到缓冲区中的攻击指令（也就是我们编写的函数），在这个函数之后，再跳转到bang函数中</p>
+<p>新的函数如下所示，先获取已有的cookie，再将其复制到global_value上，最后将bang的地址推入栈中，以返回该函数<img src="/2018/05/16/lab-buffer/12.JPG" alt=""> </p>
+<p>我们选择将该攻击函数代码放在缓冲区的起始位置，因此要寻找buf的起始位置是多少，如下所示<img src="/2018/05/16/lab-buffer/10.JPG" alt=""></p>
+<p>和上面题目不太一样的一点就是现在我们要返回到我们编写的这个函数位置，最后完整的指令如下所示<img src="/2018/05/16/lab-buffer/13.JPG" alt=""></p>
+<p>Firecracker GET！<img src="/2018/05/16/lab-buffer/11.JPG" alt=""></p>
 <h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1>
       
     </div>
