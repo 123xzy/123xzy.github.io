@@ -106,7 +106,11 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/10.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/13.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/11.JPG">
-<meta property="og:updated_time" content="2019-04-22T11:37:13.695Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/14.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/17.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/16.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/15.JPG">
+<meta property="og:updated_time" content="2019-04-23T08:51:39.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
 <meta name="twitter:description" content="I am a hacker!!">
@@ -426,7 +430,7 @@
 <p>要传入的参数就是userID对应到的cookie，如下所示<img src="/2018/05/16/lab-buffer/9.JPG" alt=""></p>
 <p>得到的攻击字符串自然如下所示<img src="/2018/05/16/lab-buffer/8.JPG" alt=""></p>
 <p>Sparkler GET！<img src="/2018/05/16/lab-buffer/7.JPG" alt=""></p>
-<h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> global_value = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> val)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (global_value == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Bang!: You set global_value to 0x%x\n"</span>, global_value); </span><br><span class="line">		validate(<span class="number">2</span>); </span><br><span class="line">	&#125; <span class="keyword">else</span> </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Misfire: global_value = 0x%x\n"</span>, global_value); </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Firecracker"><a href="#Firecracker" class="headerlink" title="Firecracker"></a>Firecracker</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> global_value = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> val)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="keyword">if</span> (global_value == cookie) &#123; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Bang!: You set global_value to 0x%x\n"</span>，global_value); </span><br><span class="line">		validate(<span class="number">2</span>); </span><br><span class="line">	&#125; <span class="keyword">else</span> </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Misfire: global_value = 0x%x\n"</span>，global_value); </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>更复杂的缓冲区攻击形式包括提供一个字符串，对实际的机器指令进行编码。然后，攻击字符串将用堆栈上这些指令的起始地址覆盖返回指针。当调用函数（在本例中为getbuf）执行其ret指令时，程序将开始执行堆栈上的指令，而不是返回。有了这种形式的攻击，你可以让程序做几乎任何事情。您放置在堆栈上的代码称为利用代码。不过，这种攻击方式很棘手，因为你必须把机器代码放到堆栈上，并将返回指针设置为此代码的开头。</p>
 <p>global_value是一个全局变量，它没有储存在栈里面。所以在程序执行过程中，只能通过赋值语句来改变global_value的值。即这次我们不仅要让函数跳到bang中，而且要模拟一个函数调用来先进行赋值。</p>
 <p>因此思路就是先覆盖返回地址，使其跳转到缓冲区中的攻击指令（也就是我们编写的函数），在这个函数之后，再跳转到bang函数中</p>
@@ -434,7 +438,15 @@
 <p>我们选择将该攻击函数代码放在缓冲区的起始位置，因此要寻找buf的起始位置是多少，如下所示<img src="/2018/05/16/lab-buffer/10.JPG" alt=""></p>
 <p>和上面题目不太一样的一点就是现在我们要返回到我们编写的这个函数位置，最后完整的指令如下所示<img src="/2018/05/16/lab-buffer/13.JPG" alt=""></p>
 <p>Firecracker GET！<img src="/2018/05/16/lab-buffer/11.JPG" alt=""></p>
-<h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1>
+<h1 id="Dynamite"><a href="#Dynamite" class="headerlink" title="Dynamite"></a>Dynamite</h1><p>这次要求getbuf调用后，返回到test当中，但是不能破坏为test函数维护的堆栈状态（test函数加了堆栈状态检测），同时要让test函数调用getbuf后的返回值（val）为自己的cookie。</p>
+<p>由于缓冲区溢出时破坏了<code>%ebp</code>的值，需要写入代码修复<code>%ebp</code>，因此先获得原来的<code>%ebp</code>的值，如下所示<img src="/2018/05/16/lab-buffer/14.JPG" alt=""></p>
+<p>和之前的做法一样，在攻击字符串中写入一下代码，首先将cookie作为返回值传给test，然后修复%ebp，在将test调用getbuf的下一条指令推入栈，最后返回<img src="/2018/05/16/lab-buffer/17.JPG" alt=""></p>
+<p>得到对应的完整攻击代码<img src="/2018/05/16/lab-buffer/16.JPG" alt=""></p>
+<p>Dynamite GET！<img src="/2018/05/16/lab-buffer/15.JPG" alt=""></p>
+<h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1><p>如书中所说，每次运行时，给定过程使用的确切堆栈位置会有所不同。</p>
+<p>当您使用命令行标志”-n”运行时，它将在”Nitro”模式下运行。程序不是调用函数getbuf，而是调用稍有不同的函数getbufn。此函数类似于getbuf，只是它具有512个字符的缓冲区。您将需要此附加空间来创建可靠的利用。调用getbufn的代码首先在堆栈上分配随机数量的存储。如果在两次连续执行getbufn过程中采样%ebp值，您会发现它们的差异高达±240。</p>
+<p>要做的依旧是提供一个利用字符串，该字符串将导致getbufn将您的cookie返回test，而不是值1。您可以在测试代码中看到，这将导致程序转到”KABOOM!”。其他功能则和Dynamite一样。</p>
+
       
     </div>
     
