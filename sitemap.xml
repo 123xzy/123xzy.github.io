@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://123xzy.github.io/Practice/index.html</loc>
+    
+    <lastmod>2019-04-24T09:09:14.392Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://123xzy.github.io/2018/05/16/lab-buffer/</loc>
     
-    <lastmod>2019-04-23T08:51:39.563Z</lastmod>
+    <lastmod>2019-04-24T09:01:37.938Z</lastmod>
     
   </url>
   
@@ -299,13 +306,6 @@
     <loc>https://123xzy.github.io/2019/03/15/lab-cache/</loc>
     
     <lastmod>2019-04-08T12:19:51.289Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/Practice/index.html</loc>
-    
-    <lastmod>2019-04-08T12:02:29.840Z</lastmod>
     
   </url>
   

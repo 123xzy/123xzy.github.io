@@ -110,7 +110,9 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/17.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/16.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/15.JPG">
-<meta property="og:updated_time" content="2019-04-23T08:51:39.563Z">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/18.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/19.JPG">
+<meta property="og:updated_time" content="2019-04-24T09:01:37.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
 <meta name="twitter:description" content="I am a hacker!!">
@@ -443,9 +445,10 @@
 <p>和之前的做法一样，在攻击字符串中写入一下代码，首先将cookie作为返回值传给test，然后修复%ebp，在将test调用getbuf的下一条指令推入栈，最后返回<img src="/2018/05/16/lab-buffer/17.JPG" alt=""></p>
 <p>得到对应的完整攻击代码<img src="/2018/05/16/lab-buffer/16.JPG" alt=""></p>
 <p>Dynamite GET！<img src="/2018/05/16/lab-buffer/15.JPG" alt=""></p>
-<h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1><p>如书中所说，每次运行时，给定过程使用的确切堆栈位置会有所不同。</p>
-<p>当您使用命令行标志”-n”运行时，它将在”Nitro”模式下运行。程序不是调用函数getbuf，而是调用稍有不同的函数getbufn。此函数类似于getbuf，只是它具有512个字符的缓冲区。您将需要此附加空间来创建可靠的利用。调用getbufn的代码首先在堆栈上分配随机数量的存储。如果在两次连续执行getbufn过程中采样%ebp值，您会发现它们的差异高达±240。</p>
+<h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1><p>如书中所说，每次运行时，给定过程使用的确切堆栈位置会有所不同。攻击方法就是在实际攻击代码前插入很长一段nop操作（no operation），执行这种指令除了PC加一外，使其指向下一条指令，没有任何效果。只要攻击者能够猜中这段序列的某个地址，就能达到攻击代码。这个序列就叫<strong>空操作雪橇</strong>（nop sled）</p>
+<p>当您使用命令行标志”-n”运行时，它将在”Nitro”模式下运行。程序不是调用函数getbuf，而是调用稍有不同的函数getbufn。此函数类似于getbuf，只是它具有512个字符的缓冲区。调用getbufn的代码首先在堆栈上分配随机数量的存储。如果在两次连续执行getbufn过程中采样%ebp值，您会发现它们的差异高达±240。</p>
 <p>要做的依旧是提供一个利用字符串，该字符串将导致getbufn将您的cookie返回test，而不是值1。您可以在测试代码中看到，这将导致程序转到”KABOOM!”。其他功能则和Dynamite一样。</p>
+<p><img src="/2018/05/16/lab-buffer/18.JPG" alt=""><br><img src="/2018/05/16/lab-buffer/19.JPG" alt=""></p>
 
       
     </div>
