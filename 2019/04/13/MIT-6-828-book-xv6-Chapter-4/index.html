@@ -94,7 +94,7 @@
 <meta property="og:description" content="Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-4/1.JPG">
-<meta property="og:updated_time" content="2019-04-23T07:17:44.170Z">
+<meta property="og:updated_time" content="2019-04-25T06:25:28.386Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 4">
 <meta name="twitter:description" content="Xv6在多处理器上运行，多核CPU的计算机独立执行代码。这些多核CPU在单个物理地址空间上运行，并共享数据结构；xv6必须引入一个协调机制，以防止它们相互干扰。即使在单处理器上，xv6也必须使用某种机制来防止中断处理程序干扰非中断代码。Xv6对两者都使用相同的低级概念：锁。锁提供互斥，确保一次只能有一个CPU拥有锁。如果xv6仅访问数据结构，同时持有特定的锁，则xv6可以确保一次只有一个CPU访问">
@@ -405,18 +405,20 @@
 <p>因为xv6使用粗粒度的锁，xv6很简单，所以xv6几乎没有锁序链（lock-order chains）。最长的链子只有两层深（two deep）。例如，ideintr在调用wakeup时持有ide锁，wakeup则需要获取ptable锁。还有很多其他涉及sleep和wakeup的例子。这些命令的产生是因为sleep和wakeup有一个复杂的不变量，如第5章所述。在文件系统中有许多两个链的示例，因为文件系统必须获取目录上的锁和该目录中文件上的锁，才能正确地从其父目录中取消文件的链接。Xv6总是按顺序获取锁的第一个父目录，然后是文件。</p>
 <h1 id="Interrupt-handlers"><a href="#Interrupt-handlers" class="headerlink" title="Interrupt handlers"></a>Interrupt handlers</h1><p>Xv6使用锁保护在一个CPU上运行的中断处理程序不受访问另一个CPU上相同数据的非中断代码的影响。例如，计时器中断处理程序（3364）会增加ticks，但另一个CPU可能同时处于sys_sleep状态，也使用相同变量（3723）。锁tickslock同步两个CPU对单个变量的访问。</p>
 <p>中断甚至在单个处理器上也会导致并发：如果启用了中断，则可以随时停止内核代码以运行中断处理程序。假设iderw拿着idelock，然后被中断去运行ideintr。Ideintr会试图锁定idelock，看到它被持有，并等待它被释放。在这种情况下，idelock永远不会被释放–只有iderw才能释放它，而且在ideintr返回之前，iderw不会继续运行–因此处理器，最终整个系统将死锁。</p>
-<p>若要避免这种情况，如果中断处理程序使用锁，处理器绝不能在启用中断的情况下持有该锁。Xv6更为保守：它从不持有任何启用中断的锁。它使用pushcli（1655）和popcli（1655）来管理堆栈的”禁用中断”操作（cli是x86的禁用中断指令）。在尝试获取锁（1576）之前获取调用推特，并在释放锁（1621）后释放调用popcli。普什克莱 (1655) 和 popcli (1655) 不仅仅是围绕 cli 和 sti 的包装: 它们被计算在内，因此需要两个调用 popcli 才能撤销两次调用 p推克;这样，如果代码获取两个不同的锁，中断将不会重新启用，直到两个锁都被释放。</p>
-<p>重要的是要在可能获得锁 (1583) 的 xchg 之前获得调用推特。如果两者发生逆转，则在启用中断的情况下持有锁将有几个指令周期，不幸的是，定时中断会使系统死锁。同样，只有在释放锁 (1583) 的 xchg 之后，才释放调用 popcli 也很重要。</p>
-<p>中断处理程序和非中断代码之间的交互提供了一个很好的示例，说明了递归锁存在问题的原因。如果 xv6 使用递归锁 (如果第一次获取也发生在 CPU 上，则允许在 CPU 上进行第二次获取)，则中断处理程序可以在非中断代码处于关键部分时运行。这可能会造成严重破坏，因为当中断处理程序运行时，处理程序所依赖的不变量可能会被暂时违反。例如，ideintr (4202) 假定具有未完成请求的链接列表格式正确。如果 xv6 使用递归锁，则 ideintr 可能会在 idew 正在操作链接列表时运行，并且链接列表最终将处于不正确的状态。</p>
-<h1 id="Memory-ordering"><a href="#Memory-ordering" class="headerlink" title="Memory ordering"></a>Memory ordering</h1><p>本章假定处理器按照它们在程序中出现的顺序启动和完成指令。但是, 许多处理器执行指令的顺序不正常, 以实现更高的性能。如果指令需要多个周期才能完成, 处理器可能希望提前发出指令, 以便它可以与其他指令重叠并避免处理器停滞。例如, 处理器可能会注意到, 在指令 A 和 B 的串行序列中, a 和 B 并不相互依赖, 并在 a 之前启动指令 B, 以便在处理器完成 A 时完成指令 B, 但是并发性可能会将这种重新排序暴露给软件, 这将导致不正确的行为。</p>
-<p>例如, 人们可能想知道, 如果发布只是将0分配给 lk &gt; 锁定, 而不是使用 xchg, 会发生什么情况。这个问题的答案不清楚, 因为不同世代的 x86 处理器对内存排序做出了不同的保证。如果 lk-&gt;locked=0, 允许在 popcli 之后重新排序, 则获取可能会中断, 因为在释放锁之前将启用另一个线程中断。为了避免依赖不明确的处理器规格有关内存排序, xv6 不承担任何风险, 并使用 xv6, 处理器必须保证不重新排序。</p>
-<h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1><p>并发原语和并行编程是研究的活跃领域, 因为使用锁编程仍然具有挑战性。最好使用锁作为较高级别的构造 (如同步队列) 的基础, 尽管 xv6 并不这样做。如果您使用锁编程, 则明智的做法是使用尝试识别竞争条件的工具, 因为很容易错过需要锁的固定项。用户级程序也需要锁, 但在 xv6 应用程序中有一个执行线程, 进程不共享内存, 因此 xv6 应用程序中不需要锁。</p>
-<p>可以在没有原子指令的情况下实现锁, 但成本很高, 大多数操作系统都使用原子指令。当锁满足时, 原子指令也不是免费的。如果一个处理器在其本地缓存中缓存了一个锁, 而另一个处理器必须获取锁, 则更新持有锁的行的原子指令必须将该行从一个处理器的缓存移动到另一个处理器的缓存中, 然后可能使其失效缓存行的任何其他副本。从另一个处理器的缓存中获取缓存行的成本可能比从本地缓存中获取一行的成本要高出数级。</p>
-<p>为了避免与锁相关的开销, 许多操作系统使用无锁定数据结构和算法, 并尝试避免这些算法中的原子操作。例如, 可以实现一个链接列表, 如本章开头的链接列表, 在列表搜索过程中不需要锁定, 以及一个原子指令, 以便在列表中插入项。、</p>
+<p>若要避免这种情况，如果中断处理程序使用锁，处理器绝不能在启用中断的情况下持有该锁。Xv6更为保守：在启用中断时，它从不持有任何锁。它使用pushcli（1655）和popcli（1665）来管理堆栈的”禁用中断”操作（cli是x86的禁用中断指令）。在尝试获取锁（1576）之前Acquire调用pushcli，并在释放锁（1621）后release调用popcli。Pushcli（1655）和popcli（1666）不仅仅是cli和sti的包装：，函数内存还存在计数器，因此需要两个调用popcli才能撤销两次调用pushcli；这样，如果代码获取两个不同的锁，中断将不会重新启用，直到两个锁都被释放。</p>
+<p>在xchg可能获得锁之前让acquire去调用pushcli很重要。如果交换两者位置，则在启用中断的情况下持有锁在几个指令周期之后，不幸的定时中断就会使系统死锁。同样，只有在xchg释放锁（1583）之后，release才调用popcli也很重要。</p>
+<p>中断处理程序和非中断代码之间的交互提供了一个很好的示例，说明了递归锁存在问题的原因。如果xv6使用递归锁（如果第一次获取也发生在CPU上，则允许在CPU上进行第二次获取），则中断处理程序可以在非中断代码处于关键部分时运行。这可能会造成严重破坏，因为当中断处理程序运行时，处理程序所依赖的不变量可能会被暂时违反。例如，ideintr（4202）假定具有未完成请求的链表格式正确。如果xv6使用递归锁，则ideintr可能会在idew正在操作链接列表时运行，并且链表最终将处于不正确的状态。</p>
+<h1 id="Memory-ordering"><a href="#Memory-ordering" class="headerlink" title="Memory ordering"></a>Memory ordering</h1><p>本章假定处理器按照它们在程序中出现的顺序启动和完成指令。但是，许多处理器执行指令的顺序不正常，以实现更高的性能。如果指令需要多个周期才能完成，处理器可能希望提前发出指令，以便它可以与其他指令重叠并避免处理器停滞。例如，处理器可能会注意到，在指令A和B的串行序列中，A和B并不相互依赖，并在A之前启动指令B，以便在处理器完成A时完成指令B，但是并发性可能会将这种重新排序暴露给软件，这将导致不正确的行为。</p>
+<p>例如，人们可能想知道，如果release只是将0分配给lk-&gt;locked，而不是使用xchg，会发生什么情况。这个问题的答案不清楚，因为不同代的x86处理器对内存排序做出了不同的保证。如果lk-&gt;locked=0，允许在popcli之后重新排序，则acquire可能会中断，因为在释放锁之前将启用另一个线程中断。为了避免依赖不明确的处理器规格有关内存排序，xv6不承担任何风险，并使用xchg，即处理器必须保证不重新排序。</p>
+<h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1><p>并发原语和并行编程是研究的活跃领域，因为使用锁编程仍然具有挑战性。最好使用锁作为较高级别的构造（如同步队列）的基础，尽管xv6并不这样做。如果您使用锁编程，则明智的做法是使用尝试识别竞争条件的工具，因为很容易错过需要锁的不变量。</p>
+<p>用户级程序也需要锁，但在xv6应用程序中只有一个执行线程，进程不共享内存，因此xv6应用程序中不需要锁。</p>
+<p>可以在没有原子指令的情况下实现锁，但成本很高，大多数操作系统都使用原子指令。</p>
+<p>当锁满足时，原子指令也不是免费的。如果一个处理器在其本地缓存中缓存了一个锁，而另一个处理器必须获取锁，则更新持有锁的行的原子指令必须将该行从一个处理器的缓存移动到另一个处理器的缓存中，然后可能使其失效缓存行的任何其他副本。从另一个处理器的缓存中获取缓存行的成本可能比从本地缓存中获取一行的成本要高出数级。</p>
+<p>为了避免与锁相关的开销，许多操作系统使用无锁定数据结构和算法，并尝试避免这些算法中的原子操作。例如，可以实现一个链表，如本章开头的链表，在列表搜索过程中不需要锁定，以及只需要一个原子指令在链表中插入项。</p>
 <h1 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h1><ul>
 <li>Remove the xchg in acquire. explain what happens when you run xv6?</li>
 <li>Move the acquire in iderw to before sleep. is there a race? why don’t you observe it when booting xv6 and run stressfs? increase critical section with a dummy loop; what do you see now? explain.</li>
-<li>Setting a bit in a buﬀer’s flags is not an atomic operation: the processor makes a copy of flags in a register, edits the register, and writes it back. Thus it is important that two processes are not writing to flags at the same time. xv6 edits the B_BUSY bit only while holding buflock but edits the B_VALID and B_WRITE ﬂags without holding any locks. Why is this safe?</li>
+<li>Setting a bit in a buﬀer’s flags is not an atomic operation: the processor makes a copy of flags in a register，edits the register，and writes it back. Thus it is important that two processes are not writing to flags at the same time. xv6 edits the B_BUSY bit only while holding buflock but edits the B_VALID and B_WRITE ﬂags without holding any locks. Why is this safe?</li>
 </ul>
 
       

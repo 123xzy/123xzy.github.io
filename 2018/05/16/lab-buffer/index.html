@@ -111,8 +111,10 @@
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/16.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/15.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/18.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/20.JPG">
+<meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/21.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2018/05/16/lab-buffer/19.JPG">
-<meta property="og:updated_time" content="2019-04-24T09:01:37.938Z">
+<meta property="og:updated_time" content="2019-04-25T05:16:28.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buflab">
 <meta name="twitter:description" content="I am a hacker!!">
@@ -446,9 +448,11 @@
 <p>得到对应的完整攻击代码<img src="/2018/05/16/lab-buffer/16.JPG" alt=""></p>
 <p>Dynamite GET！<img src="/2018/05/16/lab-buffer/15.JPG" alt=""></p>
 <h1 id="Nitroglycerin"><a href="#Nitroglycerin" class="headerlink" title="Nitroglycerin"></a>Nitroglycerin</h1><p>如书中所说，每次运行时，给定过程使用的确切堆栈位置会有所不同。攻击方法就是在实际攻击代码前插入很长一段nop操作（no operation），执行这种指令除了PC加一外，使其指向下一条指令，没有任何效果。只要攻击者能够猜中这段序列的某个地址，就能达到攻击代码。这个序列就叫<strong>空操作雪橇</strong>（nop sled）</p>
-<p>当您使用命令行标志”-n”运行时，它将在”Nitro”模式下运行。程序不是调用函数getbuf，而是调用稍有不同的函数getbufn。此函数类似于getbuf，只是它具有512个字符的缓冲区。调用getbufn的代码首先在堆栈上分配随机数量的存储。如果在两次连续执行getbufn过程中采样%ebp值，您会发现它们的差异高达±240。</p>
-<p>要做的依旧是提供一个利用字符串，该字符串将导致getbufn将您的cookie返回test，而不是值1。您可以在测试代码中看到，这将导致程序转到”KABOOM!”。其他功能则和Dynamite一样。</p>
-<p><img src="/2018/05/16/lab-buffer/18.JPG" alt=""><br><img src="/2018/05/16/lab-buffer/19.JPG" alt=""></p>
+<p>当您使用命令行标志”-n”运行时，它将在”Nitro”模式下运行。程序不是调用函数getbuf，而是调用稍有不同的函数getbufn。此函数类似于getbuf，只是它具有512个字符的缓冲区。调用getbufn的代码首先在堆栈上分配随机数量的存储。每次执行时，会发现<code>%ebp</code>（<code>%ebp-0x208</code>则是buf的首地址）的值都是不一样的，如下所示<img src="/2018/05/16/lab-buffer/18.JPG" alt=""></p>
+<p>由于不能确定buf首地址的位置，就不知道修改的跳转地址应该是什么，也就不知道攻击代码应该放在哪里。对于这种栈随机化，使用的就是<code>nop sled</code>方法。要做的依旧是提供一个利用字符串，该字符串将导致getbufn将您的cookie返回test，而不是值1。您可以在测试代码中看到，这将导致程序转到”KABOOM!”。其他功能则和Dynamite一样。</p>
+<p>先通过上图来确定buf首地址可能的位置，设置跳转地址为该值，如下图最后一行所示，不管buf首地址是什么，只要能跳转到509个nop操作（也就是90）中的其中一个，PC就能执行到存放在buf中的攻击代码<img src="/2018/05/16/lab-buffer/20.JPG" alt=""></p>
+<p>攻击代码和上面的题目类似，首先将cookie作为返回值，然后修复%ebp，然后将调用getbufn的下一条语句推入栈中<img src="/2018/05/16/lab-buffer/21.JPG" alt=""></p>
+<p>Nitroglycerin GET！<img src="/2018/05/16/lab-buffer/19.JPG" alt=""></p>
 
       
     </div>
