@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="阿谢的BLOG">
 <meta property="og:description" content="为了解决在21世纪多核和网络化环境下越来越复杂的编程问题而发明了Go语言。Go语言是从Ken Thompson发明的B语言、Dennis M. Ritchie发明的C语言逐步演化过来的，是C语言家族的成员，因此很多人将Go语言称为21世纪的C语言。纵观这几年来的发展趋势，Go语言已经成为云计算、云存储时代最重要的基础编程语言。 但是它不仅仅是一个更新的C语言。它还从其他语言借鉴了很多好的想法，同时">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-25T06:25:59.286Z">
+<meta property="og:updated_time" content="2019-04-28T06:21:38.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《The Go Programming Language》">
 <meta name="twitter:description" content="为了解决在21世纪多核和网络化环境下越来越复杂的编程问题而发明了Go语言。Go语言是从Ken Thompson发明的B语言、Dennis M. Ritchie发明的C语言逐步演化过来的，是C语言家族的成员，因此很多人将Go语言称为21世纪的C语言。纵观这几年来的发展趋势，Go语言已经成为云计算、云存储时代最重要的基础编程语言。 但是它不仅仅是一个更新的C语言。它还从其他语言借鉴了很多好的想法，同时">
@@ -394,6 +394,11 @@
 <p>每次循环迭代，range产生一对值；索引以及在该索引处的元素值</p>
 <p>初始值重要的话就显式地指定变量的类型，否则使用隐式初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s := &quot;&quot;</span><br><span class="line">var s string</span><br></pre></td></tr></table></figure></p>
 <p>dup的前两个版本以”流”模式读取输入</p>
+<p>数组的长度是数组类型的一个组成部分，因此[3]int和[4]int是两种不同的数组类型。数组的长度必须是常量表达式，因为数组的长度需要在编译阶段确定。</p>
+<p>一个slice类型一般写作[]T，其中T代表slice中元素的类型；slice的语法和数组很像，只是没有固定长度而已。</p>
+<p>数组和slice之间有着紧密的联系。一个slice是一个轻量级的数据结构，提供了访问数组子序列（或者全部）元素的功能，而且slice的底层确实引用一个数组对象。一个slice由三个部分构成：指针、长度和容量。指针指向第一个slice元素对应的底层数组元素的地址，要注意的是slice的第一个元素并不一定就是数组的第一个元素。长度对应slice中元素的数目；长度不能超过容量，容量一般是从slice的开始位置到底层数据的结尾位置。内置的len和cap函数分别返回slice的长度和容量。</p>
+<p>内置的append函数可能使用比appendInt更复杂的内存扩展策略。因此，通常我们并不知道append调用是否导致了内存的重新分配，因此我们也不能确认新的slice和原始的slice是否引用的是相同的底层数组空间。同样，我们不能确认在原先的slice上的操作是否会影响到新的slice。因此，通常是将append返回的结果直接赋值给输入的slice变量</p>
+<p>Go语言编译器的编译速度也明显快于其它编译语言。Go语言的闪电般的编译速度主要得益于三个语言特性。第一点，所有导入的包必须在每个文件的开头显式声明，这样的话编译器就没有必要读取和分析整个源文件来判断包的依赖关系。第二点，禁止包的环状依赖，因为没有循环依赖，包的依赖关系形成一个有向无环图，每个包可以被独立编译，而且很可能是被并发编译。第三点，编译后包的目标文件不仅仅记录包本身的导出信息，目标文件同时还记录了包的依赖关系。因此，在编译一个包的时候，编译器只需要读取每个直接导入包的目标文件，而不需要遍历所有依赖的的文件（译注：很多都是重复的间接依赖）。</p>
 
       
     </div>

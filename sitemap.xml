@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
+    
+    <lastmod>2019-04-28T12:25:41.963Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://123xzy.github.io/2019/04/21/%E3%80%8AThe-Go-Programming-Language%E3%80%8B/</loc>
     
-    <lastmod>2019-04-25T06:25:59.286Z</lastmod>
+    <lastmod>2019-04-28T06:21:38.910Z</lastmod>
     
   </url>
   
@@ -89,13 +96,6 @@
     <loc>https://123xzy.github.io/2018/03/29/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%881%EF%BC%89/</loc>
     
     <lastmod>2019-04-19T00:08:35.815Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
-    
-    <lastmod>2019-04-18T13:12:31.726Z</lastmod>
     
   </url>
   
