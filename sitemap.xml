@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
+    <loc>https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/</loc>
     
-    <lastmod>2019-04-28T12:25:41.963Z</lastmod>
+    <lastmod>2019-04-29T14:11:04.707Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://123xzy.github.io/2019/04/21/%E3%80%8AThe-Go-Programming-Language%E3%80%8B/</loc>
     
-    <lastmod>2019-04-28T06:21:38.910Z</lastmod>
+    <lastmod>2019-04-29T05:37:25.424Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
+    
+    <lastmod>2019-04-28T23:39:40.286Z</lastmod>
     
   </url>
   
@@ -145,13 +152,6 @@
     <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
     
     <lastmod>2019-04-16T09:13:01.096Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/</loc>
-    
-    <lastmod>2019-04-16T07:44:35.617Z</lastmod>
     
   </url>
   

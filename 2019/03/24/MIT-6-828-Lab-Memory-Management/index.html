@@ -95,7 +95,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/2.jpg">
 <meta property="og:image" content="https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/1.JPG">
-<meta property="og:updated_time" content="2019-04-28T12:25:41.963Z">
+<meta property="og:updated_time" content="2019-04-28T23:39:40.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 Lab:Memory Management">
 <meta name="twitter:description" content="实验2：内存管理">
@@ -440,9 +440,11 @@ memset(kern_pgdir, 0, PGSIZE);</code>：kern_pgdir是一个指针，它是指向
 <p>描述符由编译器，链接器，加载器或操作系统创建，而不是由应用程序员创建</p>
 <p>段描述符存储于两种描述符表中的一种：全局描述符表（GDT）和本地描述符表（LDT）。处理器通过GDTR和LDTR寄存器将GDT和当前LDT定位在存储器中。这些寄存器将表的基址存储在线性地址空间中，并存储段限制</p>
 <p>逻辑地址的选择器部分通过指定描述符表并索引该表内的描述符来标识描述符。应用程序可以将选择器看作指针变量中的字段，但选择器的值通常由链接器或链接加载器分配（固定）。</p>
-<p>80386在段寄存器中存储来自的描述符的信息，从而避免在每次访问存储器时查询描述符表。<br>每个段寄存器都有一个“可见”部分和一个“不可见”部分， 如图5-7 所示。这些段地址寄存器的可见部分由程序操作，就好像它们只是16位寄存器一样。不可见部分由处理器操纵。</p>
+<p>80386在段寄存器中存储来自的描述符的信息，从而避免在每次访问存储器时查询描述符表。</p>
+<p>每个段寄存器都有一个“可见”部分和一个“不可见”部分。这些段地址寄存器的可见部分由程序操作，就好像它们只是16位寄存器一样。不可见部分由处理器操纵。</p>
 <p>加载这些寄存器的操作是正常的程序指令（之前在第3章中描述 ）。这些说明分为两类：</p>
-<p>直接加载指令; 例如，MOV， POP， LDS， LSS， LGS， LFS。这些指令明确引用段寄存器。<br>隐含的加载说明; 例如，远 CALL和JMP。这些指令隐式引用CS寄存器，并使用新值加载它。<br>使用这些指令，程序使用16位选择器加载段寄存器的可见部分。处理器自动从描述符表中提取基址，限制，类型和其他信息，并将它们加载到段寄存器的不可见部分。<br>因为大多数指令指的是其选择器已经被加载到段寄存器中的段中的数据，所以处理器可以将指令提供的段相对偏移添加到段基地址而没有额外的开销。</p>
+<p>使用正常的程序指令，程序使用16位选择器加载段寄存器的可见部分。处理器自动从描述符表中提取基址，限制，类型和其他信息，并将它们加载到段寄存器的不可见部分。</p>
+<p>因为大多数指令指的是其选择器已经被加载到段寄存器中的段中的数据，所以处理器可以将指令提供的段相对偏移添加到段基地址而没有额外的开销。</p>
 <h2 id="页面翻译"><a href="#页面翻译" class="headerlink" title="页面翻译"></a>页面翻译</h2><h2 id="虚拟，线性和物理地址"><a href="#虚拟，线性和物理地址" class="headerlink" title="虚拟，线性和物理地址"></a>虚拟，线性和物理地址</h2><h2 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h2><h2 id="页表管理"><a href="#页表管理" class="headerlink" title="页表管理"></a>页表管理</h2><h1 id="第3部分：内核地址空间"><a href="#第3部分：内核地址空间" class="headerlink" title="第3部分：内核地址空间"></a>第3部分：内核地址空间</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/bdhmwz/p/4960034.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/gatsby123/p/9832223.html" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/fatsheep9146/p/5124921.html" target="_blank" rel="noopener">参考</a></p>
 
       
