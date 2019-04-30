@@ -94,7 +94,7 @@
 <meta property="og:description" content="任何操作系统都可能使用比计算机的处理器数量更多的进程运行，因此需要一个计划来在进程之间分配处理器的时间。理想情况下，共享对用户进程是透明的。一种常见的方法是为每个进程提供一种错觉，即它有自己的虚拟处理器，并在单个物理处理器上使操作系统复用多个虚拟处理器。本章说明xv6如何在多个进程之间多路复用处理器。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/1.JPG">
-<meta property="og:updated_time" content="2019-04-29T14:11:04.707Z">
+<meta property="og:updated_time" content="2019-04-29T23:50:29.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 5">
 <meta name="twitter:description" content="任何操作系统都可能使用比计算机的处理器数量更多的进程运行，因此需要一个计划来在进程之间分配处理器的时间。理想情况下，共享对用户进程是透明的。一种常见的方法是为每个进程提供一种错觉，即它有自己的虚拟处理器，并在单个物理处理器上使操作系统复用多个虚拟处理器。本章说明xv6如何在多个进程之间多路复用处理器。">
@@ -401,9 +401,9 @@
 <p>有一种情况是，调度程序对新进程的swtch最终不会出现分裂。我们在第2章中看到了这种情况：当一个新的进程首次被安排时，它从forkret（2783）开始。Forkret的存在只是为了通过释放pt.lock 来遵守这个惯例；否则，新的过程可能从trapret开始。</p>
 <p>调度程序（2708）运行一个简单的循环：找到要运行的进程，运行它，直到它停止，重复。调度程序对其大多数操作都持有ptable.lock，但在其外部循环的每次迭代中都会释放一次锁（并显式启用中断）。这对于此CPU处于空闲状态的特殊情况非常重要（找不到RUNNABLE进程）。如果一个闲置的调度程序循环着连续持有的锁，任何其他运行进程的CPU都不能执行上下文切换或任何与进程相关的系统调用，特别是永远不能将进程标记为RUNNABLE，从而使得闲置CPU脱离调度循环（scheduling loop）。在闲置的CPU上定期启用中断的原因是，由于进程（例如shell）正在等待I/O，因此可能没有RUNNABLE进程；如果调度程序一直禁用中断，I/O将永远无法到达。</p>
 <p>调度程序在进程表上循环查找可运行的进程，该进程具有p-&gt;state==RUNNABLE。一旦找到一个进程，它就会设置每个CPU当前进程变量proc，用switchuvm切换到进程的页面表，将进程标记为RUNNING，然后调用swtch开始运行它（2722-2728）。</p>
-<p>考虑调度代码结构的一种方法是，它安排对每个进程强制执行一组不变量，并在这些不变量不正确时保留 ptable-lok. lock。一个不变的是，如果一个进程是运行，事情必须设置，以便计时器中断的收益率可以正确地切换远离该进程;这意味着 CPU 寄存器必须保存进程的寄存器值 (即它们实际上不在上下文中)， cr3 必须引用进程的可分页， esp 必须引用进程的内核堆栈，以便 swtch 可以正确推送寄存器，并且必须引用 proc到进程的 proc [] 插槽。另一个不变因素是，如果进程是 RUNNABLE，则必须设置操作，以便空闲 cpu 的计划程序可以运行它;这意味着 p-&gt; 上下文必须保存进程的内核线程变量，进程的内核堆栈上没有 CPU 执行，没有 CPU 的% cr3 引用进程的页面表，并且没有 CPU 的 proc 引用进程。</p>
-<p>维护上述不变量是 xv6 在一个线程中获取 ptable.lock (通常在产量中) 并在另一个线程 (调度程序线程或另一个下一个内核线程) 中释放锁的原因。一旦代码开始修改正在运行的进程的状态，使其 RUNNABLE，它必须保持锁，直到它完成还原不变量: 最早的正确释放点是在计划程序停止使用进程的页面表并清除 proc 之后。同样，一旦调度程序开始将可运行的进程转换为 RUNNING，在内核线程完全运行之前 (在 swch 之后，例如在收益率方面)，锁就无法释放。</p>
-<p>后备局锁也保护其他东西: 进程 Id 和自由进程表插槽的分配，退出和等待之间的相互作用，避免丢失唤醒的机制 (见下一节)，可能还有其他的东西。也许值得思考的是，ptable.lock 的不同功能是否可以拆分，当然是为了清晰，也许也是为了性能</p>
+<p>考虑调度代码结构的一种方法是，它安排对每个进程强制执行一组不变量，并在这些不变量不正确时保留ptable-&gt;lock。一个不变量的是，如果一个进程是RUNNING，事情必须设置，以便计时器中断的yield可以正确地切换远离该进程；这意味着CPU寄存器必须保存进程的寄存器值（它们实际上不在上下文中），%cr3必须指向进程的页表，%esp必须指向进程的内核堆栈，以便swtch可以正确推入寄存器，并且proc必须指向进程的proc[]插槽。另一个不变因素是，如果进程是RUNNABLE，则必须设置操作，以便空闲CPU的调度程序可以运行它；这意味着p-&gt;context必须保存进程的内核线程变量，进程的内核堆栈上没有CPU执行，没有CPU的%cr3引用进程的页面表，并且没有CPU的proc 引用进程。</p>
+<p>维护上述不变量是xv6在一个线程中获取ptable.lock（通常在yield中）并在另一个线程中释放锁的原因（调度程序线程或下一个内核线程）。一旦代码开始修改进程的状态为RUNNABLE，它必须保持锁，直到它完成还原不变量：最早的正确释放点是在调度程序停止使用进程的页面表并清除proc 之后。同样，一旦调度程序开始将可运行的进程转换为RUNNING，在内核线程完全运行之前（在swch之后，例如在yield），锁就无法释放。</p>
+<p>ptable.lock也保护其他东西：进程ID和空闲进程表插槽的分配，exit和wait之间的相互作用，避免丢失唤醒的机制（见下一节），可能还有其他的东西。也许值得思考的是，为了清晰，也许也是为了性能，ptable.lock的不同功能是否可以拆分。</p>
 <h1 id="Sleep-and-wakeup"><a href="#Sleep-and-wakeup" class="headerlink" title="Sleep and wakeup"></a>Sleep and wakeup</h1><h1 id="Code-Pipes"><a href="#Code-Pipes" class="headerlink" title="Code: Pipes"></a>Code: Pipes</h1><h1 id="Code-Wait，exit，and-kill"><a href="#Code-Wait，exit，and-kill" class="headerlink" title="Code: Wait，exit，and kill"></a>Code: Wait，exit，and kill</h1><h1 id="Real-world"><a href="#Real-world" class="headerlink" title="Real world"></a>Real world</h1>
       
     </div>
