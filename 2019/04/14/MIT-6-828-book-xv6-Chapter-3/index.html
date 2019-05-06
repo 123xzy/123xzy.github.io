@@ -85,20 +85,20 @@
 
 
 
-<meta name="description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
+<meta name="description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备指令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
 <meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MIT 6.828 book_xv6:Chapter 3">
 <meta property="og:url" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
+<meta property="og:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备指令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/2.JPG">
-<meta property="og:updated_time" content="2019-04-20T05:27:34.492Z">
+<meta property="og:updated_time" content="2019-05-06T05:11:11.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 3">
-<meta name="twitter:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
+<meta name="twitter:description" content="运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备指令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：1)内核必须安排处理器从用户模式切换到内核模式（和返回）；2)内核和设备必须协调">
 <meta name="twitter:image" content="https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/1.JPG">
 
 
@@ -383,11 +383,11 @@
       
 
       
-        <p>运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备信令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：<br>1)内核必须安排处理器从用户模式切换到内核模式（和返回）；<br>2)内核和设备必须协调其并行活动；<br>3)内核必须很好地理解设备的接口；<br>解决这三个难题需要对硬件有详细的了解并仔细的编程，并且可能会产生不透明的内核代码。本章解释xv6如何解决这些问题。</p>
+        <p>运行进程时，CPU执行正常的处理器循环：读取指令，增加程序计数器，执行指令，重复。但有些事件，必须从对用户程序的控制转移回内核，而不是执行下一条指令。这些事件包括希望得到注意的设备指令、执行非法操作的用户程序（例如，引用没有PTE的虚拟地址），或用户程序要求内核提供具有系统调用的服务。在处理这些事件时，有三个主要挑战：<br>1)内核必须安排处理器从用户模式切换到内核模式（和返回）；<br>2)内核和设备必须协调两者之间的并行活动；<br>3)内核必须很好地理解设备的接口；<br>解决这三个难题需要对硬件有详细的了解并小心的编写代码，并且可能会产生不透明的内核代码。本章解释xv6如何解决这些问题。</p>
 <a id="more"></a>
 <hr>
 <a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
-<h1 id="Systems-calls，exceptions，and-interrupts"><a href="#Systems-calls，exceptions，and-interrupts" class="headerlink" title="Systems calls，exceptions，and interrupts"></a>Systems calls，exceptions，and interrupts</h1><p>有了系统调用，用户程序可以要求操作系统服务（operating system service），就像我们在最后一章结束时看到的那样。术语exception是指生成中断的非法程序操作。非法程序操作的示例包括除以零、尝试访问不存在的PTE的内存等。interrupt一词是指硬件设备生成的信号，表明它需要操作系统的注意。例如，时钟芯片可能每100毫秒生成一次中断，以允许内核实现时间共享。另一个示例是，当磁盘从磁盘读取块时，它会生成一个中断，以提醒操作系统该块已准备好进行检索。</p>
+<h1 id="Systems-calls，exceptions，and-interrupts"><a href="#Systems-calls，exceptions，and-interrupts" class="headerlink" title="Systems calls，exceptions，and interrupts"></a>Systems calls，exceptions，and interrupts</h1><p>有了系统调用，用户程序可以要求操作系统服务（operating system service），就像我们在最后一章结束时看到的那样。术语exception是指生成中断的非法程序操作。非法程序操作的示例包括除零、尝试访问不存在的PTE的内存等。interrupt一词是指硬件设备生成的信号，表明它需要操作系统的注意。例如，时钟芯片可能每100毫秒生成一次中断，以允许内核实现时间共享。另一个示例是，当磁盘从磁盘读取块时，它会生成一个中断，以提醒操作系统该块已准备好进行检索。</p>
 <p>内核处理所有中断，而不是进程处理中断，因为在大多数情况下，只有内核具有所需的特权和状态。例如，为了在响应时钟中断的进程之间进行时间划分，内核必须参与其中，即使只是为了强制不合作进程（uncooperative processes）放弃（yield）处理器。</p>
 <p>在所有三种示例中，操作系统设计都必须为以下情况做好安排。系统必须保存处理器的寄存器，以便将来透明恢复。必须将系统设置为在内核中执行。系统必须选择一个位置，让内核开始执行。内核必须能够检索有关事件的信息，例如，系统调用参数。这一切都必须安全地完成；系统必须保持用户进程和内核的隔离。</p>
 <p>要实现此目标，操作系统必须了解硬件如何处理系统调用、异常和中断的详细信息。在大多数处理器中，这三个事件由一个硬件机制处理。例如，在x86上，程序通过使用<code>int</code>指令生成中断来调用系统调用。同样，异常也会生成中断。因此，如果操作系统有中断处理计划，那么操作系统也可以处理系统调用和异常。</p>
