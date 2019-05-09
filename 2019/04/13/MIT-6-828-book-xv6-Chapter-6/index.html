@@ -96,7 +96,7 @@
 <meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/2.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/4.JPG">
-<meta property="og:updated_time" content="2019-04-15T12:42:30.769Z">
+<meta property="og:updated_time" content="2019-05-09T12:20:04.908Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 6">
 <meta name="twitter:description" content="文件系统的目的是为了组织和保存数据。文件系统通常支持在用户和应用之间分享数据，并且支持持久化，以便数据在重启后依旧有效。">
@@ -395,10 +395,29 @@
 <li>访问磁盘的速度比访问内存要慢数量级，因此文件系统必须维护常用块的内存中缓存。</li>
 </ul>
 <p>本章剩余部分解释了xv6如何解决上述挑战</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG" alt=""></p>
-<p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/2.JPG" alt=""></p>
-<h1 id="Buﬀer-cache-Layer"><a href="#Buﬀer-cache-Layer" class="headerlink" title="Buﬀer cache Layer"></a>Buﬀer cache Layer</h1><h1 id="Logging-layer"><a href="#Logging-layer" class="headerlink" title="Logging layer"></a>Logging layer</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/4.JPG" alt=""></p>
-<h1 id="Inode-layer"><a href="#Inode-layer" class="headerlink" title="Inode layer"></a>Inode layer</h1><h1 id="File-descriptor-layer"><a href="#File-descriptor-layer" class="headerlink" title="File descriptor layer"></a>File descriptor layer</h1><p>Unix接口的一个很酷的方面是，Unix中的大多数资源都可以表示为文件，包括控制台、管道等设备，当然还有实际文件。文件描述符是实现这种一致性（uniformity）的层。</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/1.JPG" alt="">Xv6文件系统实现分为七个层，如图6-1所示。磁盘层读取和写入IDE硬盘驱动上的块。高速缓存层缓存磁盘块并同步对它们的访问，确保一次只有一个内核进程可以修改存储在任何特定块中的数据。日志层允许更高层将对多个快块的更新包装到一个事务（transaction）中，并确保这些块在发生崩溃时进行原子更新（即所有这些块都已更新或没有更新）。Inode层提供了单独的文件，每个文件表示为具有唯一i-number的inode和一些包含文件数据的块。目录层将每个目录实现为一种特殊的inode，其内容是目录项的序列，每个条目都包含文件名和i-number。路径层（pathname layer）提供分层路径名称，如/usr/rtm/xv6/fs.c，并通过递归查找对其进行解析。文件描述符层使用文件系统接口抽象了许多Unix资源（如管道、设备，文件等），简化了应用程序员的工作。</p>
+<p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/2.JPG" alt="">文件系统必须有一个计划，决定在磁盘上存储inodes和内容块的位置。为此，xv6将磁盘划分为多个部分，如图6-2所示。文件系统不使用block 0（它保存boot sector）。Block 1被称为超级块（superblock）；它包含有关文件系统的元数据（块中的文件系统大小、数据块的数量、inodes的数量和日志中的块数）。从Block 2开始保存 inodes，每个块有多个inodes。在这些数据块之后，位图块（bitmap blocks）跟踪正在使用的数据块。其余的大多数块都是数据块；每个都在位图块中标记为”空闲”，或保留文件或目录的内容。磁盘末端的块保存日志层的日志。</p>
+<p>本章的其余部分讨论了每个层，从缓冲区缓存开始。在较低层选择良好的抽象可使得设计较高层变得轻松。</p>
+<h1 id="Buﬀer-cache-Layer"><a href="#Buﬀer-cache-Layer" class="headerlink" title="Buﬀer cache Layer"></a>Buﬀer cache Layer</h1><p>缓冲区缓存有两个作业：（1）同步对磁盘块的访问，以确保内存中只有一个块的副本，并且一次只有一个内核线程使用该副本；（2）缓存热点块，使它们不会从慢速磁盘重新读取。该代码是在bio.c。</p>
+<p>缓冲区缓存层提供的主要接口是bread和bwrite；前者获取一个buf，其包含可在内存中读取或修改的块的副本，后者将修改后的缓冲区写入磁盘上的相应块。内核线程必须在使用缓冲区后通过调用brelse来释放缓冲区。</p>
+<p>缓冲区缓存通过允许最多一个内核线程具有对块缓冲区的引用来同步对每个块的访问。如果一个内核线程获得了对缓冲区的引用，但尚未释放，则其他线程对同一块的bread的调用将等待。较高的文件系统层依赖于缓冲区缓存的块同步，以帮助它们维持一致性。</p>
+<p>缓冲区缓存具有固定数量的缓冲区来容纳磁盘块，这意味着，如果文件系统要求的块尚未在缓存中，则缓冲区缓存必须回收当前包含某些其他块的缓冲区。缓冲区缓存回收最近使用最少的新块缓冲区。假设是，最近使用最少的缓冲区是最不可能很快再次使用的缓冲区。</p>
+<h1 id="Code-Buﬀer-cache"><a href="#Code-Buﬀer-cache" class="headerlink" title="Code: Buﬀer cache"></a>Code: Buﬀer cache</h1><p>缓冲区缓存是缓冲区的双向链表（doubly-linked list）。由main（1231）调用的函数binit使用静态数组buf中的NBUF个缓冲区初始化列表（4350-4359）。对缓冲区缓存的所有其他访问都是通过bcache.head来引用链表，而不是通过buf数组。</p>
+<p>缓冲区有三个与之关联的状态位。B_VALID表示缓冲区包含块的副本。B_DIRTY表示缓冲区内容已被修改，需要写入磁盘。B_BUSY表示某些内核线程具有对此缓冲区的引用，但尚未释放它。</p>
+<p>bread（4402）调用bget，以获得给定扇区（4406）的缓冲。如果需要从磁盘读取缓冲区，bread会在返回缓冲区之前调用iderw来进行读取。</p>
+<p>Bget（4366）使用给定的设备和扇区编号扫描缓冲区列表以获取缓冲区（4373-4384）。如果有这样的缓冲区，并且缓冲区不忙，bget设置B_BUSY标志并返回（4376-4383）。如果缓冲区已在使用中，bget在缓冲区上休眠等待其释放。当sleep返回时，bget不能假定缓冲区现在可用。事实上，由于sleep释放和重新获得buf_table_lock，不能保证b仍然是正确的缓冲区：可能它已被重用到不同的磁盘扇区。Bget必须重新开始（4382），希望这次的结果会有所不同。</p>
+<p>如果给定扇区没有缓存缓冲区，bget必须创建一个缓冲区，可能会重用包含不同扇区的缓冲区。它第二次扫描缓冲区列表，寻找空闲的的缓冲区：可以使用任何此类缓冲区。Bget编辑缓冲区元数据以记录新设备和扇区编号，并在返回缓冲区之前标记缓冲区为BUSY（4393-4395）。请注意，对标志的分配不仅设置了B_BUSY位，而且还清除了B_VALID和B_DIRTY位，从而确保bread将从磁盘读取块数据，而不是错误地使用缓冲区以前的内容。</p>
+<p>由于缓冲区缓存用于同步，因此特定磁盘扇区只有一个缓冲区是很重要的。这些分配（4391-4393）是安全的，因为bget的第一个循环确定该扇区已经不存在缓冲区，此后bget没有放弃buf_table_lock。</p>
+<p>如果所有的缓冲区都很忙，就出了问题：bget panics。一个更优雅的反应可能是sleep，直到有缓冲区变得空闲，尽管这样就有可能出现死锁。</p>
+<p>一旦bread将缓冲区返回给其调用方，调用方就可以独占使用（exclusive use）该缓冲区，并且可以读取或写入数据字节。如果调用方确实写入了数据，则必须调用bwrite将更改后的数据写入磁盘，然后再释放缓冲区。Bwrite（4414）设置B_DIRTY标志，并调用iderw将缓冲区写入磁盘。</p>
+<p>当调用方使用缓冲区完成时，它必须调用brelse释放它。（brelse，是b-release的缩短，是神秘的（cryptic），但值得学习：它起源于Unix，并在BSD，Linux 和 Solaris 也使用。Brelse（4425）将缓冲区移动到链表的前面（4432-4437），清除B_BUSY位，并唤醒在缓冲区上休眠的任何进程。移动缓冲区会导致根据缓冲区最近的使用方式（意味着已释放）对列表进行排序：列表中的第一个缓冲区是最近使用的缓冲区，最后一个缓冲区是最近使用的缓冲区。Bget 中的两个循环利用了这一点：对现有缓冲区的扫描必须在最坏的情况下处理整个列表，但首先检查最近使用的缓冲区（从bcache.head开始，然后是next指针）将减少扫描时间。选择缓冲区以重复使用的扫描通过向后扫描（在prev指针之后）选择最近使用最少的缓冲区。</p>
+<h1 id="Logging-layer"><a href="#Logging-layer" class="headerlink" title="Logging layer"></a>Logging layer</h1><p><img src="/2019/04/13/MIT-6-828-book-xv6-Chapter-6/4.JPG" alt=""><br>文件系统设计中最有趣的问题之一是崩溃恢复。出现此问题的原因是，许多文件系统操作涉及对磁盘的多次写入，并且写入的子集后发生崩溃可能会使磁盘上的文件系统处于不一致的状态。例如，根据磁盘写入的顺序，文件删除过程中的崩溃可能会使目录项指向空闲 inode，也可能会保留已分配但未引用的 inode。后者是相对良性的，但一个目录条目，指的是一个释放的 inode 很可能会导致严重的问题后重新启动。</p>
+<p>Xv6 通过简单版本的日志记录解决了文件系统操作过程中的崩溃问题。Xv6 系统调用不会直接写入磁盘上的文件系统数据结构。相反，它将对它希望在磁盘上的日志中进行的所有磁盘写入的描述。一旦系统调用记录了它的所有写入操作，它就会将一个特殊的提交记录写入磁盘，指示日志包含一个完整的操作。此时，系统调用将写入操作复制到磁盘上文件系统数据结构。这些写入完成后，系统调用将擦除磁盘上的日志。如果系统应崩溃并重新启动，文件系统代码将从崩溃中恢复，如下所示，然后再运行任何进程。如果日志被标记为包含完整的操作，则恢复代码会将写入操作复制到它们在磁盘文件系统中的位置。如果未将日志标记为包含完整操作，则恢复代码将忽略该日志。恢复代码通过擦除它来完成..。</p>
+<p>为什么 xv6 的日志解决了文件系统操作过程中的崩溃问题？如果在提交操作之前发生崩溃，则日志磁盘将不会标记为已完成，恢复代码将忽略它，并且磁盘的状态将像操作甚至尚未启动一样。如果在操作提交后发生崩溃，则恢复将重播操作的所有写入操作，如果操作已开始将其写入磁盘数据结构，则可能会重复这些写入操作。无论哪种情况，日志都会使操作成为与崩溃有关的原子操作: 恢复后，操作的所有写入都显示在磁盘上，或者这些写入操作都不会出现。</p>
+<h1 id="Log-design"><a href="#Log-design" class="headerlink" title="Log design"></a>Log design</h1><p>日志驻留在磁盘末尾的已知固定位置。它由一个标头块和一系列更新的块副本 (“记录块”) 组成。标头块包含一个扇区编号数组，每个记录的块一个。标头块还包含记录块的计数。Xv6 在事务提交时写入标头块，但不在之前写入，并在将记录的块复制到文件系统后将计数设置为零。因此，事务中途崩溃将导致日志的标头块中的计数为零;提交后的崩溃将导致非零计数。</p>
+<p>每个系统调用的代码都指示必须是原子的写入序列的开始和结束。为了提高效率，并允许文件系统代码中的一定程度的并发性，日志记录系统可以在每个事务中累积多个系统调用的写入。因此，一次提交可能涉及多个完整系统调用的写入。为了保持原子性，只有在没有文件系统调用的情况下，日志记录系统才会提交。同时提交多个事务的想法称为组提交。组提交允许多个事务同时运行，并允许文件系统批处理多个磁盘操作，并向磁盘驱动程序发出单个磁盘操作。这允许磁盘巧妙地安排块的写入，并以磁盘带宽的速率进行写入。Xv6 的 IDE 驱动程序不支持批处理，但 xv6 的文件系统设计允许批处理。</p>
+<p>Xv6 在磁盘上指定固定的空间来保存日志。系统调用在事务中写入的块总数必须适合该空间。这有两个后果。任何单个系统调用都不能比日志中的空间更不同地写入块。这对大多数系统调用来说不是问题，但其中两个调用可能会编写许多块: 写入和取消链接。大文件写入可能会写入多个数据块和多个位图块以及 inode 块;取消链接的大文件可能会写入多个位图块和 inode。Xv6 的写入系统调用将大型写入分解为多个适合日志中的较小的写入，并且取消链接不会导致问题，因为实际上 xv6 文件系统只使用一个位图块。有限日志空间的另一个后果是，日志系统无法允许系统调用启动，除非系统调用的写入是否符合日志中剩余的空间。</p>
+<h1 id="Code-logging"><a href="#Code-logging" class="headerlink" title="Code: logging"></a>Code: logging</h1><h1 id="Code-Block-allocator"><a href="#Code-Block-allocator" class="headerlink" title="Code: Block allocator"></a>Code: Block allocator</h1><h1 id="Inode-layer"><a href="#Inode-layer" class="headerlink" title="Inode layer"></a>Inode layer</h1><h1 id="File-descriptor-layer"><a href="#File-descriptor-layer" class="headerlink" title="File descriptor layer"></a>File descriptor layer</h1><p>Unix接口的一个很酷的方面是，Unix中的大多数资源都可以表示为文件，包括控制台、管道等设备，当然还有实际文件。文件描述符是实现这种一致性（uniformity）的层。</p>
 <p>正如我们在第0章中看到的那样，Xv6为每个进程提供了独有的打开文件表或文件描述符。每个打开的文件都由一个struct file（4000）表示，该结构是一个inode或pipe 的包装，外加上一个I/O偏移量。Open的每次调用都会创建一个新的打开文件（一个新的struct file）：如果多个进程独立打开同一文件，则不同的实例将具有不同的I/O偏移量。另一方面，单个打开的文件（相同的结构文件）可以在一个进程的文件表中多次出现，也可以在多个进程的文件表中出现。如果一个进程使用open去打开文件，然后使用dup创建别名，或者使用fork与子进程共享，则会发生这种情况。引用计数值跟踪对特定打开文件的引用数。文件可以打开读取或写入，也可以同时。readable和writable字段跟踪这一点。</p>
 <p>系统中所有打开的文件都保存在全局文件表中。文件表具有分配文件（filealloc）、创建重复引用（filealloc）、释放引用（filecloc）以及读取和写入数据（filealloc和filealloc）的函数。</p>
 <p>前三个遵循现在熟悉的形式。Filealloc（5625）扫描文件表中的未引用文件（f-&gt;ref == 0），并返回新引用；filedup（5652）递增引用计数；fileclose（5664）减少它。当文件的引用计数达到零时，fileclose会根据类型释放基础管道或inode。</p>
@@ -423,8 +442,8 @@
 <li>Why panic in ialloc? Can xv6 recover? </li>
 <li>Why doesn’t filealloc panic when it runs out of ﬁles? Why is this more common and therefore worth handling? </li>
 <li>Suppose the ﬁle corresponding to ip gets unlinked by another process between sys_link’s calls to iunlock(ip) and dirlink. Will the link be created correctly? Why or why not? </li>
-<li>create makes four function calls (one to ialloc and three to dirlink) that it requires to succeed. If any doesn’t, create calls panic. Why is this acceptable? Why can’t any of those four calls fail? </li>
-<li>sys_chdir calls iunlock(ip) before iput(cp-&gt;cwd), which might try to lock cp-&gt;cwd, yet postponing iunlock(ip) until after the iput would not cause deadlocks. Why not?</li>
+<li>create makes four function calls (one to ialloc and three to dirlink) that it requires to succeed. If any doesn’t，create calls panic. Why is this acceptable? Why can’t any of those four calls fail? </li>
+<li>sys_chdir calls iunlock(ip) before iput(cp-&gt;cwd)，which might try to lock cp-&gt;cwd，yet postponing iunlock(ip) until after the iput would not cause deadlocks. Why not?</li>
 </ul>
 
       
@@ -613,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Buﬀer-cache-Layer"><span class="nav-number">2.</span> <span class="nav-text">Buﬀer cache Layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logging-layer"><span class="nav-number">3.</span> <span class="nav-text">Logging layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inode-layer"><span class="nav-number">4.</span> <span class="nav-text">Inode layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-descriptor-layer"><span class="nav-number">5.</span> <span class="nav-text">File descriptor layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-System-calls"><span class="nav-number">6.</span> <span class="nav-text">Code: System calls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Real-world"><span class="nav-number">7.</span> <span class="nav-text">Real world</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercises"><span class="nav-number">8.</span> <span class="nav-text">Exercises</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Buﬀer-cache-Layer"><span class="nav-number">2.</span> <span class="nav-text">Buﬀer cache Layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Buﬀer-cache"><span class="nav-number">3.</span> <span class="nav-text">Code: Buﬀer cache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logging-layer"><span class="nav-number">4.</span> <span class="nav-text">Logging layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Log-design"><span class="nav-number">5.</span> <span class="nav-text">Log design</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-logging"><span class="nav-number">6.</span> <span class="nav-text">Code: logging</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Block-allocator"><span class="nav-number">7.</span> <span class="nav-text">Code: Block allocator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inode-layer"><span class="nav-number">8.</span> <span class="nav-text">Inode layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-descriptor-layer"><span class="nav-number">9.</span> <span class="nav-text">File descriptor layer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-System-calls"><span class="nav-number">10.</span> <span class="nav-text">Code: System calls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Real-world"><span class="nav-number">11.</span> <span class="nav-text">Real world</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercises"><span class="nav-number">12.</span> <span class="nav-text">Exercises</span></a></li></ol></div>
             
 
           </div>

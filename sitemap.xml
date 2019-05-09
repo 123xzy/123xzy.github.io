@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
+    
+    <lastmod>2019-05-09T12:20:04.908Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     
     <lastmod>2019-05-08T06:09:33.311Z</lastmod>
@@ -159,13 +166,6 @@
     <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
     
     <lastmod>2019-04-16T09:13:01.096Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
-    
-    <lastmod>2019-04-15T12:42:30.769Z</lastmod>
     
   </url>
   

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
+    <lastmod>2019-05-09</lastmod>
+  </url>  <url>
     <loc>https://123xzy.github.io/2019/03/08/MIT-6-828-Operating-System-Engineering/</loc>
     <lastmod>2019-05-08</lastmod>
   </url>  <url>
@@ -60,9 +63,6 @@
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
     <lastmod>2019-04-16</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
-    <lastmod>2019-04-15</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/05/16/lab-malloc/</loc>
     <lastmod>2019-04-14</lastmod>
