@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://123xzy.github.io/2019/05/17/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E9%9D%A2%E8%AF%95-%E5%A4%8D%E7%9B%98/</loc>
+    <lastmod>2019-05-21</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/</loc>
+    <lastmod>2019-05-21</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/15/lab-shell/</loc>
+    <lastmod>2019-05-19</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/21/%E3%80%8AThe-Go-Programming-Language%E3%80%8B/</loc>
+    <lastmod>2019-05-19</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
+    <lastmod>2019-05-14</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
+    <lastmod>2019-05-13</lastmod>
+  </url>  <url>
+    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
+    <lastmod>2019-05-13</lastmod>
+  </url>  <url>
     <loc>https://123xzy.github.io/2019/04/13/MIT-6-828-book-xv6-Chapter-6/</loc>
     <lastmod>2019-05-13</lastmod>
   </url>  <url>
@@ -9,12 +30,6 @@
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/</loc>
     <lastmod>2019-05-08</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/21/%E3%80%8AThe-Go-Programming-Language%E3%80%8B/</loc>
-    <lastmod>2019-05-07</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/14/MIT-6-828-book-xv6-Chapter-3/</loc>
-    <lastmod>2019-05-06</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
     <lastmod>2019-04-28</lastmod>
@@ -30,12 +45,6 @@
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/01/%E3%80%8A%E4%BC%97%E7%97%85%E4%B9%8B%E7%8E%8B%E3%80%8B/</loc>
     <lastmod>2019-04-21</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Lab-MapReduce/</loc>
-    <lastmod>2019-04-21</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/04/09/MIT-6-824-Distributed-System/</loc>
-    <lastmod>2019-04-20</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/04/17/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%883%EF%BC%89/</loc>
     <lastmod>2019-04-20</lastmod>
@@ -59,9 +68,6 @@
     <lastmod>2019-04-17</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/04/14/%E3%80%8A%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%85%AC%E5%8F%B8%E3%80%8B/</loc>
-    <lastmod>2019-04-16</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-book-xv6-Chapter-1/</loc>
     <lastmod>2019-04-16</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2018/05/16/lab-malloc/</loc>
@@ -245,9 +251,6 @@
     <lastmod>2019-03-18</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/01/17/%E3%80%8ASpring-MVC%E3%80%8B/</loc>
-    <lastmod>2019-03-18</lastmod>
-  </url>  <url>
-    <loc>https://123xzy.github.io/2019/03/15/lab-shell/</loc>
     <lastmod>2019-03-18</lastmod>
   </url>  <url>
     <loc>https://123xzy.github.io/2019/03/15/lab-data/</loc>
