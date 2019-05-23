@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="操作系统," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -85,21 +85,20 @@
 
 
 
-<meta name="description" content="页表">
-<meta name="keywords" content="操作系统">
+<meta name="description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT 6.828 book_xv6:Chapter 2">
+<meta property="og:title" content="阿谢的BLOG">
 <meta property="og:url" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="页表">
+<meta property="og:description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/3.JPG">
-<meta property="og:updated_time" content="2019-04-10T09:17:27.903Z">
+<meta property="og:updated_time" content="2019-05-23T06:08:20.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 2">
-<meta name="twitter:description" content="页表">
+<meta name="twitter:title" content="阿谢的BLOG">
+<meta name="twitter:description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
 <meta name="twitter:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
 
 
@@ -136,7 +135,7 @@
 
 
 
-  <title>MIT 6.828 book_xv6:Chapter 2 | 阿谢的BLOG</title>
+  <title> | 阿谢的BLOG</title>
   
 
 
@@ -334,7 +333,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MIT 6.828 book_xv6:Chapter 2</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -384,18 +383,20 @@
       
 
       
-        <p>页表<br><a id="more"></a></p>
+        <hr>
+<p>title: ‘MIT 6.828 book_xv6:Chapter 2’<br>date: 2019-04-07 14:50:08<br>tags: 操作系统</p>
+<h2 id="mathjax-true"><a href="#mathjax-true" class="headerlink" title="mathjax: true "></a>mathjax: true </h2><p>页表<br><a id="more"></a></p>
 <hr>
 <a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
 <p>页表是操作系统控制内存地址含义的机制。它们允许xv6将不同进程的地址空间复用到一个物理内存上,并保护不同进程的内存。页面表提供的间接级别也是许多巧妙技巧的来源。xv6主要使用页表来复用地址空间和保护内存。它还使用了一些简单的页表技巧：在多个地址空间中映射相同的内存（内核），在一个地址空间中多次映射相同的内存（每个用户页面也映射到内核的物理内存视图中），以及保护用户堆栈用一个未映射的页面。本章的其余部分解释了x86硬件提供的页表以及xv6如何使用这些页表。</p>
-<h1 id="分页硬件"><a href="#分页硬件" class="headerlink" title="分页硬件"></a>分页硬件</h1><p>作为提醒，x86指令（包括用户和内核）操作虚拟地址。计算机的RAM（物理内存）使用物理地址索引。X86页表硬件通过将每个虚拟地址映射到物理地址来连接这两种地址。</p>
-<p>从逻辑上讲，x86页表是由$2^{20}(1,048,576)$个页表项（PTEs，page table entries）组成的数组。每个PTE都包含一个20位的物理页码（PPN，physical page number ） 和一些标志。分页硬件通过使用其前20位索引到页面表中查找PTE，并将地址的前20位替换为 PTE中的PPN，从而转换虚拟地址。分页硬件将较低的12位从虚拟复制到已翻译的物理地址。因此，页表提供了操作系统对$4096(2^{12})$字节对齐块的粒度的虚拟到物理地址转换的控制。这样的块称为页。</p>
+<h1 id="分页硬件"><a href="#分页硬件" class="headerlink" title="分页硬件"></a>分页硬件</h1><p>需要注意的是，x86指令（包括用户和内核）操作虚拟地址。计算机的RAM（物理内存）使用物理地址索引。X86页表硬件通过将每个虚拟地址映射到物理地址来连接这两种地址。</p>
+<p>从逻辑上讲，x86页表是由$2^{20}(1,048,576)$个页表项（PTEs，page table entries）组成的数组。每个PTE都包含一个20位的物理页码（PPN，physical page number ） 和一些标志。分页硬件通过使用PPN索引到页表中查找PTE，并将地址的前20位替换为 PTE中的PPN，从而转换虚拟地址。分页硬件将虚拟地址中低12位复制到物理地址。因此，页表提供了操作系统对$4096(2^{12})$字节对齐块的粒度的虚拟到物理地址转换的控制。这样的块称为页。</p>
 <p><img src="/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG" alt=""><br>如图2-1所示，实际转换分两个步骤进行。页表作为两级树（two-level tree）存储在物理内存中。树的根目录是4096字节的页目录，其中包含对页表页的1024个类似于PTE的引用。每个页面页是一个包含1024个32位PTE的数组。分页硬件使用虚拟地址的前10位来选择页目录项。如果存在页目录项，分页硬件将使用虚拟地址的接下来10位从页面目录项所引用的页面表页中选择PTE。如果页目录项或PTE不存在，分页硬件将引发故障。这种两级结构允许页表在大量虚拟地址没有映射的常见情况下省略整个页表页。</p>
 <p>每个PTE都包含标志位，这些标记位告诉分页硬件是否允许使用关联的虚拟地址。PTE_P指示PTE是否存在：如果未设置PTE，则对页面的引用会导致错误。PTE_W控制是否允许指令对页面进行写入；如果未设置，则只允许读取指令。PTE_U控制是否允许用户程序使用该页面；如果清除，则只允许内核使用该页面。图2-1 显示了它是如何工作的。标志和所有其他页面硬件相关结构在mmu.h（0700）中定义。</p>
 <p>一些关于术语的说明。物理内存是指DRAM中的存储单元。物理内存的每个字节有一个地址，称为物理地址。指令仅使用虚拟地址（分页硬件将其转换为物理地址），然后发送到DRAM硬件以读取或写入存储。在这个层次的讨论中，没有虚拟内存这样的东西，只有虚拟地址。</p>
 <h1 id="进程地址空间"><a href="#进程地址空间" class="headerlink" title="进程地址空间"></a>进程地址空间</h1><p><img src="/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG" alt=""></p>
 <p>由entry创建的页表具有足够的映射，以允许内核的C代码开始运行。但是，main通过调用kvmalloc（1857）立即切换到新的页面表，因为内核有一个更详细的描述进程地址空间的计划。</p>
-<p>进程有一个单独的页面表，xv6告诉页面表硬件在进程之间切换时切换页表。如图2-2所示，进程的用户内存从虚拟地址零开始，并可以增长为KERNBASE，从而允许进程处理多达2GB的内存。文件memlayout.h（0200）声明xv6内存布局的常量，以及将虚拟转换为物理地址的宏。</p>
+<p>进程有一个单独的页面表，xv6告诉页面表硬件在进程之间切换时切换页表。如图2-2所示，进程的用户内存从虚拟地址零开始，并可以增长为KERNBASE，从而允许进程处理多达2GB的内存。文件memlayout.h（0200）声明xv6内存布局的常量，以及将虚拟地址转换为物理地址的宏。</p>
 <p>当进程要求xv6提供更多内存时，xv6首先找到可用的物理页来提供存储，然后将PTES添加到指向新物理页的进程页表中。xv6在这些PTES中设置PTE_U、PTE_W和PTE_P标志。大多数进程不使用整个用户地址空间；xv6在未使用的PTES中清除PTE_P标志。不同进程的页面表将用户地址转换为不同的物理内存页，以便每个进程都有私有用户内存。</p>
 <p>Xv6包括内核在每个进程的页面表中运行所需的所有映射；这些映射都出现在KERNBASE上方。它将虚拟地址<code>KERNBASE:KERNBASE+PHYSTOP</code>映射到<code>0:PHYSTOP</code>。此映射的一个原因是内核可以使用自己的指令和数据。另一个原因是内核有时需要能够编写给定的物理内存页，例如在创建页表页时；让每个物理页面都显示在可预测的虚拟地址，这就很方便了。这种安排的一个缺陷是xv6不能使用超过2GB的物理内存。一些使用内存映射的I/O设备出现在0xFE000000开始的物理地址上，因此xv6页表包括它们的直接映射。Xv6在KERNBASE上方的PTES中没有设置PTE_U标志，因此只有内核可以使用它们。</p>
 <p>让每个进程的页表同时包含用户内存和整个内核的映射，这样可以在系统调用和中断期间，方便地切换到内核：这样的切换不需要页表切换。对于内核大部分没有自己的页面表；它几乎总是借用一些进程的页面表。</p>
@@ -444,12 +445,6 @@
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
-          
-        </div>
       
 
       
@@ -617,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number">1.</span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number">2.</span> <span class="nav-text">进程地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：创建地址空间"><span class="nav-number">3.</span> <span class="nav-text">代码：创建地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理内存分配"><span class="nav-number">4.</span> <span class="nav-text">物理内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：物理内存分配器"><span class="nav-number">5.</span> <span class="nav-text">代码：物理内存分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址空间的用户部分"><span class="nav-number">6.</span> <span class="nav-text">地址空间的用户部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：exec"><span class="nav-number">7.</span> <span class="nav-text">代码：exec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number">8.</span> <span class="nav-text">真实世界</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number">9.</span> <span class="nav-text">练习</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mathjax-true"><span class="nav-number">1.</span> <span class="nav-text">mathjax: true </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number"></span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number"></span> <span class="nav-text">进程地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：创建地址空间"><span class="nav-number"></span> <span class="nav-text">代码：创建地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理内存分配"><span class="nav-number"></span> <span class="nav-text">物理内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：物理内存分配器"><span class="nav-number"></span> <span class="nav-text">代码：物理内存分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址空间的用户部分"><span class="nav-number"></span> <span class="nav-text">地址空间的用户部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：exec"><span class="nav-number"></span> <span class="nav-text">代码：exec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number"></span> <span class="nav-text">真实世界</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number"></span> <span class="nav-text">练习</span></a></div>
             
 
           </div>
@@ -1140,26 +1135,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

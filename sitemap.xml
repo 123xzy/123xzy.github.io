@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
+    
+    <lastmod>2019-05-23T06:08:24.690Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/</loc>
+    
+    <lastmod>2019-05-23T06:08:20.204Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://123xzy.github.io/2019/05/17/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E9%9D%A2%E8%AF%95-%E5%A4%8D%E7%9B%98/</loc>
     
     <lastmod>2019-05-21T05:41:30.666Z</lastmod>
@@ -68,13 +82,6 @@
     <loc>https://123xzy.github.io/2019/04/15/MIT-6-828-book-xv6-Chapter-5/</loc>
     
     <lastmod>2019-05-08T01:28:07.556Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/03/24/MIT-6-828-Lab-Memory-Management/</loc>
-    
-    <lastmod>2019-04-28T23:39:40.286Z</lastmod>
     
   </url>
   
@@ -257,13 +264,6 @@
     <loc>https://123xzy.github.io/2019/03/14/MIT-6-828-Lab-Booting-a-PC/</loc>
     
     <lastmod>2019-04-10T14:38:28.945Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/</loc>
-    
-    <lastmod>2019-04-10T09:17:27.903Z</lastmod>
     
   </url>
   
