@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -85,20 +85,21 @@
 
 
 
-<meta name="description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
+<meta name="description" content="页表">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿谢的BLOG">
+<meta property="og:title" content="MIT 6.828 book_xv6:Chapter 2">
 <meta property="og:url" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/index.html">
 <meta property="og:site_name" content="阿谢的BLOG">
-<meta property="og:description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
+<meta property="og:description" content="页表">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/2.JPG">
 <meta property="og:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/3.JPG">
-<meta property="og:updated_time" content="2019-05-23T06:08:20.204Z">
+<meta property="og:updated_time" content="2019-05-23T23:37:54.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿谢的BLOG">
-<meta name="twitter:description" content="title: ‘MIT 6.828 book_xv6:Chapter 2’date: 2019-04-07 14:50:08tags: 操作系统 mathjax: true 页表">
+<meta name="twitter:title" content="MIT 6.828 book_xv6:Chapter 2">
+<meta name="twitter:description" content="页表">
 <meta name="twitter:image" content="https://123xzy.github.io/2019/04/07/MIT-6-828-book-xv6-Chapter-2/1.JPG">
 
 
@@ -135,7 +136,7 @@
 
 
 
-  <title> | 阿谢的BLOG</title>
+  <title>MIT 6.828 book_xv6:Chapter 2 | 阿谢的BLOG</title>
   
 
 
@@ -333,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">MIT 6.828 book_xv6:Chapter 2</h1>
         
 
         <div class="post-meta">
@@ -383,9 +384,7 @@
       
 
       
-        <hr>
-<p>title: ‘MIT 6.828 book_xv6:Chapter 2’<br>date: 2019-04-07 14:50:08<br>tags: 操作系统</p>
-<h2 id="mathjax-true"><a href="#mathjax-true" class="headerlink" title="mathjax: true "></a>mathjax: true </h2><p>页表<br><a id="more"></a></p>
+        <p>页表<br><a id="more"></a></p>
 <hr>
 <a href="/2019/03/08/MIT-6-828-Operating-System-Engineering/" title="MIT 6.828 Operating System Engineering">MIT 6.828 Operating System Engineering</a>
 <p>页表是操作系统控制内存地址含义的机制。它们允许xv6将不同进程的地址空间复用到一个物理内存上,并保护不同进程的内存。页面表提供的间接级别也是许多巧妙技巧的来源。xv6主要使用页表来复用地址空间和保护内存。它还使用了一些简单的页表技巧：在多个地址空间中映射相同的内存（内核），在一个地址空间中多次映射相同的内存（每个用户页面也映射到内核的物理内存视图中），以及保护用户堆栈用一个未映射的页面。本章的其余部分解释了x86硬件提供的页表以及xv6如何使用这些页表。</p>
@@ -445,6 +444,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
+          
+        </div>
       
 
       
@@ -612,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mathjax-true"><span class="nav-number">1.</span> <span class="nav-text">mathjax: true </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number"></span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number"></span> <span class="nav-text">进程地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：创建地址空间"><span class="nav-number"></span> <span class="nav-text">代码：创建地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理内存分配"><span class="nav-number"></span> <span class="nav-text">物理内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：物理内存分配器"><span class="nav-number"></span> <span class="nav-text">代码：物理内存分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址空间的用户部分"><span class="nav-number"></span> <span class="nav-text">地址空间的用户部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：exec"><span class="nav-number"></span> <span class="nav-text">代码：exec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number"></span> <span class="nav-text">真实世界</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number"></span> <span class="nav-text">练习</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分页硬件"><span class="nav-number">1.</span> <span class="nav-text">分页硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程地址空间"><span class="nav-number">2.</span> <span class="nav-text">进程地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：创建地址空间"><span class="nav-number">3.</span> <span class="nav-text">代码：创建地址空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理内存分配"><span class="nav-number">4.</span> <span class="nav-text">物理内存分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：物理内存分配器"><span class="nav-number">5.</span> <span class="nav-text">代码：物理内存分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址空间的用户部分"><span class="nav-number">6.</span> <span class="nav-text">地址空间的用户部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码：exec"><span class="nav-number">7.</span> <span class="nav-text">代码：exec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真实世界"><span class="nav-number">8.</span> <span class="nav-text">真实世界</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number">9.</span> <span class="nav-text">练习</span></a></li></ol></div>
             
 
           </div>
@@ -1135,6 +1140,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
