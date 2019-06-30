@@ -428,7 +428,7 @@
 <h2 id="Getting-Started-with-x86-assembly"><a href="#Getting-Started-with-x86-assembly" class="headerlink" title="Getting Started with x86 assembly"></a>Getting Started with x86 assembly</h2><p>MIT官方为我们提供了一个关于汇编语言的参考资料<a href="https://pdos.csail.mit.edu/6.828/2014/readings/pcasm-book.pdf" target="_blank" rel="noopener">pcasm-book</a>，里面基本介绍了汇编语言的方方面面，你可以把这本书作为一个备查，遇到没看过的命令就上里面查，或者直接上网查。如果没有任何汇编基础，建议还是看一看书，把一些基础的指令看懂</p>
 <p>本书中的示例是为NASM汇编程序编写的，而我们将使用GNU汇编程序。NASM使用所谓的Intel语法，而GNU使用AT＆T语法。虽然在语义上是等效的，但是程序集文件会有很大不同，至少表面上看，这取决于使用的语法。幸运的是，两者之间的转换非常简单，并且在<a href="http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html" target="_blank" rel="noopener">汇编指南</a>中有所介绍</p>
 <h2 id="Simulating-the-x86"><a href="#Simulating-the-x86" class="headerlink" title="Simulating the x86"></a>Simulating the x86</h2><p><code>Instead of developing the operating system on a real, physical personal computer (PC), we use a program that faithfully emulates a complete PC: the code you write for the emulator will boot on a real PC too. Using an emulator simplifies debugging; you can, for example, set break points inside of the emulated x86, which is difficult to do with the silicon version of an x86.</code></p>
-<p>进行该部分需要安装QEMU（<a href="/2019/03/08/MIT-6-828-Lab-Guide/" title="MIT 6.828 Lab:Guide">MIT 6.828 Lab:Guide</a>，该文章中有实验的所有前期准备指南）和熟悉GDB调试（<a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a>）</p>
+<p>进行该部分需要安装QEMU（<a href="/2019/03/08/MIT-6-828-Lab-Guide/" title="MIT 6.828 Lab:Guide">MIT 6.828 Lab:Guide</a>，该文章中有实验的所有前期准备指南）和熟悉GDB调试（）</p>
 <p><code>Everything after &#39;Booting from Hard Disk...&#39; was printed by our skeletal JOS kernel; the K&gt; is the prompt printed by the small monitor, or interactive control program, that we&#39;ve included in the kernel. These lines printed by the kernel will also appear in the regular shell window from which you ran QEMU. This is because for testing and lab grading purposes we have set up the JOS kernel to write its console output not only to the virtual VGA display (as seen in the QEMU window), but also to the simulated PC&#39;s virtual serial port, which QEMU in turn outputs to its own standard output.</code></p>
 <p>启动给内核之后，所有字符就是由<code>JOS kernel</code>产生</p>
 <p><code>There are only two commands you can give to the kernel monitor, help and kerninfo.</code></p>
@@ -743,7 +743,7 @@ What is the first instruction after the new mapping is established that would fa
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -756,7 +756,7 @@ What is the first instruction after the new mapping is established that would fa
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

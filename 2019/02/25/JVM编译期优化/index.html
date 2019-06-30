@@ -383,10 +383,10 @@
         <p>对效率的追求是程序员天生的坚定信仰<br><a id="more"></a></p>
 <hr>
 <p>编译期的<strong>前端</strong>（如Sun的<strong>Javac</strong>）把<code>*.java</code>文件转化成<code>*.class</code>文件，<strong>后端</strong>运行期编译器（JIT编译器，如HotSpot VM的C1、C2编译器）把字节码转化成机器码，静态提前编译器（GCJ）直接把<code>*.java</code>文件编译为本地机器代码，本文所讲的都是<strong>前端编译部分</strong></p>
-<p>Javac并没有优化措施，对性能的优化多集中在后端的即时编译器中，但Javac做了优化措施来改善程序员的编码风格和提高编码效率，许多新生<strong>Java“语法糖”</strong>，如泛型、内部类，是靠<strong>前端编译器</strong>实现的，而不是依赖虚拟机的底层改进，且本身就是由Java编写的，为分析源码提供便利。语言编译器竟然是由语言本身完成，称为<strong>自举</strong>，这似乎让自己有点明白了<a href="/2018/05/30/《计算机程序的构造和解释》/" title="《计算机程序的构造和解释》">《计算机程序的构造和解释》</a>中最后两章自制编译器，即最开始使用X语言（如Fortran）实现Y语言（如Pascal）的编译器，即解决鸡与蛋的问题，即使用其它语言构建出我们的第一版编译器，之后成熟以后，就可以完全使用已经生成好的编译器来编译出我们的新编译器</p>
+<p>Javac并没有优化措施，对性能的优化多集中在后端的即时编译器中，但Javac做了优化措施来改善程序员的编码风格和提高编码效率，许多新生<strong>Java“语法糖”</strong>，如泛型、内部类，是靠<strong>前端编译器</strong>实现的，而不是依赖虚拟机的底层改进，且本身就是由Java编写的，为分析源码提供便利。语言编译器竟然是由语言本身完成，称为<strong>自举</strong>，这似乎让自己有点明白了中最后两章自制编译器，即最开始使用X语言（如Fortran）实现Y语言（如Pascal）的编译器，即解决鸡与蛋的问题，即使用其它语言构建出我们的第一版编译器，之后成熟以后，就可以完全使用已经生成好的编译器来编译出我们的新编译器</p>
 <p>编译过程大概分成三步</p>
 <ul>
-<li>解析与填充符号表：解析分为<strong>词法分析</strong>和<strong>语法分析</strong>，词法分析是将源代码的字符流转变为<strong>Token</strong>集合，Token指的是关键词、变量名、字面量、运算符等，词法分析由javac.parser.Scanner类完成；语法分析则根据Token序列构造抽象语法树，具体可参见<a href="/2019/02/25/《编译原理》/" title="《编译原理》">《编译原理》</a>，语法分析由javac.parser.Parser类完成，生成的抽象语法树由javac.tree.JCTree类表示</li>
+<li>解析与填充符号表：解析分为<strong>词法分析</strong>和<strong>语法分析</strong>，词法分析是将源代码的字符流转变为<strong>Token</strong>集合，Token指的是关键词、变量名、字面量、运算符等，词法分析由javac.parser.Scanner类完成；语法分析则根据Token序列构造抽象语法树，具体可参见，语法分析由javac.parser.Parser类完成，生成的抽象语法树由javac.tree.JCTree类表示</li>
 <li>插入式注解处理器的注解处理：编写<strong>注解处理器</strong>参见<a href="/2019/01/18/《TIJ-注解》/" title="第20章 注解">第20章 注解</a>，如果这些注解处理器在处理注解期间对语法树进行了修改，编译器将回到上一步骤重新处理，直到不再对语法树进行修改为止，每次循环成为一个Round</li>
 <li>分析和字节码生成：语法分析形成的抽象树能表示正确的源程序抽象，但不代表符合语言规定的语义，因此要进行<strong>语义分析</strong>，而语义分析必须限定在具体的语言和具体的上下文环境中</li>
 </ul>
@@ -514,7 +514,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -527,7 +527,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

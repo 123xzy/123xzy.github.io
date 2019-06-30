@@ -382,7 +382,7 @@
       
         <p>本章所讲的并发是通向高级主题的中介，但即使融汇贯通本章内容，也不能说自己是一个优秀的并发程序员。学习<strong>并发编程</strong>就像进入一个全新的领域<br><a id="more"></a></p>
 <hr>
-<p>源码分析参见：<a href="/2019/01/28/java-lang源码分析/" title="java.lang">java.lang</a><br>相关文章：<a href="/2019/01/07/CSAPP-第十二章/" title="第十二章：并发编程">第十二章：并发编程</a><br>详细并发教程参见：<a href="/2019/01/18/《Java并发编程实战》/" title="《Java并发编程实战》">《Java并发编程实战》</a></p>
+<p>源码分析参见：<br>相关文章：<a href="/2019/01/07/CSAPP-第十二章/" title="第十二章：并发编程">第十二章：并发编程</a><br>详细并发教程参见：<a href="/2019/01/18/《Java并发编程实战》/" title="《Java并发编程实战》">《Java并发编程实战》</a></p>
 <p>并发通常是为了提高运行在<strong>单处理器</strong>上的程序性能，而不是直观上的多处理器上。乍看可响应起来有悖常理，多个程序一起运行，不停地切换上下文，看起来可能比程序顺序执行要慢？造成这个错觉的原因就是因为<strong>阻塞</strong>，程序在执行过程中并不是百分之百使用CPU，因此空闲的那段时间（也就是阻塞）时浪费的，因此使用并发来编写程序时，就可以切换到其他程序继续执行</p>
 <p>使用并发可以实现具有可响应的用户界面。某些编程语言被设计为可以将并发任务彼此隔离，这些语言称为<strong>函数型语言</strong>，其中每个函数调用都不会产生任何副作用，并且可以当做独立的任务来驱动。在面对<strong>游戏仿真、分布式系统</strong>时，并发机制都能提供更好的编码设计</p>
 <h1 id="基本线程机制"><a href="#基本线程机制" class="headerlink" title="基本线程机制"></a>基本线程机制</h1><p>线程可以驱动<strong>任务</strong>，通过实现<strong>Runnable接口</strong>并编写<strong>run()</strong>方法来定义任务。要实现线程行为，就要显式的把任务附着到线程上去。通过向Thread类构造器传入一个Runnable对象，并调用<strong>start()</strong>方法为该线程执行必要的初始化操作，然后自动调用run()方法，以便在这个新线程中启动该任务。调用start()后悔迅速返回，但由于Thread对象都注册了自己，所以会继续存在，并独立运行，直到任务退出，垃圾回收器才会清除它</p>
@@ -535,7 +535,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -548,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

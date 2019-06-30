@@ -405,13 +405,13 @@
 <li><strong>命名机制</strong>：不同的局域网采取不同和不兼容的方式来为主机分配地址，互联网络通过定义一致的主机地址格式来消除差异。每台主机分配至少一个互联网络地址来标记自己</li>
 <li><strong>传送机制</strong>：互联网络通过定义一种把数据位捆扎成不连续的<strong>包</strong>的方式，消除差异，一个包由包头和有效载荷组成，其中包头包含包的大小和源主机以及目的主机的地址</li>
 </ul>
-<p>具体流程参考<a href="/2018/12/26/《计算机网络》/" title="《计算机网络》">《计算机网络》</a>，互联网思想的精髓就是<strong>封装</strong></p>
+<p>具体流程参考，互联网思想的精髓就是<strong>封装</strong></p>
 <h2 id="IP因特网"><a href="#IP因特网" class="headerlink" title="IP因特网"></a>IP因特网</h2><p>每个因特网主机都运行实现TCP/IP协议的软件。因特网的客户端和服务器混合使用<strong>套接字接口函数</strong>和<strong>Unix I/O函数</strong>来进行通信，通常套接字函数实现为<strong>系统调用</strong>，这些系统调用会陷入内核，并调用各种内核模式的TCP/IP函数</p>
 <p>TCP/IP实际是一个协议族。<strong>IP协议</strong>提供基本的命名方式和递送机制，这种递送机制能够从一台因特网主机往其他主机发送<strong>数据报</strong>，但不是可靠地。<strong>UDP</strong>则稍微扩展了IP协议，这样数据报可以在<strong>进程间</strong>而不是主机间传送。<strong>TCP</strong>则是构建在IP之上的复杂协议，提供了<strong>进程间可靠地全双工连接</strong></p>
 <h2 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h2><p>IP地址就是一个32位无符号整数，但却放在一个结构中，因为这是套接字接口早期实现的不幸产物</p>
 <p>主机可以有不同的主机字节顺序，TCP/IP为任意整数数据项定义了统一的<strong>网络字节顺序</strong>（<strong>大端</strong>字节顺序），即使主机字节顺序是小端法。Unix提供了载网络和主机字节顺序间转换的函数</p>
 <p>IP地址使用一种<strong>点分十进制</strong>的表示法来表示，Unix提供了IP地址和点分十进制之间转换的函数</p>
-<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>因特网提供一组人性化的域名，以及一种将域名映射到IP的机制。这个映射是通过分布世界范围内的数据库（DNS）维护的，可以使用<code>NSLOOKUP</code>来查看，具体参见<a href="/2018/12/26/《计算机网络》/" title="《计算机网络》">《计算机网络》</a></p>
+<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>因特网提供一组人性化的域名，以及一种将域名映射到IP的机制。这个映射是通过分布世界范围内的数据库（DNS）维护的，可以使用<code>NSLOOKUP</code>来查看，具体参见</p>
 <h2 id="因特网连接"><a href="#因特网连接" class="headerlink" title="因特网连接"></a>因特网连接</h2><p>一个套接字是连接的断点，每个套接字都有相应的套接字地址，由一个因特网地址和一个16位的整数端口组成 </p>
 <p>当客户端发起一个连接请求，客户端套接字地址中的端口是由内核自动分配的，然后服务器的端口通常是某个知名端口，是和这个服务相对应的，例如web服务器通常的端口是80。<code>/etc/services</code>包含了一张这台机器提供的知名服务和端口之间的映射</p>
 <p>一个连接由两端的套接字地址唯一确定，称为<strong>套接字对</strong></p>
@@ -517,8 +517,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/01/红黑树/" rel="next" title="红黑树">
-                <i class="fa fa-chevron-left"></i> 红黑树
+              <a href="/2018/05/28/CSAPP-第九章/" rel="next" title="第九章：虚拟内存">
+                <i class="fa fa-chevron-left"></i> 第九章：虚拟内存
               </a>
             
           </div>
@@ -606,7 +606,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -619,7 +619,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

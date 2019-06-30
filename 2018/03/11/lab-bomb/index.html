@@ -388,7 +388,7 @@
       
         <p><img src="/2018/03/11/lab-bomb/1.jpg" alt=""><br><a id="more"></a></p>
 <hr>
-<p>啃完了CSAPP的前四章，但是怎么能停在只是坑完了呢，当然要做配套的经典Lab,这次做实验把学到的都用起来了<br>因为实验会涉及到<code>GDB</code>的调试，可以参照<a href="/2018/03/11/GDB-GCC/" title="GDB GCC">GDB GCC</a></p>
+<p>啃完了CSAPP的前四章，但是怎么能停在只是坑完了呢，当然要做配套的经典Lab,这次做实验把学到的都用起来了<br>因为实验会涉及到<code>GDB</code>的调试，可以参照</p>
 <ul>
 <li><a href="#1">phase_1</a></li>
 <li><a href="#2">phase_2</a></li>
@@ -401,7 +401,7 @@
 <p>从对汇编代码的分析看，<code>$0x402400</code>地址的值是破解的关键</p>
 <ul>
 <li>我们先<code>GDB</code>该程序，并在<code>phase_1</code>函数开头设置一个断点，如下图所示<img src="/2018/03/11/lab-bomb/2.JPG" alt=""></li>
-<li><p>之后<code>run</code>该程序，就会在断点处停下，并随机输入一个字符串<code>xzy</code><br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为<code>-rw-------</code>，因此我是没有权限去执行它的，具体修改权限可以参照<a href="/2018/03/31/Linux-第六章/" title="Linux-第六章">Linux-第六章</a>）<img src="/2018/03/11/lab-bomb/3.JPG" alt=""></p>
+<li><p>之后<code>run</code>该程序，就会在断点处停下，并随机输入一个字符串<code>xzy</code><br>（当时在这里还碰到了个小问题，我是把直接把程序从Windows下直接复制到虚拟机中，导致该文件的权限为<code>-rw-------</code>，因此我是没有权限去执行它的，具体修改权限可以参照）<img src="/2018/03/11/lab-bomb/3.JPG" alt=""></p>
 </li>
 <li><p>我们的目的是要读取<code>$0x402400</code>地址的值，所以我们单步调试到mov语句之后，并读取该地址的值，我们可以看到写入的字符串xzy存在<code>%eax</code>，而我们要的信息存在<code>%esi</code><img src="/2018/03/11/lab-bomb/4.JPG" alt=""></p>
 </li>
@@ -474,8 +474,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/11/GDB-GCC/" rel="prev" title="GDB GCC">
-                GDB GCC <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/23/《深入理解计算机系统》/" rel="prev" title="《深入理解计算机系统》">
+                《深入理解计算机系统》 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -553,7 +553,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -566,7 +566,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

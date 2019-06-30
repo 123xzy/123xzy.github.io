@@ -431,7 +431,7 @@
 <p>上面说到该服务器是事件驱动的，也就是状态机，对应的，<code>select</code>函数检测到输入事件，<code>add_client</code>创建新的逻辑流（状态机），<code>check_clients</code>回送输入行，执行状态转移，并在完成文本行发送后，删除该状态机</p>
 <p>现代高性能服务器（如Node.js、Nginx）使用的都是基于I/O多路复用的事件驱动的编程方式，虽然有其缺点，但是相比于进程和线程，它有明显的性能优势，因为不需要进程上下文切换来调度新的流</p>
 <p>使用事件驱动设计的一个好处在于比基于进程设计给了程序员更多的对程序行为的控制，另一个好处在于只运行单一进程的上下文中，每个逻辑流都能访问该进程的全部地址空间，这就可以使用GDB来调试并发服务器。缺点则是编码复杂和不能充分使用多核处理器</p>
-<p>参见APUE的<a href="/2019/01/11/《APUE-高级IO》/" title="第十四章 高级I/O">第十四章 高级I/O</a></p>
+<p>参见APUE的</p>
 <h1 id="基于线程"><a href="#基于线程" class="headerlink" title="基于线程"></a>基于线程</h1><p>是上述两种方法的混合，线程就是运行在进程上下文中的<strong>逻辑流</strong>。线程上下文的切换比进程切换快很多，其次线程不按照进程一样有严格的父子层次，和一个进程有关的线程组成一个<strong>线程池</strong>，线程池中的线程可以杀死他的任何对等线程，或者等待他的任意线程终止   </p>
 <p><strong>Posix线程</strong>（Pthreads）是在C语言中处理线程的一个标准接口，定义了约60个函数，运行程序创建、杀死和回收线程，与对等线程安全的共享数据，还可以通知对等线系统状态的变化。下面是最简单的线程程序</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"csapp.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *vargp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="keyword">pthread_t</span> tid;</span><br><span class="line">        Pthread_create(&amp;tid,<span class="literal">NULL</span>,thread,<span class="literal">NULL</span>);</span><br><span class="line">        Pthread_join(tid,<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *vargp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -450,7 +450,7 @@
 <p>在调用<code>Pthread_create</code>，通过传递一个指向已连接描述符的指针<code>*connfdp</code>，将描述符传递给对等线程</p>
 <p>但是这样做却会引入<strong>竞争</strong>，试想一下，如果对象线程中的赋值在下一个Accept之前完成，那局部变量将得到正确的值，但是在之后完成，就会得到下一个连接的描述符，这样两个线程就会使用同一个描述符，为此，我们将accept返回的每个已连接描述符分配到它自己的动态分配的内存块？？？</p>
 <p>另一个要注意的地方就是分离线程，避免内存泄漏，还要释放主线程分配的内存块</p>
-<p>参见APUE的<a href="/2019/01/23/《APUE-线程》/" title="第十一章 线程">第十一章 线程</a></p>
+<p>参见APUE的</p>
 <h1 id="多线程的共享变量"><a href="#多线程的共享变量" class="headerlink" title="多线程的共享变量"></a>多线程的共享变量</h1><p>线程的吸引力就在于多个线程能共享程序变量，但是为了编写正确的多线程程序，就需要对所谓的共享如何工作有清楚地了解</p>
 <p>一组并发线程运行在一个进程的上下文中，每个线程都有自己独立的线程上下文，包括<strong>线程ID、栈、栈指针、程序计数器、条件码和寄存器值</strong>，并共享其余部分，包括<strong>只读文本、读写数据、堆、共享库代码和打开文件</strong></p>
 <p><strong>线程内存模型</strong>参见<a href="/2018/07/02/修养-《程序员的自我修养》/" title="《程序员的自我修养》">《程序员的自我修养》</a> </p>
@@ -555,8 +555,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/07/运输层/" rel="prev" title="运输层">
-                运输层 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/07/修养-《静态链接》/" rel="prev" title="《静态链接》">
+                《静态链接》 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -634,7 +634,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">236</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -647,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
